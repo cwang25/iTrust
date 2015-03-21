@@ -16987,6 +16987,7 @@
     	<precondition>UC69 data is loaded.</precondition>
         <precondition>HCP Spencer Reid (MID: 9900000012) authenticates into iTrust.</precondition>
 		<precondition>Patient Aaron Hotchner has two food diaries.</precondition>
+		<precondition>HCP SPencer Reid has to be Aaron Hotchner's designated nutritionist.</precondition>
 		<step>HCP Spencer Reid logs into iTrust.</step>
 		<step>Click on View Food Diary</step>
 		<step>Type in Aaron Hotchner in the Select A Patient search box.</step>
@@ -17011,6 +17012,7 @@
     	<precondition>UC69 data is loaded.</precondition>
         <precondition>HCP Spencer Reid (MID: 9900000012)authenticates into iTrust.</precondition>
 		<precondition>Patient Aaron Hotchner has two food diaries.</precondition>
+		<precondition>HCP SPencer Reid has to be Aaron Hotchner's designated nutritionist.</precondition>
 		<step>HCP Spencer Reid logs into iTrust.</step>
 		<step>Click on View Food Diary</step>
 		<step>Type in 500 in the Select A Patient search box.</step>
@@ -17053,6 +17055,7 @@
     	<precondition>UC69 data is loaded.</precondition>
         <precondition>HCP Spencer Reid (MID: 9900000012)authenticates into iTrust.</precondition>
 		<precondition>Patient Jim Raynor (MID: 503) does not have any food diary.</precondition>
+		<precondition>HCP SPencer Reid has to be Jim Raynor's designated nutritionist.</precondition>
 		<step>HCP Spencer Reid logs into iTrust.</step>
 		<step>Click on View Food Diary on the left drop down menu.</step>
 		<step>Type in 503 in the Select A Patient searchbox.</step>
@@ -17185,6 +17188,27 @@
         <eResult>
 		The deleted entry will then be restored to the table.  Jennifer remains on the page to view her food diary, and the totals of that day remain the same.
 		</eResult>
+    </expectedResults>
+</test>
+<test id="NotDesignatedNutritionistViewPatientFoodDiary">
+    <role>HCP</role>
+    <usecase>74</usecase>
+    <dateAdded>03/21/2015</dateAdded>
+    <description>
+    	<precondition>Standard data is loaded.</precondition>
+    	<precondition>UC69 data is loaded.</precondition>
+        <precondition>HCP Spencer Reid (MID: 9900000012)authenticates into iTrust.</precondition>
+		<precondition>Patient Anakin Skywalker (MID: 100) does not have any food diary.</precondition>
+		<precondition>HCP SPencer Reid is not Anakin Skywalker's designated nutritionist.</precondition>
+		<step>HCP Spencer Reid logs into iTrust.</step>
+		<step>Click on View Food Diary on the left drop down menu.</step>
+		<step>Type in 100 in the Select A Patient searchbox.</step>
+		<step>Select the search result: Anakin SKywalker</step>
+	</description>
+    <expectedResults>
+        <eResult>
+        The message "Patient has to set you as his/her Designated Nutrtionist in order to view it." should show.
+        </eResult>
     </expectedResults>
 </test>
 </BlackBoxTestPlan>

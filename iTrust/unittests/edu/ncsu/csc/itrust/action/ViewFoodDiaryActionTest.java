@@ -49,6 +49,9 @@ public class ViewFoodDiaryActionTest {
 		assertTrue(emptylist.size() == 0);
 		List<FoodDiaryBean> fail_fooddiarylist = Non_nutritionist_action.getFoodDiaryListByOwnerID(500L);
 		assertTrue(null == fail_fooddiarylist);
+		//Test if the nutritionist is not the designated for this patient.
+		List<FoodDiaryBean> fail_not_designated_emptylist = Nutritionist_action.getFoodDiaryListByOwnerID(100L);
+		assertTrue(null == fail_not_designated_emptylist);
 	}
 
 	/**

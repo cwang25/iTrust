@@ -20,6 +20,7 @@ public class HCPViewsPatientFoodDiaryTest extends iTrustHTTPTest {
 		//gen.standardData();
 		gen.uc69();
 		gen.hcp0();
+		gen.patient100();
 	}
 	
 	/*
@@ -101,7 +102,6 @@ public class HCPViewsPatientFoodDiaryTest extends iTrustHTTPTest {
 		wr = wc.getCurrentPage();
 		assertEquals(ADDRESS + "auth/hcp-uap/viewPatientFoodDiary.jsp", wr.getURL().toString());
 		assertTrue(wr.getText().contains("This function is only available to Nutritionist specialty HCP"));
-
 	}
 
 	/*
@@ -123,5 +123,22 @@ public class HCPViewsPatientFoodDiaryTest extends iTrustHTTPTest {
 		patientForm.getButtons()[1].click();
 		wr = wc.getCurrentPage();
 		assertTrue(wr.getText().contains("The patient has no Food diary"));
+	}
+	//NotDesignatedNutritionistViewPatientFoodDiary
+	public void testNotDesignatedNutritionistViewPatientFoodDiary() throws Exception{
+		//login
+		gen.transactionLog();
+		WebConversation wc = login("9900000012","pw");//log in as Nutritionist.
+		WebResponse wr = wc.getCurrentPage();
+		assertEquals("iTrust - HCP Home", wr.getTitle());
+		assertLogged(TransactionType.HOME_VIEW, 9900000012L, 0L, "");
+		//Click view Food Diary.
+		wr = wr.getLinkWith("Patient Food Diary").click();
+		WebForm patientForm = wr.getForms()[0];
+		patientForm.getScriptableObject().setParameterValue("UID_PATIENTID", "100");
+		patientForm.getButtons()[1].click();
+		wr = wc.getCurrentPage();
+		assertEquals(ADDRESS + "auth/hcp-uap/viewPatientFoodDiary.jsp", wr.getURL().toString());
+		assertTrue(wr.getText().contains("Patient has to set you as his/her Designated Nutritionist in order to view it"));
 	}
 }
