@@ -7,6 +7,7 @@ import java.util.List;
 
 import edu.ncsu.csc.itrust.action.base.FoodDiaryBaseAction;
 import edu.ncsu.csc.itrust.beans.FoodDiaryBean;
+import edu.ncsu.csc.itrust.beans.PersonnelBean;
 import edu.ncsu.csc.itrust.dao.DAOFactory;
 import edu.ncsu.csc.itrust.enums.TransactionType;
 import edu.ncsu.csc.itrust.exception.DBException;
@@ -40,10 +41,22 @@ public class ViewFoodDiaryAction extends FoodDiaryBaseAction {
 	public List<FoodDiaryBean> getFoodDiaryListByOwnerID(long inputID) throws DBException{
 		long ownerID = inputID;
 		boolean isPatient = super.getFactory().getPatientDAO().checkPatientExists(mid);
+		//Get Declared HCP.
+		List<PersonnelBean> personnelList = super.getFactory().getPatientDAO().getDeclaredHCPs(inputID);
+		//Check if the HCP (Nutritionist) MID is in the patient's declared list.
+		//Doesn't matter if login ID is HCP or Patient.
+		//If it is patient this is always FALSE plus it will short-circuit the if loop later.
+		boolean isInDeclaredList = false;
+		for(PersonnelBean b : personnelList){
+			if(b.getMID() == mid){
+				isInDeclaredList = true;
+				break;
+			}
+		}
 		//Try to prevent patient from using some weird hack to see others info.
 		if(isPatient){
 			ownerID = mid;
-		}else if(!super.isNutritionist){
+		}else if(!super.isNutritionist || !isInDeclaredList){
 			return null;
 		}
 		List<FoodDiaryBean> answer = foodDAO.getFoodDiaryListByOwnerID(ownerID);

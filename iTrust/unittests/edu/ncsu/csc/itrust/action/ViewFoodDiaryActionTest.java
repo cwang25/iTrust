@@ -45,7 +45,7 @@ public class ViewFoodDiaryActionTest {
 	public void testGetFoodDiaryListByOwnerID() throws DBException {
 		List<FoodDiaryBean> fooddiarylist = Nutritionist_action.getFoodDiaryListByOwnerID(500L);
 		assertTrue(fooddiarylist.size()== 2);
-		List<FoodDiaryBean> emptylist = Nutritionist_action.getFoodDiaryListByOwnerID(100L);
+		List<FoodDiaryBean> emptylist = Nutritionist_action.getFoodDiaryListByOwnerID(503L);
 		assertTrue(emptylist.size() == 0);
 		List<FoodDiaryBean> fail_fooddiarylist = Non_nutritionist_action.getFoodDiaryListByOwnerID(500L);
 		assertTrue(null == fail_fooddiarylist);

@@ -148,7 +148,8 @@
 	</div>
 <%		}else{%>
 	<div>
-		<center>This function is only available to Nutritionist specialty HCP.</center>
+		<center>1. This function is only available to Nutritionist specialty HCP.</center>
+		<center>2. Patient has to set you as his/her Designated Nutritionist in order to view it.</center>
 	</div>
 	<%  } %>
 <%	} %>	

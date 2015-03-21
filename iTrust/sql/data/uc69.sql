@@ -176,3 +176,11 @@ NULL,
 2
 );
 /*End of insert food diary.*/
+/*Insert declared HCP, only designaed Nutritionist can view the patient's food diary.*/
+INSERT INTO declaredhcp
+(PatientID,	HCPID)
+VALUES
+(500,9900000012),
+(503,9900000012)
+ON DUPLICATE KEY UPDATE PatientID = PatientID;
+/*End of insert declared HCP*/
