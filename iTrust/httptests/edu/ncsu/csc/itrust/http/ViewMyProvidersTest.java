@@ -36,8 +36,8 @@ public class ViewMyProvidersTest extends iTrustHTTPTest {
 		wr = wr.getLinkWith("My Providers").click();
 		assertEquals("iTrust - My Providers", wr.getTitle());
 		WebTable wt = wr.getTableStartingWith("HCP Name");
-		// Row count is number of HCPs (2) + header row + footer row == 4.
-		assertEquals(4, wt.getRowCount());
+		// Row count is number of HCPs (2) + header row + footer row + Nutritionist == 5.
+		assertEquals(5, wt.getRowCount());
 		assertEquals("Gandalf Stormcrow", wt.getCellAsText(1, 0));
 		assertEquals("Kelly Doctor", wt.getCellAsText(2, 0));
 		
@@ -67,8 +67,8 @@ public class ViewMyProvidersTest extends iTrustHTTPTest {
 		wr = wr.getLinkWith("My Providers").click();
 		assertEquals("iTrust - My Providers", wr.getTitle());
 		WebTable wt = wr.getTableStartingWith("HCP Name");
-		// Row count is number of HCPs (2) + header row + footer row == 4.
-		assertEquals(4, wt.getRowCount());
+		// Row count is number of HCPs (2) + header row + footer row + Nutritionist == 5
+		assertEquals(5, wt.getRowCount());
 		assertEquals("Gandalf Stormcrow", wt.getCellAsText(1, 0));
 		assertEquals("Kelly Doctor", wt.getCellAsText(2, 0));
 		

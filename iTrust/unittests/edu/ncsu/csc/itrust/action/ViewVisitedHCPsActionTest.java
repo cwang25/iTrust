@@ -61,7 +61,7 @@ public class ViewVisitedHCPsActionTest extends TestCase {
 		// ignored.)
 		List<HCPVisitBean> beanslist = action.filterHCPList("", "", "");
 		ArrayList<HCPVisitBean> beans = new ArrayList<HCPVisitBean>(beanslist);
-		assertEquals(5, beans.size());
+		assertEquals(6, beans.size());
 		assertEquals("Kelly Doctor", beans.get(4).getHCPName());
 		assertEquals("Jason Frankenstein", beans.get(3).getHCPName());
 		assertEquals("Lauren Frankenstein", beans.get(2).getHCPName());
@@ -73,7 +73,8 @@ public class ViewVisitedHCPsActionTest extends TestCase {
 		// Get all visited HCPs without any filtering. (The nulls are ignored.)
 		List<HCPVisitBean> beanslist = action.filterHCPList(null, null, null);
 		ArrayList<HCPVisitBean> beans = new ArrayList<HCPVisitBean>(beanslist);
-		assertEquals(5, beans.size());
+		assertEquals(6, beans.size());
+		assertEquals("Spencer Reid", beans.get(5).getHCPName());
 		assertEquals("Kelly Doctor", beans.get(4).getHCPName());
 		assertEquals("Jason Frankenstein", beans.get(3).getHCPName());
 		assertEquals("Lauren Frankenstein", beans.get(2).getHCPName());

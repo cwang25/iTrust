@@ -543,4 +543,39 @@ public class PersonnelDAO {
 			DBUtil.closeConnection(conn, ps);
 		}
 	}
+	
+	/**
+	 * Matches all personnel who have specialty LIKE (as in SQL) 
+	 * the first and last names passed in.
+	 * 
+	 * @param speicalty The specialty of the HCP.
+	 * @return A java.util.List of personnel who match these names.
+	 * @throws DBException
+	 */
+	public List<PersonnelBean> searchForPersonnelWithSpecialty(
+			final String specialty) throws DBException {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		List<PersonnelBean> returnList;
+		try {
+			conn = factory.getConnection();
+
+			pstmt = conn
+					.prepareStatement("SELECT * FROM personnel WHERE specialty LIKE ?");
+			pstmt.setString(1, specialty);
+			final ResultSet results = pstmt.executeQuery();
+			final List<PersonnelBean> loadlist = personnelLoader
+					.loadList(results);
+			results.close();
+			pstmt.close();
+			returnList = loadlist;
+		} catch (SQLException e) {
+
+			throw new DBException(e);
+		} finally {
+			DBUtil.closeConnection(conn, pstmt);
+		}
+
+		return returnList;
+	}
 }

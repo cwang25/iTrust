@@ -152,6 +152,24 @@ public class ViewVisitedHCPsAction {
 					visits.add(visitBean);
 				}
 			}
+			// Get all nutritionist HCPs. Because a designated HCP may be also nutritionist.
+			// We will ensure the HCP is not already in the list.
+			// Some reasons the PROJECT REQUIRE us to add a list of available nutritionist differently than other HCPs.
+			List<PersonnelBean> nutritionists = docDAO.searchForPersonnelWithSpecialty("Nutritionist");
+			next: for (PersonnelBean pb : nutritionists) {
+				if (matchPersonnel(pb, lastName, specialty, zip)) {
+					long hcpid = pb.getMID();
+					// if HCP is already in visits list, skip here
+					for (HCPVisitBean hv : visits) {
+						if (hv.getHCPMID() == hcpid) {
+							continue next;
+						}
+					}
+					String date = "";
+					HCPVisitBean visitBean = makeHCPVisitBean(pb, date);
+					visits.add(visitBean);
+				}
+			}
 		} catch (DBException dbe) {
 			throw new ITrustException(dbe.getMessage());
 		}
