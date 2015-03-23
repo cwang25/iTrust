@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class SuggestionBean {
 	
+	private long rowID = -1;
 	private Date date;
 	private long patientID;
 	private long hcpID;
@@ -82,6 +83,20 @@ public class SuggestionBean {
 	 */
 	public void setSuggestion(String suggestion) {
 		this.suggestion = suggestion;
+	}
+
+	/**
+	 * @return the rowID
+	 */
+	public long getRowID() {
+		return rowID;
+	}
+
+	/**
+	 * @param rowID the rowID to set
+	 */
+	public void setRowID(long rowID) {
+		this.rowID = rowID;
 	}
 
 }
