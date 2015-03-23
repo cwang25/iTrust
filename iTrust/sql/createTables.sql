@@ -706,4 +706,5 @@ CREATE TABLE IF NOT EXISTS suggestions (
 	suggDate DATE,
 	patientID BIGINT unsigned NOT NULL,
 	hcpID BIGINT unsigned NOT NULL,
+	sugg TEXT
 ) ENGINE=MyISAM;
