@@ -438,7 +438,11 @@ public enum TransactionType {
 	/**PATIENT_EDIT_FOOD_DIARY**/
 	PATIENT_EDIT_FDIARY(7000, "Edited a Food Diary Entry", "edited a food diary entry", true),
 	/**PATIENT_DELETE_FOOD_DIARY**/
-	PATIENT_DELETE_FDIARY(7001, "Deleted a Food Diary Entry", "deleted a food diary entry", true)
+	PATIENT_DELETE_FDIARY(7001, "Deleted a Food Diary Entry", "deleted a food diary entry", true),
+	/**HCP_LEFT_SUGGESTION_IN_FOOD_DIARY**/
+	HCP_LEFT_SUGGESTION(7500, "Nutritionist left suggestion in Food Diary", "left suggestion in food diary", true),
+	/**HCP_LEFT_SUGGESTION_IN_FOOD_DIARY**/
+	PATIENT_VIEW_SUGGESTION(7501, "Viewed Suggestion in Food Diary", "viewed your suggestions", true)
 	;
 	/**
 	 * This string is used in the SQL statement associated with pulling events for

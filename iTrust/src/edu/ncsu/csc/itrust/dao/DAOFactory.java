@@ -382,6 +382,10 @@ public class DAOFactory {
 	public FoodDiaryDAO getFoodDiaryDAO(){
 		return new FoodDiaryDAO(this);
 	}
+	
+	public SuggestionDAO getSuggestionDAO() {
+		return new SuggestionDAO(this);
+	}
 
 	public PreExistingConditionsDAO getPreExistingConditionsDAO() {
 		return new PreExistingConditionsDAO(this);

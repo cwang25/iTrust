@@ -2,19 +2,22 @@ package edu.ncsu.csc.itrust.action.base;
 
 import edu.ncsu.csc.itrust.action.EventLoggingAction;
 import edu.ncsu.csc.itrust.dao.DAOFactory;
-import edu.ncsu.csc.itrust.dao.mysql.FoodDiaryDAO;
+import edu.ncsu.csc.itrust.dao.mysql.SuggestionDAO;
 import edu.ncsu.csc.itrust.exception.ITrustException;
 
 public class SuggestionBaseAction {
 
 	private DAOFactory factory;
-	protected FoodDiaryDAO foodDAO;
+	protected SuggestionDAO suggDAO;
 	protected EventLoggingAction loggingAction;
 	
-	public SuggestionBaseAction(DAOFactory factory, String midString)throws ITrustException {
+	public SuggestionBaseAction(DAOFactory factory)throws ITrustException {
 		this.factory = factory;
-		//this.mid = checkOwnerID(midString);
-		foodDAO = factory.getFoodDiaryDAO();
+		suggDAO = factory.getSuggestionDAO();
 		loggingAction = new EventLoggingAction(factory);
+	}
+	
+	protected DAOFactory getFactory(){
+		return factory;
 	}
 }
