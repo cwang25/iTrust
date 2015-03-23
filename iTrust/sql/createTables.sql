@@ -713,3 +713,11 @@ CREATE TABLE IF NOT EXISTS fooddiarysetlabels (
 	diarydate DATE NOT NULL,
 	label VARCHAR(30) NOT NULL
 ) ENGINE=innoDB;
+
+CREATE TABLE IF NOT EXISTS suggestions (
+	rowID BIGINT unsigned AUTO_INCREMENT PRIMARY KEY,
+	suggDate DATE,
+	patientID BIGINT unsigned NOT NULL,
+	hcpID BIGINT unsigned NOT NULL,
+	sugg TEXT
+) ENGINE=MyISAM;
