@@ -25,6 +25,5 @@ public class SuggestionAction extends SuggestionBaseAction {
 	 *  
 	 */
 	
-	
 
 }
