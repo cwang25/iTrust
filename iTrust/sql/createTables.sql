@@ -700,3 +700,10 @@ CREATE TABLE IF NOT EXISTS fooddiarytable (
 	CONSTRAINT chk_protein_amt CHECK (gramsOfProteinPerServing >= 0),
 	CONSTRAINT chk_ownerid FOREIGN KEY (ownerID) REFERENCES patients (MID) ON DELETE CASCADE
 ) ENGINE=MyISAM;
+
+CREATE TABLE IF NOT EXISTS suggestions (
+	rowID BIGINT unsigned AUTO_INCREMENT PRIMARY KEY,
+	suggDate DATE,
+	patientID BIGINT unsigned NOT NULL,
+	hcpID BIGINT unsigned NOT NULL,
+) ENGINE=MyISAM;
