@@ -383,6 +383,14 @@ public class DAOFactory {
 		return new FoodDiaryDAO(this);
 	}
 
+	/**
+	 * Get the DAO for food diary labels.
+	 * @return this DAO factory's FoodDiaryLabelDAO
+	 */
+	public FoodDiaryLabelDAO getFoodDiaryLabelDAO() {
+		return new FoodDiaryLabelDAO(this);
+	}
+	
 	public PreExistingConditionsDAO getPreExistingConditionsDAO() {
 		return new PreExistingConditionsDAO(this);
 	}

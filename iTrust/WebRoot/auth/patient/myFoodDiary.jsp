@@ -12,6 +12,12 @@
 <%@page import="edu.ncsu.csc.itrust.beans.FoodDiaryBean"%>
 <%@page import="edu.ncsu.csc.itrust.dao.DAOFactory"%>
 <%@page import="edu.ncsu.csc.itrust.exception.FormValidationException"%>
+<%@page import="edu.ncsu.csc.itrust.beans.FoodDiaryLabelSetBean"%>
+<%@page import="edu.ncsu.csc.itrust.beans.FoodDiaryLabelBean"%>
+<%@page import="edu.ncsu.csc.itrust.action.GetFoodDiaryLabelAction"%>
+<%@page import="edu.ncsu.csc.itrust.action.AddFoodDiaryLabelAction"%>
+<%@page import="edu.ncsu.csc.itrust.action.SetFoodDiaryLabelAction"%>
+<%@page import="edu.ncsu.csc.itrust.action.RemoveFoodDiaryLabelAction"%>
 <%@page import="java.util.Calendar"%>
 <%@include file="/global.jsp"%>
 
@@ -27,6 +33,11 @@
 		//The fields to create foodDiary bean if user add new food diary.
 		AddFoodDiaryAction addAction = new AddFoodDiaryAction(prodDAO, loggedInMID.toString());
 		EditFoodDiaryAction editAction = new EditFoodDiaryAction(prodDAO, loggedInMID.toString());
+		GetFoodDiaryLabelAction labelGetAction = new GetFoodDiaryLabelAction(prodDAO, loggedInMID);
+		AddFoodDiaryLabelAction labelAddAction = new AddFoodDiaryLabelAction(prodDAO, loggedInMID);
+		SetFoodDiaryLabelAction labelSetAction = new SetFoodDiaryLabelAction(prodDAO, loggedInMID);
+		RemoveFoodDiaryLabelAction labelRemoveAction = new RemoveFoodDiaryLabelAction(prodDAO, loggedInMID);
+		
 		boolean dataAllCorrect = true;
 	  	String dateStr = request.getParameter("date") != null ? request.getParameter("date") : "";
 	 	String typeOfMeal = request.getParameter("typeOfMeal") != null ? request.getParameter("typeOfMeal") : "";
@@ -39,12 +50,17 @@
 		String gramsOfSugar = request.getParameter("gramsOfSugar")!= null ? request.getParameter("gramsOfSugar") : "";
 		String gramsOfFiber = request.getParameter("gramsOfFiber")!= null ? request.getParameter("gramsOfFiber") : "";
 		String gramsOfProtein = request.getParameter("gramsOfProtein")!= null ? request.getParameter("gramsOfProtein") : ""; 
+		String newLabelName = request.getParameter("newLabelName") != null ? request.getParameter("newLabelName") : "";
+		String labelDate = request.getParameter("labelDate") != null ? request.getParameter("labelDate") : "";
+		String changedLabelName = request.getParameter("changedLabelName") != null ? request.getParameter("changedLabelName") : "";
 	 	String mode = request.getParameter("operationMode");
 	 	String selectedIndex = request.getParameter("selectedIndex");
 	 	long selectedRowID = request.getParameter("row_id_to_edit")!=null?Long.parseLong(request.getParameter("row_id_to_edit")):-1;
 	 	boolean toEdit = mode!=null&&mode.equals("to_edit");
 	 	boolean toDelete = mode!=null&&mode.equals("delete");
 	 	boolean undo = mode!=null&&mode.equals("undo");
+	 	boolean addLabel = mode!=null&&mode.equals("addLabel");
+	 	boolean setLabel = mode!=null&&mode.equals("setLabel");
 	 	//out.println(mode);
 /*  	String dateStr = "";
 		String typeOfMeal = "";
@@ -141,6 +157,32 @@
 		}else if(undo){
 			FoodDiaryBean b = (FoodDiaryBean) session.getAttribute("deletedFoodDiary");
 			addAction.addFoodDiary(b);
+		} else if(addLabel) {
+			try {
+				FoodDiaryLabelBean b = new FoodDiaryLabelBean(loggedInMID, newLabelName);
+				labelAddAction.addFoodDiaryLabel(b);
+				%>
+				<p align="center"style="font-size: 16pt; font-weight: bold;" >Label has been added.</p>
+				<%
+			} catch (FormValidationException e) {
+				%>
+				<span class="iTrustError">Label name may only contain letters and numbers.</span>
+				<%
+				dataAllCorrect = false;
+			}
+		} else if(setLabel) {
+			FoodDiaryLabelSetBean b = labelGetAction.getSetFoodDiaryLabel(loggedInMID, java.sql.Date.valueOf(labelDate));
+			if(changedLabelName.equals("none") && b != null) {
+				labelRemoveAction.removeFoodDiaryLabel(b);
+			} else {
+				if(b == null)
+					b = new FoodDiaryLabelSetBean(loggedInMID, java.sql.Date.valueOf(labelDate), changedLabelName);
+				b.setLabel(changedLabelName);
+				labelSetAction.setFoodDiaryLabel(b);
+			}
+			%>
+			<p align="center"style="font-size: 16pt; font-weight: bold;" >Label has been set.</p>
+			<%
 		}
 
 		
@@ -176,6 +218,7 @@
 				FoodDiaryBean totalBeanTmp = new FoodDiaryBean();
 				//Use to keep on daily total calories.
 				double dailyTotalCalories = 0;
+				FoodDiaryBean oldBean = null; // keeps track of the previous bean
 				for(FoodDiaryBean b : foodDiaryList) { 		
 					boolean needDailySummary = false;
 					String row = "<tr";
@@ -190,6 +233,10 @@
 						
 						
 						if(needDailySummary){
+							FoodDiaryLabelSetBean labelBean = labelGetAction.getSetFoodDiaryLabel(oldBean.getOwnerID(), new java.sql.Date(oldBean.getDate().getTime()));
+							String label = "";
+							if(labelBean != null)
+								label = labelBean.getLabel();
 			%>
 			<tr>
 				<td><%=StringEscapeUtils.escapeHtml("[Daily Summary]")%></td>
@@ -204,7 +251,20 @@
 				<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getGramsOfFiber())%></td>
 				<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getGramsOfProtein())%></td>
 				<td><%=StringEscapeUtils.escapeHtml("" + dailyTotalCalories)%></td>
-				<td><%=StringEscapeUtils.escapeHtml("")%></td>
+				<td>
+					<span style="color:red"><%=StringEscapeUtils.escapeHtml(label)%></span>
+					<select value="<%=label %>">
+						<option value="none">none</option>
+						<%
+							List<FoodDiaryLabelBean> labelList = labelGetAction.getAllFoodDiaryLabels(loggedInMID);
+							for(FoodDiaryLabelBean lb : labelList) {
+								String labelText = StringEscapeUtils.escapeHtml(lb.getLabel());
+								%><option value="<%=labelText %>"><%=labelText %></option><%	
+							}								
+						%>
+					</select>
+					<button class="changeLabelBtn" data-date="<%=(new java.sql.Date(oldBean.getDate().getTime())).toString() %>">Change Label</button>
+				</td>
 			</tr>
 			<%
 				totalBeanTmp = new FoodDiaryBean();
@@ -241,10 +301,16 @@
 			</td>
 			</tr>
 			<%
+				oldBean = b;
 				index ++;
 			%>
 			<%
 				}
+				
+				FoodDiaryLabelSetBean labelBean = labelGetAction.getSetFoodDiaryLabel(oldBean.getOwnerID(), new java.sql.Date(oldBean.getDate().getTime()));
+				String label = "";
+				if(labelBean != null)
+					label = labelBean.getLabel();
 			%>
 
 			<tr>
@@ -266,7 +332,20 @@
 				<td><%=StringEscapeUtils.escapeHtml(""
 						+ totalBeanTmp.getGramsOfProtein())%></td>
 				<td><%=StringEscapeUtils.escapeHtml("" + dailyTotalCalories)%></td>
-				<td><%=StringEscapeUtils.escapeHtml("")%></td>
+				<td>
+					<span style="color:red"><%=StringEscapeUtils.escapeHtml(label)%></span>
+					<select value="<%=label %>">
+						<option value="none">none</option>
+						<%
+							List<FoodDiaryLabelBean> labelList = labelGetAction.getAllFoodDiaryLabels(loggedInMID);
+							for(FoodDiaryLabelBean lb : labelList) {
+								String labelText = StringEscapeUtils.escapeHtml(lb.getLabel());
+								%><option value="<%=labelText %>"><%=labelText %></option><%	
+							}								
+						%>
+					</select>
+					<button class="changeLabelBtn" data-date="<%=(new java.sql.Date(oldBean.getDate().getTime())).toString() %>">Change Label</button>
+				</td>
 			</tr>
 		</table>
 
@@ -283,12 +362,12 @@
 	%>
 	<div>
 		</br>
-		<button type='button' onclick="showHiddenAddNewFoodDiaryForm('HiddenForm')">
-			Add new food diary</button>
-	</div>
+		<button type='button' onclick="showHiddenAddNewFoodDiaryForm('HiddenForm');$('#newLabelForm').hide();">Add new food diary</button>
+		<button type='button' onclick="hideHiddenForm('HiddenForm');$('#newLabelForm').show();">Create new label</button>
+	</div>	
 	<br />
 	<div id="HiddenForm" name="Hiddenform"
-		style="visibility: <%=dataAllCorrect&&!toEdit? "hidden" : "visible"%>">
+		style="display: <%=!dataAllCorrect&&toEdit? "block" : "none"%>">
 		<form action="myFoodDiary.jsp" method="post" id="edit" align="center">
 			<td valign=top>
 				<div class="row">
@@ -400,12 +479,40 @@
 			</div>
 		</form>
 	</div>
-	<br />
+	<br/>
+</div>
+
+<div id="newLabelForm" name="newLabelForm" style="display: <%=!dataAllCorrect&&addLabel? "block" : "none"%>">
+	<form action="myFoodDiary.jsp" method="post" id="newLabel" align="center">
+		<table class="fTable">
+			<tr>
+				<th>New Label</th>
+				<th><input type="button" style="color: black;font-size: 16pt; font-weight: bold; float: right;" value="Cancel" onclick="$('#newLabelForm').hide();"></th>
+			</tr>
+			<tr>
+				<td class="subHeaderVertical">Label Name:</td>
+				<td><input type="text" name="newLabelName" id="newLabelName" value="<%=StringEscapeUtils.escapeHtml(!dataAllCorrect&&addLabel ? newLabelName : "")%>"></td>
+			</tr>
+		</table>
+		<br/>
+		<input name="operationMode" value="addLabel" type="hidden">
+	
+		<input type="submit" id="saveBtn" name="action"	style="font-size: 16pt; font-weight: bold;"	value="Save">
+	</form>
+</div>
+
+<div id="hiddenLabelChangeForm" name="hiddenLabelChangeForm" style="display:none;">
+	<form action="myFoodDiary.jsp" method="post" id="hiddenLabelChange" align="center">
+		<input type="hidden" id="labelDate" name="labelDate">
+		<input type="hidden" id="changedLabelName" name="changedLabelName">
+		<input type="hidden" name="operationMode" value="setLabel">
+		<input type="submit" class="hiddenSubmitBtn">
+	</form>
 </div>
 
 <script language="JavaScript">
 	function showHiddenForm(divID) {
-		document.getElementById(divID).style.visibility = "visible";
+		document.getElementById(divID).style.display = "block";
 	}
 	function showHiddenAddNewFoodDiaryForm(divID){
 		document.getElementById("form_top_banner_tag").value = "New Food Diary";
@@ -434,7 +541,7 @@
 		document.getElementById("saveBtn").click();
 	}
 	function hideHiddenForm(divID){
-		document.getElementById(divID).style.visibility = "hidden";
+		document.getElementById(divID).style.display = "none";
 	}
 	function runDeleteRecord(index){
 		if(confirm('Are you sure you want to delete the food diary record?')){
@@ -449,6 +556,14 @@
 		document.getElementById("operationMode").value = "undo";
 		document.getElementById("saveBtn").click();
 	}
+	
+	$('.changeLabelBtn').click(function() {
+		var me = $(this);
+		var form = $('#hiddenLabelChangeForm');
+		form.find('#labelDate').val(me.attr('data-date'));
+		form.find('#changedLabelName').val(me.siblings('select').val());
+		form.find('.hiddenSubmitBtn').click();
+	});
 /* 	function scrollToBottom() {
 		var objDiv = document.getElementById("bottomLine");
 		objDiv.scrollTop = objDiv.scrollHeight;

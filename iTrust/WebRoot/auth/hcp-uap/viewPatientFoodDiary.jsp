@@ -4,6 +4,7 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.text.DecimalFormat"%>
+<%@page import="java.sql.Date"%>
 <%@page import="edu.ncsu.csc.itrust.dao.DAOFactory"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="edu.ncsu.csc.itrust.beans.HealthRecord"%>
@@ -11,7 +12,9 @@
 <%@page import="edu.ncsu.csc.itrust.beans.PersonnelBean"%>
 <%@page import="edu.ncsu.csc.itrust.dao.mysql.PersonnelDAO"%>
 <%@page import="edu.ncsu.csc.itrust.action.ViewFoodDiaryAction"%>
+<%@page import="edu.ncsu.csc.itrust.action.GetFoodDiaryLabelAction"%>
 <%@page import="edu.ncsu.csc.itrust.beans.FoodDiaryBean"%>
+<%@page import="edu.ncsu.csc.itrust.beans.FoodDiaryLabelSetBean"%>
 
 <%@include file="/global.jsp" %>
 
@@ -29,6 +32,7 @@
 	   	return;
 	}
 	ViewFoodDiaryAction action = new ViewFoodDiaryAction(prodDAO, Long.toString(loggedInMID));
+	GetFoodDiaryLabelAction labelAction = new GetFoodDiaryLabelAction(prodDAO, loggedInMID);
 	List<FoodDiaryBean> foodDiaryList = action.getFoodDiaryListByOwnerID(Long.parseLong(pidString));
 	session.setAttribute("foodDiaryList", foodDiaryList);
 	if (foodDiaryList != null && foodDiaryList.size() > 0) {
@@ -59,6 +63,7 @@
 		FoodDiaryBean totalBeanTmp = new FoodDiaryBean();
 		//Use to keep on daily total calories.
 		double dailyTotalCalories = 0;
+		FoodDiaryBean oldBean = null; // keeps track of the previous bean
 		for(FoodDiaryBean b : foodDiaryList) { 			
 			boolean needDailySummary = false;
 			String row = "<tr";
@@ -73,12 +78,16 @@
 						
 						
 			if(needDailySummary){
+				FoodDiaryLabelSetBean labelBean = labelAction.getSetFoodDiaryLabel(oldBean.getOwnerID(), new Date(oldBean.getDate().getTime()));
+				String label = "";
+				if(labelBean != null)
+					label = labelBean.getLabel();
 			%>
 			<tr>
 				<td><%=StringEscapeUtils.escapeHtml("[Daily Summary]")%></td>
 				<td><%=StringEscapeUtils.escapeHtml("")%></td>
 				<td><%=StringEscapeUtils.escapeHtml("")%></td>
-				<td><%=StringEscapeUtils.escapeHtml("")%></td>
+				<td><span style="color:red"><%=StringEscapeUtils.escapeHtml(label)%></span></td>
 				<td><%=StringEscapeUtils.escapeHtml("")%></td>
 				<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getGramsOfFat())%></td>
 				<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getMilligramsOfSodium())%></td>
@@ -101,6 +110,7 @@
 			totalBeanTmp.setGramsOfProtein(totalBeanTmp.getGramsOfProtein() + b.getGramsOfProtein());
 			dailyTotalCalories += b.totalCalories();
 			recordFlag = sdf.format(b.getDate());
+			oldBean = b;
 			%>
 				<td><%= StringEscapeUtils.escapeHtml("" + sdf.format(b.getDate()))%></td>
 				<td><%= StringEscapeUtils.escapeHtml("" + b.getTypeOfMeal().toString()) %></td>
@@ -116,12 +126,17 @@
 				<td><%= StringEscapeUtils.escapeHtml("" + b.totalCalories()) %></td>
 			</tr>
 	<%		index ++; %>
-	<%	} %>
+	<%	} 
+		FoodDiaryLabelSetBean labelBean = labelAction.getSetFoodDiaryLabel(oldBean.getOwnerID(), new Date(oldBean.getDate().getTime()));
+		String label = "";
+		if(labelBean != null)
+			label = labelBean.getLabel();
+	%>
 			<tr>
 				<td><%=StringEscapeUtils.escapeHtml("[Daily Summary]")%></td>
 				<td><%=StringEscapeUtils.escapeHtml("")%></td>
 				<td><%=StringEscapeUtils.escapeHtml("")%></td>
-				<td><%=StringEscapeUtils.escapeHtml("")%></td>
+				<td><span style="color:red"><%=StringEscapeUtils.escapeHtml(label)%></span></td>
 				<td><%=StringEscapeUtils.escapeHtml("")%></td>
 				<td><%=StringEscapeUtils.escapeHtml(""
 						+ totalBeanTmp.getGramsOfFat())%></td>

@@ -697,6 +697,19 @@ CREATE TABLE IF NOT EXISTS fooddiarytable (
 	CONSTRAINT chk_carbs_amt CHECK (gramsOfCarbsPerServing >= 0),
 	CONSTRAINT chk_sugar_amt CHECK (gramsOfSugarPerServing >= 0),
 	CONSTRAINT chk_fiber_amt CHECK (gramsOfFiberPerServing >= 0),
-	CONSTRAINT chk_protein_amt CHECK (gramsOfProteinPerServing >= 0),
-	CONSTRAINT chk_ownerid FOREIGN KEY (ownerID) REFERENCES patients (MID) ON DELETE CASCADE
-) ENGINE=MyISAM;
+	CONSTRAINT chk_protein_amt CHECK (gramsOfProteinPerServing >= 0)
+	/*CONSTRAINT chk_ownerid FOREIGN KEY (ownerID) REFERENCES patients (MID) ON DELETE CASCADE*/
+) ENGINE=innoDB;
+
+CREATE TABLE IF NOT EXISTS fooddiarylabels (
+	rowid BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	mid BIGINT UNSIGNED NOT NULL,
+	label VARCHAR(30) NOT NULL
+) ENGINE=innoDB;
+
+CREATE TABLE IF NOT EXISTS fooddiarysetlabels (
+	rowid BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,	
+	mid BIGINT UNSIGNED NOT NULL,
+	diarydate DATE NOT NULL,
+	label VARCHAR(30) NOT NULL
+) ENGINE=innoDB;

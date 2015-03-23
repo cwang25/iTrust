@@ -85,3 +85,6 @@ DROP TABLE IF EXISTS billing;
 
 DROP TABLE IF EXISTS obstetricshealthrecords;
 DROP TABLE IF EXISTS pregnancies;
+
+DROP TABLE IF EXISTS fooddiarylabels;
+DROP TABLE IF EXISTS fooddiarysetlabels;

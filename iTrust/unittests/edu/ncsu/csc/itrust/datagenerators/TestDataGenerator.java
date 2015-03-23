@@ -754,6 +754,16 @@ public class TestDataGenerator {
 		new DBBuilder(factory).executeSQLFile(DIR+"/uc70.sql");
 	}
 	/**
+	 * Generate test data for uc73 acceptance scenarios.
+	 * (Not a part of standard test data.)
+	 * @throws SQLException
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	public void uc73() throws SQLException, FileNotFoundException, IOException{
+		new DBBuilder(factory).executeSQLFile(DIR+"/uc73.sql");
+	}
+	/**
 	 * Generate test data for cdc health statistics
 	 */
 	public void cdcStatistics() throws SQLException, FileNotFoundException, IOException{

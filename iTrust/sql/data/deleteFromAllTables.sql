@@ -74,3 +74,9 @@ ALTER TABLE recordsrelease AUTO_INCREMENT = 0;
 
 DELETE FROM fooddiarytable;
 ALTER TABLE fooddiarytable AUTO_INCREMENT = 0;
+
+DELETE FROM fooddiarylabels;
+ALTER TABLE fooddiarylabels AUTO_INCREMENT = 0;
+
+DELETE FROM fooddiarysetlabels;
+ALTER TABLE fooddiarysetlabels AUTO_INCREMENT = 0;
