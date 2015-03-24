@@ -395,6 +395,7 @@ public class DAOFactory {
 		return new FoodDiaryLabelDAO(this);
 	}
 	
+	
 	public PreExistingConditionsDAO getPreExistingConditionsDAO() {
 		return new PreExistingConditionsDAO(this);
 	}

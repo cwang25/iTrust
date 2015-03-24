@@ -8,13 +8,12 @@ import edu.ncsu.csc.itrust.exception.ITrustException;
 public class SuggestionBaseAction {
 
 	private DAOFactory factory;
-	protected FoodDiaryDAO foodDAO;
+	protected SuggestionDAO suggestionDAO;
 	protected EventLoggingAction loggingAction;
 	
-	public SuggestionBaseAction(DAOFactory factory, String midString)throws ITrustException {
+	public SuggestionBaseAction(DAOFactory factory)throws ITrustException {
 		this.factory = factory;
-		//this.mid = checkOwnerID(midString);
-		foodDAO = factory.getFoodDiaryDAO();
+		suggestionDAO = factory.getSuggestionDAO();
 		loggingAction = new EventLoggingAction(factory);
 	}
 }

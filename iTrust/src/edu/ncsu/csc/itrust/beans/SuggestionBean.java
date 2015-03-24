@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class SuggestionBean {
 	
+	private long rowID = -1;
 	private Date date;
 	private long patientID;
 	private long hcpID;
