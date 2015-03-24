@@ -484,7 +484,7 @@
 
 <div id="newLabelForm" name="newLabelForm" style="display: <%=!dataAllCorrect&&addLabel? "block" : "none"%>">
 	<form action="myFoodDiary.jsp" method="post" id="newLabel" align="center">
-		<table class="fTable">
+		<table class="fTable" align="center">
 			<tr>
 				<th>New Label</th>
 				<th><input type="button" style="color: black;font-size: 16pt; font-weight: bold; float: right;" value="Cancel" onclick="$('#newLabelForm').hide();"></th>
