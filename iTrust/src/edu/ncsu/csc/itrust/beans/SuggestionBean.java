@@ -84,4 +84,18 @@ public class SuggestionBean {
 		this.suggestion = suggestion;
 	}
 
+	/**
+	 * @return the rowID
+	 */
+	public long getRowID() {
+		return rowID;
+	}
+
+	/**
+	 * @param rowID the rowID to set
+	 */
+	public void setRowID(long rowID) {
+		this.rowID = rowID;
+	}
+
 }
