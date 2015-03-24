@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Date;
+import java.util.List;
 
 import edu.ncsu.csc.itrust.DBUtil;
 import edu.ncsu.csc.itrust.beans.SuggestionBean;
@@ -85,6 +87,27 @@ public class SuggestionDAO {
 			DBUtil.closeConnection(conn, ps);
 		}
 		return bean;
+	}
+	
+	public List<SuggestionBean> getSuggestionsByDate(Date date, long patientID) throws DBException{
+		Connection conn = null;
+		PreparedStatement ps = null;
+		List<SuggestionBean> list = null;
+		try{
+			conn = factory.getConnection();
+			ps = conn.prepareStatement("SELECT * FROM suggestions WHERE patientId = ? AND date = ?");
+			ps.setLong(1, patientID);
+			ps.setDate(2, date);
+			ResultSet rs = ps.executeQuery();
+			list = loader.loadList(rs);
+			rs.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+			throw new DBException(e);
+		}finally{
+			DBUtil.closeConnection(conn, ps);
+		}
+		return list;
 	}
 	
 	/* Methods needed:
