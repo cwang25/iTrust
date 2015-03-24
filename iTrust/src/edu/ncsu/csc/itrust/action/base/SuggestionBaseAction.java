@@ -10,10 +10,12 @@ public class SuggestionBaseAction {
 	private DAOFactory factory;
 	protected SuggestionDAO suggestionDAO;
 	protected EventLoggingAction loggingAction;
+	protected long loggedInMID;
 	
-	public SuggestionBaseAction(DAOFactory factory)throws ITrustException {
+	public SuggestionBaseAction(DAOFactory factory, long mid)throws ITrustException {
 		this.factory = factory;
 		suggestionDAO = factory.getSuggestionDAO();
 		loggingAction = new EventLoggingAction(factory);
+		this.loggedInMID = mid;
 	}
 }

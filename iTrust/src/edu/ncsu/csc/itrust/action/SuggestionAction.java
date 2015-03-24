@@ -12,17 +12,14 @@ import edu.ncsu.csc.itrust.exception.ITrustException;
 
 public class SuggestionAction extends SuggestionBaseAction {
 	
-	private SuggestionDAO suggestionDAO;
-	
 	/**
 	 * Constructor
 	 * @param factory the DAOFactory
 	 * @throws ITrustException
 	 */
 	
-	public SuggestionAction(DAOFactory factory)	throws ITrustException {
-		super(factory);
-		suggestionDAO = new SuggestionDAO(factory);
+	public SuggestionAction(DAOFactory factory, long loggedInMid)	throws ITrustException {
+		super(factory, loggedInMid);
 	}
 	
 
