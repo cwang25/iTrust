@@ -439,7 +439,6 @@ public enum TransactionType {
 	PATIENT_EDIT_FDIARY(7000, "Edited a Food Diary Entry", "edited a food diary entry", true),
 	/**PATIENT_DELETE_FOOD_DIARY**/
 	PATIENT_DELETE_FDIARY(7001, "Deleted a Food Diary Entry", "deleted a food diary entry", true),
-<<<<<<< HEAD
 	/**PATIENT_SET_LABEL**/
 	PATIENT_SET_LABEL(7300, "Set Food Diary Label", "Set Food Diary Label", true),
 	/**PATIENT_ADD_LABEL**/
@@ -449,13 +448,11 @@ public enum TransactionType {
 	/**PATIENT_GET_ALL_LABELS**/
 	PATIENT_GET_ALL_LABELS(7303, "Retrieved all labels", "Retrieved all labels", true),
 	/**PATIENT_REMOVE_LABEL**/
-	PATIENT_REMOVE_LABEL(7304, "Removed a label", "Removed a label", true)
-=======
+	PATIENT_REMOVE_LABEL(7304, "Removed a label", "Removed a label", true),
 	/**HCP_LEFT_SUGGESTION_IN_FOOD_DIARY**/
 	HCP_LEFT_SUGGESTION(7500, "Nutritionist left suggestion in Food Diary", "left suggestion in food diary", true),
 	/**HCP_LEFT_SUGGESTION_IN_FOOD_DIARY**/
 	PATIENT_VIEW_SUGGESTION(7501, "Viewed Suggestion in Food Diary", "viewed your suggestions", true)
->>>>>>> branch 'development' of https://github.ncsu.edu/engr-csc326-spring2015/project-team21.git
 	;
 	/**
 	 * This string is used in the SQL statement associated with pulling events for
