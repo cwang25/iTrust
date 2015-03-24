@@ -29,4 +29,11 @@ public class PersonnelExistsTest extends TestCase {
 		List<PersonnelBean> fetch = personnelDAO.fuzzySearchForExpertsWithName("Gan", "");
 		assertEquals(1, fetch.size());
 	}
+	
+	public void testSearchForPersonnelWithSpecialty() throws Exception {
+		gen.standardData();
+		List<PersonnelBean> fetch = personnelDAO.searchForPersonnelWithSpecialty("Nutritionist");
+		assertEquals(1, fetch.size());
+	}
+	
 }
