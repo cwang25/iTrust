@@ -68,7 +68,7 @@
 							+ "<BR/>");%>
 						</span>
 						<li><a href="/iTrust">Home</a></li>
-						<li><a href="/iTrust/logout.jsp">Logout</a></li>
+						<li><a href="/iTrust/logout.jsp" id="logoutBtn">Logout</a></li>
 						<li><a href="/iTrust/auth/changePassword.jsp">Change Password</a></li>
 					</ul>
 				</div>

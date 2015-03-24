@@ -124,7 +124,9 @@ public class HCPViewsPatientFoodDiaryTest extends iTrustHTTPTest {
 		wr = wc.getCurrentPage();
 		assertTrue(wr.getText().contains("The patient has no Food diary"));
 	}
-	//NotDesignatedNutritionistViewPatientFoodDiary
+	/*Test ID: NotDesignatedNutritionistViewPatientFoodDiary
+	 * UC: UC74
+	 */
 	public void testNotDesignatedNutritionistViewPatientFoodDiary() throws Exception{
 		//login
 		gen.transactionLog();
