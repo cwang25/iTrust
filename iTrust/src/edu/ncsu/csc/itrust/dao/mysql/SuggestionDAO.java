@@ -110,6 +110,22 @@ public class SuggestionDAO {
 		return list;
 	}
 	
+	public void editSuggestion(SuggestionBean suggestion) throws DBException{
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try{
+			conn = factory.getConnection();
+			ps = conn.prepareStatement("UPDATE suggestions SET suggDate = ? patientID = ? hcpID = ? sugg = ? WHERE rowID = ?");
+			ps = loader.loadParameters(ps, suggestion);
+			ps.executeUpdate();
+		} catch (SQLException e){
+			e.printStackTrace();
+			throw new DBException(e);
+		} finally{
+			DBUtil.closeConnection(conn, ps);
+		}
+	}
+	
 	/* Methods needed:
 	 *	insertSuggestion()
 	 *	getSuggestionByMID()
