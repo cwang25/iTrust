@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-package edu.ncsu.csc.itrust.beans.loaders;
-
-public class SuggestionBeanLoader {
-
-}
-=======
 package edu.ncsu.csc.itrust.beans.loaders;
 
 import java.sql.PreparedStatement;
@@ -79,4 +72,3 @@ public class SuggestionBeanLoader {
 		return ps;
 	}
 }
->>>>>>> branch 'development' of https://github.ncsu.edu/engr-csc326-spring2015/project-team21.git

@@ -382,6 +382,10 @@ public class DAOFactory {
 	public FoodDiaryDAO getFoodDiaryDAO(){
 		return new FoodDiaryDAO(this);
 	}
+	
+	public SuggestionDAO getSuggestionDAO() {
+		return new SuggestionDAO(this);
+	}
 
 	/**
 	 * Get the DAO for food diary labels.

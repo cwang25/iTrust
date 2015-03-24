@@ -2,7 +2,7 @@ package edu.ncsu.csc.itrust.action.base;
 
 import edu.ncsu.csc.itrust.action.EventLoggingAction;
 import edu.ncsu.csc.itrust.dao.DAOFactory;
-import edu.ncsu.csc.itrust.dao.mysql.FoodDiaryDAO;
+import edu.ncsu.csc.itrust.dao.mysql.SuggestionDAO;
 import edu.ncsu.csc.itrust.exception.ITrustException;
 
 public class SuggestionBaseAction {
