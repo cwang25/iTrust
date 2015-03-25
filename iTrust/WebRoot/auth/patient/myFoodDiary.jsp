@@ -284,7 +284,7 @@
 				<td>Suggestions:</td>
 				<%
 					String suggestionList = "";
-					List<SuggestionBean> suggestionsToShow = new ArrayList<SuggestionBean>();//suggestionAction.getSuggestionsByDate(new java.sql.Date(oldBean.getDate().getTime()), loggedInMID);
+					List<SuggestionBean> suggestionsToShow = suggestionAction.getSuggestionsByDate(new java.sql.Date(oldBean.getDate().getTime()), loggedInMID);
 					boolean isNew = false;
 					
 					if(suggestionsToShow.size() != 0){

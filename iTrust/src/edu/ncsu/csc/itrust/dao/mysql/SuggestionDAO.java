@@ -95,7 +95,7 @@ public class SuggestionDAO {
 		List<SuggestionBean> list = null;
 		try{
 			conn = factory.getConnection();
-			ps = conn.prepareStatement("SELECT * FROM suggestions WHERE patientId = ? AND date = ?");
+			ps = conn.prepareStatement("SELECT * FROM suggestions WHERE patientId = ? AND suggDate = ?");
 			ps.setLong(1, patientID);
 			ps.setDate(2, date);
 			ResultSet rs = ps.executeQuery();
