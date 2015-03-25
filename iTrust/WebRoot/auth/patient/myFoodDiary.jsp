@@ -240,7 +240,15 @@
 								label = labelBean.getLabel();
 			%>
 			<tr>
-				<td><%=StringEscapeUtils.escapeHtml("[Daily Summary]")%></td>
+				<td><%=StringEscapeUtils.escapeHtml("[Daily Summary]")%><button id="toggle<%=index%>">Toggle</button> </td>
+				<script language="JavaScript">
+				$(document).ready(function(){
+					$("#toggle<%=index%>").click(
+					function(){
+						$("#suggestion<%=index%>").toggle();
+					});
+				});
+				</script>
 				<td><%=StringEscapeUtils.escapeHtml("")%></td>
 				<td><%=StringEscapeUtils.escapeHtml("")%></td>
 				<td><%=StringEscapeUtils.escapeHtml("")%></td>
@@ -266,6 +274,10 @@
 					</select>
 					<button class="changeLabelBtn" data-date="<%=(new java.sql.Date(oldBean.getDate().getTime())).toString() %>">Change Label</button>
 				</td>
+			</tr>
+			<tr id="suggestion<%=index%>"> 
+				<td>Suggestions:</td>
+				<td colspan="12"><textarea rows="4" cols="50" readonly>A nice suggestion</textarea></td>
 			</tr>
 			<%
 				totalBeanTmp = new FoodDiaryBean();
@@ -315,7 +327,15 @@
 			%>
 
 			<tr>
-				<td><%=StringEscapeUtils.escapeHtml("[Daily Summary]")%></td>
+				<td><%=StringEscapeUtils.escapeHtml("[Daily Summary]")%> <button id="toggle<%=index%>" onclick="">Toggle</button></td>
+				<script language="JavaScript">
+				$(document).ready(function(){
+					$("#toggle<%=index%>").click(
+					function(){
+						$("#suggestion<%=index%>").toggle();
+					});
+				});
+				</script>
 				<td><%=StringEscapeUtils.escapeHtml("")%></td>
 				<td><%=StringEscapeUtils.escapeHtml("")%></td>
 				<td><%=StringEscapeUtils.escapeHtml("")%></td>
@@ -347,6 +367,10 @@
 					</select>
 					<button class="changeLabelBtn" data-date="<%=(new java.sql.Date(oldBean.getDate().getTime())).toString() %>">Change Label</button>
 				</td>
+			</tr>
+			<tr id="suggestion<%=index%>"> 
+				<td>Suggestions:</td>
+				<td colspan="12"><textarea rows="4" cols="50" readonly>A nice suggestion</textarea></td>
 			</tr>
 		</table>
 
@@ -569,6 +593,5 @@
 		var objDiv = document.getElementById("bottomLine");
 		objDiv.scrollTop = objDiv.scrollHeight;
 	}; */
-	
 </script>
 <%@include file="/footer.jsp"%>
