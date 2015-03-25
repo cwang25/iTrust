@@ -3,6 +3,7 @@
 <%@page import="java.util.List"%>
 <%@page import="java.lang.Long"%>
 <%@page import="java.util.Date"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.sql.Timestamp"%>
@@ -10,6 +11,7 @@
 <%@page import="edu.ncsu.csc.itrust.action.AddFoodDiaryAction"%>
 <%@page import="edu.ncsu.csc.itrust.action.EditFoodDiaryAction"%>
 <%@page import="edu.ncsu.csc.itrust.beans.FoodDiaryBean"%>
+<%@page import="edu.ncsu.csc.itrust.beans.SuggestionBean"%>
 <%@page import="edu.ncsu.csc.itrust.dao.DAOFactory"%>
 <%@page import="edu.ncsu.csc.itrust.exception.FormValidationException"%>
 <%@page import="edu.ncsu.csc.itrust.beans.FoodDiaryLabelSetBean"%>
@@ -18,6 +20,8 @@
 <%@page import="edu.ncsu.csc.itrust.action.AddFoodDiaryLabelAction"%>
 <%@page import="edu.ncsu.csc.itrust.action.SetFoodDiaryLabelAction"%>
 <%@page import="edu.ncsu.csc.itrust.action.RemoveFoodDiaryLabelAction"%>
+<%@page import="edu.ncsu.csc.itrust.action.SuggestionAction"%>
+
 <%@page import="java.util.Calendar"%>
 <%@include file="/global.jsp"%>
 
@@ -37,7 +41,7 @@
 		AddFoodDiaryLabelAction labelAddAction = new AddFoodDiaryLabelAction(prodDAO, loggedInMID);
 		SetFoodDiaryLabelAction labelSetAction = new SetFoodDiaryLabelAction(prodDAO, loggedInMID);
 		RemoveFoodDiaryLabelAction labelRemoveAction = new RemoveFoodDiaryLabelAction(prodDAO, loggedInMID);
-		//SuggestionAction suggestionAction = new SuggestionAction(prodDAO, loggedInMID);
+		SuggestionAction suggestionAction = new SuggestionAction(prodDAO, loggedInMID);
 		
 		boolean dataAllCorrect = true;
 	  	String dateStr = request.getParameter("date") != null ? request.getParameter("date") : "";
@@ -240,12 +244,13 @@
 								label = labelBean.getLabel();
 			%>
 			<tr>
-				<td><%=StringEscapeUtils.escapeHtml("[Daily Summary]")%><button id="toggle<%=index%>">Toggle</button> </td>
+				<td><%=StringEscapeUtils.escapeHtml("[Daily Summary]")%><button id="toggle<%=index%>"><img id="img<%=index%>" src="/iTrust/image/icons/addSuggestionPlus.png" height="20" width="20"></button> </td>
 				<script language="JavaScript">
 				$(document).ready(function(){
 					$("#toggle<%=index%>").click(
 					function(){
 						$("#suggestion<%=index%>").toggle();
+						$('#img<%=index%>')[0].src="/iTrust/image/icons/greenplus.png";
 					});
 				}); 
 				</script>
@@ -275,9 +280,31 @@
 					<button class="changeLabelBtn" data-date="<%=(new java.sql.Date(oldBean.getDate().getTime())).toString() %>">Change Label</button>
 				</td>
 			</tr>
-			<tr id="suggestion<%=index%>"> 
+			<tr id="suggestion<%=index%>" style="display: none"> 
 				<td>Suggestions:</td>
-				<td colspan="12"><textarea rows="4" cols="50" readonly>A nice suggestion</textarea></td>
+				<%
+					String suggestionList = "";
+					List<SuggestionBean> suggestionsToShow = new ArrayList<SuggestionBean>();//suggestionAction.getSuggestionsByDate(new java.sql.Date(oldBean.getDate().getTime()), loggedInMID);
+					boolean isNew = false;
+					
+					if(suggestionsToShow.size() != 0){
+						for(SuggestionBean sBean: suggestionsToShow){
+							if(sBean.getIsNew().equals("true")){isNew = true; break;}
+						}
+						if(isNew){
+							%><script language="JavaScript">$(document).ready(function(){$('#img<%=index%>')[0].src="/iTrust/img/icons/greenplus.png";});</script>
+							<%
+						}
+						for(SuggestionBean sBean: suggestionsToShow){
+							suggestionList += sBean.getSuggestion() + '\n';
+						}
+					}else{
+						suggestionList = "No suggestions";
+					}
+				%>
+				<td colspan="12"><textarea rows="4" cols="50" readonly>
+				
+				<%=suggestionList%></textarea></td>
 			</tr>
 			<%
 				totalBeanTmp = new FoodDiaryBean();
@@ -327,7 +354,7 @@
 			%>
 
 			<tr>
-				<td><%=StringEscapeUtils.escapeHtml("[Daily Summary]")%> <button id="toggle<%=index%>" onclick="">Toggle</button></td>
+				<td><%=StringEscapeUtils.escapeHtml("[Daily Summary]")%> <button id="toggle<%=index%>" onclick=""><img src="/iTrust/image/icons/addSuggestionPlus.png" height="20" width="20"></button></td>
 				<script language="JavaScript">
 				$(document).ready(function(){
 					$("#toggle<%=index%>").click(
@@ -368,7 +395,7 @@
 					<button class="changeLabelBtn" data-date="<%=(new java.sql.Date(oldBean.getDate().getTime())).toString() %>">Change Label</button>
 				</td>
 			</tr>
-			<tr id="suggestion<%=index%>"> 
+			<tr id="suggestion<%=index%>" style="display: none"> 
 				<td>Suggestions:</td>
 				<td colspan="12"><textarea rows="4" cols="50" readonly>A nice suggestion</textarea></td>
 			</tr>

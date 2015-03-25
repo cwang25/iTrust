@@ -719,5 +719,6 @@ CREATE TABLE IF NOT EXISTS suggestions (
 	suggDate DATE,
 	patientID BIGINT unsigned NOT NULL,
 	hcpID BIGINT unsigned NOT NULL,
-	sugg TEXT
+	sugg TEXT,
+	isNew varchar(10)
 ) ENGINE=MyISAM;

@@ -31,8 +31,8 @@ public class SuggestionDAO {
 		long lastInsertID = -1;
 		try {
 			conn = factory.getConnection();
-			ps = conn.prepareStatement("INSERT INTO suggestions (suggDate, patientID, hcpID, sugg) "
-					+ "VALUES (?,?,?,?)");
+			ps = conn.prepareStatement("INSERT INTO suggestions (suggDate, patientID, hcpID, sugg, isNew) "
+					+ "VALUES (?,?,?,?, ?)");
 			ps = loader.loadParameters(ps, suggestion);
 			ps.executeUpdate();
 			lastInsertID = DBUtil.getLastInsert(conn);
@@ -115,7 +115,7 @@ public class SuggestionDAO {
 		PreparedStatement ps = null;
 		try{
 			conn = factory.getConnection();
-			ps = conn.prepareStatement("UPDATE suggestions SET suggDate = ? patientID = ? hcpID = ? sugg = ? WHERE rowID = ?");
+			ps = conn.prepareStatement("UPDATE suggestions SET suggDate = ? patientID = ? hcpID = ? sugg = ? isNew = ? WHERE rowID = ?");
 			ps = loader.loadParameters(ps, suggestion);
 			ps.executeUpdate();
 		} catch (SQLException e){

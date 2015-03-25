@@ -45,7 +45,8 @@ public class SuggestionBeanLoader {
 		long patientID = rs.getLong("patientID");
 		long hcpID = rs.getLong("hcpID");
 		String sugg = rs.getString("sugg");
-		SuggestionBean result = new SuggestionBean(suggDate, patientID, hcpID, sugg);
+		String isNew = rs.getString("isNew");
+		SuggestionBean result = new SuggestionBean(suggDate, patientID, hcpID, sugg, isNew);
 		
 		//Explicitly set rowID to prove that the object is retrieve from SQL.
 		result.setRowID(rs.getLong("rowID"));
@@ -68,6 +69,7 @@ public class SuggestionBeanLoader {
 		ps.setLong(i++, bean.getPatientID());
 		ps.setLong(i++, bean.getHcpID());
 		ps.setString(i++, bean.getSuggestion());
+		ps.setString(i++, bean.getIsNew());
 		
 		return ps;
 	}

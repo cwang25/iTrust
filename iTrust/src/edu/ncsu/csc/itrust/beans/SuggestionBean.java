@@ -9,7 +9,7 @@ public class SuggestionBean {
 	private long patientID;
 	private long hcpID;
 	private String suggestion;
-	
+	private String isNew;
 	/**
 	 * 
 	 * @param date The date of the suggestion
@@ -17,7 +17,7 @@ public class SuggestionBean {
 	 * @param hcpID The ID of the HCP making suggestion
 	 * @param sugg The suggestion of the HCP to the patient
 	 */
-	public SuggestionBean(Date date, long patientID, long hcpID,String sugg) {
+	public SuggestionBean(Date date, long patientID, long hcpID,String sugg, String isNew) {
 		
 		//Make a copy of the date, for security reasons from jenkin's bug finder.
 		Date copyOfDate = new Date();
@@ -27,6 +27,7 @@ public class SuggestionBean {
 		setHcpID(hcpID);
 		setDate(copyOfDate);
 		setSuggestion(sugg);
+		setIsNew(isNew);
 	}
 
 	/**
@@ -97,6 +98,20 @@ public class SuggestionBean {
 	 */
 	public void setRowID(long rowID) {
 		this.rowID = rowID;
+	}
+	
+	/**
+	 * @return the rowID
+	 */
+	public String getIsNew() {
+		return isNew;
+	}
+
+	/**
+	 * @param rowID the rowID to set
+	 */
+	public void setIsNew(String isNew) {
+		this.isNew = isNew;
 	}
 
 }
