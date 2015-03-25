@@ -46,12 +46,17 @@
 	    java.util.Date d = sdf.parse(date);  
 		String suggTxt = request.getParameter("suggestionText");
 		
-		SuggestionBean newSugg = new SuggestionBean(d, Long.parseLong(pidString), loggedInMID, suggTxt, "true");
-		
-		suggAction.addSuggestion(newSugg);
-		%>
-		<p align="center"style="font-size: 16pt; font-weight: bold;" >Your Suggestion has been added to the patient's Food Diary.</p>
-		<%
+		if (suggTxt.length() < 1) {
+			%>
+			<p align="center"style="font-size: 16pt; font-weight: bold;" >Suggestion cannot be empty.</p>
+			<%
+		} else {
+			SuggestionBean newSugg = new SuggestionBean(d, Long.parseLong(pidString), loggedInMID, suggTxt, "true");
+			suggAction.addSuggestion(newSugg);
+			%>
+			<p align="center"style="font-size: 16pt; font-weight: bold;" >Your Suggestion has been added to the patient's Food Diary.</p>
+			<%
+		}
 	}
 
 	if (foodDiaryList != null && foodDiaryList.size() > 0) {
@@ -107,7 +112,7 @@
 			<tr>
 				<td>
 					<%=StringEscapeUtils.escapeHtml("[Daily Summary]")%>
-					<button id="toggle<%=index%>" style="border:none; background-color:Transparent"><img src="/iTrust/image/icons/addSuggestionPlus.png" height="20" width="20"></button>
+					<button id="toggle<%=index%>" style="border:none; background-color:Transparent"><img id="img<%=index%>" src="/iTrust/image/icons/addSuggestionPlus.png" height="20" width="20"></button>
 				</td>
 				<script language="JavaScript">
 				$(document).ready(function(){
@@ -233,13 +238,6 @@
 <%	} %>	
 	<br />
 </div>
-
-<script language="JavaScript">
-function addSuggestion() {
-	document.getElementById("addNewSuggestion").value = "true";
-	document.reload();
-};
-</script>
 
 <%@include file="/footer.jsp" %>
 
