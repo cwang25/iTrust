@@ -49,7 +49,9 @@
 		SuggestionBean newSugg = new SuggestionBean(d, Long.parseLong(pidString), loggedInMID, suggTxt, "true");
 		
 		suggAction.addSuggestion(newSugg);
-		
+		%>
+		<p align="center"style="font-size: 16pt; font-weight: bold;" >Your Suggestion has been added to the patient's Food Diary.</p>
+		<%
 	}
 
 	if (foodDiaryList != null && foodDiaryList.size() > 0) {
@@ -128,7 +130,7 @@
 				<td><%=StringEscapeUtils.escapeHtml("" + dailyTotalCalories)%></td>
 			</tr>
 			<tr id="suggestion<%=index%>" style="display: none;">
-			<form action="viewPatientFoodDiary.jsp?addNewSuggestion=true"> 
+			<form action="viewPatientFoodDiary.jsp"> 
 				<td>New Suggestion:</td>
 				<td colspan="4">
 					<textarea rows="4" cols="50" name="suggestionText" id="suggestionText"></textarea>
@@ -209,7 +211,7 @@
 					<input name="addNewSuggestion" value="true" type ="hidden" ></input>
 					<input name="date" value="<%=sdf.format(oldBean.getDate())%>" type ="hidden" ></input>
 				</td>
-				<td colspan="7"><button type="submit" id="addNewSuggestion">Submit Suggestion</button></td>
+				<td colspan="7"><button type="submit" name="submitMe">Submit Suggestion</button></td>
 			</form>
 			</tr>
 			</tr>
