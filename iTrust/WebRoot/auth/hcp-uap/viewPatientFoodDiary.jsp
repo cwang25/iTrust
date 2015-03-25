@@ -3,6 +3,7 @@
 
 <%@page import="java.util.List"%>
 <%@page import="java.util.Calendar"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="java.sql.Date"%>
 <%@page import="edu.ncsu.csc.itrust.dao.DAOFactory"%>
@@ -40,11 +41,12 @@
 	session.setAttribute("foodDiaryList", foodDiaryList);
 	boolean needToAddSuggestion = (request.getParameter("addNewSuggestion") != null && request.getParameter("addNewSuggestion").equals("true"));
 	if (needToAddSuggestion) {
-		java.util.Date date = new java.util.Date();
+		String date = request.getParameter("date");
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+	    java.util.Date d = sdf.parse(date);  
 		String suggTxt = request.getParameter("suggestionText");
 		
-		//out.write("This is the date: "+date+"The hcp id: "+loggedInMID+"The patient ID: "+Long.parseLong(pidString)+"The suggestion: "+suggTxt);
-		SuggestionBean newSugg = new SuggestionBean(date, Long.parseLong(pidString), loggedInMID, suggTxt, "true");
+		SuggestionBean newSugg = new SuggestionBean(d, Long.parseLong(pidString), loggedInMID, suggTxt, "true");
 		
 		suggAction.addSuggestion(newSugg);
 		
@@ -96,6 +98,7 @@
 			if(needDailySummary){
 				FoodDiaryLabelSetBean labelBean = labelAction.getSetFoodDiaryLabel(oldBean.getOwnerID(), new Date(oldBean.getDate().getTime()));
 				String label = "";
+				SimpleDateFormat sdf2 = new SimpleDateFormat("MM/dd/yyyy");
 				if(labelBean != null)
 					label = labelBean.getLabel();
 			%>
@@ -130,6 +133,7 @@
 				<td colspan="4">
 					<textarea rows="4" cols="50" name="suggestionText" id="suggestionText"></textarea>
 					<input name="addNewSuggestion" value="true" type ="hidden" ></input>
+					<input name="date" value="<%=sdf.format(oldBean.getDate())%>" type ="hidden" ></input>
 				</td>
 				<td><button type="submit" id="addNewSuggestion">Submit Suggestion</button></td>
 			</form>
