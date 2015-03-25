@@ -39,11 +39,11 @@
 	List<FoodDiaryBean> foodDiaryList = action.getFoodDiaryListByOwnerID(Long.parseLong(pidString));
 	session.setAttribute("foodDiaryList", foodDiaryList);
 	boolean needToAddSuggestion = (request.getParameter("addNewSuggestion") != null && request.getParameter("addNewSuggestion").equals("true"));
-	out.write("" + needToAddSuggestion);
 	if (needToAddSuggestion) {
 		java.util.Date date = new java.util.Date();
 		String suggTxt = request.getParameter("suggestionText");
-		out.write("This is the date: "+date+"The hcp id: "+loggedInMID+"The patient ID: "+Long.parseLong(pidString)+"The suggestion: "+suggTxt);
+		
+		//out.write("This is the date: "+date+"The hcp id: "+loggedInMID+"The patient ID: "+Long.parseLong(pidString)+"The suggestion: "+suggTxt);
 		SuggestionBean newSugg = new SuggestionBean(date, loggedInMID, Long.parseLong(pidString), suggTxt, "true");
 		
 		suggAction.addSuggestion(newSugg);
@@ -52,9 +52,7 @@
 
 	if (foodDiaryList != null && foodDiaryList.size() > 0) {
 %>	
-	<div id="HiddenHelperFields">
-		<input name="addNewSuggestion" id="addNewSuggestion" value=<%=needToAddSuggestion ? "true" : "false"%> type="hidden">
-	</div>
+
 	<div style="margin-left: 5px;">
 	</br>
 	<table class="fTable" border=1 align="center">
@@ -127,12 +125,13 @@
 				<td><%=StringEscapeUtils.escapeHtml("" + dailyTotalCalories)%></td>
 			</tr>
 			<tr id="suggestion<%=index%>" style="display: none;">
-			<form action="viewPatientFoodDiary.jsp"> 
+			<form action="viewPatientFoodDiary.jsp?addNewSuggestion=true"> 
 				<td>New Suggestion:</td>
 				<td colspan="4">
-				<textarea rows="4" cols="50" name="suggestionText" id="suggestionText"></textarea>
+					<textarea rows="4" cols="50" name="suggestionText" id="suggestionText"></textarea>
+					<input name="addNewSuggestion" value="true" type ="hidden" ></input>
 				</td>
-				<td><button type="submit" onclick="addSuggestion()">Submit Suggestion</button></td>
+				<td><button type="submit" id="addNewSuggestion">Submit Suggestion</button></td>
 			</form>
 			</tr>
 			<%
@@ -225,6 +224,7 @@
 <script language="JavaScript">
 function addSuggestion() {
 	document.getElementById("addNewSuggestion").value = "true";
+	document.reload();
 };
 </script>
 
