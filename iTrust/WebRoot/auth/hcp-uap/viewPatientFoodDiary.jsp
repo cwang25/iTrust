@@ -44,7 +44,7 @@
 		String suggTxt = request.getParameter("suggestionText");
 		
 		//out.write("This is the date: "+date+"The hcp id: "+loggedInMID+"The patient ID: "+Long.parseLong(pidString)+"The suggestion: "+suggTxt);
-		SuggestionBean newSugg = new SuggestionBean(date, loggedInMID, Long.parseLong(pidString), suggTxt, "true");
+		SuggestionBean newSugg = new SuggestionBean(date, Long.parseLong(pidString), loggedInMID, suggTxt, "true");
 		
 		suggAction.addSuggestion(newSugg);
 		
