@@ -9,6 +9,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
@@ -174,6 +175,10 @@ public class iTrustSeleniumTest extends TestCase{
 	
 	public void waitFor(int seconds) throws InterruptedException{
 		Thread.sleep(seconds*1000);
+	}
+	
+	public void clickOnJavascriptElement(WebElement w){
+		
 	}
 
 }
