@@ -37,7 +37,7 @@
 		AddFoodDiaryLabelAction labelAddAction = new AddFoodDiaryLabelAction(prodDAO, loggedInMID);
 		SetFoodDiaryLabelAction labelSetAction = new SetFoodDiaryLabelAction(prodDAO, loggedInMID);
 		RemoveFoodDiaryLabelAction labelRemoveAction = new RemoveFoodDiaryLabelAction(prodDAO, loggedInMID);
-		SuggestionAction suggestionAction = new SuggestionAction(prodDAO, loggedInMID);
+		//SuggestionAction suggestionAction = new SuggestionAction(prodDAO, loggedInMID);
 		
 		boolean dataAllCorrect = true;
 	  	String dateStr = request.getParameter("date") != null ? request.getParameter("date") : "";

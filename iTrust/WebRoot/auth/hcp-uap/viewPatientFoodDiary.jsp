@@ -64,12 +64,12 @@
 		//Use to keep on daily total calories.
 		double dailyTotalCalories = 0;
 		FoodDiaryBean oldBean = null; // keeps track of the previous bean
-		for(FoodDiaryBean b : foodDiaryList) { 			
+		for(FoodDiaryBean b : foodDiaryList) {
 			boolean needDailySummary = false;
 			String row = "<tr";
 %>
 
-			<%=row+""+((index%2 == 1)?" class=\"alt\"":"")+">"%>
+			<%=row+""+((index % 2 == 1)?" class=\"alt\"":"")+">"%>
 			<%
 				//SimpleDateFormat sdf = new SimpleDateFormat("M/dd/YYYY");
 			if(recordFlag.length() > 0 && !sdf.format(b.getDate()).equals(recordFlag)){
@@ -84,7 +84,11 @@
 					label = labelBean.getLabel();
 			%>
 			<tr>
-				<td><%=StringEscapeUtils.escapeHtml("[Daily Summary]")%></td>
+				<td>
+				<%=StringEscapeUtils.escapeHtml("[Daily Summary]")%> 
+				<a href="">
+				<img src="/iTrust/image/icons/addSuggestionPlus.png" alt="Add Suggestion" height="25" width="25" title="Add Suggestion">
+				</a></td>
 				<td><%=StringEscapeUtils.escapeHtml("")%></td>
 				<td><%=StringEscapeUtils.escapeHtml("")%></td>
 				<td><span style="color:red"><%=StringEscapeUtils.escapeHtml(label)%></span></td>
@@ -96,6 +100,9 @@
 				<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getGramsOfFiber())%></td>
 				<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getGramsOfProtein())%></td>
 				<td><%=StringEscapeUtils.escapeHtml("" + dailyTotalCalories)%></td>
+			</tr>
+			<tr id="suggestion<%=index%>" style="display: none;"> 
+				<td>A nice suggestion</td>
 			</tr>
 			<%
 				totalBeanTmp = new FoodDiaryBean();
@@ -124,6 +131,7 @@
 				<td><%= StringEscapeUtils.escapeHtml("" + b.getGramsOfFiber()) %></td>
 				<td><%= StringEscapeUtils.escapeHtml("" + b.getGramsOfProtein()) %></td>
 				<td><%= StringEscapeUtils.escapeHtml("" + b.totalCalories()) %></td>
+				</tr>
 			</tr>
 	<%		index ++; %>
 	<%	} 
@@ -133,7 +141,10 @@
 			label = labelBean.getLabel();
 	%>
 			<tr>
-				<td><%=StringEscapeUtils.escapeHtml("[Daily Summary]")%></td>
+				<td><%=StringEscapeUtils.escapeHtml("[Daily Summary]")%>
+				<a href="">
+				<img src="/iTrust/image/icons/addSuggestionPlus.png" alt="Add Suggestion" height="25" width="25" title="Add Suggestion">
+				</a></td>
 				<td><%=StringEscapeUtils.escapeHtml("")%></td>
 				<td><%=StringEscapeUtils.escapeHtml("")%></td>
 				<td><span style="color:red"><%=StringEscapeUtils.escapeHtml(label)%></span></td>
@@ -151,6 +162,9 @@
 				<td><%=StringEscapeUtils.escapeHtml(""
 						+ totalBeanTmp.getGramsOfProtein())%></td>
 				<td><%=StringEscapeUtils.escapeHtml("" + dailyTotalCalories)%></td>
+				<tr id="suggestion<%=index%>" style="display: none;"> 
+					<td>A nice suggestion</td>
+				</tr>
 			</tr>
 	</table>
 	
