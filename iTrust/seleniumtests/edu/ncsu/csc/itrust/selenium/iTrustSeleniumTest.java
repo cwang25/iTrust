@@ -32,7 +32,7 @@ import junit.framework.TestCase;
  * @author Chi-Han
  *
  */
-public class iTrustSeleniumTest extends TestCase{
+abstract public class iTrustSeleniumTest extends TestCase{
 	/**ADDRESS**/
 	public static final String ADDRESS = "http://localhost:8080/iTrust/";
 	/**Gen**/
