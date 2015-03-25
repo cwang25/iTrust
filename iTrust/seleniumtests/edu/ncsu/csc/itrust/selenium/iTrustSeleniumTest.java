@@ -28,7 +28,7 @@ import junit.framework.TestCase;
  * The base test case for Selenium Test.
  * 
  * Note:
- * Please use the driver in this class instead of creating another instance in every single test class.
+ * Please use the driver in this class instead of creating another instance in every test case.
  * @author Chi-Han
  *
  */
@@ -41,7 +41,12 @@ public class iTrustSeleniumTest extends TestCase{
 	protected HtmlUnitDriver driver;
 	private boolean acceptNextAlert = true;
 	private StringBuffer verificationErrors = new StringBuffer();
-
+	
+	/**
+	 * Generic setUp
+	 * This will setup the driver for the browser version and the wait time.
+	 * 
+	 */
 	@Override
 	protected void setUp() throws Exception {
 		driver = new HtmlUnitDriver(BrowserVersion.FIREFOX_3_6);
@@ -49,7 +54,12 @@ public class iTrustSeleniumTest extends TestCase{
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		gen.clearAllTables();
 	}
-	
+	/**
+	 * Login helper function.
+	 * @param username
+	 * @param password
+	 * @throws Exception
+	 */
 	protected void login(String username, String password) throws Exception{
 		try {
 			driver.get(ADDRESS);
@@ -66,7 +76,9 @@ public class iTrustSeleniumTest extends TestCase{
 			throw new ConnectException("Tomcat must be running to run Selenium tests.");
 		}
 	}
-	
+	/**
+	 * Logout helper method.
+	 */
 	protected void logout(){
 		driver.setJavascriptEnabled(false);
 	    driver.findElement(By.id("logoutBtn")).click();
@@ -134,12 +146,18 @@ public class iTrustSeleniumTest extends TestCase{
 	@After
 	protected void tearDown() throws Exception {
 		driver.quit();
+		gen.clearAllTables();
 		String verificationErrorString = verificationErrors.toString();
 		if (!"".equals(verificationErrorString)) {
 			fail(verificationErrorString);
 		}
+		
 	}
-
+	/**
+	 * Check if the element is present.
+	 * @param by
+	 * @return
+	 */
 	protected boolean isElementPresent(By by) {
 		try {
 			driver.findElement(by);
@@ -148,7 +166,10 @@ public class iTrustSeleniumTest extends TestCase{
 			return false;
 		}
 	}
-
+	/**
+	 * Check if there is alert dialog.
+	 * @return true alert dialog, false no alert.
+	 */
 	protected boolean isAlertPresent() {
 		try {
 			driver.switchTo().alert();
@@ -157,7 +178,10 @@ public class iTrustSeleniumTest extends TestCase{
 			return false;
 		}
 	}
-
+	/**
+	 * Get alert message and close it.
+	 * @return message
+	 */
 	protected String closeAlertAndGetItsText() {
 		try {
 			Alert alert = driver.switchTo().alert();
@@ -172,13 +196,40 @@ public class iTrustSeleniumTest extends TestCase{
 			acceptNextAlert = true;
 		}
 	}
-	
+	/**
+	 * When you need to delay the process to wait for the interface.
+	 * Such as waiting javascript to generate the interface, or other things that need time to load.
+	 * 
+	 * @param seconds
+	 * @throws InterruptedException
+	 */
 	public void waitFor(int seconds) throws InterruptedException{
 		Thread.sleep(seconds*1000);
 	}
 	
-	public void clickOnJavascriptElement(WebElement w){
-		
+	/**
+	 * Method to click on element that associate with javascript.
+	 * This helepr will help you delay the process a little bit to allow javascript to finish up loading before further instrcutions come.
+	 * If there is no delay, then the upcoming new elements or new interface will not be showed when the further process comes.
+	 * No delay may result in exception, or element not visible errors.
+	 * @param w WebElement to be clicked
+	 * @throws InterruptedException
+	 */
+	public void clickOnJavascriptElement(WebElement w) throws InterruptedException{
+		w.click();
+		Thread.sleep(500);
+	}
+	/**
+	 * This is helepr for some elements that having trouble to be clicked when javascript is enable.
+	 * For my experience, iTrst Logout buttons has this problem that if javascript is always on, then the logout buttons is not clickable.
+	 * Selenium keeps returning element is not visible errors until I set javascript enable to false.
+	 * So, this method will help us to temporary disable the javascript and click the element then re-enable it.
+	 * @param w WebElement to be clicked
+	 */
+	public void clickOnNonJavascriptElement(WebElement w){
+		driver.setJavascriptEnabled(false);
+		w.click();
+		driver.setJavascriptEnabled(true);
 	}
 
 }
