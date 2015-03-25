@@ -316,7 +316,7 @@
 					}
 					
 				%>
-				<td colspan="12"><textarea rows="4" cols="50" readonly><%=StringEscapeUtils.escapeHtml(suggestionList)%></textarea>
+				<td colspan="12"><textarea id="tarea<%=index%>" rows="4" cols="50" readonly><%=StringEscapeUtils.escapeHtml(suggestionList)%></textarea>
 				</td>
 			</tr>
 			<%
@@ -444,7 +444,7 @@
 						suggestionList += "No suggestions";
 					}
 				%>
-				<td colspan="12"><textarea rows="4" cols="50" readonly><%=StringEscapeUtils.escapeHtml(suggestionList)%></textarea>
+				<td colspan="12"><textarea id="tarea<%=index%>" rows="4" cols="50" readonly><%=StringEscapeUtils.escapeHtml(suggestionList)%></textarea>
 				</td>
 			</tr>
 		</table>
