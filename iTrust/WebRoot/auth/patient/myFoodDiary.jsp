@@ -247,7 +247,7 @@
 					function(){
 						$("#suggestion<%=index%>").toggle();
 					});
-				});
+				}); 
 				</script>
 				<td><%=StringEscapeUtils.escapeHtml("")%></td>
 				<td><%=StringEscapeUtils.escapeHtml("")%></td>
