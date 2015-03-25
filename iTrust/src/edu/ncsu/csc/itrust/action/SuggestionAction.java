@@ -7,6 +7,7 @@ import edu.ncsu.csc.itrust.action.base.SuggestionBaseAction;
 import edu.ncsu.csc.itrust.beans.SuggestionBean;
 import edu.ncsu.csc.itrust.dao.DAOFactory;
 import edu.ncsu.csc.itrust.dao.mysql.SuggestionDAO;
+import edu.ncsu.csc.itrust.enums.TransactionType;
 import edu.ncsu.csc.itrust.exception.DBException;
 import edu.ncsu.csc.itrust.exception.ITrustException;
 
@@ -51,6 +52,8 @@ public class SuggestionAction extends SuggestionBaseAction {
 	 */
 	public void addSuggestion(SuggestionBean suggestionBean) throws DBException{
 		suggestionDAO.insertSuggestion(suggestionBean);
+		//log the event
+		loggingAction.logEvent(TransactionType.HCP_LEFT_SUGGESTION, loggedInMID, suggestionBean.getPatientID(), "");
 	}
 	
 	/**
