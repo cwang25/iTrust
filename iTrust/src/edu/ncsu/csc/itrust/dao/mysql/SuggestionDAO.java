@@ -115,8 +115,8 @@ public class SuggestionDAO {
 		PreparedStatement ps = null;
 		try{
 			conn = factory.getConnection();
-			ps = conn.prepareStatement("UPDATE suggestions SET suggDate = ? patientID = ? hcpID = ? sugg = ? isNew = ? WHERE rowID = ?");
-			ps = loader.loadParameters(ps, suggestion);
+			ps = conn.prepareStatement("UPDATE suggestions SET suggDate=?, patientID=?, hcpID=?, sugg=?, isNew=? WHERE rowID=?");
+			ps = loader.loadEditParameters(ps, suggestion);
 			ps.executeUpdate();
 		} catch (SQLException e){
 			e.printStackTrace();

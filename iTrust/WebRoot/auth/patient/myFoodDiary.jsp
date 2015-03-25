@@ -244,7 +244,7 @@
 								label = labelBean.getLabel();
 			%>
 			<tr>
-				<td><%=StringEscapeUtils.escapeHtml("[Daily Summary]")%><button id="toggle<%=index%>"><img id="img<%=index%>" src="/iTrust/image/icons/addSuggestionPlus.png" height="20" width="20"></button> </td>
+				<td><%=StringEscapeUtils.escapeHtml("[Daily Summary]")%><button id="toggle<%=index%>" style="border:none; background-color:Transparent"><img id="img<%=index%>" src="/iTrust/image/icons/greenplus.png" height="20" width="20"></button> </td>
 				<script language="JavaScript">
 				$(document).ready(function(){
 					$("#toggle<%=index%>").click(
@@ -281,7 +281,7 @@
 				</td>
 			</tr>
 			<tr id="suggestion<%=index%>" style="display: none"> 
-				<td>Suggestions:</td>
+					<td>Suggestions:</td>
 				<%
 					String suggestionList = "";
 					List<SuggestionBean> suggestionsToShow = suggestionAction.getSuggestionsByDate(new java.sql.Date(oldBean.getDate().getTime()), loggedInMID);
@@ -292,19 +292,23 @@
 							if(sBean.getIsNew().equals("true")){isNew = true; break;}
 						}
 						if(isNew){
-							%><script language="JavaScript">$(document).ready(function(){$('#img<%=index%>')[0].src="/iTrust/img/icons/greenplus.png";});</script>
+							%><script language="JavaScript">$(document).ready(function(){$('#img<%=index%>')[0].src="/iTrust/image/icons/notification.gif";});</script>
 							<%
 						}
+						int suggestionNum = 1;
 						for(SuggestionBean sBean: suggestionsToShow){
-							suggestionList += sBean.getSuggestion() + '\n';
+							suggestionList += "" + suggestionNum + ". " + sBean.getSuggestion() + "\n";
+							sBean.setIsNew("False");
+							suggestionAction.editSuggestion(sBean);
+							suggestionNum++;
 						}
 					}else{
-						suggestionList = "No suggestions";
+						suggestionList += "No suggestions";
 					}
+					
 				%>
-				<td colspan="12"><textarea rows="4" cols="50" readonly>
-				
-				<%=suggestionList%></textarea></td>
+				<td colspan="12"><textarea rows="4" cols="50" readonly><%=StringEscapeUtils.escapeHtml(suggestionList)%></textarea>
+				</td>
 			</tr>
 			<%
 				totalBeanTmp = new FoodDiaryBean();
@@ -354,12 +358,13 @@
 			%>
 
 			<tr>
-				<td><%=StringEscapeUtils.escapeHtml("[Daily Summary]")%> <button id="toggle<%=index%>" onclick=""><img src="/iTrust/image/icons/addSuggestionPlus.png" height="20" width="20"></button></td>
+				<td><%=StringEscapeUtils.escapeHtml("[Daily Summary]")%> <button id="toggle<%=index%>" style="border:none; background-color:Transparent" onclick=""><img src="/iTrust/image/icons/greenplus.png" height="20" width="20"></button></td>
 				<script language="JavaScript">
 				$(document).ready(function(){
 					$("#toggle<%=index%>").click(
 					function(){
 						$("#suggestion<%=index%>").toggle();
+						$('#img<%=index%>')[0].src="/iTrust/image/icons/greenplus.png";
 					});
 				});
 				</script>
@@ -397,7 +402,32 @@
 			</tr>
 			<tr id="suggestion<%=index%>" style="display: none"> 
 				<td>Suggestions:</td>
-				<td colspan="12"><textarea rows="4" cols="50" readonly>A nice suggestion</textarea></td>
+				<%
+					String suggestionList = "";
+					List<SuggestionBean> suggestionsToShow = suggestionAction.getSuggestionsByDate(new java.sql.Date(oldBean.getDate().getTime()), loggedInMID);
+					boolean isNew = false;
+					
+					if(suggestionsToShow.size() != 0){
+						for(SuggestionBean sBean: suggestionsToShow){
+							if(sBean.getIsNew().equals("true")){isNew = true; break;}
+						}
+						if(isNew){
+							%><script language="JavaScript">$(document).ready(function(){$('#img<%=index%>')[0].src="/iTrust/image/icons/notification.gif";});</script>
+							<%
+						}
+						int suggestionNum = 1;
+						for(SuggestionBean sBean: suggestionsToShow){
+							suggestionList += "" + suggestionNum + ". " + sBean.getSuggestion() + "\n";
+							sBean.setIsNew("False");
+							suggestionAction.editSuggestion(sBean);
+							suggestionNum++;
+						}
+					}else{
+						suggestionList += "No suggestions";
+					}
+				%>
+				<td colspan="12"><textarea rows="4" cols="50" readonly><%=StringEscapeUtils.escapeHtml(suggestionList)%></textarea>
+				</td>
 			</tr>
 		</table>
 

@@ -73,4 +73,17 @@ public class SuggestionBeanLoader {
 		
 		return ps;
 	}
+	
+	public PreparedStatement loadEditParameters(PreparedStatement ps,
+			SuggestionBean bean) throws SQLException {
+		int i = 1;
+		ps.setDate(i++, new java.sql.Date(bean.getDate().getTime()));
+		ps.setLong(i++, bean.getPatientID());
+		ps.setLong(i++, bean.getHcpID());
+		ps.setString(i++, bean.getSuggestion());
+		ps.setString(i++, bean.getIsNew());
+		ps.setLong(i++, bean.getRowID());
+		
+		return ps;
+	}
 }
