@@ -105,7 +105,7 @@
 			<tr>
 				<td>
 					<%=StringEscapeUtils.escapeHtml("[Daily Summary]")%>
-					<button id="toggle<%=index%>"><img src="/iTrust/image/icons/addSuggestionPlus.png" height="20" width="20" ></button>
+					<button id="toggle<%=index%>" style="border:none; background-color:Transparent"><img src="/iTrust/image/icons/addSuggestionPlus.png" height="20" width="20"></button>
 				</td>
 				<script language="JavaScript">
 				$(document).ready(function(){
@@ -135,7 +135,7 @@
 					<input name="addNewSuggestion" value="true" type ="hidden" ></input>
 					<input name="date" value="<%=sdf.format(oldBean.getDate())%>" type ="hidden" ></input>
 				</td>
-				<td><button type="submit" id="addNewSuggestion">Submit Suggestion</button></td>
+				<td colspan="7"><button type="submit" id="addNewSuggestion">Submit Suggestion</button></td>
 			</form>
 			</tr>
 			<%
@@ -175,7 +175,7 @@
 			label = labelBean.getLabel();
 	%>
 			<tr>
-				<td><%=StringEscapeUtils.escapeHtml("[Daily Summary]")%><button id="toggle<%=index%>">Toggle</button> </td>
+				<td><%=StringEscapeUtils.escapeHtml("[Daily Summary]")%><button id="toggle<%=index%>" style="border:none; background-color:Transparent"><img src="/iTrust/image/icons/addSuggestionPlus.png" height="20" width="20"></button> </td>
 				<script language="JavaScript">
 				$(document).ready(function(){
 					$("#toggle<%=index%>").click(
@@ -202,8 +202,15 @@
 						+ totalBeanTmp.getGramsOfProtein())%></td>
 				<td><%=StringEscapeUtils.escapeHtml("" + dailyTotalCalories)%></td>
 			<tr id="suggestion<%=index%>" style="display: none;"> 
+				<form action="viewPatientFoodDiary.jsp?"> 
 				<td>New Suggestion:</td>
-				<td colspan="12"><textarea rows="4" cols="50">A nice suggestion</textarea></td>
+				<td colspan="4">
+					<textarea rows="4" cols="50" name="suggestionText" id="suggestionText2"></textarea>
+					<input name="addNewSuggestion" value="true" type ="hidden" ></input>
+					<input name="date" value="<%=sdf.format(oldBean.getDate())%>" type ="hidden" ></input>
+				</td>
+				<td colspan="7"><button type="submit" id="addNewSuggestion">Submit Suggestion</button></td>
+			</form>
 			</tr>
 			</tr>
 	</table>

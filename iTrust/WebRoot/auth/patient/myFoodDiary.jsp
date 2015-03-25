@@ -367,7 +367,7 @@
 			%>
 
 			<tr>
-				<td><%=StringEscapeUtils.escapeHtml("[Daily Summary]")%> <button id="toggle<%=index%>" style="border:none; background-color:Transparent" onclick=""><img src="/iTrust/image/icons/greenplus.png" height="20" width="20"></button></td>
+				<td><%=StringEscapeUtils.escapeHtml("[Daily Summary]")%> <button id="toggle<%=index%>" style="border:none; background-color:Transparent" onclick=""><img id="img<%=index%>" src="/iTrust/image/icons/greenplus.png" height="20" width="20"></button></td>
 				<script language="JavaScript">
 				$(document).ready(function(){
 					$("#toggle<%=index%>").click(
