@@ -29,7 +29,10 @@ public class SuggestionBean {
 		setSuggestion(sugg);
 		setIsNew(isNew);
 	}
-
+	
+	public SuggestionBean(){
+		//Doesn't do anything
+	}
 	/**
 	 * @return the patientID
 	 */

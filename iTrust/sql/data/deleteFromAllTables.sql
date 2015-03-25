@@ -80,3 +80,6 @@ ALTER TABLE fooddiarylabels AUTO_INCREMENT = 0;
 
 DELETE FROM fooddiarysetlabels;
 ALTER TABLE fooddiarysetlabels AUTO_INCREMENT = 0;
+
+DELETE FROM suggestions;
+ALTER TABLE fooddiarytable AUTO_INCREMENT = 0;

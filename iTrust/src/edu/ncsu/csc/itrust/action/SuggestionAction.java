@@ -31,14 +31,34 @@ public class SuggestionAction extends SuggestionBaseAction {
 	 *  
 	 */
 	
+	/**
+	 * Get all suggestions given a date and a patient id
+	 * 
+	 * @param date The date
+	 * @param patientID The mid of the patient
+	 * @return a list of SuggestionBeans containing suggestions
+	 * @throws DBException if something goes wrong in the database
+	 */
 	public List<SuggestionBean> getSuggestionsByDate(Date date, long patientID) throws DBException{
 		return suggestionDAO.getSuggestionsByDate(date, patientID);
 	}
 	
+	/**
+	 * Add a suggestion to the database
+	 * 
+	 * @param suggestionBean The suggestion to be added
+	 * @throws DBException if something goes wrong int he database
+	 */
 	public void addSuggestion(SuggestionBean suggestionBean) throws DBException{
 		suggestionDAO.insertSuggestion(suggestionBean);
 	}
 	
+	/**
+	 * Edit a specific suggestion in the database
+	 * 
+	 * @param suggestionBean The suggestion to be edited
+	 * @throws DBException if something goes wrong in the database
+	 */
 	public void editSuggestion(SuggestionBean suggestionBean) throws DBException{
 		suggestionDAO.editSuggestion(suggestionBean);
 	}

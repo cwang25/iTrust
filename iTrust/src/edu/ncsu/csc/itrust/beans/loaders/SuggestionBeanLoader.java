@@ -13,7 +13,6 @@ import edu.ncsu.csc.itrust.beans.SuggestionBean;
 /**
  * Suggestion Bean Loader class
  * @author Ben
- *
  */
 public class SuggestionBeanLoader {
 
@@ -74,6 +73,13 @@ public class SuggestionBeanLoader {
 		return ps;
 	}
 	
+	/**
+	 * loadEditParameters is used to insert the values of a bean into a prepared statement.
+	 * 
+	 * @param ps The prepared statement that the bean will be loaded into.
+	 * @param bean The SuggestionBean that will be loaded into the prepared statement.
+	 * @return The PreparedStatement that was passed in.
+	 */
 	public PreparedStatement loadEditParameters(PreparedStatement ps,
 			SuggestionBean bean) throws SQLException {
 		int i = 1;

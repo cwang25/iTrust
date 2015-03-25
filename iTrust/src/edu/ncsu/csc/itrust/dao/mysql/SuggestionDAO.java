@@ -14,8 +14,11 @@ import edu.ncsu.csc.itrust.dao.DAOFactory;
 import edu.ncsu.csc.itrust.exception.DBException;
 
 public class SuggestionDAO {
+	/** Factory object */
 	private transient final DAOFactory factory;
+	/** A Loader for loading parameters */
 	private transient final SuggestionBeanLoader loader;
+	
 	/**
 	 * Constructor
 	 * @param factory
@@ -25,6 +28,12 @@ public class SuggestionDAO {
 		this.loader = new SuggestionBeanLoader();
 	}
 	
+	/**
+	 * Insert a new suggestion in the database
+	 * @param suggestion The bean containing the suggestion
+	 * @return lastInsertID
+	 * @throws DBException if something goes wrong in the database
+	 */
 	public long insertSuggestion(SuggestionBean suggestion) throws DBException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -45,50 +54,13 @@ public class SuggestionDAO {
 		return lastInsertID;
 	}
 	
-	public SuggestionBean getSuggestionByHCPID(long hcpID) throws DBException {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		SuggestionBean bean = null;
-		try{
-			conn = factory.getConnection();
-			ps = conn.prepareStatement("SELECT * FROM suggestions WHERE hcpID = ?");
-			ps.setLong(1, hcpID);
-			ResultSet rs = ps.executeQuery();
-			if(rs.next()){
-				bean = loader.loadSingle(rs);
-			}
-			rs.close();
-		}catch(SQLException e){
-			e.printStackTrace();
-			throw new DBException(e);
-		}finally{
-			DBUtil.closeConnection(conn, ps);
-		}
-		return bean;
-	} 
-
-	public SuggestionBean getSuggestionByPatientID(long hcpID) throws DBException {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		SuggestionBean bean = null;
-		try{
-			conn = factory.getConnection();
-			ps = conn.prepareStatement("SELECT * FROM suggestions WHERE patientID = ?");
-			ps.setLong(1, hcpID);
-			ResultSet rs = ps.executeQuery();
-			if(rs.next()){
-				bean = loader.loadSingle(rs);
-			}
-			rs.close();
-		}catch(SQLException e){
-			e.printStackTrace();
-			throw new DBException(e);
-		}finally{
-			DBUtil.closeConnection(conn, ps);
-		}
-		return bean;
-	}
-	
+	/**
+	 * Get all suggestions for a specific date
+	 * @param date The date
+	 * @param patientID the mid of the patient
+	 * @return list a list of SuggestionBeans
+	 * @throws DBException if something goes wrong in the database
+	 */
 	public List<SuggestionBean> getSuggestionsByDate(Date date, long patientID) throws DBException{
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -110,6 +82,11 @@ public class SuggestionDAO {
 		return list;
 	}
 	
+	/**
+	 * Edit a suggestion already in the database
+	 * @param suggestion The SuggestionBean to be edited
+	 * @throws DBException if something goes wrong in the database
+	 */
 	public void editSuggestion(SuggestionBean suggestion) throws DBException{
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -125,10 +102,4 @@ public class SuggestionDAO {
 			DBUtil.closeConnection(conn, ps);
 		}
 	}
-	
-	/* Methods needed:
-	 *	insertSuggestion()
-	 *	getSuggestionByMID()
-	 *  anything else?? 
-	 */
 }
