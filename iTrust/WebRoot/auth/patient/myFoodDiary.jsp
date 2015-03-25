@@ -251,6 +251,8 @@
 					function(){
 						$("#suggestion<%=index%>").toggle();
 						$('#img<%=index%>')[0].src="/iTrust/image/icons/greenplus.png";
+						$('#img<%=index%>')[0].height="20";
+						$('#img<%=index%>')[0].width="20";
 					});
 				}); 
 				</script>
@@ -292,7 +294,14 @@
 							if(sBean.getIsNew().equals("true")){isNew = true; break;}
 						}
 						if(isNew){
-							%><script language="JavaScript">$(document).ready(function(){$('#img<%=index%>')[0].src="/iTrust/image/icons/notification.gif";});</script>
+							%><script language="JavaScript">
+								$(document).ready(
+									function(){
+										$('#img<%=index%>')[0].src="/iTrust/image/icons/notification.gif";
+										$('#img<%=index%>')[0].height="35";
+										$('#img<%=index%>')[0].width="35";
+								});
+							</script>
 							<%
 						}
 						int suggestionNum = 1;
@@ -365,6 +374,8 @@
 					function(){
 						$("#suggestion<%=index%>").toggle();
 						$('#img<%=index%>')[0].src="/iTrust/image/icons/greenplus.png";
+						$('#img<%=index%>')[0].height="20";
+						$('#img<%=index%>')[0].width="20";
 					});
 				});
 				</script>
@@ -412,7 +423,14 @@
 							if(sBean.getIsNew().equals("true")){isNew = true; break;}
 						}
 						if(isNew){
-							%><script language="JavaScript">$(document).ready(function(){$('#img<%=index%>')[0].src="/iTrust/image/icons/notification.gif";});</script>
+							%><script language="JavaScript">
+								$(document).ready(
+									function(){
+										$('#img<%=index%>')[0].src="/iTrust/image/icons/notification.gif";
+										$('#img<%=index%>')[0].height="35";
+										$('#img<%=index%>')[0].width="35";
+								});
+							</script>
 							<%
 						}
 						int suggestionNum = 1;
