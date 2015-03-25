@@ -64,9 +64,9 @@ abstract public class iTrustSeleniumTest extends TestCase{
 		try {
 			driver.get(ADDRESS);
 			driver.findElement(By.id("j_username")).clear();
-		    driver.findElement(By.id("j_username")).sendKeys("9900000012");
+		    driver.findElement(By.id("j_username")).sendKeys(username);
 		    driver.findElement(By.id("j_password")).clear();
-		    driver.findElement(By.id("j_password")).sendKeys("pw");
+		    driver.findElement(By.id("j_password")).sendKeys(password);
 		    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 			if (driver.getTitle().equals("iTrust Login")) {
 				throw new IllegalArgumentException("Error logging in, user not in database?");
