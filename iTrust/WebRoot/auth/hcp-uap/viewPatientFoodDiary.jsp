@@ -38,7 +38,7 @@
 	SuggestionAction suggAction = new SuggestionAction(prodDAO, loggedInMID);
 	List<FoodDiaryBean> foodDiaryList = action.getFoodDiaryListByOwnerID(Long.parseLong(pidString));
 	session.setAttribute("foodDiaryList", foodDiaryList);
-	boolean needToAddSuggestion = request.getParameter("addNewSuggestion").equals("true");
+	boolean needToAddSuggestion = (request.getParameter("addNewSuggestion") != null && request.getParameter("addNewSuggestion").equals("true"));
 	if (needToAddSuggestion) {
 		java.util.Date date = new java.util.Date();
 		String suggTxt = request.getParameter("suggestionText");
@@ -55,7 +55,7 @@
 	if (foodDiaryList != null && foodDiaryList.size() > 0) {
 %>	
 	<div id="HiddenHelperFields">
-		<input name="addNewSuggestion" id="addNewSuggestion" value = <%=needToAddSuggestion ? "true" : "false"%> type="hidden">
+		<input name="addNewSuggestion" id="addNewSuggestion" value=<%=needToAddSuggestion ? "true" : "false"%> type="hidden">
 	</div>
 	<div style="margin-left: 5px;">
 	</br>
@@ -128,10 +128,14 @@
 				<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getGramsOfProtein())%></td>
 				<td><%=StringEscapeUtils.escapeHtml("" + dailyTotalCalories)%></td>
 			</tr>
-			<tr id="suggestion<%=index%>"> 
+			<tr id="suggestion<%=index%>" style="display: none;">
+			<form action="viewPatientFoodDiary.jsp"> 
 				<td>New Suggestion:</td>
-				<td colspan="4"><textarea rows="4" cols="50" name="suggestionText" id="suggestionText"></textarea></td>
+				<td colspan="4">
+				<textarea rows="4" cols="50" name="suggestionText" id="suggestionText"></textarea>
+				</td>
 				<td><button type="submit" onclick="addSuggestion()" id="addSuggestion<%=index%>">Submit Suggestion</button></td>
+			</form>
 			</tr>
 			<%
 				totalBeanTmp = new FoodDiaryBean();
@@ -196,7 +200,7 @@
 				<td><%=StringEscapeUtils.escapeHtml(""
 						+ totalBeanTmp.getGramsOfProtein())%></td>
 				<td><%=StringEscapeUtils.escapeHtml("" + dailyTotalCalories)%></td>
-			<tr id="suggestion<%=index%>"> 
+			<tr id="suggestion<%=index%>" style="display: none;"> 
 				<td>New Suggestion:</td>
 				<td colspan="12"><textarea rows="4" cols="50">A nice suggestion</textarea></td>
 			</tr>
