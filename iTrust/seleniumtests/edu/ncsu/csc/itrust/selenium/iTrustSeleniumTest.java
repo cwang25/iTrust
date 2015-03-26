@@ -147,6 +147,7 @@ abstract public class iTrustSeleniumTest extends TestCase{
 	protected void tearDown() throws Exception {
 		driver.quit();
 		gen.clearAllTables();
+		gen.standardData();
 		String verificationErrorString = verificationErrors.toString();
 		if (!"".equals(verificationErrorString)) {
 			fail(verificationErrorString);
