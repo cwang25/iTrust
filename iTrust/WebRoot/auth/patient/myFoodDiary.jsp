@@ -599,7 +599,7 @@
 		<br/>
 		<input name="operationMode" value="addLabel" type="hidden">
 	
-		<input type="submit" id="saveBtn" name="action"	style="font-size: 16pt; font-weight: bold;"	value="Save">
+		<input type="submit" id="saveNewLabelBtn" name="action"	style="font-size: 16pt; font-weight: bold;"	value="Save">
 	</form>
 </div>
 
