@@ -106,7 +106,7 @@ List<HCPVisitBean> hcplist = action.filterHCPList(filterName, filterSpecialty, f
 				<td><%= StringEscapeUtils.escapeHtml("" + (vb.getHCPAddr())) %></td>
 				<td><%= StringEscapeUtils.escapeHtml("" + (vb.getOVDate())) %></td>
 				<td>
-					<input name="doctor" value="<%= StringEscapeUtils.escapeHtml("" + (vb.getHCPName())) %>" 
+					<input name="doctor" value="<%= StringEscapeUtils.escapeHtml("" + (vb.getHCPName())) %>" id="doctor<%=i%>"
 							type="checkbox" <%= StringEscapeUtils.escapeHtml("" + (vb.isDesignated()?"checked=\"checked\"":"")) %> 
 							onClick="hcp_checkbox(<%= StringEscapeUtils.escapeHtml("" + (i)) %>,'<%= StringEscapeUtils.escapeHtml("" + (vb.getHCPName())) %>','mainForm');"
 							/>

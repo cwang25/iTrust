@@ -17197,17 +17197,67 @@
     <description>
     	<precondition>Standard data is loaded.</precondition>
     	<precondition>UC69 data is loaded.</precondition>
-        <precondition>HCP Spencer Reid (MID: 9900000012)authenticates into iTrust.</precondition>
-		<precondition>Patient Anakin Skywalker (MID: 100) does not have any food diary.</precondition>
+        <precondition>HCP Spencer Reid (MID: 9900000012) authenticates into iTrust.</precondition>
 		<precondition>HCP SPencer Reid is not Anakin Skywalker's designated nutritionist.</precondition>
 		<step>HCP Spencer Reid logs into iTrust.</step>
-		<step>Click on View Food Diary on the left drop down menu.</step>
+		<step>Click on 'Patient Info' -> Patient Food Diary</step>
 		<step>Type in 100 in the Select A Patient searchbox.</step>
-		<step>Select the search result: Anakin SKywalker</step>
+		<step>Select the search result: Anakin Skywalker</step>
 	</description>
     <expectedResults>
         <eResult>
         The message "Patient has to set you as his/her Designated Nutrtionist in order to view it." should show.
+        </eResult>
+    </expectedResults>
+</test>
+<test id="DesignatedNutritionistViewPatientFoodDiary">
+    <role>HCP</role>
+    <usecase>74</usecase>
+    <dateAdded>03/26/2015</dateAdded>
+    <description>
+    	<precondition>Standard data is loaded.</precondition>
+    	<precondition>UC69 data is loaded.</precondition>
+        <precondition>HCP Spencer Reid (MID: 9900000012) authenticates into iTrust.</precondition>
+		<precondition>HCP SPencer Reid is Aaron Hotchner's designated nutritionist.</precondition>
+		<step>Login as HCP Spencer Reid (MID: 9900000012)</step>
+				<step>Click on 'Patient Info' -> Patient Food Diary</step>
+		<step>Type in 500 in the Select A Patient searchbox.</step>
+		<step>Select the search result: Aaron Hotchner</step>
+	</description>
+    <expectedResults>
+        <eResult>
+        Two Food Diary entries are displayed: one from 4/13/2014 (Oreos) and one from 5/21/2013 (Cheese and Bean Dip)
+        </eResult>
+    </expectedResults>
+</test>
+<test id="MakeDesignatedNutritionist">
+    <role>HCP</role>
+    <usecase>74</usecase>
+    <dateAdded>03/26/2015</dateAdded>
+    <description>
+    	<precondition>Standard data is loaded.</precondition>
+    	<precondition>UC69 data is loaded.</precondition>
+        <precondition>HCP Spencer Reid (MID: 9900000012) authenticates into iTrust.</precondition>
+		<precondition>Patient Anakin Skywalker (MID: 100) does not have any food diary.</precondition>
+		<precondition>HCP SPencer Reid is not Anakin Skywalker's designated nutritionist.</precondition>
+		<step>Login as HCP Spencer Reid (MID: 9900000012)</step>
+		<step>Click on View Food Diary on the left drop down menu.</step>
+		<step>Type in 100 in the Select A Patient searchbox.</step>
+		<step>Select the search result: Anakin Skywalker</step>
+		<step>The message "Patient has to set you as his/her Designated Nutrtionist in order to view it." should show.</step>
+		<step>Logout</step>
+		<step>Login as Anakin Skywalker (MID: 100)</step>
+		<step>Click on 'View' -> 'My Providers'</step>
+		<step>Check the box on the right for Nutritionist Spencer Reid</step>
+		<step>Logout</step>
+		<step>Login as HCP Spencer Reid (MID: 9900000012)</step>
+		<step>Click on 'Patient Info' -> 'Patient Food Diary'</step>
+		<step>Enter 100 into the searchbox</step>
+		<step>Select the search result: Anakin Skywalker</step>
+	</description>
+    <expectedResults>
+        <eResult>
+        The message "The patient has no Food diary" should show, indicating that HCP can now view patient's food diary.
         </eResult>
     </expectedResults>
 </test>

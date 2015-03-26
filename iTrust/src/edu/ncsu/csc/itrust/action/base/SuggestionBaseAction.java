@@ -12,7 +12,7 @@ public class SuggestionBaseAction {
 	protected EventLoggingAction loggingAction;
 	protected long loggedInMID;
 	
-	public SuggestionBaseAction(DAOFactory factory, long mid)throws ITrustException {
+	public SuggestionBaseAction(DAOFactory factory, long mid) throws ITrustException {
 		this.factory = factory;
 		suggestionDAO = factory.getSuggestionDAO();
 		loggingAction = new EventLoggingAction(factory);
