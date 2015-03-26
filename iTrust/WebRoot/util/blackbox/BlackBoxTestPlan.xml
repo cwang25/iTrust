@@ -17211,4 +17211,109 @@
         </eResult>
     </expectedResults>
 </test>
+
+<test id="TestViewSuggestion">
+	<role>HCP</role>
+	<role>Patient</role>
+	<usecase>75</usecase>
+	<dateAdded>03/25/2015</dateAdded>
+	<description>
+		<precondition>Standard Data is loaded</precondition>
+		<precondition>UC 69 data to be loaded</precondition>
+		<precondition>HCP Spencer Reid(MID: 9900000012) is a registered Nutritionist for Aaron Hotchner(mid:500)</precondition>
+		<precondition>Aaron Hotchner is a registered user of the iTrust system</precondition>
+		<step>Log in as Spencer Reid</step>
+		<step>Click on 'Patient Info' -> Patient Food Diary</step>
+		<step>Enter 500 in the search box</step>
+		<step>Click on Patient 500 - Aaron Hotchner</step>
+		<step>Click on '+' icon below 'Daily Summary' for 04/13/2014</step>
+		<step>Add a suggestion: "This is a test suggestion"</step>
+		<step>Click 'Submit Suggestion'</step>
+		<step> Log Out</step>
+		<step>Log in as Aaron Hotchner</step>
+		<step>Click on 'View' -> 'My Food Diary'</step>
+		<step>Click on icon that is flashing and says 'new'</step>
+	</description>
+	<expectedResults>
+		<eResult>Search box appears to select patient</eResult>
+		<eResult>Aaron Hotchner's food diary is displayed</eResult>
+		<eResult>A text area pops up for entering suggestion</eResult>
+		<eResult>"Your Suggestion has been added to the patient's Food Diary" appears on the screen</eResult>
+		<eResult>Patient logs in - At Home Page</eResult>
+		<eResult>Food Diary is displayed with a flashing red notification</eResult>
+		<eResult>Newly added suggestion is displayed</eResult>
+	</expectedResults>
+</test>
+
+<test id="TestAddingMultipleSuggestions">
+	<role>HCP</role>
+	<role>Patient</role>
+	<usecase>75</usecase>
+	<dateAdded>03/25/2015</dateAdded>
+	<description>
+		<precondition>Standard Data is loaded</precondition>
+		<precondition>UC 69 data to be loaded</precondition>
+		<precondition>HCP Spencer Reid(MID: 9900000012) is a registered Nutritionist for Aaron Hotchner(mid:500)</precondition>
+		<precondition>Aaron Hotchner is a registered user of the iTrust system</precondition>
+		<step>Log in as Spencer Reid</step>
+		<step>Click on 'Patient Info' -> Patient Food Diary</step>
+		<step>Enter 500 in the search box</step>
+		<step>Click on Patient 500 - Aaron Hotchner</step>
+		<step>Click on '+' icon below 'Daily Summary' for 04/13/2014</step>
+		<step>Add a suggestion: "TestSuggestion1"</step>
+		<step>Click 'Submit Suggestion'</step>
+		<step>Add a suggestion: "TestSuggestion2"</step>
+		<step>Click 'Submit Suggestion'</step>
+		<step> Log Out</step>
+		<step>Log in as Aaron Hotchner</step>
+		<step>Click on 'View' -> 'My Food Diary'</step>
+		<step>Click on icon that is flashing and says 'new'</step>
+	</description>
+	<expectedResults>
+		<eResult>Search box appears to select patient</eResult>
+		<eResult>Aaron Hotchner's food diary is displayed</eResult>
+		<eResult>A text area pops up for entering suggestion</eResult>
+		<eResult>"Your Suggestion has been added to the patient's Food Diary" appears on the screen</eResult>
+		<eResult>Patient logs in - At Home Page</eResult>
+		<eResult>Food Diary is displayed with a flashing red notification</eResult>
+		<eResult>Newly added suggestions are displayed for 04/13/2014</eResult>
+	</expectedResults>
+</test>
+
+<test id="TestAddSuggestionsToMultipleDates">
+	<role>HCP</role>
+	<role>Patient</role>
+	<usecase>75</usecase>
+	<dateAdded>03/25/2015</dateAdded>
+	<description>
+		<precondition>Standard Data is loaded</precondition>
+		<precondition>UC 69 data to be loaded</precondition>
+		<precondition>HCP Spencer Reid(MID: 9900000012) is a registered Nutritionist for Aaron Hotchner(mid:500)</precondition>
+		<precondition>Aaron Hotchner is a registered user of the iTrust system</precondition>
+		<step>Log in as Spencer Reid</step>
+		<step>Click on 'Patient Info' -> Patient Food Diary</step>
+		<step>Enter 500 in the search box</step>
+		<step>Click on Patient 500 - Aaron Hotchner</step>
+		<step>Click on '+' icon below 'Daily Summary' for 04/13/2014</step>
+		<step>Add a suggestion: "AprilSuggestion"</step>
+		<step>Click 'Submit Suggestion'</step>
+		<step>Click on '+' icon below 'Daily Summary' for 05/21/2013</step>
+		<step>Add a suggestion: "MaySuggestion"</step>
+		<step>Click 'Submit Suggestion'</step>
+		<step> Log Out</step>
+		<step>Log in as Aaron Hotchner</step>
+		<step>Click on 'View' -> 'My Food Diary'</step>
+		<step>Click on icon that is flashing and says 'new'</step>
+	</description>
+	<expectedResults>
+		<eResult>Search box appears to select patient</eResult>
+		<eResult>Aaron Hotchner's food diary is displayed</eResult>
+		<eResult>A text area pops up for entering suggestion</eResult>
+		<eResult>"Your Suggestion has been added to the patient's Food Diary" appears on the screen</eResult>
+		<eResult>Patient logs in - At Home Page</eResult>
+		<eResult>Food Diary is displayed with a flashing red notification</eResult>
+		<eResult>Newly added suggestion is displayed for 04/13/2014</eResult>
+		<eResult>Newly added suggestion is displayed for 05/21/2013</eResult>
+	</expectedResults>
+</test>
 </BlackBoxTestPlan>
