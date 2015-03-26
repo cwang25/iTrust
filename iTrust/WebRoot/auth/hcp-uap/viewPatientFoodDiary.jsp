@@ -122,9 +122,9 @@
 					});
 				}); 
 				</script>
+				<td><span style="<%= label.length() > 0 ? "border-radius:5px; padding:3px; color:white; background-color:red;" : "" %>"><%=StringEscapeUtils.escapeHtml(label)%></span></td>
 				<td><%=StringEscapeUtils.escapeHtml("")%></td>
-				<td><%=StringEscapeUtils.escapeHtml("")%></td>
-				<td><span style="color:red"><%=StringEscapeUtils.escapeHtml(label)%></span></td>
+				<td></td>
 				<td><%=StringEscapeUtils.escapeHtml("")%></td>
 				<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getGramsOfFat())%></td>
 				<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getMilligramsOfSodium())%></td>
@@ -191,9 +191,9 @@
 					});
 				}); 
 				</script>
+				<td><span style="<%= label.length() > 0 ? "border-radius:5px; padding:3px; color:white; background-color:red;" : "" %>"><%=StringEscapeUtils.escapeHtml(label)%></span></td>
 				<td><%=StringEscapeUtils.escapeHtml("")%></td>
-				<td><%=StringEscapeUtils.escapeHtml("")%></td>
-				<td><span style="color:red"><%=StringEscapeUtils.escapeHtml(label)%></span></td>
+				<td></td>
 				<td><%=StringEscapeUtils.escapeHtml("")%></td>
 				<td><%=StringEscapeUtils.escapeHtml(""
 						+ totalBeanTmp.getGramsOfFat())%></td>

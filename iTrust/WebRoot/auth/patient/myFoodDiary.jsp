@@ -268,7 +268,8 @@
 				<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getGramsOfProtein())%></td>
 				<td><%=StringEscapeUtils.escapeHtml("" + dailyTotalCalories)%></td>
 				<td>
-					<span style="color:red"><%=StringEscapeUtils.escapeHtml(label)%></span>
+					<span style="<%= label.length() > 0 ? "border-radius:5px; padding:3px; color:white; background-color:red;" : "" %>"><%=StringEscapeUtils.escapeHtml(label)%></span>
+					<%= label.length() > 0 ? "<br/><br/>" : "" %>
 					<select value="<%=label %>">
 						<option value="none">none</option>
 						<%
@@ -397,7 +398,8 @@
 						+ totalBeanTmp.getGramsOfProtein())%></td>
 				<td><%=StringEscapeUtils.escapeHtml("" + dailyTotalCalories)%></td>
 				<td>
-					<span style="color:red"><%=StringEscapeUtils.escapeHtml(label)%></span>
+					<span style="<%= label.length() > 0 ? "border-radius:5px; padding:3px; color:white; background-color:red;" : "" %>"><%=StringEscapeUtils.escapeHtml(label)%></span>
+					<%= label.length() > 0 ? "<br/><br/>" : "" %>
 					<select value="<%=label %>">
 						<option value="none">none</option>
 						<%
