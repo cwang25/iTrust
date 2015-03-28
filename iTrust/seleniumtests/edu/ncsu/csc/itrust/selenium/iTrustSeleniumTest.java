@@ -85,7 +85,7 @@ abstract public class iTrustSeleniumTest extends TestCase{
 	    driver.setJavascriptEnabled(true);
 	}
 	
-	protected boolean contain(String str){
+	protected boolean contains(String str){
 		return driver.getPageSource().contains(str);
 	}
 	/**

@@ -111,7 +111,6 @@ public class EditFoodDiaryEntryTest extends iTrustHTTPTest {
 		});
 		Button btn = (Button) wr.getElementsWithName("deleteBtn")[0];
 		btn.click();
-		btn.click();
 		wr = wc.getCurrentPage();
 		assertTrue(wr.getText().contains("Your Food Diary has been deleted"));
 		assertTrue(wr.getText().contains("View My Food Diary"));

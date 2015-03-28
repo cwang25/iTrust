@@ -91,7 +91,9 @@
 			(gramsOfProtein!=null&&gramsOfProtein.length() > 0)) &&
 			(mode!=null&&!mode.equals("to_edit"))&&
 			(mode!=null&&!mode.equals("delete"))&&
-			(mode!=null&&!mode.equals("undo"))){
+			(mode!=null&&!mode.equals("undo"))&&
+			(mode!=null&&!mode.equals("addLabel"))&&
+			(mode!=null&&!mode.equals("setLabel"))){
 			try {
 				if(mode.equals("edit")){
 					if(selectedIndex != null){
