@@ -17366,4 +17366,61 @@
 		<eResult>Newly added suggestion is displayed for 05/21/2013</eResult>
 	</expectedResults>
 </test>
+
+<test id="TestAddFoodDiarylabel">
+	<role>Patient</role>
+	<usecase>73</usecase>
+	<dateAdded>03/28/2015</dateAdded>
+	<description>
+		<precondition>Standard Data is loaded</precondition>
+		<precondition>Aaron Hotchner is a registered user of the iTrust system</precondition>
+		<step>Log in as Aaron Hotchner</step>
+		<step>Click on View -> My Food Diary</step>
+		<step>Click the "Create New Label" button</step>
+		<step>Type "TestLabel" into the box and click the "Save" button</step>
+	</description>
+	<expectedResults>
+		<eResult>"Label has been added" success message should be shown</eResult>
+		<eResult>Label "TestLabel" is a choice in the dropdown under the options column</eResult>
+	</expectedResults>
+</test>
+
+<test id="TestSetFoodDiarylabel">
+	<role>Patient</role>
+	<usecase>73</usecase>
+	<dateAdded>03/28/2015</dateAdded>
+	<description>
+		<precondition>Standard Data is loaded</precondition>
+		<precondition>Aaron Hotchner is a registered user of the iTrust system</precondition>
+		<precondition>TestAddFoodDiarylabel has been run or "Testlabel" exists as one of Aaron Hotchner's labels</precondition>
+		<step>Log in as Aaron Hotchner</step>
+		<step>Click on View -> My Food Diary</step>
+		<step>In the daily summary row for 4/13/2014, choose "TestLabel" in the label dropdown</step>
+		<step>Click the "Change Label" button right below the dropdown</step>
+	</description>
+	<expectedResults>
+		<eResult>"Label has been set" success message should be shown</eResult>
+		<eResult>Label "TestLabel" is shown at the top of the table cell used to set the label in the options column in the 4/13/2014 daily summary row.</eResult>
+	</expectedResults>
+</test>
+
+<test id="TestRemoveFoodDiarylabel">
+	<role>Patient</role>
+	<usecase>73</usecase>
+	<dateAdded>03/28/2015</dateAdded>
+	<description>
+		<precondition>Standard Data is loaded</precondition>
+		<precondition>Aaron Hotchner is a registered user of the iTrust system</precondition>
+		<precondition>TestAddFoodDiarylabel and TestSetFoodDiaryLabel have been run or "Testlabel" exists as one of Aaron Hotchner's labels and is set as the label for 4/13/2014.</precondition>
+		<step>Log in as Aaron Hotchner</step>
+		<step>Click on View -> My Food Diary</step>
+		<step>In the daily summary row for 4/13/2014, choose "none" in the label dropdown</step>
+		<step>Click the "Change Label" button right below the dropdown</step>
+	</description>
+	<expectedResults>
+		<eResult>"Label has been set" success message should be shown</eResult>
+		<eResult>No label is shown for the 4/13/2014 daily summary</eResult>
+	</expectedResults>
+</test>
+
 </BlackBoxTestPlan>
