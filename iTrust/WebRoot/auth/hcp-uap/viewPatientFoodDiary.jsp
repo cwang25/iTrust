@@ -37,6 +37,7 @@
 	ViewFoodDiaryAction action = new ViewFoodDiaryAction(prodDAO, Long.toString(loggedInMID));
 	GetFoodDiaryLabelAction labelAction = new GetFoodDiaryLabelAction(prodDAO, loggedInMID);
 	SuggestionAction suggAction = new SuggestionAction(prodDAO, loggedInMID);
+	SuggestionAction suggPatientAction = new SuggestionAction(prodDAO, Long.parseLong(pidString));
 	List<FoodDiaryBean> foodDiaryList = action.getFoodDiaryListByOwnerID(Long.parseLong(pidString));
 	session.setAttribute("foodDiaryList", foodDiaryList);
 	boolean needToAddSuggestion = (request.getParameter("addNewSuggestion") != null && request.getParameter("addNewSuggestion").equals("true"));
@@ -113,6 +114,7 @@
 				<td>
 					<%=StringEscapeUtils.escapeHtml("[Daily Summary]")%>
 					<button id="toggle<%=index%>" style="border:none; background-color:Transparent"><img id="img<%=index%>" src="/iTrust/image/icons/addSuggestionPlus.png" height="20" width="20"></button>
+					<span style="<%= label.length() > 0 ? "border-radius:5px; padding:3px; color:white; background-color:red;" : "" %>"><%=StringEscapeUtils.escapeHtml(label)%></span>
 				</td>
 				<script language="JavaScript">
 				$(document).ready(function(){
@@ -122,7 +124,7 @@
 					});
 				}); 
 				</script>
-				<td><span style="<%= label.length() > 0 ? "border-radius:5px; padding:3px; color:white; background-color:red;" : "" %>"><%=StringEscapeUtils.escapeHtml(label)%></span></td>
+				<td></td>
 				<td><%=StringEscapeUtils.escapeHtml("")%></td>
 				<td></td>
 				<td><%=StringEscapeUtils.escapeHtml("")%></td>
@@ -142,7 +144,26 @@
 					<input name="addNewSuggestion" value="true" type ="hidden" ></input>
 					<input name="date" value="<%=sdf.format(oldBean.getDate())%>" type ="hidden" ></input>
 				</td>
-				<td colspan="7"><button type="submit" id="addNewSuggestion">Submit Suggestion</button></td>
+				<td colspan="2"><button type="submit" id="addNewSuggestion">Submit Suggestion</button></td>
+				<%
+					String suggestionList = "";
+					List<SuggestionBean> suggestionsToShow = suggPatientAction.getSuggestionsByDate(new java.sql.Date(oldBean.getDate().getTime()), Long.parseLong(pidString));
+					
+					if(suggestionsToShow.size() != 0){
+						int suggestionNum = 1;
+						for(SuggestionBean sBean : suggestionsToShow){
+							suggestionList += "" + suggestionNum + ". " + sBean.getSuggestion() + "\n";
+							suggPatientAction.editSuggestion(sBean);
+							suggestionNum++;
+						}
+					}else{
+						suggestionList += "No suggestions";
+					}
+					
+				%>
+				<td>Patient's Suggestions:</td>
+				<td colspan="4"><textarea id="tarea<%=index%>" rows="4" cols="50" readonly><%=StringEscapeUtils.escapeHtml(suggestionList)%></textarea>
+				</td>
 			</form>
 			</tr>
 			<%
@@ -182,7 +203,11 @@
 			label = labelBean.getLabel();
 	%>
 			<tr>
-				<td><%=StringEscapeUtils.escapeHtml("[Daily Summary]")%><button id="toggle<%=index%>" style="border:none; background-color:Transparent"><img src="/iTrust/image/icons/addSuggestionPlus.png" height="20" width="20"></button> </td>
+				<td>
+				<%=StringEscapeUtils.escapeHtml("[Daily Summary]")%>
+				<button id="toggle<%=index%>" style="border:none; background-color:Transparent"><img src="/iTrust/image/icons/addSuggestionPlus.png" height="20" width="20"></button>
+				<span style="<%= label.length() > 0 ? "border-radius:5px; padding:3px; color:white; background-color:red;" : "" %>"><%=StringEscapeUtils.escapeHtml(label)%></span>
+				</td>
 				<script language="JavaScript">
 				$(document).ready(function(){
 					$("#toggle<%=index%>").click(
@@ -191,7 +216,7 @@
 					});
 				}); 
 				</script>
-				<td><span style="<%= label.length() > 0 ? "border-radius:5px; padding:3px; color:white; background-color:red;" : "" %>"><%=StringEscapeUtils.escapeHtml(label)%></span></td>
+				<td></td>
 				<td><%=StringEscapeUtils.escapeHtml("")%></td>
 				<td></td>
 				<td><%=StringEscapeUtils.escapeHtml("")%></td>
@@ -216,7 +241,26 @@
 					<input name="addNewSuggestion" value="true" type ="hidden" ></input>
 					<input name="date" value="<%=sdf.format(oldBean.getDate())%>" type ="hidden" ></input>
 				</td>
-				<td colspan="7"><button type="submit" name="submitMe">Submit Suggestion</button></td>
+				<td colspan="2"><button type="submit" name="submitMe">Submit Suggestion</button></td>
+				<%
+					String suggestionList = "";
+					List<SuggestionBean> suggestionsToShow = suggPatientAction.getSuggestionsByDate(new java.sql.Date(oldBean.getDate().getTime()), Long.parseLong(pidString));
+					
+					if(suggestionsToShow.size() != 0){
+						int suggestionNum = 1;
+						for(SuggestionBean sBean : suggestionsToShow){
+							suggestionList += "" + suggestionNum + ". " + sBean.getSuggestion() + "\n";
+							suggPatientAction.editSuggestion(sBean);
+							suggestionNum++;
+						}
+					}else{
+						suggestionList += "No suggestions";
+					}
+					
+				%>
+				<td>Patient's Suggestions:</td>
+				<td colspan="4"><textarea id="tarea<%=index%>" rows="4" cols="50" readonly><%=StringEscapeUtils.escapeHtml(suggestionList)%></textarea>
+				</td>
 			</form>
 			</tr>
 			</tr>
