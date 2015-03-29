@@ -181,7 +181,7 @@
 			FoodDiaryLabelSetBean b = labelGetAction.getSetFoodDiaryLabel(loggedInMID, java.sql.Date.valueOf(labelDate));
 			if(changedLabelName.equals("none") && b != null) {
 				labelRemoveAction.removeFoodDiaryLabel(b);
-			} else {
+			} else if(!changedLabelName.equals("none")){
 				if(b == null)
 					b = new FoodDiaryLabelSetBean(loggedInMID, java.sql.Date.valueOf(labelDate), changedLabelName);
 				b.setLabel(changedLabelName);
