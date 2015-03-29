@@ -46,7 +46,7 @@ public class WardTest extends iTrustSeleniumTest {
         Thread.sleep(500);
         driver.findElement(By.xpath("//input[@value='1' and @type='button']")).click();
         System.out.println(driver.getPageSource());
- 		assertTrue(contains("Random Person"));
+ 		assertTrue(pageContains("Random Person"));
     }
     
     /**
@@ -62,10 +62,10 @@ public class WardTest extends iTrustSeleniumTest {
 	    driver.findElement(By.name("ward")).clear();
 	    driver.findElement(By.name("ward")).sendKeys("ChatAddictionClinic");
 	    driver.findElement(By.name("addWard")).click();
-		assertTrue(contains("ChatAddictionClinic"));
+		assertTrue(pageContains("ChatAddictionClinic"));
 	    driver.findElement(By.name("removeWardButton")).click();
 		//check make sure table is gone
-		assertFalse(contains("ChatAddictionClinic"));		
+		assertFalse(pageContains("ChatAddictionClinic"));		
 		
 		
 		
@@ -143,12 +143,12 @@ public class WardTest extends iTrustSeleniumTest {
 	    driver.findElement(By.name("room")).sendKeys("TestOneRoomCardiac");
 	    driver.findElement(By.name("addRoomButton")).click();
 	    //Check if all wards have been created and rooms.
-	    assertTrue(contains("TestOneWard"));
-	    assertTrue(contains("TestTwoWard"));
-	    assertTrue(contains("TestThreeWard"));
-	    assertTrue(contains("TestOneRoom"));
-	    assertTrue(contains("TestTwoRoom"));
-	    assertTrue(contains("Pediatric"));
+	    assertTrue(pageContains("TestOneWard"));
+	    assertTrue(pageContains("TestTwoWard"));
+	    assertTrue(pageContains("TestThreeWard"));
+	    assertTrue(pageContains("TestOneRoom"));
+	    assertTrue(pageContains("TestTwoRoom"));
+	    assertTrue(pageContains("Pediatric"));
 		
 	}
 	
