@@ -200,6 +200,20 @@
 		
 		if (foodDiaryList.size() > 0) {
 	%>
+	<div>
+		<span>Filter entries by label: </span>
+		<select id="labelFilter" value="any">
+			<option value="any">any</option>
+			<%
+				List<FoodDiaryLabelBean> labelsList = labelGetAction.getAllFoodDiaryLabels(loggedInMID);
+				for(FoodDiaryLabelBean lb : labelsList) {
+					String labeltxt = StringEscapeUtils.escapeHtml(lb.getLabel());
+					%><option value="<%=labeltxt %>"><%=labeltxt %></option><%	
+				}								
+			%>
+		</select>
+	</div>
+	<br/>
 	<div style="margin-left: 5px;">
 		<table id="fTable" class="fTable" border=1 align="center">
 			<tr>
@@ -226,9 +240,14 @@
 				//Use to keep on daily total calories.
 				double dailyTotalCalories = 0;
 				FoodDiaryBean oldBean = null; // keeps track of the previous bean
-				for(FoodDiaryBean b : foodDiaryList) { 		
+				for(FoodDiaryBean b : foodDiaryList) {
+					FoodDiaryLabelSetBean labelBean1 = labelGetAction.getSetFoodDiaryLabel(b.getOwnerID(), new java.sql.Date(b.getDate().getTime()));
+					String label1 = "";
+					if(labelBean1 != null)
+						label1 = labelBean1.getLabel();
+					
 					boolean needDailySummary = false;
-					String row = "<tr";
+					String row = "<tr class='diaryLabelRow " + label1 + "'";
 			%>
 
 				<%=row+""+((index%2 == 1)?" class=\"alt\"":"")+">"%>
@@ -245,10 +264,10 @@
 							if(labelBean != null)
 								label = labelBean.getLabel();
 			%>
-			<tr>
+			<tr class="diaryLabelRow <%= label %>">
 				<td><%=StringEscapeUtils.escapeHtml("[Daily Summary]")%><button id="toggle<%=index%>" style="border:none; background-color:Transparent"><img id="img<%=index%>" src="/iTrust/image/icons/greenplus.png" height="20" width="20"></button> </td>
 				<script language="JavaScript">
-				$(document).ready(function(){
+				$(document).ready(function(){					
 					$("#toggle<%=index%>").click(
 					function(){
 						$("#suggestion<%=index%>").toggle();
@@ -322,6 +341,7 @@
 				<td colspan="12"><textarea id="tarea<%=index%>" rows="4" cols="50" readonly><%=StringEscapeUtils.escapeHtml(suggestionList)%></textarea>
 				</td>
 			</tr>
+			<tr class="diaryLabelRow <%= label1 %>">
 			<%
 				totalBeanTmp = new FoodDiaryBean();
 							dailyTotalCalories = 0;
@@ -369,7 +389,7 @@
 					label = labelBean.getLabel();
 			%>
 
-			<tr>
+			<tr class="diaryLabelRow <%= label %>">
 				<td><%=StringEscapeUtils.escapeHtml("[Daily Summary]")%> <button id="toggle<%=index%>" style="border:none; background-color:Transparent" onclick=""><img id="img<%=index%>" src="/iTrust/image/icons/greenplus.png" height="20" width="20"></button></td>
 				<script language="JavaScript">
 				$(document).ready(function(){
@@ -671,6 +691,18 @@
 		form.find('#changedLabelName').val(me.siblings('select').val());
 		document.getElementById("operationMode").value = "setLabel";
 		form.find('.hiddenSubmitBtn').click();
+	});
+	
+	$('#labelFilter').change(function() {
+		var label = $(this).val();
+		if(label == "any") {
+			$('.diaryLabelRow').show();
+		} else {
+			$('.diaryLabelRow').hide();
+			var selector = '.'+label;
+			console.log(selector);
+			$(selector).show();
+		}
 	});
 /* 	function scrollToBottom() {
 		var objDiv = document.getElementById("bottomLine");
