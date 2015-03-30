@@ -467,7 +467,7 @@
 	<div>
 		</br>
 		<button type='button' onclick="showHiddenAddNewFoodDiaryForm('HiddenForm');$('#newLabelForm').hide();">Add new food diary</button>
-		<button type='button' onclick="hideHiddenForm('HiddenForm');$('#newLabelForm').show();">Create new label</button>
+		<button type='button' onclick="hideHiddenForm('HiddenForm');$('#newLabelForm').show();setOperationMode('addLabel');">Create new label</button>
 	</div>	
 	<br />
 	<div id="HiddenForm" name="Hiddenform"
@@ -637,6 +637,9 @@
 		
 		showHiddenForm(divID);		
 	}
+	function setOperationMode(operation){
+		document.getElementById("operationMode").value = operation;
+	}
 	function showHiddenEditFoodDiaryForm(divID, index){
 		document.getElementById("operationMode").value = "to_edit";
 		document.getElementById("selectedIndex").value = ""+index;
@@ -666,6 +669,7 @@
 		var form = $('#hiddenLabelChangeForm');
 		form.find('#labelDate').val(me.attr('data-date'));
 		form.find('#changedLabelName').val(me.siblings('select').val());
+		document.getElementById("operationMode").value = "setLabel";
 		form.find('.hiddenSubmitBtn').click();
 	});
 /* 	function scrollToBottom() {
