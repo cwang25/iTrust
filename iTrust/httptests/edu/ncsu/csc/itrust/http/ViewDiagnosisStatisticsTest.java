@@ -4,6 +4,7 @@ import com.meterware.httpunit.WebConversation;
 import com.meterware.httpunit.WebForm;
 import com.meterware.httpunit.WebResponse;
 import com.meterware.httpunit.WebTable;
+
 import edu.ncsu.csc.itrust.enums.TransactionType;
 
 /**
@@ -219,6 +220,8 @@ public class ViewDiagnosisStatisticsTest extends iTrustHTTPTest {
 		table = wr.getTableWithID("diagnosisStatisticsTable");
 		long local2 = Long.parseLong(table.getCellAsText(1, 2));
 		long region2 = Long.parseLong(table.getCellAsText(1, 3));
+	    System.out.println("local1 = " + local1 + ", local2 = " + local2);
+	    System.out.println("region1 = " + region1 + ", region2 = " + region2);
 		assertEquals(local1+1, local2);
 		assertEquals(region1+1, region2);
 	}

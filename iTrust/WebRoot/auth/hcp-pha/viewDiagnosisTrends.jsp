@@ -101,8 +101,8 @@
 <tr style="text-align:center;">
 	<td><%= icdCode %></td>
 	<td><%= zipCode %></td>
-	<td><%= dsBean.getZipStats() %></td>
-	<td><%= dsBean.getRegionStats() %></td>
+	<td id="zip"><%= dsBean.getZipStats() %></td>
+	<td id="region"><%= dsBean.getRegionStats() %></td>
 	<td><%= startDate %></td>
 	<td><%= endDate %></td>
 </tr>
