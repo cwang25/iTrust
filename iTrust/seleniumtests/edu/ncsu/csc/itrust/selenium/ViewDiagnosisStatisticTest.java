@@ -146,7 +146,7 @@ public class ViewDiagnosisStatisticTest extends iTrustSeleniumTest {
 		driver.findElement(By.xpath("//input[@value='25' and @type='button']")).click();
 
 		assertTrue(driver.getCurrentUrl().equals(ADDRESS + "auth/hcp-uap/documentOfficeVisit.jsp"));
-		assertTrue(contains("Click on an old office visit to modify:"));
+		assertTrue(pageContains("Click on an old office visit to modify:"));
 
 		// Click "Yes, Document Office Visit"
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
@@ -158,12 +158,12 @@ public class ViewDiagnosisStatisticTest extends iTrustSeleniumTest {
 		driver.findElement(By.name("notes")).clear();
 		driver.findElement(By.name("notes")).sendKeys("I like diet-coke");
 		driver.findElement(By.id("update")).click();
-		assertTrue(contains("Information Successfully Updated"));
+		assertTrue(pageContains("Information Successfully Updated"));
 		assertLogged(TransactionType.OFFICE_VISIT_CREATE, 9000000008L, 25L, "Office visit");
 
 		new Select(driver.findElement(By.name("ICDCode"))).selectByVisibleText("487.00 - Influenza");
 		driver.findElement(By.id("add_diagnosis")).click();
-		assertTrue(contains("Diagnosis information successfully updated."));
+		assertTrue(pageContains("Diagnosis information successfully updated."));
 
 		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.xpath("//div[@class='panel-body']/ul/li[2]")).click();
@@ -221,8 +221,8 @@ public class ViewDiagnosisStatisticTest extends iTrustSeleniumTest {
 		assertTrue(driver.getCurrentUrl().equals(ADDRESS + "auth/hcp-pha/viewDiagnosisStatistics.jsp"));
 		assertLogged(TransactionType.DIAGNOSIS_TRENDS_VIEW, 9000000008L, 0L, "");
 
-		assertTrue(contains("Information not valid"));
-		assertTrue(contains("Zip Code must be 5 digits!"));
+		assertTrue(pageContains("Information not valid"));
+		assertTrue(pageContains("Zip Code must be 5 digits!"));
 	}
 	
 	/*
@@ -262,8 +262,8 @@ public class ViewDiagnosisStatisticTest extends iTrustSeleniumTest {
 		assertTrue(driver.getCurrentUrl().equals(ADDRESS + "auth/hcp-pha/viewDiagnosisStatistics.jsp"));
 		assertLogged(TransactionType.DIAGNOSIS_TRENDS_VIEW, 9000000008L, 0L, "");
 
-		assertTrue(contains("Information not valid"));
-		assertTrue(contains("Start date must be before end date!"));		
+		assertTrue(pageContains("Information not valid"));
+		assertTrue(pageContains("Start date must be before end date!"));		
 	}
 	
 	/*
@@ -440,8 +440,8 @@ public class ViewDiagnosisStatisticTest extends iTrustSeleniumTest {
 		assertTrue(driver.getCurrentUrl().equals(ADDRESS + "auth/hcp-pha/viewDiagnosisStatistics.jsp"));
 		assertLogged(TransactionType.DIAGNOSIS_TRENDS_VIEW, 9000000008L, 0L, "");
 		
-		assertTrue(contains("Information not valid"));
-		assertTrue(contains("ICDCode must be valid diagnosis!"));
+		assertTrue(pageContains("Information not valid"));
+		assertTrue(pageContains("ICDCode must be valid diagnosis!"));
 	}
 	
 	/**
@@ -471,7 +471,7 @@ public class ViewDiagnosisStatisticTest extends iTrustSeleniumTest {
 		assertTrue(driver.getCurrentUrl().equals(ADDRESS + "auth/hcp-pha/viewDiagnosisStatistics.jsp"));
 		assertLogged(TransactionType.DIAGNOSIS_EPIDEMICS_VIEW, 9000000000L, 0L, "");
 		
-		assertTrue(contains("There is no epidemic occurring in the region."));
+		assertTrue(pageContains("There is no epidemic occurring in the region."));
 	}
 	
 	/**
@@ -500,7 +500,7 @@ public class ViewDiagnosisStatisticTest extends iTrustSeleniumTest {
 		driver.findElement(By.id("select_diagnosis")).click();
 		assertTrue(driver.getCurrentUrl().equals(ADDRESS + "auth/hcp-pha/viewDiagnosisStatistics.jsp"));
 		assertLogged(TransactionType.DIAGNOSIS_EPIDEMICS_VIEW, 9000000007L, 0L, "");
-		assertFalse(contains("THERE IS AN EPIDEMIC OCCURRING IN THIS REGION!"));
+		assertFalse(pageContains("THERE IS AN EPIDEMIC OCCURRING IN THIS REGION!"));
 	}
 	
 	/**
@@ -528,6 +528,6 @@ public class ViewDiagnosisStatisticTest extends iTrustSeleniumTest {
 		driver.findElement(By.id("select_diagnosis")).click();
 		assertTrue(driver.getCurrentUrl().equals(ADDRESS + "auth/hcp-pha/viewDiagnosisStatistics.jsp"));
 		assertLogged(TransactionType.DIAGNOSIS_EPIDEMICS_VIEW, 9000000007L, 0L, "");
-		assertTrue(contains("There is no epidemic occurring in the region."));
+		assertTrue(pageContains("There is no epidemic occurring in the region."));
 	}
 }
