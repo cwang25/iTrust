@@ -21,6 +21,7 @@ List<PatientVisitBean> patientVisits = action.getPatients();
 loggingAction.logEvent(TransactionType.PATIENT_LIST_VIEW, loggedInMID, 0, "");
 
 %>
+			<!-- 
 			<script src="/iTrust/DataTables/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
 			<script type="text/javascript">
 				jQuery.fn.dataTableExt.oSort['lname-asc']  = function(x,y) {
@@ -45,6 +46,7 @@ loggingAction.logEvent(TransactionType.PATIENT_LIST_VIEW, loggedInMID, 0, "");
        				});
    				});
 			</script>
+			-->
 			<style type="text/css" title="currentStyle">
 				@import "/iTrust/DataTables/media/css/demo_table.css";		
 			</style>
