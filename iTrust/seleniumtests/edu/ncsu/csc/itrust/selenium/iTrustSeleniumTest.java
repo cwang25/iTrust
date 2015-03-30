@@ -49,7 +49,7 @@ abstract public class iTrustSeleniumTest extends TestCase{
 	 */
 	@Override
 	protected void setUp() throws Exception {
-		driver = new HtmlUnitDriver(BrowserVersion.FIREFOX_3_6);
+		driver = new HtmlUnitDriver(BrowserVersion.FIREFOX_24);
 		driver.setJavascriptEnabled(true);
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		gen.clearAllTables();

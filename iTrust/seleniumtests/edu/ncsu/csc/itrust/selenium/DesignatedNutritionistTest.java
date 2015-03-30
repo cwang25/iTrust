@@ -27,7 +27,7 @@ public class DesignatedNutritionistTest extends iTrustHTTPTest {
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
-		driver = new HtmlUnitDriver(BrowserVersion.FIREFOX_3_6);
+		driver = new HtmlUnitDriver(BrowserVersion.FIREFOX_24);
 		driver.setJavascriptEnabled(true);
 		baseUrl = "http://localhost:8080/iTrust/";
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);

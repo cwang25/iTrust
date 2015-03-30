@@ -90,8 +90,8 @@ public class AddSuggestionToFoodDiary extends iTrustSeleniumTest {
 		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("My Food Diary")).click();
 		driver.findElement(By.id("toggle1")).click();
-		assertTrue(driver.findElement(By.id("tarea1")).getValue().contains("TestSuggestion1"));
-		assertTrue(driver.findElement(By.id("tarea1")).getValue().contains("TestSuggestion2"));
+		assertTrue(driver.findElement(By.id("tarea1")).getText().contains("TestSuggestion1"));
+		assertTrue(driver.findElement(By.id("tarea1")).getText().contains("TestSuggestion2"));
 	}
 
 	/**
@@ -127,8 +127,8 @@ public class AddSuggestionToFoodDiary extends iTrustSeleniumTest {
 		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("My Food Diary")).click();
 		driver.findElement(By.id("toggle1")).click();
-		assertTrue(driver.findElement(By.id("tarea1")).getValue().contains("AprilSuggestion"));
+		assertTrue(driver.findElement(By.id("tarea1")).getText().contains("AprilSuggestion"));
 		driver.findElement(By.id("toggle2")).click();
-		assertTrue(driver.findElement(By.id("tarea2")).getValue().contains("MaySuggestion"));
+		assertTrue(driver.findElement(By.id("tarea2")).getText().contains("MaySuggestion"));
 	}
 }
