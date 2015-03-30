@@ -42,7 +42,7 @@ List<ReportRequestBean> list = action.getAllReportRequestsForRequester();
 %>
 <br /><br />
 <input type="hidden" name="add" id="add" />
-<table class="fTable" align="center">
+<table id="requestTable" class="fTable" align="center">
 	<tr>
 		<th colspan="10">Report Requests</th>
 	</tr>

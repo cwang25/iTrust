@@ -84,8 +84,12 @@ abstract public class iTrustSeleniumTest extends TestCase{
 	    driver.findElement(By.id("logoutBtn")).click();
 	    driver.setJavascriptEnabled(true);
 	}
-	
-	protected boolean contains(String str){
+	/**
+	 * Helper method for checking if the current page source (html) contains the given string texts.
+	 * @param str String texts to check.
+	 * @return true if contains, otherwise false.
+	 */
+	protected boolean pageContains(String str){
 		return driver.getPageSource().contains(str);
 	}
 	/**

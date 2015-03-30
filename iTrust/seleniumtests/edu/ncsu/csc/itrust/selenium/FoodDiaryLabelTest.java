@@ -23,7 +23,7 @@ public class FoodDiaryLabelTest extends iTrustSeleniumTest {
 	    driver.findElement(By.id("newLabelName")).clear();
 	    driver.findElement(By.id("newLabelName")).sendKeys("testlabel");
 	    driver.findElement(By.id("saveNewLabelBtn")).click();
-	    assertTrue(contains("Label has been added."));
+	    assertTrue(pageContains("Label has been added."));
 	}
 	
 	@Test
@@ -35,10 +35,10 @@ public class FoodDiaryLabelTest extends iTrustSeleniumTest {
 	    driver.findElement(By.id("newLabelName")).clear();
 	    driver.findElement(By.id("newLabelName")).sendKeys("test");
 	    driver.findElement(By.id("saveNewLabelBtn")).click();
-	    assertTrue(contains("Label has been added."));
+	    assertTrue(pageContains("Label has been added."));
 	    new Select(driver.findElement(By.xpath("(//select[@value=''])[2]"))).selectByVisibleText("test");
 	    driver.findElement(By.xpath("//table[@id='fTable']/tbody/tr[7]/td[13]/button")).click();
-	    assertTrue(contains("Label has been set."));
+	    assertTrue(pageContains("Label has been set."));
 	}
 	
 	@Test
@@ -50,11 +50,11 @@ public class FoodDiaryLabelTest extends iTrustSeleniumTest {
 	    driver.findElement(By.id("newLabelName")).clear();
 	    driver.findElement(By.id("newLabelName")).sendKeys("test");
 	    driver.findElement(By.id("saveNewLabelBtn")).click();
-	    assertTrue(contains("Label has been added."));
+	    assertTrue(pageContains("Label has been added."));
 	    new Select(driver.findElement(By.cssSelector("select"))).selectByVisibleText("test");
 	    driver.findElement(By.cssSelector("button.changeLabelBtn")).click();
-	    assertTrue(contains("Label has been set."));
+	    assertTrue(pageContains("Label has been set."));
 	    driver.findElement(By.cssSelector("button.changeLabelBtn")).click();
-	    assertTrue(contains("Label has been set."));
+	    assertTrue(pageContains("Label has been set."));
 	}
 }
