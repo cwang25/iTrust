@@ -11,61 +11,81 @@ import org.openqa.selenium.support.ui.Select;
 import edu.ncsu.csc.itrust.enums.TransactionType;
 
 /**
- * @author nishant
- *
+ * Selenium tests for ViewHealthRecordsHistory
  */
-public class ViewHealthRecordsHistoryTest extends iTrustSeleniumTest{
-
+public class ViewHealthRecordsHistoryTest extends iTrustSeleniumTest {
+	
 	/**
+	 * Sets up the test environment
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
+		//Generate standard data
 		gen.standardData();
 	}
-
+	
+	/**
+	 * testOfficeVisit4MonthOldViewHealthMetrics
+	 * @throws Exception
+	 */
 	@Test
 	public void testOfficeVisit4MonthOldViewHealthMetrics() throws Exception{
+		//Login as HCP Shelly Vang
 		login("8000000011", "pw");
-		
 		assertLogged(TransactionType.HOME_VIEW, 8000000011L, 0L, "");
 		
+		//Click Document Office Visit Link
 	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div")).click();
 	    driver.findElement(By.linkText("Document Office Visit")).click();
-	    
-	    
+	    //Search for Brynn McClain (MID 101)
 	    driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("101");
 	    waitFor(1);
+	    //Click on first MID button
 	    driver.findElement(By.xpath("//input[@value='101' and @type='button']")).click();
-	    
+	    //Verify Document Office Visit page
 	    assertEquals(ADDRESS + "auth/hcp-uap/documentOfficeVisit.jsp", driver.getCurrentUrl());
-	    
-	    
+	    //Click Yes, Document Office Visit
 	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-	    
+	    //Verify Edit Office Visit page
 	    assertEquals("iTrust - Document Office Visit", driver.getTitle());
 	    
+	    //Add a new office visit
+	    //Enter 10/01/2013 for the Office Visit Date
 	    driver.findElement(By.name("visitDate")).clear();
 	    driver.findElement(By.name("visitDate")).sendKeys("10/01/2013");
+	    //Select Central Hospital for the hospital
 	    new Select(driver.findElement(By.name("hospitalID"))).selectByVisibleText("Central Hospital");
+	    //Enter "Brynn can start eating rice cereal mixed with breast milk or formula once a day" for Notes
 	    driver.findElement(By.name("notes")).clear();
 	    driver.findElement(By.name("notes")).sendKeys("Brynn can start eating rice cereal mixed with breast milk or formula once a day.");
+	    //Click the create button
 	    driver.findElement(By.id("update")).click();
 	    
+	    //Verify "Information Successfully Updated" message
 	    assertTrue(pageContains("Information Successfully Updated"));
 	    
+	    //Enter Health Metrics
+	    //Enter 22.3 in for Length
 	    driver.findElement(By.name("height")).clear();
 	    driver.findElement(By.name("height")).sendKeys("22.3");
+	    //Enter 16.5 lbs for Weight
 	    driver.findElement(By.name("weight")).clear();
 	    driver.findElement(By.name("weight")).sendKeys("16.5");
+	    //Enter 16.1 in for Head Circumference
 	    driver.findElement(By.name("headCircumference")).clear();
 	    driver.findElement(By.name("headCircumference")).sendKeys("16.1");
+	    //Select '1 - non-smoking household' for household smoking status
 	    new Select(driver.findElement(By.id("householdSmokingStatus"))).selectByVisibleText("1 - non-smoking household");
+	    //Click the Add Record button
 	    driver.findElement(By.id("addHR")).click();
+	    
+	    //Verify "Health information successfully updated." message
 	    assertTrue(pageContains("Health information successfully updated."));
 	    
+	    //Click Basic Health Information link
 	    driver.findElement(By.cssSelector("h2.panel-title")).click();
 	    driver.findElement(By.linkText("Basic Health Information")).click();
 	  
@@ -78,8 +98,8 @@ public class ViewHealthRecordsHistoryTest extends iTrustSeleniumTest{
   		List<WebElement> entriesToCheck = tableRows.get(2).findElements(By.tagName("td"));
   		//Verify the table has the provided information: Header, field descriptions, 1 row of health records
   		assertEquals(3, tableRows.size());
-  		//Verify table contents
   		
+  		//Verify table contents
   		//Row 1 values
   		//Office visit date
   		assertEquals("10/01/2013", entriesToCheck.get(0).getText());
@@ -91,6 +111,9 @@ public class ViewHealthRecordsHistoryTest extends iTrustSeleniumTest{
   		assertEquals("16.1in", entriesToCheck.get(4).getText());
   		//Patient household smoking status
   		assertEquals("Non-smoking household", entriesToCheck.get(5).getText());
+  		
+  		//Log out
+  		logout();
 	}
 	
 	/**
@@ -144,6 +167,327 @@ public class ViewHealthRecordsHistoryTest extends iTrustSeleniumTest{
 	}
 	
 	/**
+	 * testOfficeVisit20YrOldViewHealthMetrics
+	 * @throws Exception
+	 */
+	@Test
+	public void testOfficeVisit20YrOldViewHealthMetrics() throws Exception{
+		//Login as HCP Shelly Vang
+		login("8000000011", "pw");	
+		assertLogged(TransactionType.HOME_VIEW, 8000000011L, 0L, "");
+		
+		//Click Basic Health Information link
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
+	    driver.findElement(By.linkText("Basic Health Information")).click();
+		//Search for Daria Griffin (MID 104)
+	    driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("104");
+	    waitFor(1);
+	    //Click on first MID button
+	    driver.findElement(By.xpath("//input[@value='104' and @type='button']")).click();
+		
+		//Verify Basic Health Information page
+		assertEquals(ADDRESS + "auth/hcp-uap/viewBasicHealth.jsp", driver.getCurrentUrl());
+		
+		//Verify adult health record table displays
+		WebElement hrTable = driver.findElement(By.id("HealthRecordsTable"));
+		List<WebElement> tableRows = hrTable.findElements(By.tagName("tr"));
+		List<WebElement> row1 = tableRows.get(2).findElements(By.tagName("td"));
+		List<WebElement> row2 = tableRows.get(3).findElements(By.tagName("td"));
+		List<WebElement> row3 = tableRows.get(4).findElements(By.tagName("td"));
+		//Check that the table has 3 rows
+		assertEquals(5, tableRows.size());
+		//Verify table contents
+				
+		//Row 1 values
+		//Office visit date
+		assertEquals("10/25/2013", row1.get(0).getText());
+		//Patient length
+		assertEquals("62.3in", row1.get(1).getText());
+		//Patient weight
+		assertEquals("124.3lbs", row1.get(2).getText());
+		//Patient BMI
+		assertEquals("22.51", row1.get(3).getText());
+		//Weight status
+		assertEquals("Normal", row1.get(4).getText());
+		//Patient blood pressure
+		assertEquals("100/75 mmHg", row1.get(5).getText());
+		//Patient smoking status
+		assertEquals("N", row1.get(6).getText());
+		//Patient household smoking status
+		assertEquals("Non-smoking household", row1.get(7).getText());
+		//Patient HDL levels
+		assertEquals("65 mg/dL", row1.get(8).getText());
+		//Patient LDL levels
+		assertEquals("102 mg/dL", row1.get(9).getText());
+		//Patient triglycerides
+		assertEquals("147 mg/dL", row1.get(10).getText());
+		
+				
+		//Row 2 values
+		//Office visit date
+		assertEquals("10/20/2012", row2.get(0).getText());
+		//Patient length
+		assertEquals("62.3in", row2.get(1).getText());
+		//Patient weight
+		assertEquals("120.7lbs", row2.get(2).getText());
+		//Patient BMI
+		assertEquals("21.86",row2.get(3).getText());
+		//Weight status
+		assertEquals("N/A", row2.get(4).getText());
+		//Patient blood pressure
+		assertEquals("107/72 mmHg", row2.get(5).getText());
+		//Patient smoking status
+		assertEquals("Y", row2.get(6).getText());
+		//Patient household smoking status
+		assertEquals("Indoor smokers", row2.get(7).getText());
+		//Patient HDL levels
+		assertEquals("63 mg/dL", row2.get(8).getText());
+		//Patient LDL levels
+		assertEquals("103 mg/dL", row2.get(9).getText());
+		//Patient triglycerides
+		assertEquals("145 mg/dL", row2.get(10).getText());
+				
+		//Row 3 values
+		//Office visit date
+		assertEquals("10/10/2011", row3.get(0).getText());
+		//Patient length
+		assertEquals("62.3in", row3.get(1).getText());
+		//Patient weight
+		assertEquals("121.3lbs", row3.get(2).getText());
+		//Patient BMI
+		assertEquals("21.97", row3.get(3).getText());
+		//Weight status
+		assertEquals("N/A", row3.get(4).getText());
+		//Patient head circumference
+		assertEquals("105/73 mmHg", row3.get(5).getText());
+		//Patient smoking status
+		assertEquals("Y", row3.get(6).getText());
+		//Patient household smoking status
+		assertEquals("Indoor smokers", row3.get(7).getText());
+		//Patient HDL levels
+		assertEquals("64 mg/dL", row3.get(8).getText());
+		//Patient LDL levels
+		assertEquals("102 mg/dL", row3.get(9).getText());
+		//Patient triglycerides
+		assertEquals("143 mg/dL", row3.get(10).getText());
+		
+		//Logout
+		logout();
+	}
+	
+	/**
+	 * testDeletedHealthRecord
+	 * @throws Exception
+	 */
+	@Test
+	public void testDeletedHealthRecord() throws Exception{
+		//Login as HCP Kelly Doctor
+		login("9000000000", "pw");	
+		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
+		
+		//Click Document Office Visit Link
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div")).click();
+	    driver.findElement(By.linkText("Document Office Visit")).click();
+		//Search for Random Person (MID 1)
+	    driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("1");
+	    waitFor(1);
+	    //Click on first MID button
+	    driver.findElement(By.xpath("//input[@value='1' and @type='button']")).click();
+		//Verify Document Office Visit page
+		assertEquals(ADDRESS + "auth/hcp-uap/documentOfficeVisit.jsp", driver.getCurrentUrl());
+		//Click Yes, Document Office Visit
+		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		//Verify Edit Office Visit page
+		assertEquals("iTrust - Document Office Visit", driver.getTitle());
+		
+		//Add a new office visit
+		//Enter 10/01/2013 for the Office Visit Date
+		driver.findElement(By.name("visitDate")).clear();
+	    driver.findElement(By.name("visitDate")).sendKeys("10/01/2013");
+	    //Select Central Hospital for the hospital
+	    new Select(driver.findElement(By.name("hospitalID"))).selectByVisibleText("Central Hospital");
+	    //Enter "Random has consumed unknown seed 32912" for Notes
+	    driver.findElement(By.name("notes")).clear();
+	    driver.findElement(By.name("notes")).sendKeys("Random has consumed unknown seed 32912");
+	    //Click the create button
+	    driver.findElement(By.id("update")).click();
+		
+		//Verify "Information Successfully Updated" message
+		assertTrue(pageContains("Information Successfully Updated"));
+		
+		//Enter Health Metrics
+		//Enter 74 in for Height
+		driver.findElement(By.name("height")).clear();
+	    driver.findElement(By.name("height")).sendKeys("74");
+	    //Enter 165.8 lbs for Weight
+	    driver.findElement(By.name("weight")).clear();
+	    driver.findElement(By.name("weight")).sendKeys("165.8");
+	    //Enter 110/75 mmHg for Blood Pressure
+	    driver.findElement(By.name("bloodPressureN")).clear();
+	    driver.findElement(By.name("bloodPressureN")).sendKeys("110");
+	    driver.findElement(By.name("bloodPressureD")).clear();
+	    driver.findElement(By.name("bloodPressureD")).sendKeys("75");
+	    //Select '1 - non-smoking household' for Household Smoking Status
+	    new Select(driver.findElement(By.id("householdSmokingStatus"))).selectByVisibleText("1 - non-smoking household");
+	    //Select '3 - Former smoker' for Patient Smoking Status
+	    new Select(driver.findElement(By.id("isSmoker"))).selectByVisibleText("3 - Former smoker");
+	    //Enter 68 for HDL
+	    driver.findElement(By.name("cholesterolHDL")).clear();
+	    driver.findElement(By.name("cholesterolHDL")).sendKeys("68");
+	    //Enter 107 for LDL
+	    driver.findElement(By.name("cholesterolLDL")).clear();
+	    driver.findElement(By.name("cholesterolLDL")).sendKeys("107");
+	    //Enter 162 for Triglycerides
+	    driver.findElement(By.name("cholesterolTri")).clear();
+	    driver.findElement(By.name("cholesterolTri")).sendKeys("162");
+	    //Click Update Record
+	    driver.findElement(By.id("addHR")).click();
+		
+		//Verify "Health information successfully updated." message
+		assertEquals("iTrust - Document Office Visit", driver.getTitle());
+		assertTrue(pageContains("Health information successfully updated."));
+		
+		//Remove health record
+		driver.findElement(By.linkText("Remove")).click();
+		assertTrue(pageContains("Health information successfully updated."));
+		
+		//Click Basic Health Information link
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
+	    driver.findElement(By.linkText("Basic Health Information")).click();
+		//Verify Basic Health Information page
+		assertEquals(ADDRESS + "auth/hcp-uap/viewBasicHealth.jsp", driver.getCurrentUrl());
+		
+		WebElement hrTable = driver.findElement(By.id("HealthRecordsTable"));
+  		List<WebElement> tableRows = hrTable.findElements(By.tagName("tr"));
+  		List<WebElement> row1 = tableRows.get(2).findElements(By.tagName("td"));
+  		//Verify the table has the provided information: Header, field descriptions, 1 row of health records
+  		assertEquals(4, tableRows.size());
+		//Verify table contents
+				
+		//Row 1 values
+		//Office visit date
+		assertEquals("06/11/2007", row1.get(0).getText());
+		//Patient length
+		assertEquals("72.0in", row1.get(1).getText());
+		//Patient weight
+		assertEquals("185.0lbs", row1.get(2).getText());
+		//Patient BMI
+		assertEquals("25.09", row1.get(3).getText());
+		//Weight status
+		assertEquals("Overweight", row1.get(4).getText());
+		//Patient blood pressure
+		assertEquals("107/104 mmHg", row1.get(5).getText());
+		//Patient smoking status
+		assertEquals("N", row1.get(6).getText());
+		//Patient household smoking status
+		assertEquals("Non-smoking household", row1.get(7).getText());
+		//Patient HDL levels
+		assertEquals("41 mg/dL", row1.get(8).getText());
+		//Patient LDL levels
+		assertEquals("104 mg/dL", row1.get(9).getText());
+		//Patient triglycerides
+		assertEquals("101 mg/dL", row1.get(10).getText());
+		//By personnel Kelly Doctor
+		assertEquals("Kelly Doctor", row1.get(13).getText());
+		
+		//Logout
+		logout();
+	}
+	
+	/**
+	 * testOfficeVisitDateIsBirthDate
+	 * @throws Exception
+	 */
+	@Test
+	public void testOfficeVisitDateIsBirthDate() throws Exception{
+		//Login as HCP Shelly Vang
+		login("8000000011", "pw");	
+		assertLogged(TransactionType.HOME_VIEW, 8000000011L, 0L, "");
+		
+		//Click Document Office Visit Link
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div")).click();
+	    driver.findElement(By.linkText("Document Office Visit")).click();
+		//Search for Random Person (MID 1)
+	    driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("101");
+	    waitFor(1);
+	    //Click on first MID button
+	    driver.findElement(By.xpath("//input[@value='101' and @type='button']")).click();
+		//Verify Document Office Visit page
+		assertEquals(ADDRESS + "auth/hcp-uap/documentOfficeVisit.jsp", driver.getCurrentUrl());
+		//Click Yes, Document Office Visit
+		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		//Verify Edit Office Visit page
+		assertEquals("iTrust - Document Office Visit", driver.getTitle());
+		
+		//Add a new office visit
+		//Enter 05/01/2016 for the Office Visit Date
+		driver.findElement(By.name("visitDate")).clear();
+	    driver.findElement(By.name("visitDate")).sendKeys("05/01/2016");
+	    //Select Central Hospital for the hospital
+	    new Select(driver.findElement(By.name("hospitalID"))).selectByVisibleText("Central Hospital");
+	    //Enter "Brynn is growing into a beautiful sunflower" for Notes
+	    driver.findElement(By.name("notes")).clear();
+	    driver.findElement(By.name("notes")).sendKeys("Brynn is growing into a beautiful sunflower.");
+	    //Click the create button
+	    driver.findElement(By.id("update")).click();
+		
+		//Verify "Information Successfully Updated" message
+		assertTrue(pageContains("Information Successfully Updated"));
+		
+		//Enter Health Metrics
+		//Enter 42.8 in for Height
+		driver.findElement(By.name("height")).clear();
+	    driver.findElement(By.name("height")).sendKeys("42.8");
+	    //Enter 41.2 lbs for Weight
+	    driver.findElement(By.name("weight")).clear();
+	    driver.findElement(By.name("weight")).sendKeys("41.2");
+	    //Enter 123/64 mmHg for Blood Pressure
+	    driver.findElement(By.name("bloodPressureN")).clear();
+	    driver.findElement(By.name("bloodPressureN")).sendKeys("123");
+	    driver.findElement(By.name("bloodPressureD")).clear();
+	    driver.findElement(By.name("bloodPressureD")).sendKeys("64");
+	    //Select '1 - non-smoking household' for Household Smoking Status
+	    new Select(driver.findElement(By.id("householdSmokingStatus"))).selectByVisibleText("1 - non-smoking household");
+	    //Click the Add Record button
+	    driver.findElement(By.id("addHR")).click();
+		
+		//Verify "Health information successfully updated." message
+		assertTrue(pageContains("Health information successfully updated."));
+		
+		//Click Basic Health Information link
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
+	    driver.findElement(By.linkText("Basic Health Information")).click();
+		//Verify Basic Health Information page
+		assertEquals(ADDRESS + "auth/hcp-uap/viewBasicHealth.jsp", driver.getCurrentUrl());
+		
+		//Verify youth health record table displays
+		WebElement hrTable = driver.findElement(By.id("HealthRecordsTable"));
+		List<WebElement> tableRows = hrTable.findElements(By.tagName("tr"));
+		List<WebElement> row1 = tableRows.get(2).findElements(By.tagName("td"));
+		//Verify the table has the provided information: Header, field descriptions, 1 row of health records
+		assertEquals(3, tableRows.size());
+		//Verify table contents
+				
+		//Row 1 youth values
+		//Office visit date
+		assertEquals("05/01/2016", row1.get(0).getText());
+		//Patient length
+		assertEquals("42.8in", row1.get(1).getText());
+		//Patient weight
+		assertEquals("41.2lbs", row1.get(2).getText());
+		//Patient blood pressure
+		assertEquals("123/64 mmHg", row1.get(4).getText());
+		//Patient household smoking status
+		assertEquals("Non-smoking household", row1.get(5).getText());
+		
+		//Log out
+		logout();
+	}
+	
+	/**
 	 * testHCPLoggingAction
 	 * @throws Exception
 	 */
@@ -165,11 +509,14 @@ public class ViewHealthRecordsHistoryTest extends iTrustSeleniumTest{
 		//Verify Basic Health Information page
 		assertEquals(ADDRESS + "auth/hcp-uap/viewBasicHealth.jsp", driver.getCurrentUrl());
 		
+		//Log out as Shelly Vang
 		logout();
 		assertEquals("iTrust - Login", driver.getTitle());
 		
+		//Log in as MID 102
 		login("102", "pw");
 		assertEquals("iTrust - Patient Home", driver.getTitle());
+		//Make sure HCP action is appears in Your Activity Feed
 		assertTrue(pageContains("Shelly Vang"));
 		assertTrue(pageContains("viewed your health records history"));
 		
@@ -272,6 +619,7 @@ public class ViewHealthRecordsHistoryTest extends iTrustSeleniumTest{
 		//Patient household smoking status
 		assertEquals("Indoor smokers", infantRow5.get(5).getText());	
 		
+		//Log out
 		logout();
 	}
 	
@@ -374,6 +722,8 @@ public class ViewHealthRecordsHistoryTest extends iTrustSeleniumTest{
 		//Verify that message displays to user
 		assertTrue(pageContains("No health records available"));
 		
+		//Log out
+		logout();
 	}
 	
 	/**
@@ -394,5 +744,8 @@ public class ViewHealthRecordsHistoryTest extends iTrustSeleniumTest{
 		
 		//Verify that message displays to user
 		assertTrue(pageContains("No health records available"));
+		
+		//Log out
+		logout();
 	}
 }

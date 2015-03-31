@@ -137,7 +137,7 @@
 				<td><%=StringEscapeUtils.escapeHtml("" + dailyTotalCalories)%></td>
 			</tr>
 			<tr id="suggestion<%=index%>" style="display: none;">
-			<form action="viewPatientFoodDiary.jsp"> 
+			<form action="viewPatientFoodDiary.jsp" method="POST"> 
 				<td>New Suggestion:</td>
 				<td colspan="4">
 					<textarea rows="4" cols="50" name="suggestionText" id="suggestionText"></textarea>
@@ -234,7 +234,7 @@
 						+ totalBeanTmp.getGramsOfProtein())%></td>
 				<td><%=StringEscapeUtils.escapeHtml("" + dailyTotalCalories)%></td>
 			<tr id="suggestion<%=index%>" style="display: none;"> 
-				<form action="viewPatientFoodDiary.jsp?"> 
+				<form action="viewPatientFoodDiary.jsp" method="POST"> 
 				<td>New Suggestion:</td>
 				<td colspan="4">
 					<textarea rows="4" cols="50" name="suggestionText" id="suggestionText2"></textarea>
