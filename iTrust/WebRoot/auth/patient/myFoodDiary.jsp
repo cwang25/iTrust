@@ -163,7 +163,7 @@
 			}
 		}else if(undo){
 			FoodDiaryBean b = (FoodDiaryBean) session.getAttribute("deletedFoodDiary");
-			addAction.addFoodDiary(b);
+			addAction.undoFoodDiary(b);
 		} else if(addLabel) {
 			try {
 				FoodDiaryLabelBean b = new FoodDiaryLabelBean(loggedInMID, newLabelName);

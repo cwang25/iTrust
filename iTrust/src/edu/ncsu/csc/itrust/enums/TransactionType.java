@@ -439,6 +439,8 @@ public enum TransactionType {
 	PATIENT_EDIT_FDIARY(7000, "Edited a Food Diary Entry", "edited a food diary entry", true),
 	/**PATIENT_DELETE_FOOD_DIARY**/
 	PATIENT_DELETE_FDIARY(7001, "Deleted a Food Diary Entry", "deleted a food diary entry", true),
+	/**PATIENT_DELETE_FOOD_DIARY**/
+	PATIENT_UNDO_FDIARY(7800, "Undo a Food Diary Deletion", "undo a food diary deletion", true),
 	/**PATIENT_SET_LABEL**/
 	PATIENT_SET_LABEL(7300, "Set Food Diary Label", "Set Food Diary Label", true),
 	/**PATIENT_ADD_LABEL**/

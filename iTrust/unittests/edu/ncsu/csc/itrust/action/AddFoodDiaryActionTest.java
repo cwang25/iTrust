@@ -60,6 +60,25 @@ public class AddFoodDiaryActionTest {
 
 	/**
 	 * Test method for
+	 * {@link edu.ncsu.csc.itrust.action.AddFoodDiaryAction#undoFoodDiary(edu.ncsu.csc.itrust.beans.FoodDiaryBean)}
+	 * .
+	 * 
+	 * @throws DBException
+	 */
+	@Test
+	public void testUndoFoodDiary() throws DBException {
+		FoodDiaryBean testBean = new FoodDiaryBean(500L, new Date(),
+				FoodDiaryBean.MealTypes.BREAKFAST, "Test food", 2, 2, 2,
+				2, 2, 2, 2, 2);
+		long newID = aaron_action.undoFoodDiary(testBean);
+		FoodDiaryBean returnBean = factory.getFoodDiaryDAO().getFoodDiaryByID(
+				newID);
+		assertTrue(testBean.getNameOfFood().equals(returnBean.getNameOfFood()));
+		assertTrue(testBean.getGramsOfFat() == returnBean.getGramsOfFat());
+	}
+	
+	/**
+	 * Test method for
 	 * {@link edu.ncsu.csc.itrust.action.AddFoodDiaryAction#addStrFoodDiary(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)}
 	 * .
 	 */

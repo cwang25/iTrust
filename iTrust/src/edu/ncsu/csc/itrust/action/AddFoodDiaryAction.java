@@ -46,6 +46,24 @@ public class AddFoodDiaryAction extends FoodDiaryBaseAction {
 		loggingAction.logEvent(TransactionType.PATIENT_CREATE_FDIARY, mid, mid, "Patient created food diary.");
 		return newid;
 	}
+	
+	/**
+	 * Undo by adding food diary into database.
+	 * This method is like adding but record as undo. (for undo operation.)
+	 * @param b FoodDiaryBean to undo the deletion.
+	 * @return The long id of the new inserted record.
+	 * @throws DBException 
+	 */
+	public long undoFoodDiary(FoodDiaryBean b) throws DBException{		
+		//Sanitize the rowID, since adding food diary is not able to explicitly declare the row id.
+		//row id should be 100% created and decided by SQL.
+		b.setRowID(-1);
+		long newid = foodDAO.insertFoodDiary(b);
+		loggingAction.logEvent(TransactionType.PATIENT_UNDO_FDIARY, mid, mid, "Patient undo food diary deletion.");
+		return newid;
+	}
+	
+	
 	/**
 	 * Add food diary from string input from jsp page.
 	 * It will handle the data format and throw appropriate error messages.
