@@ -1,4 +1,4 @@
-package edu.ncsu.csc.itrust.selenium;
+package edu.ncsu.csc.itrust.seleniumtests;
 
 import java.net.ConnectException;
 import java.util.List;

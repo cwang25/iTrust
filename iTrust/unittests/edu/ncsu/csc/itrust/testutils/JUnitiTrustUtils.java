@@ -7,9 +7,10 @@ import edu.ncsu.csc.itrust.beans.TransactionBean;
 import edu.ncsu.csc.itrust.enums.TransactionType;
 import edu.ncsu.csc.itrust.exception.DBException;
 import edu.ncsu.csc.itrust.http.iTrustHTTPTest;
+import edu.ncsu.csc.itrust.seleniumtests.iTrustSeleniumTest;
 
 @SuppressWarnings("unused")
-public class JUnitiTrustUtils  extends iTrustHTTPTest{
+public class JUnitiTrustUtils  extends iTrustSeleniumTest {
 
 	public static void assertTransactionOnly(TransactionType transType, long loggedInMID, long secondaryMID,
 			String addedInfo) throws DBException {

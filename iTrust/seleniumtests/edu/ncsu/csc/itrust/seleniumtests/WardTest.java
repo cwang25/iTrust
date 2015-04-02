@@ -1,4 +1,4 @@
-package edu.ncsu.csc.itrust.selenium;
+package edu.ncsu.csc.itrust.seleniumtests;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.Select;
