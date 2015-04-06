@@ -492,7 +492,7 @@
 	</div>	
 	<br />
 	<div id="HiddenForm" name="Hiddenform"
-		style="display: <%=!dataAllCorrect&&toEdit? "block" : "none"%>">
+		style="display: <%=!dataAllCorrect||toEdit? "block" : "none"%>">
 		<form action="myFoodDiary.jsp" method="post" id="edit" align="center">
 			<td valign=top>
 				<div class="row">

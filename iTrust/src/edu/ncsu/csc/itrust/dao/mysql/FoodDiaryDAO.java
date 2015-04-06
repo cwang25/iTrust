@@ -55,6 +55,9 @@ public class FoodDiaryDAO {
 		}
 		return lastInsertID;
 	}
+	
+	
+	
 	/**
 	 * The method to get a list of food diary for particular owner (patient).
 	 * @param ownerID  The owner (patient) id.
