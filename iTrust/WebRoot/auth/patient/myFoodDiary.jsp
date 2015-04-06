@@ -486,6 +486,7 @@
 	%>
 	<div>
 		</br>
+		<button type='button' onclick="showMacroCalculator">Macro Calculator</button>
 		<button type='button' onclick="showHiddenAddNewFoodDiaryForm('HiddenForm');$('#newLabelForm').hide();">Add new food diary</button>
 		<button type='button' onclick="hideHiddenForm('HiddenForm');$('#newLabelForm').show();setOperationMode('addLabel');">Create new label</button>
 	</div>	
