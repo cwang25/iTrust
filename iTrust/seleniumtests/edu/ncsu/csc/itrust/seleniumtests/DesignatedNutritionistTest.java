@@ -1,26 +1,13 @@
 package edu.ncsu.csc.itrust.seleniumtests;
 
-import static org.junit.Assert.fail;
-
 import java.util.concurrent.TimeUnit;
-
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
-import com.gargoylesoftware.htmlunit.javascript.background.JavaScriptExecutor;
 
-import edu.ncsu.csc.itrust.http.iTrustHTTPTest;
-
-public class DesignatedNutritionistTest extends iTrustHTTPTest {
+public class DesignatedNutritionistTest extends iTrustSeleniumTest {
 	private HtmlUnitDriver driver;
 	private String baseUrl;
 
