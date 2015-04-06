@@ -112,7 +112,7 @@
 			%>
 			<tr>
 				<td>
-					<%=StringEscapeUtils.escapeHtml("[Daily Summary]")%>
+					<b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b>
 					<button id="toggle<%=index%>" style="border:none; background-color:Transparent"><img id="img<%=index%>" src="/iTrust/image/icons/addSuggestionPlus.png" height="20" width="20"></button>
 					<span style="<%= label.length() > 0 ? "border-radius:5px; padding:3px; color:white; background-color:red;" : "" %>"><%=StringEscapeUtils.escapeHtml(label)%></span>
 				</td>
@@ -204,7 +204,7 @@
 	%>
 			<tr>
 				<td>
-				<%=StringEscapeUtils.escapeHtml("[Daily Summary]")%>
+				<b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b>
 				<button id="toggle<%=index%>" style="border:none; background-color:Transparent"><img src="/iTrust/image/icons/addSuggestionPlus.png" height="20" width="20"></button>
 				<span style="<%= label.length() > 0 ? "border-radius:5px; padding:3px; color:white; background-color:red;" : "" %>"><%=StringEscapeUtils.escapeHtml(label)%></span>
 				</td>

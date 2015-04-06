@@ -265,7 +265,7 @@
 								label = labelBean.getLabel();
 			%>
 			<tr class="diaryLabelRow <%= label %>">
-				<td><%=StringEscapeUtils.escapeHtml("[Daily Summary]")%><button id="toggle<%=index%>" style="border:none; background-color:Transparent"><img id="img<%=index%>" src="/iTrust/image/icons/greenplus.png" height="20" width="20"></button> </td>
+				<td><b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b><br><button id="toggle<%=index%>" style="border:none; background-color:Transparent"><img id="img<%=index%>" src="/iTrust/image/icons/greenplus.png" height="20" width="20"></button></td>
 				<script language="JavaScript">
 				$(document).ready(function(){					
 					$("#toggle<%=index%>").click(
@@ -390,7 +390,7 @@
 			%>
 
 			<tr class="diaryLabelRow <%= label %>">
-				<td><%=StringEscapeUtils.escapeHtml("[Daily Summary]")%> <button id="toggle<%=index%>" style="border:none; background-color:Transparent" onclick=""><img id="img<%=index%>" src="/iTrust/image/icons/greenplus.png" height="20" width="20"></button></td>
+				<td><b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b><br><button id="toggle<%=index%>" style="border:none; background-color:Transparent" onclick=""><img id="img<%=index%>" src="/iTrust/image/icons/greenplus.png" height="20" width="20"></button></td>
 				<script language="JavaScript">
 				$(document).ready(function(){
 					$("#toggle<%=index%>").click(
