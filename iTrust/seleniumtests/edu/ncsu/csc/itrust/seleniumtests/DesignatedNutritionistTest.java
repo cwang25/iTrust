@@ -35,7 +35,7 @@ public class DesignatedNutritionistTest extends iTrustSeleniumTest {
 		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("Patient Food Diary")).click();
 		driver.findElement(By.id("searchBox")).sendKeys("100");
-		Thread.sleep(2000);
+		waitFor(2);
 		driver.findElement(By.xpath("//input[@value='100' and @type='button']")).click();
 		assertTrue((driver.getPageSource()).contains("2. Patient has to set you as his/her Designated Nutritionist in order to view it."));
 		driver.setJavascriptEnabled(false);
@@ -54,15 +54,15 @@ public class DesignatedNutritionistTest extends iTrustSeleniumTest {
 		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("Patient Food Diary")).click();
 		driver.findElement(By.id("searchBox")).sendKeys("500");
-		Thread.sleep(2000);
+		waitFor(2);
 		driver.findElement(By.xpath("//input[@value='500' and @type='button']")).click();
 		assertTrue((driver.getPageSource()).contains("Oreos"));
 		assertTrue((driver.getPageSource()).contains("Cheese and Bean Dip"));
 
-		Thread.sleep(2000);
+		waitFor(2);
 		driver.findElement(By.linkText("Switch Patient")).click();
 		driver.findElement(By.id("searchBox")).sendKeys("500");
-		Thread.sleep(2000);
+		waitFor(2);
 		driver.findElement(By.xpath("//input[@value='500' and @type='button']")).click();
 		driver.findElement(By.linkText("Food Diary")).click();
 		assertTrue((driver.getPageSource()).contains("Oreos"));
@@ -102,7 +102,7 @@ public class DesignatedNutritionistTest extends iTrustSeleniumTest {
 		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("My Providers")).click();
 		driver.findElement(By.id("doctor1")).click();
-		Thread.sleep(1000);
+		waitFor(2);
 		driver.setJavascriptEnabled(false);
 		driver.findElement(By.id("logoutBtn")).click();
 		driver.setJavascriptEnabled(true);
@@ -112,6 +112,7 @@ public class DesignatedNutritionistTest extends iTrustSeleniumTest {
 		driver.findElement(By.linkText("Patient Food Diary")).click();
 		driver.findElement(By.id("searchBox")).clear();
 		driver.findElement(By.id("searchBox")).sendKeys("100");
+		waitFor(2);
 		driver.findElement(By.xpath("//input[@value='100' and @type='button']")).click();
 		assertTrue((driver.getPageSource()).contains("The patient has no Food diary"));
 	}

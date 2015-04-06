@@ -19,7 +19,7 @@ public class FoodDiaryLabelTest extends iTrustSeleniumTest {
 		login("500", "pw");
 	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 	    driver.findElement(By.linkText("My Food Diary")).click();
-	    driver.findElement(By.xpath("(//button[@type='button'])[8]")).click();
+	    driver.findElement(By.xpath("(//button[@type='button'])[9]")).click();
 	    driver.findElement(By.id("newLabelName")).clear();
 	    driver.findElement(By.id("newLabelName")).sendKeys("testlabel");
 	    driver.findElement(By.id("saveNewLabelBtn")).click();
@@ -31,7 +31,7 @@ public class FoodDiaryLabelTest extends iTrustSeleniumTest {
 		login("500", "pw");
 	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 	    driver.findElement(By.linkText("My Food Diary")).click();
-	    driver.findElement(By.xpath("(//button[@type='button'])[8]")).click();
+	    driver.findElement(By.xpath("(//button[@type='button'])[9]")).click();
 	    driver.findElement(By.id("newLabelName")).clear();
 	    driver.findElement(By.id("newLabelName")).sendKeys("test");
 	    driver.findElement(By.id("saveNewLabelBtn")).click();
@@ -46,7 +46,7 @@ public class FoodDiaryLabelTest extends iTrustSeleniumTest {
 		login("500", "pw");
 	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 	    driver.findElement(By.linkText("My Food Diary")).click();
-	    driver.findElement(By.xpath("(//button[@type='button'])[8]")).click();
+	    driver.findElement(By.xpath("(//button[@type='button'])[9]")).click();
 	    driver.findElement(By.id("newLabelName")).clear();
 	    driver.findElement(By.id("newLabelName")).sendKeys("test");
 	    driver.findElement(By.id("saveNewLabelBtn")).click();
@@ -64,7 +64,7 @@ public class FoodDiaryLabelTest extends iTrustSeleniumTest {
 		login("500", "pw");
 		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 	    driver.findElement(By.linkText("My Food Diary")).click();
-	    driver.findElement(By.xpath("(//button[@type='button'])[8]")).click();
+	    driver.findElement(By.xpath("(//button[@type='button'])[9]")).click();
 	    driver.findElement(By.id("newLabelName")).clear();
 	    driver.findElement(By.id("newLabelName")).sendKeys("test");
 	    driver.findElement(By.id("saveNewLabelBtn")).click();
