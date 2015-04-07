@@ -11,7 +11,7 @@ import java.util.Date;
  * @author Chi-Han
  *
  */
-public class FoodDiaryDateSummaryBean extends FoodDiaryBean {
+public class FoodDiaryDailySummaryBean extends FoodDiaryBean {
 
 	/**
 	 * The constructor of daily summary food diary. 
@@ -27,7 +27,7 @@ public class FoodDiaryDateSummaryBean extends FoodDiaryBean {
 	 * @param fiberg
 	 * @param proteing
 	 */
-	public FoodDiaryDateSummaryBean(long oID, Date d, double servCal, double fatg,
+	public FoodDiaryDailySummaryBean(long oID, Date d, double servCal, double fatg,
 			double sodiummg, double carbsg, double sugarg, double fiberg,
 			double proteing) {
 		super(oID, d, null, null, -1, servCal, fatg, sodiummg,

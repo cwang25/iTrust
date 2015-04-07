@@ -11,7 +11,9 @@ import java.util.List;
 
 import edu.ncsu.csc.itrust.DBUtil;
 import edu.ncsu.csc.itrust.beans.FoodDiaryBean;
+import edu.ncsu.csc.itrust.beans.FoodDiaryDailySummaryBean;
 import edu.ncsu.csc.itrust.beans.loaders.FoodDiaryBeanLoader;
+import edu.ncsu.csc.itrust.beans.loaders.FoodDiaryDailySummaryBeanLoader;
 import edu.ncsu.csc.itrust.dao.DAOFactory;
 import edu.ncsu.csc.itrust.exception.DBException;
 
@@ -22,6 +24,7 @@ import edu.ncsu.csc.itrust.exception.DBException;
 public class FoodDiaryDAO {
 	private transient final DAOFactory factory;
 	private transient final FoodDiaryBeanLoader loader;
+	private transient final FoodDiaryDailySummaryBeanLoader summaryLoader;
 	/**
 	 * Constructor
 	 * @param factory
@@ -29,6 +32,7 @@ public class FoodDiaryDAO {
 	public FoodDiaryDAO(final DAOFactory factory){
 		this.factory = factory;
 		this.loader = new FoodDiaryBeanLoader();
+		this.summaryLoader = new FoodDiaryDailySummaryBeanLoader();
 	}
 	/**
 	 * The method to insert food diary record into SQL.
@@ -83,6 +87,41 @@ public class FoodDiaryDAO {
 		}
 		return fDList;
 	}
+	
+	/**
+	 * The method to get a list of food diary daily summary for particular owner (patient).
+	 * (In decs order, which the most recent record first than older records.)
+	 * @param ownerID  The owner (patient) id.
+	 * @return The list of the food diary daily summary.
+	 * @throws DBException
+	 */
+	public List<FoodDiaryDailySummaryBean> getFoodDiaryDailySummaryListByOwnerID(long ownerID) throws DBException{
+		Connection conn = null;
+		PreparedStatement ps = null;
+		List<FoodDiaryDailySummaryBean> fDList;
+		try{
+			conn = factory.getConnection();
+			ps = conn.prepareStatement("SELECT ownerID,diaryDate,SUM(servingsNum*caloriesPerServing) totalCals,"+
+			"SUM(gramsOfFatPerServing) totalFat,SUM(milligramsOfSodiumServing) totalSodium,"+
+					"SUM(gramsOfCarbsPerServing) totalCarbs,SUM(gramsOfSugarPerServing) totalSugar,"+
+			"SUM(gramsOfFiberPerServing) totalFiber,SUM(gramsOfProteinPerServing) totalProtein from fooddiarytable WHERE ownerID=? GROUP BY diaryDate ORDER BY diaryDate DESC;");
+			ps.setLong(1, ownerID);
+			ResultSet rs = ps.executeQuery();
+			fDList = summaryLoader.loadList(rs);
+			rs.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+			throw new DBException(e);
+		}finally{
+			DBUtil.closeConnection(conn, ps);
+		}
+		return fDList;
+	}
+	
+	
+	
+	
+	
 	/**
 	 * To retrieve food diary record by searching specific diaryID.
 	 * @param diaryID The rowID of the food diary record.

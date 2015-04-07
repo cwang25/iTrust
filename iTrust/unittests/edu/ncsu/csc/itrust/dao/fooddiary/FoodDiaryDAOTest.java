@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import edu.ncsu.csc.itrust.DBBuilder;
 import edu.ncsu.csc.itrust.beans.FoodDiaryBean;
+import edu.ncsu.csc.itrust.beans.FoodDiaryDailySummaryBean;
 import edu.ncsu.csc.itrust.dao.DAOFactory;
 import edu.ncsu.csc.itrust.dao.mysql.FoodDiaryDAO;
 import edu.ncsu.csc.itrust.datagenerators.TestDataGenerator;
@@ -26,6 +27,9 @@ public class FoodDiaryDAOTest {
 	private FoodDiaryDAO foodDAO = factory.getFoodDiaryDAO();
 	private FoodDiaryBean b1;
 	private FoodDiaryBean b2;
+	private FoodDiaryBean bDate1;
+	private FoodDiaryBean bDate2;
+	private FoodDiaryBean bDate3;
 	private FoodDiaryBean bad_bean;
 	private static final long PATIENT_MID = 500L;
 	private static final long PETIENT_MID_2 = 503L;
@@ -45,6 +49,8 @@ public class FoodDiaryDAOTest {
 		gen.clearAllTables();
 		Calendar c1 = Calendar.getInstance();
 		c1.set(2015, 2, 15);
+		Calendar c2 = Calendar.getInstance();
+		c2.set(2015, 2, 13);
 		b1 = new FoodDiaryBean(500, c1.getTime(),
 				FoodDiaryBean.MealTypes.SNACK, "Oreos", 53, 140, 7,
 				90, 21, 13, 1, 0);
@@ -54,6 +60,15 @@ public class FoodDiaryDAOTest {
 		bad_bean = new FoodDiaryBean(500, new Date(),
 				FoodDiaryBean.MealTypes.DINNER, "Junk", 60, 140, 8,
 				100, 20, 0, 0, -1);
+		bDate1 = new FoodDiaryBean(500, c1.getTime(),
+				FoodDiaryBean.MealTypes.SNACK, "Oreos", 50, 140, 7,
+				90, 21, 13, 1, 0);
+		bDate2 = new FoodDiaryBean(500, c1.getTime(),
+				FoodDiaryBean.MealTypes.SNACK, "Oreoss", 50, 140, 7,
+				90, 21, 13, 1, 0);
+		bDate3 = new FoodDiaryBean(500, c2.getTime(),
+				FoodDiaryBean.MealTypes.SNACK, "Oreosss", 50, 140, 7,
+				90, 21, 13, 1, 0);
 	}
 
 	@Test
@@ -121,5 +136,23 @@ public class FoodDiaryDAOTest {
 		}
 		List <FoodDiaryBean> newList = foodDAO.getFoodDiaryListByOwnerID(500);
 		assertTrue(newList.size() == 0);
+	}
+	
+	public void testGetFoodDiaryDailySummaryListByOwnerID() throws DBException{
+		//foodDAO.insertFoodDiary(b1);
+		foodDAO.insertFoodDiary(b2);
+		
+		foodDAO.insertFoodDiary(bDate1);
+		foodDAO.insertFoodDiary(bDate2);
+		foodDAO.insertFoodDiary(bDate3);
+
+		List<FoodDiaryDailySummaryBean> foodlist = foodDAO.getFoodDiaryDailySummaryListByOwnerID(PATIENT_MID);
+		assertEquals(2, foodlist.size());
+		FoodDiaryDailySummaryBean t1 = foodlist.get(0);
+		assertTrue(t1.getCaloriesPerServing() - 2*bDate1.totalCalories() == 0);
+		FoodDiaryDailySummaryBean t2 = foodlist.get(1);
+		assertTrue(t2.getCaloriesPerServing() - bDate3.totalCalories() == 0);
+		List<FoodDiaryDailySummaryBean> emptyFood = foodDAO.getFoodDiaryDailySummaryListByOwnerID(PETIENT_MID_2);
+		assertEquals(0, emptyFood.size());	
 	}
 }
