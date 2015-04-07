@@ -102,9 +102,9 @@ public class FoodDiaryDAO {
 		try{
 			conn = factory.getConnection();
 			ps = conn.prepareStatement("SELECT ownerID,diaryDate,SUM(servingsNum*caloriesPerServing) totalCals,"+
-			"SUM(gramsOfFatPerServing) totalFat,SUM(milligramsOfSodiumServing) totalSodium,"+
-					"SUM(gramsOfCarbsPerServing) totalCarbs,SUM(gramsOfSugarPerServing) totalSugar,"+
-			"SUM(gramsOfFiberPerServing) totalFiber,SUM(gramsOfProteinPerServing) totalProtein from fooddiarytable WHERE ownerID=? GROUP BY diaryDate ORDER BY diaryDate DESC;");
+			"SUM(servingsNum*gramsOfFatPerServing) totalFat,SUM(servingsNum*milligramsOfSodiumPerServing) totalSodium,"+
+					"SUM(servingsNum*gramsOfCarbsPerServing) totalCarbs,SUM(servingsNum*gramsOfSugarPerServing) totalSugar,"+
+			"SUM(servingsNum*gramsOfFiberPerServing) totalFiber,SUM(servingsNum*gramsOfProteinPerServing) totalProtein from fooddiarytable WHERE ownerID=? GROUP BY diaryDate ORDER BY diaryDate DESC;");
 			ps.setLong(1, ownerID);
 			ResultSet rs = ps.executeQuery();
 			fDList = summaryLoader.loadList(rs);
