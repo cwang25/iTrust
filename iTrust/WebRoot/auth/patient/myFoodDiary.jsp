@@ -66,6 +66,8 @@
 	 	boolean undo = mode!=null&&mode.equals("undo");
 	 	boolean addLabel = mode!=null&&mode.equals("addLabel");
 	 	boolean setLabel = mode!=null&&mode.equals("setLabel");
+	 	
+	 	SimpleDateFormat diaryDateFormat = new SimpleDateFormat("MM/dd/yyyy");
 	 	//out.println(mode);
 /*  	String dateStr = "";
 		String typeOfMeal = "";
@@ -214,6 +216,14 @@
 		</select>
 	</div>
 	<br/>
+	<div>
+		<span>Filter entries by date</span><br/>
+		Filter by range: <input id="dateRangeCheckbox" type="checkbox"/><br/>
+		<input type="text" placeholder="MM/dd/yyyy" id="dateRangeFrom"/>&nbsp;<input type="text" placeholder="MM/dd/yyyy" id="dateRangeTo" style="display:none;" /><br/>
+		<input type="button" id="dateFilterSubmit" value="Filter"/><input type="button" id="dateFilterClear" value="Show All"/><br/>
+		<span style="color:red;" id="dateFilterErrorMsg"></span>
+	</div>
+	<br/>
 	<div style="margin-left: 5px;">
 		<table id="fTable" class="fTable" border=1 align="center">
 			<tr>
@@ -247,7 +257,7 @@
 						label1 = labelBean1.getLabel();
 					
 					boolean needDailySummary = false;
-					String row = "<tr class='diaryLabelRow " + label1 + "'";
+					String row = "<tr class='diaryLabelRow " + label1 + "' data-diarydate='" + diaryDateFormat.format(labelBean1.getDate()) + "'";
 			%>
 
 				<%=row+""+((index%2 == 1)?" class=\"alt\"":"")+">"%>
@@ -264,7 +274,7 @@
 							if(labelBean != null)
 								label = labelBean.getLabel();
 			%>
-			<tr class="diaryLabelRow <%= label %>">
+			<tr class="diaryLabelRow <%= label %>" data-diarydate="<%= diaryDateFormat.format(labelBean.getDate()) %>">
 				<td><b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b><br><button id="toggle<%=index%>" style="border:none; background-color:Transparent"><img id="img<%=index%>" src="/iTrust/image/icons/greenplus.png" height="20" width="20"></button></td>
 				<script language="JavaScript">
 				$(document).ready(function(){					
@@ -341,7 +351,7 @@
 				<td colspan="12"><textarea id="tarea<%=index%>" rows="4" cols="50" readonly><%=StringEscapeUtils.escapeHtml(suggestionList)%></textarea>
 				</td>
 			</tr>
-			<tr class="diaryLabelRow <%= label1 %>">
+			<tr class="diaryLabelRow <%= label1 %>" data-diarydate="<%= diaryDateFormat.format(labelBean1.getDate()) %>">
 			<%
 				totalBeanTmp = new FoodDiaryBean();
 							dailyTotalCalories = 0;
@@ -389,7 +399,7 @@
 					label = labelBean.getLabel();
 			%>
 
-			<tr class="diaryLabelRow <%= label %>">
+			<tr class="diaryLabelRow <%= label %>" data-diarydate="<%= diaryDateFormat.format(labelBean.getDate()) %>">
 				<td><b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b><br><button id="toggle<%=index%>" style="border:none; background-color:Transparent" onclick=""><img id="img<%=index%>" src="/iTrust/image/icons/greenplus.png" height="20" width="20"></button></td>
 				<script language="JavaScript">
 				$(document).ready(function(){
@@ -701,10 +711,98 @@
 		} else {
 			$('.diaryLabelRow').hide();
 			var selector = '.'+label;
-			console.log(selector);
 			$(selector).show();
 		}
 	});
+	
+	$('#dateRangeCheckbox').click(function() {
+		if(this.checked)
+			$('#dateRangeTo').show();
+		else
+			$('#dateRangeTo').hide();
+	});
+	
+	$('#dateFilterClear').click(function() {
+		$('[data-diarydate]').show();
+	});
+	
+	$('#dateFilterSubmit').click(function() {
+		var goodDate = isDate($('#dateRangeFrom').val()); //validate from date
+		var dateRange = $('#dateRangeCheckbox')[0].checked;
+		if(dateRange)
+			goodDate = isDate($('#dateRangeTo').val()); //validate to date if we're in a date range
+		
+		//doesn't pass validation, show error message
+		//otherwise continue with filtering
+		if(!goodDate) {
+			$('#dateFilterErrorMsg').html('Invalid date. Please make sure your dates are valid and in MM/dd/yyyy format.');
+		} else {
+			$('#dateFilterErrorMsg').html(''); //clear error message
+			var dateFrom = (new Date($('#dateRangeFrom').val())).getTime();
+			//if user wants to filter by range
+			if(dateRange) {
+				var dateTo = (new Date($('#dateRangeTo').val())).getTime();				
+				//swap them if dateFrom is after dateTo
+				if(dateFrom > dateTo) {
+					var tmpdate = dateFrom;
+					dateFrom = dateTo;
+					dateTo = tmpdate;
+				}
+			}
+			
+			//show/hide each applicable element
+			$('[data-diarydate]').each(function() {
+				var thisdate = (new Date($(this).attr('data-diarydate'))).getTime();
+				//single date, must be equal
+				if(!dateRange) {
+					if(thisdate == dateFrom)
+						$(this).show();
+					else
+						$(this).hide();
+				} else { //date range, must be in range
+					if(thisdate >= dateFrom && thisdate <= dateTo)
+						$(this).show();
+					else
+						$(this).hide();
+				}
+			});
+			
+		}
+	});
+	
+	//validates MM/dd/yyyy format
+	//taken from http://www.jquerybyexample.net/2011/12/validate-date-using-jquery.html
+	function isDate(txtDate)
+	{
+	    var currVal = txtDate;
+	    if(currVal == '')
+	        return false;
+	    
+	    var rxDatePattern = /^(\d{1,2})(\/|-)(\d{1,2})(\/|-)(\d{4})$/; //Declare Regex
+	    var dtArray = currVal.match(rxDatePattern); // is format OK?
+	    
+	    if (dtArray == null) 
+	        return false;
+	    
+	    //Checks for mm/dd/yyyy format.
+	    dtMonth = dtArray[1];
+	    dtDay= dtArray[3];
+	    dtYear = dtArray[5];        
+	    
+	    if (dtMonth < 1 || dtMonth > 12) 
+	        return false;
+	    else if (dtDay < 1 || dtDay> 31) 
+	        return false;
+	    else if ((dtMonth==4 || dtMonth==6 || dtMonth==9 || dtMonth==11) && dtDay ==31) 
+	        return false;
+	    else if (dtMonth == 2) 
+	    {
+	        var isleap = (dtYear % 4 == 0 && (dtYear % 100 != 0 || dtYear % 400 == 0));
+	        if (dtDay> 29 || (dtDay ==29 && !isleap)) 
+	                return false;
+	    }
+	    return true;
+	}
 /* 	function scrollToBottom() {
 		var objDiv = document.getElementById("bottomLine");
 		objDiv.scrollTop = objDiv.scrollHeight;

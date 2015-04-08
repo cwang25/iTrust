@@ -40,6 +40,9 @@
 	SuggestionAction suggPatientAction = new SuggestionAction(prodDAO, Long.parseLong(pidString));
 	List<FoodDiaryBean> foodDiaryList = action.getFoodDiaryListByOwnerID(Long.parseLong(pidString));
 	session.setAttribute("foodDiaryList", foodDiaryList);
+	
+	SimpleDateFormat diaryDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+	
 	boolean needToAddSuggestion = (request.getParameter("addNewSuggestion") != null && request.getParameter("addNewSuggestion").equals("true"));
 	if (needToAddSuggestion) {
 		String date = request.getParameter("date");
@@ -62,7 +65,13 @@
 
 	if (foodDiaryList != null && foodDiaryList.size() > 0) {
 %>	
-
+	<div align="center">
+		<span>Filter entries by date</span><br/>
+		Filter by range: <input id="dateRangeCheckbox" type="checkbox"/><br/>
+		<input type="text" placeholder="MM/dd/yyyy" id="dateRangeFrom"/>&nbsp;<input type="text" placeholder="MM/dd/yyyy" id="dateRangeTo" style="display:none;" /><br/>
+		<input type="button" id="dateFilterSubmit" value="Filter"/><input type="button" id="dateFilterClear" value="Show All"/><br/>
+		<span style="color:red;" id="dateFilterErrorMsg"></span>
+	</div>
 	<div style="margin-left: 5px;">
 	</br>
 	<table class="fTable" border=1 align="center">
@@ -92,7 +101,7 @@
 		FoodDiaryBean oldBean = null; // keeps track of the previous bean
 		for(FoodDiaryBean b : foodDiaryList) {
 			boolean needDailySummary = false;
-			String row = "<tr";
+			String row = "<tr data-diarydate='" + diaryDateFormat.format(b.getDate()) + "'";
 %>
 
 			<%=row+""+((index % 2 == 1)?" class=\"alt\"":"")+">"%>
@@ -110,7 +119,7 @@
 				if(labelBean != null)
 					label = labelBean.getLabel();
 			%>
-			<tr>
+			<tr data-diarydate="<%= diaryDateFormat.format(labelBean.getDate()) %>">
 				<td>
 					<b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b>
 					<button id="toggle<%=index%>" style="border:none; background-color:Transparent"><img id="img<%=index%>" src="/iTrust/image/icons/addSuggestionPlus.png" height="20" width="20"></button>
@@ -181,6 +190,7 @@
 			recordFlag = sdf.format(b.getDate());
 			oldBean = b;
 			%>
+			<tr data-diarydate="<%= diaryDateFormat.format(b.getDate()) %>">
 				<td><%= StringEscapeUtils.escapeHtml("" + sdf.format(b.getDate()))%></td>
 				<td><%= StringEscapeUtils.escapeHtml("" + b.getTypeOfMeal().toString()) %></td>
 				<td><%= StringEscapeUtils.escapeHtml("" + b.getNameOfFood()) %></td>
@@ -202,7 +212,7 @@
 		if(labelBean != null)
 			label = labelBean.getLabel();
 	%>
-			<tr>
+			<tr data-diarydate="<%= diaryDateFormat.format(labelBean.getDate()) %>">
 				<td>
 				<b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b>
 				<button id="toggle<%=index%>" style="border:none; background-color:Transparent"><img src="/iTrust/image/icons/addSuggestionPlus.png" height="20" width="20"></button>
@@ -282,6 +292,97 @@
 <%	} %>	
 	<br />
 </div>
+
+<script type="text/javascript">
+	$('#dateRangeCheckbox').click(function() {
+		if(this.checked)
+			$('#dateRangeTo').show();
+		else
+			$('#dateRangeTo').hide();
+	});
+	
+	$('#dateFilterClear').click(function() {
+		$('[data-diarydate]').show();
+	});
+	
+	$('#dateFilterSubmit').click(function() {
+		var goodDate = isDate($('#dateRangeFrom').val()); //validate from date
+		var dateRange = $('#dateRangeCheckbox')[0].checked;
+		if(dateRange)
+			goodDate = isDate($('#dateRangeTo').val()); //validate to date if we're in a date range
+		
+		//doesn't pass validation, show error message
+		//otherwise continue with filtering
+		if(!goodDate) {
+			$('#dateFilterErrorMsg').html('Invalid date. Please make sure your dates are valid and in MM/dd/yyyy format.');
+		} else {
+			$('#dateFilterErrorMsg').html(''); //clear error message
+			var dateFrom = (new Date($('#dateRangeFrom').val())).getTime();
+			//if user wants to filter by range
+			if(dateRange) {
+				var dateTo = (new Date($('#dateRangeTo').val())).getTime();				
+				//swap them if dateFrom is after dateTo
+				if(dateFrom > dateTo) {
+					var tmpdate = dateFrom;
+					dateFrom = dateTo;
+					dateTo = tmpdate;
+				}
+			}
+			
+			//show/hide each applicable element
+			$('[data-diarydate]').each(function() {
+				var thisdate = (new Date($(this).attr('data-diarydate'))).getTime();
+				//single date, must be equal
+				if(!dateRange) {
+					if(thisdate == dateFrom)
+						$(this).show();
+					else
+						$(this).hide();
+				} else { //date range, must be in range
+					if(thisdate >= dateFrom && thisdate <= dateTo)
+						$(this).show();
+					else
+						$(this).hide();
+				}
+			});
+			
+		}
+	});
+	
+	//validates MM/dd/yyyy format
+	//taken from http://www.jquerybyexample.net/2011/12/validate-date-using-jquery.html
+	function isDate(txtDate)
+	{
+	    var currVal = txtDate;
+	    if(currVal == '')
+	        return false;
+	    
+	    var rxDatePattern = /^(\d{1,2})(\/|-)(\d{1,2})(\/|-)(\d{4})$/; //Declare Regex
+	    var dtArray = currVal.match(rxDatePattern); // is format OK?
+	    
+	    if (dtArray == null) 
+	        return false;
+	    
+	    //Checks for mm/dd/yyyy format.
+	    dtMonth = dtArray[1];
+	    dtDay= dtArray[3];
+	    dtYear = dtArray[5];        
+	    
+	    if (dtMonth < 1 || dtMonth > 12) 
+	        return false;
+	    else if (dtDay < 1 || dtDay> 31) 
+	        return false;
+	    else if ((dtMonth==4 || dtMonth==6 || dtMonth==9 || dtMonth==11) && dtDay ==31) 
+	        return false;
+	    else if (dtMonth == 2) 
+	    {
+	        var isleap = (dtYear % 4 == 0 && (dtYear % 100 != 0 || dtYear % 400 == 0));
+	        if (dtDay> 29 || (dtDay ==29 && !isleap)) 
+	                return false;
+	    }
+	    return true;
+	}
+</script>
 
 <%@include file="/footer.jsp" %>
 
