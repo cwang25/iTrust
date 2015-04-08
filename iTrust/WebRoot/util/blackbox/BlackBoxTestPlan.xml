@@ -17423,4 +17423,54 @@
 	</expectedResults>
 </test>
 
+<test id="testFilterSuccess">
+	<role>Patient</role>
+	<usecase>71</usecase>
+	<dateAdded>04/08/2015</dateAdded>
+	<description>
+		<precondition>Standard Data is loaded</precondition>
+		<precondition>Aaron Hotchner is a registered user of the iTrust system</precondition>
+		<step>Log in as Aaron Hotchner</step>
+		<step>Click on View -> My Food Diary</step>
+		<step>In the date filter box, type "04/13/2014" and click "Filter".</step>
+	</description>
+	<expectedResults>
+		<eResult>The food diary entry and daily summary for 04/13/2014 is shown while the 05/21/2013 entry and summary are not.</eResult>
+	</expectedResults>
+</test>
+
+<test id="testFilterRangeSuccess">
+	<role>Patient</role>
+	<usecase>71</usecase>
+	<dateAdded>04/08/2015</dateAdded>
+	<description>
+		<precondition>Standard Data is loaded</precondition>
+		<precondition>Aaron Hotchner is a registered user of the iTrust system</precondition>
+		<step>Log in as Aaron Hotchner</step>
+		<step>Click on View -> My Food Diary</step>
+		<step>Check the checkbox labeled "Filter by range"</step>
+		<step>In the first date filter box, type "04/13/2014"</step>
+		<step>In the second date filter box, type "05/22/2013" and click "Filter".</step>
+	</description>
+	<expectedResults>
+		<eResult>The food diary entry and daily summary for 04/13/2014 is shown while the 05/21/2013 entry and summary are not.</eResult>
+	</expectedResults>
+</test>
+
+<test id="testFilterDateValidation">
+	<role>Patient</role>
+	<usecase>71</usecase>
+	<dateAdded>04/08/2015</dateAdded>
+	<description>
+		<precondition>Standard Data is loaded</precondition>
+		<precondition>Aaron Hotchner is a registered user of the iTrust system</precondition>
+		<step>Log in as Aaron Hotchner</step>
+		<step>Click on View -> My Food Diary</step>
+		<step>In the date filter box, type "04/13/14" and click "Filter".</step>
+	</description>
+	<expectedResults>
+		<eResult>An error message is shown saying the date format is incorrect.</eResult>
+	</expectedResults>
+</test>
+
 </BlackBoxTestPlan>
