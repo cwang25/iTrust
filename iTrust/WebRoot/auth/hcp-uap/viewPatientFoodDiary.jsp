@@ -119,7 +119,7 @@
 				if(labelBean != null)
 					label = labelBean.getLabel();
 			%>
-			<tr data-diarydate="<%= labelBean != null ? diaryDateFormat.format(labelBean.getDate()) : "" %>">
+			<tr data-diarydate="<%= oldBean != null ? diaryDateFormat.format(oldBean.getDate()) : "" %>">
 				<td>
 					<b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b>
 					<button id="toggle<%=index%>" style="border:none; background-color:Transparent"><img id="img<%=index%>" src="/iTrust/image/icons/addSuggestionPlus.png" height="20" width="20"></button>
@@ -212,7 +212,7 @@
 		if(labelBean != null)
 			label = labelBean.getLabel();
 	%>
-			<tr data-diarydate="<%= labelBean != null ? diaryDateFormat.format(labelBean.getDate()) : "" %>">
+			<tr data-diarydate="<%= oldBean != null ? diaryDateFormat.format(oldBean.getDate()) : "" %>">
 				<td>
 				<b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b>
 				<button id="toggle<%=index%>" style="border:none; background-color:Transparent"><img src="/iTrust/image/icons/addSuggestionPlus.png" height="20" width="20"></button>

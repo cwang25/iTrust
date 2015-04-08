@@ -257,7 +257,7 @@
 						label1 = labelBean1.getLabel();
 					
 					boolean needDailySummary = false;
-					String row = "<tr class='diaryLabelRow " + label1 + "' data-diarydate='" + (labelBean1 != null ? diaryDateFormat.format(labelBean1.getDate()) : "") + "'";
+					String row = "<tr class='diaryLabelRow " + label1 + "' data-diarydate='" + (b != null ? diaryDateFormat.format(b.getDate()) : "") + "'";
 			%>
 
 				<%=row+""+((index%2 == 1)?" class=\"alt\"":"")+">"%>
@@ -274,7 +274,7 @@
 							if(labelBean != null)
 								label = labelBean.getLabel();
 			%>
-			<tr class="diaryLabelRow <%= label %>" data-diarydate="<%= (labelBean != null ? diaryDateFormat.format(labelBean.getDate()) : "") %>">
+			<tr class="diaryLabelRow <%= label %>" data-diarydate="<%= (oldBean != null ? diaryDateFormat.format(oldBean.getDate()) : "") %>">
 				<td><b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b><br><button id="toggle<%=index%>" style="border:none; background-color:Transparent"><img id="img<%=index%>" src="/iTrust/image/icons/greenplus.png" height="20" width="20"></button></td>
 				<script language="JavaScript">
 				$(document).ready(function(){					
@@ -351,7 +351,7 @@
 				<td colspan="12"><textarea id="tarea<%=index%>" rows="4" cols="50" readonly><%=StringEscapeUtils.escapeHtml(suggestionList)%></textarea>
 				</td>
 			</tr>
-			<tr class="diaryLabelRow <%= label1 %>" data-diarydate="<%= (labelBean1 != null ? diaryDateFormat.format(labelBean1.getDate()) : "") %>">
+			<tr class="diaryLabelRow <%= label1 %>" data-diarydate="<%= (b != null ? diaryDateFormat.format(b.getDate()) : "") %>">
 			<%
 				totalBeanTmp = new FoodDiaryBean();
 							dailyTotalCalories = 0;
@@ -399,7 +399,7 @@
 					label = labelBean.getLabel();
 			%>
 
-			<tr class="diaryLabelRow <%= label %>" data-diarydate="<%= (labelBean != null ? diaryDateFormat.format(labelBean.getDate()) : "") %>">
+			<tr class="diaryLabelRow <%= label %>" data-diarydate="<%= (oldBean != null ? diaryDateFormat.format(oldBean.getDate()) : "") %>">
 				<td><b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b><br><button id="toggle<%=index%>" style="border:none; background-color:Transparent" onclick=""><img id="img<%=index%>" src="/iTrust/image/icons/greenplus.png" height="20" width="20"></button></td>
 				<script language="JavaScript">
 				$(document).ready(function(){
