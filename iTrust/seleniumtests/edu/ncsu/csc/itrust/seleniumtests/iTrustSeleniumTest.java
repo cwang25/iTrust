@@ -222,7 +222,7 @@ abstract public class iTrustSeleniumTest extends TestCase{
 	 */
 	public void clickOnJavascriptElement(WebElement w) throws InterruptedException{
 		w.click();
-		Thread.sleep(500);
+		//Thread.sleep(500);
 	}
 	/**
 	 * This is helepr for some elements that having trouble to be clicked when javascript is enable.

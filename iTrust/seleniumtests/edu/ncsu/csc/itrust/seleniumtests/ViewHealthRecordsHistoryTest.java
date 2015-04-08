@@ -42,7 +42,7 @@ public class ViewHealthRecordsHistoryTest extends iTrustSeleniumTest {
 	    //Search for Brynn McClain (MID 101)
 	    driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("101");
-	    waitFor(1);
+	    //waitFor(1);
 	    //Click on first MID button
 	    driver.findElement(By.xpath("//input[@value='101' and @type='button']")).click();
 	    //Verify Document Office Visit page
@@ -182,7 +182,7 @@ public class ViewHealthRecordsHistoryTest extends iTrustSeleniumTest {
 		//Search for Daria Griffin (MID 104)
 	    driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("104");
-	    waitFor(1);
+	    //waitFor(1);
 	    //Click on first MID button
 	    driver.findElement(By.xpath("//input[@value='104' and @type='button']")).click();
 		
@@ -292,7 +292,7 @@ public class ViewHealthRecordsHistoryTest extends iTrustSeleniumTest {
 		//Search for Random Person (MID 1)
 	    driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("1");
-	    waitFor(1);
+	    //waitFor(1);
 	    //Click on first MID button
 	    driver.findElement(By.xpath("//input[@value='1' and @type='button']")).click();
 		//Verify Document Office Visit page
@@ -412,7 +412,7 @@ public class ViewHealthRecordsHistoryTest extends iTrustSeleniumTest {
 		//Search for Random Person (MID 1)
 	    driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("101");
-	    waitFor(1);
+	    //waitFor(1);
 	    //Click on first MID button
 	    driver.findElement(By.xpath("//input[@value='101' and @type='button']")).click();
 		//Verify Document Office Visit page
@@ -503,7 +503,7 @@ public class ViewHealthRecordsHistoryTest extends iTrustSeleniumTest {
 		//Search for patient MID 102
 	    driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("102");
-	    waitFor(1);
+	    //waitFor(1);
 		//Click on first MID button
 	    driver.findElement(By.xpath("//input[@value='102' and @type='button']")).click();
 		//Verify Basic Health Information page
@@ -540,7 +540,7 @@ public class ViewHealthRecordsHistoryTest extends iTrustSeleniumTest {
 		//Search for Caldwell Hudson (MID 102)
 	    driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("102");
-	    waitFor(1);
+	    //waitFor(1);
 		//Click on first MID button
 	    driver.findElement(By.xpath("//input[@value='102' and @type='button']")).click();
 		//Verify Basic Health Information page
@@ -639,7 +639,7 @@ public class ViewHealthRecordsHistoryTest extends iTrustSeleniumTest {
 		//Search for Fulton Gray (MID 103)
 	    driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("103");
-	    waitFor(1);
+	    //waitFor(1);
 		//Click on first MID button
 	    driver.findElement(By.xpath("//input[@value='103' and @type='button']")).click();
 		//Verify Basic Health Information page
@@ -713,7 +713,7 @@ public class ViewHealthRecordsHistoryTest extends iTrustSeleniumTest {
 		//Search for Brynn McClain (MID 101)
 		driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("101");
-	    waitFor(1);
+	    //waitFor(1);
 		//Click on first MID button
 	    driver.findElement(By.xpath("//input[@value='101' and @type='button']")).click();
 		//Verify Basic Health Information page

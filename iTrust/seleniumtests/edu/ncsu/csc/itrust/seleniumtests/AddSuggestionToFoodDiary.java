@@ -35,7 +35,7 @@ public class AddSuggestionToFoodDiary extends iTrustSeleniumTest {
 		driver.findElement(By.linkText("Patient Food Diary")).click();
 		driver.findElement(By.id("searchBox")).clear();
 		driver.findElement(By.id("searchBox")).sendKeys("500");
-		waitFor(2);
+		//waitFor(2);
 		driver.findElement(By.xpath("//input[@value='500' and @type='button']")).click();
 		driver.findElement(By.id("toggle1")).click();
 		driver.findElement(By.id("suggestionText")).clear();
@@ -68,7 +68,7 @@ public class AddSuggestionToFoodDiary extends iTrustSeleniumTest {
 		driver.findElement(By.linkText("Patient Food Diary")).click();
 		driver.findElement(By.id("searchBox")).clear();
 		driver.findElement(By.id("searchBox")).sendKeys("500");
-		waitFor(1);
+		//waitFor(1);
 		driver.findElement(By.xpath("//input[@value='500' and @type='button']")).click();
 		driver.findElement(By.id("toggle1")).click();
 		driver.findElement(By.id("suggestionText")).clear();
@@ -105,7 +105,7 @@ public class AddSuggestionToFoodDiary extends iTrustSeleniumTest {
 		driver.findElement(By.linkText("Patient Food Diary")).click();
 		driver.findElement(By.id("searchBox")).clear();
 		driver.findElement(By.id("searchBox")).sendKeys("500");
-		waitFor(1);
+		//waitFor(1);
 		driver.findElement(By.xpath("//input[@value='500' and @type='button']")).click();
 		driver.findElement(By.id("toggle1")).click();
 		driver.findElement(By.id("suggestionText")).clear();
