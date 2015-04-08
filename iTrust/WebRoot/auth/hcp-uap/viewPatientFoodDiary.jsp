@@ -101,7 +101,7 @@
 		FoodDiaryBean oldBean = null; // keeps track of the previous bean
 		for(FoodDiaryBean b : foodDiaryList) {
 			boolean needDailySummary = false;
-			String row = "<tr data-diarydate='" + diaryDateFormat.format(b.getDate()) + "'";
+			String row = "<tr data-diarydate='" + (b != null ? diaryDateFormat.format(b.getDate()) : "") + "'";
 %>
 
 			<%=row+""+((index % 2 == 1)?" class=\"alt\"":"")+">"%>
@@ -119,7 +119,7 @@
 				if(labelBean != null)
 					label = labelBean.getLabel();
 			%>
-			<tr data-diarydate="<%= diaryDateFormat.format(labelBean.getDate()) %>">
+			<tr data-diarydate="<%= labelBean != null ? diaryDateFormat.format(labelBean.getDate()) : "" %>">
 				<td>
 					<b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b>
 					<button id="toggle<%=index%>" style="border:none; background-color:Transparent"><img id="img<%=index%>" src="/iTrust/image/icons/addSuggestionPlus.png" height="20" width="20"></button>
@@ -190,7 +190,7 @@
 			recordFlag = sdf.format(b.getDate());
 			oldBean = b;
 			%>
-			<tr data-diarydate="<%= diaryDateFormat.format(b.getDate()) %>">
+			<tr data-diarydate="<%= b != null ? diaryDateFormat.format(b.getDate()) : "" %>">
 				<td><%= StringEscapeUtils.escapeHtml("" + sdf.format(b.getDate()))%></td>
 				<td><%= StringEscapeUtils.escapeHtml("" + b.getTypeOfMeal().toString()) %></td>
 				<td><%= StringEscapeUtils.escapeHtml("" + b.getNameOfFood()) %></td>
@@ -212,7 +212,7 @@
 		if(labelBean != null)
 			label = labelBean.getLabel();
 	%>
-			<tr data-diarydate="<%= diaryDateFormat.format(labelBean.getDate()) %>">
+			<tr data-diarydate="<%= labelBean != null ? diaryDateFormat.format(labelBean.getDate()) : "" %>">
 				<td>
 				<b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b>
 				<button id="toggle<%=index%>" style="border:none; background-color:Transparent"><img src="/iTrust/image/icons/addSuggestionPlus.png" height="20" width="20"></button>
