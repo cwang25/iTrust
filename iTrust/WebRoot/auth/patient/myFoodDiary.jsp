@@ -720,6 +720,9 @@
 	});
 	
 	$('#labelFilter').change(function() {
+		$('[data-diarydate]').show();
+		$('#dateRangeTo').val('');
+		$('#dateRangeFrom').val('');
 		var label = $(this).val();
 		if(label == "any") {
 			$('.diaryLabelRow').show();
@@ -739,9 +742,14 @@
 	
 	$('#dateFilterClear').click(function() {
 		$('[data-diarydate]').show();
+		$('#dateRangeTo').val('');
+		$('#dateRangeFrom').val('');
+		$('#labelFilter').val('any');
 	});
 	
 	$('#dateFilterSubmit').click(function() {
+		$('#labelFilter').val('any');
+		$('[data-diarydate]').show();
 		var goodDate = isDate($('#dateRangeFrom').val()); //validate from date
 		var dateRange = $('#dateRangeCheckbox')[0].checked;
 		if(dateRange)
