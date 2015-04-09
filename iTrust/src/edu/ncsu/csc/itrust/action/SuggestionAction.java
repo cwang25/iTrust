@@ -65,4 +65,13 @@ public class SuggestionAction extends SuggestionBaseAction {
 	public void editSuggestion(SuggestionBean suggestionBean) throws DBException{
 		suggestionDAO.editSuggestion(suggestionBean);
 	}
+	/**
+	 * Get suggestion by rowid.
+	 * @param rowid
+	 * @return
+	 * @throws DBException
+	 */
+	public SuggestionBean getSuggetionByRowID(long rowid) throws DBException{
+		return suggestionDAO.getSuggetionByID(rowid);
+	}
 }

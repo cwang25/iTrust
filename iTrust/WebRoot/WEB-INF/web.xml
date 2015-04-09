@@ -366,6 +366,14 @@
 		<servlet-name>FindExpertServlet</servlet-name>
 		<url-pattern>/auth/patient/FindExpertServlet</url-pattern>
 	</servlet-mapping>	
+	<servlet>
+		<servlet-name>FoodDiarySuggestionNotificationUpdateServlet</servlet-name>
+		<servlet-class>edu.ncsu.csc.itrust.server.FoodDiarySuggestionNotificationUpdateServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FoodDiarySuggestionNotificationUpdateServlet</servlet-name>
+		<url-pattern>/auth/patient/FoodDiarySuggestionNotificationUpdateServlet</url-pattern>
+	</servlet-mapping>
 	
 </web-app>
 

@@ -89,3 +89,4 @@ DROP TABLE IF EXISTS pregnancies;
 DROP TABLE IF EXISTS fooddiarylabels;
 DROP TABLE IF EXISTS fooddiarysetlabels;
 DROP TABLE IF EXISTS suggestions;
+DROP TABLE IF EXISTS macronutrientplan;

@@ -279,7 +279,7 @@
 								label = labelBean.getLabel();
 			%>
 			<tr class="diaryLabelRow <%= label %>" data-diarydate="<%= (oldBean != null ? diaryDateFormat.format(oldBean.getDate()) : "") %>">
-				<td><b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b><br><button id="toggle<%=index%>" style="border:none; background-color:Transparent"><img id="img<%=index%>" src="/iTrust/image/icons/greenplus.png" height="20" width="20"></button></td>
+				<td><b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b><br><button id="toggle<%=index%>" style="border:none; background-color:Transparent" onclick="readSuggestion(<%=oldBean.getDate().getTime() %>, <%=loggedInMID%>);"><img id="img<%=index%>" src="/iTrust/image/icons/greenplus.png" height="20" width="20"></button></td>
 				<script language="JavaScript">
 				$(document).ready(function(){					
 					$("#toggle<%=index%>").click(
@@ -343,8 +343,8 @@
 						int suggestionNum = 1;
 						for(SuggestionBean sBean: suggestionsToShow){
 							suggestionList += "" + suggestionNum + ". " + sBean.getSuggestion() + "\n";
-							sBean.setIsNew("False");
-							suggestionAction.editSuggestion(sBean);
+							//sBean.setIsNew("False");
+							//suggestionAction.editSuggestion(sBean);
 							suggestionNum++;
 						}
 					}else{
@@ -404,7 +404,7 @@
 			%>
 
 			<tr class="diaryLabelRow <%= label %>" data-diarydate="<%= (oldBean != null ? diaryDateFormat.format(oldBean.getDate()) : "") %>">
-				<td><b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b><br><button id="toggle<%=index%>" style="border:none; background-color:Transparent" onclick=""><img id="img<%=index%>" src="/iTrust/image/icons/greenplus.png" height="20" width="20"></button></td>
+				<td><b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b><br><button id="toggle<%=index%>" style="border:none; background-color:Transparent" onclick="readSuggestion(<%=oldBean.getDate().getTime() %>, <%=loggedInMID%>);"><img id="img<%=index%>" src="/iTrust/image/icons/greenplus.png" height="20" width="20"></button></td>
 				<script language="JavaScript">
 				$(document).ready(function(){
 					$("#toggle<%=index%>").click(
@@ -474,8 +474,8 @@
 						int suggestionNum = 1;
 						for(SuggestionBean sBean: suggestionsToShow){
 							suggestionList += "" + suggestionNum + ". " + sBean.getSuggestion() + "\n";
-							sBean.setIsNew("False");
-							suggestionAction.editSuggestion(sBean);
+							//sBean.setIsNew("False");
+							//suggestionAction.editSuggestion(sBean);
 							suggestionNum++;
 						}
 					}else{
@@ -817,6 +817,20 @@
 	                return false;
 	    }
 	    return true;
+	}
+	
+	function readSuggestion(suggestionDate, loggedInMID){
+		var xmlhttp;
+		if (window.XMLHttpRequest)
+		  {// code for IE7+, Firefox, Chrome, Opera, Safari
+		  xmlhttp=new XMLHttpRequest();
+		  }
+		else
+		  {// code for IE6, IE5
+		  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		  }
+		xmlhttp.open("GET","FoodDiarySuggestionNotificationUpdateServlet?loggedInMID="+loggedInMID+"&suggestionDate="+suggestionDate,true);
+		xmlhttp.send();
 	}
 /* 	function scrollToBottom() {
 		var objDiv = document.getElementById("bottomLine");

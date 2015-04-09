@@ -102,4 +102,32 @@ public class SuggestionDAO {
 			DBUtil.closeConnection(conn, ps);
 		}
 	}
+	/**
+	 * Get suggestion by rowID
+	 * @param rowid
+	 * @return SuggestionBean
+	 * @throws DBException
+	 */
+	public SuggestionBean getSuggetionByID(long rowid) throws DBException{
+		Connection conn = null;
+		PreparedStatement ps = null;
+		SuggestionBean bean = null;
+		try{
+			conn = factory.getConnection();
+			ps = conn.prepareStatement("SELECT * FROM suggestions WHERE rowID = ?");
+			ps.setLong(1, rowid);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()){
+				bean = loader.loadSingle(rs);
+			}
+			rs.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+			throw new DBException(e);
+		}finally{
+			DBUtil.closeConnection(conn, ps);
+		}
+		return bean;
+		
+	}
 }
