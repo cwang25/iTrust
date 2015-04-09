@@ -486,7 +486,7 @@ public class PatientBean implements Serializable, Comparable<PatientBean> {
 	}
 
 	public int compareTo(PatientBean o) {
-		return (int)(o.MID-this.MID);
+		return (int)(this.MID-o.MID);
 	}
 	
 	
