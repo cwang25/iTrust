@@ -131,7 +131,7 @@
 		//Very active: 1.75
 		//Extremely active: 2.1
 		
-		//Protein is 1g per pound of bodyweight
+		//Protein is .825g per pound of bodyweight
 		//
 		
 		var weightElement = document.getElementById('weight');
@@ -145,9 +145,12 @@
 		}
 		var weight = parseInt(weightElement.value);
 		var weightunit = document.getElementById('weightUnit').value;
-		
-		if(weightunit === 'lbs'){
-			weight = weight * 0.453592;
+		var weightInPounds = weight;
+		var weightInKg = weight;
+		if(weightunit === 'kg'){
+			weightInPounds = weight * 2.20462;
+		}else{
+			weightInKg = weight * 0.453592;
 		}
 		
 		var height = parseInt(document.getElementById('height').value);
@@ -161,7 +164,7 @@
 		var gender = document.macroForm.gender.value;
 		console.log(gender);
 		
-		var bmr = (10 * weight) + (6.25 * height) - (5 * age);
+		var bmr = (10 * weightInKg) + (6.25 * height) - (5 * age);
 		
 		if(gender === 'male') bmr += 5;
 		else bmr -= 161;
@@ -175,41 +178,39 @@
 		else if(activityLevel === "high") totalCalories = bmr * 1.75;
 		else totalCalories = bmr * 2.1;
 		
+		var totalProtein = .825 * weightInPounds;
+		var proteinCalories = totalProtein * 4;
+		var fatCalories = (totalCalories * .25);
+		var totalFat = fatCalories/9;
+		var carbCalories = totalCalories - proteinCalories - fatCalories;
+		var totalCarbs = carbCalories/4;
+		
 		var pieData = [
 						{
-							value: 300,
+							value: totalProtein,
 							color:"#F7464A",
 							highlight: "#FF5A5E",
-							label: "Red"
+							label: "Grams Protein"
 						},
 						{
-							value: 50,
+							value: totalFat,
 							color: "green",
 							highlight: "#5AD3D1",
-							label: "Green"
+							label: "Grams Fat"
 						},
 						{
-							value: 100,
+							value: totalCarbs,
 							color: "#FDB45C",
 							highlight: "#FFC870",
-							label: "Yellow"
-						},
-						{
-							value: 40,
-							color: "#949FB1",
-							highlight: "#A8B3C5",
-							label: "Grey"
-						},
-						{
-							value: 120,
-							color: "#4D5360",
-							highlight: "#616774",
-							label: "Dark Grey"
+							label: "Grams Carbs"
 						}
 
 					];
 
 			var ctx = document.getElementById("chart-area").getContext("2d");
-			window.myPie = new Chart(ctx).Pie(pieData, {animateRotate: true, animationEasing: "noBounce", animationSteps:30});
+			if(window.myPie !== null)
+				window.myPie.update();
+			else
+				window.myPie = new Chart(ctx).Pie(pieData, {animateRotate: true, animationEasing: "noBounce", animationSteps:30});
 	}
 </script>
