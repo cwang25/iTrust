@@ -24,7 +24,7 @@
 <table style="border:none" align="center">
 	<tr>
 		<td>
-			<form action="myfoodDiary.jsp" method="POST" id="macroForm" align="left">
+			<form action="myfoodDiary.jsp" method="POST" id="macroForm" name="macroForm" align="left">
 					<table class="fTable" align="left">
 						<tr>
 							<th id="form_top_banner" colspan=1>Calculate Macronutrients</th>
@@ -37,9 +37,18 @@
 							<td class="subHeaderVertical">Gender:</td>
 							<td>
 								<table border=0>
-									<tr><td><input type="radio" name="male" value="male" checked> Male</td></tr>
-									<tr><td><input type="radio" name="female" value="female"> Female</td></tr>
+									<tr><td><input type="radio" name="gender" value="male" checked> Male</td></tr>
+									<tr><td><input type="radio" name="gender" value="female"> Female</td></tr>
 								</table>
+							</td>
+						<tr>
+						<tr align="left">
+							<td class="subHeaderVertical">Age:</td>
+							<td><input name="age"
+								value=""
+								id="age"
+								type="text" placeholder="Age"
+								style="width:50px">
 							</td>
 						<tr>
 						<tr align="left">
@@ -47,7 +56,9 @@
 							<td><input name="weight"
 								value=""
 								type="text" placeholder="weight"
+								id="weight"
 								style="width:50px"
+								pattern="[1-9][0-9]?|[12][0-9]{2}|3[0-5][0-9]|360"
 								>
 							<select id="weightUnit" name="wunit">
 								<option value="kg">kg</option>
@@ -57,7 +68,8 @@
 						<tr>
 						<tr align="left">
 							<td class="subHeaderVertical">Height:</td>
-							<td><input name="weight"
+							<td><input name="height"
+								id="height"
 								value=""
 								type="text" placeholder="height"
 								style="width:50px"
@@ -75,6 +87,18 @@
 									<tr><td><input type="radio" name="mode" id="losemode" value="losemode" checked> Lose weight</td></tr>
 									<tr><td><input type="radio" name="mode" id="maintainmode" value="maintainmode"> Maintain weight</td></tr>
 									<tr><td><input type="radio" name="mode" id="gainmode" value="gainmode"> Gain weight</td></tr>
+								</table>
+							</td>
+						</tr>
+						<tr align="left">
+							<td class="subHeaderVertical">Activity: </td>
+							<td>	
+								<table border=0>
+									<tr><td><input type="radio" name="activityLevel" id="sedentary" value="sedentary"> Sedentary</td></tr>
+									<tr><td><input type="radio" name="activityLevel" id="light" value="light"> Lightly active</td></tr>
+									<tr><td><input type="radio" name="activityLevel" id="moderate" value="moderate" checked> Moderately active</td></tr>
+									<tr><td><input type="radio" name="activityLevel" id="high" value="high"> Very Active</td></tr>
+									<tr><td><input type="radio" name="activityLevel" id="extreme" value="extreme"> Extremely active</td></tr>
 								</table>
 							</td>
 						</tr>
@@ -96,7 +120,60 @@
 
 <script language="JavaScript">
 	function graphIt(){
+		//Calculate BMR by Mifflin method
+		//men = 10 * weightInKg + 6.25*height in cm - 5*ageinyears + 5
+		//women = 10 * weightInKg + 6.25*height in cm - 5*ageinyears - 161
 		
+		//BMR * activity
+		//Sedentary: 1.2
+		//Lightly active: 1.35
+		//Moderately active: 1.55
+		//Very active: 1.75
+		//Extremely active: 2.1
+		
+		//Protein is 1g per pound of bodyweight
+		//
+		
+		var weightElement = document.getElementById('weight');
+		var weightRegex = /^([0-9])/i;
+		weightElement.style.borderColor= "initial";
+		if(weightElement.value !== ""){
+			if(weightElement.value.match(weightRegex) == null){
+				weightElement.style.borderColor="red";
+			}
+			
+		}
+		var weight = parseInt(weightElement.value);
+		var weightunit = document.getElementById('weightUnit').value;
+		
+		if(weightunit === 'lbs'){
+			weight = weight * 0.453592;
+		}
+		
+		var height = parseInt(document.getElementById('height').value);
+		var heightunit = document.getElementById('heightUnit').value;
+		if(heightunit === 'in'){
+			height = height * 2.54;
+		}
+		
+		var age = parseInt(document.getElementById("age").value);
+		
+		var gender = document.macroForm.gender.value;
+		console.log(gender);
+		
+		var bmr = (10 * weight) + (6.25 * height) - (5 * age);
+		
+		if(gender === 'male') bmr += 5;
+		else bmr -= 161;
+		
+		var activityLevel = document.macroForm.activityLevel.value;
+		
+		var totalCalories;
+		if(activityLevel === "sedentary") totalCalories = bmr * 1.2;
+		else if(activityLevel === "light") totalCalories = bmr * 1.35;
+		else if(activityLevel === "moderate") totalCalories = bmr * 1.55;
+		else if(activityLevel === "high") totalCalories = bmr * 1.75;
+		else totalCalories = bmr * 2.1;
 		
 		var pieData = [
 						{
@@ -107,7 +184,7 @@
 						},
 						{
 							value: 50,
-							color: "#46BFBD",
+							color: "green",
 							highlight: "#5AD3D1",
 							label: "Green"
 						},
