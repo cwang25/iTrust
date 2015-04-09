@@ -302,6 +302,8 @@
 	});
 	
 	$('#dateFilterClear').click(function() {
+		$('#dateRangeTo').val('');
+		$('#dateRangeFrom').val('');
 		$('[data-diarydate]').show();
 	});
 	
