@@ -66,7 +66,8 @@
 	 	boolean undo = mode!=null&&mode.equals("undo");
 	 	boolean addLabel = mode!=null&&mode.equals("addLabel");
 	 	boolean setLabel = mode!=null&&mode.equals("setLabel");
-	 	
+	 	boolean showGraph = mode!=null&&mode.equals("showGraph");
+	 
 	 	SimpleDateFormat diaryDateFormat = new SimpleDateFormat("MM/dd/yyyy");
 	 	//out.println(mode);
 /*  	String dateStr = "";
@@ -95,7 +96,8 @@
 			(mode!=null&&!mode.equals("delete"))&&
 			(mode!=null&&!mode.equals("undo"))&&
 			(mode!=null&&!mode.equals("addLabel"))&&
-			(mode!=null&&!mode.equals("setLabel"))){
+			(mode!=null&&!mode.equals("setLabel"))&&
+			(mode!=null&&!mode.equals("showGraph"))){
 			try {
 				if(mode.equals("edit")){
 					if(selectedIndex != null){
@@ -192,6 +194,8 @@
 			%>
 			<p align="center"style="font-size: 16pt; font-weight: bold;" >Label has been set.</p>
 			<%
+		} else if (showGraph){
+			
 		}
 
 		
@@ -496,7 +500,7 @@
 	%>
 	<div>
 		</br>
-		<button type='button' onclick="showMacroCalculator">Macro Calculator</button>
+		<button type='button' onclick="$('#newLabelForm').hide(); hideHiddenForm('HiddenForm'); showHiddenForm('hiddenMacro'); setOperationMode('showGraph'); scrollToDiv('hiddenMacro')">Macro Calculator</button>
 		<button type='button' onclick="showHiddenAddNewFoodDiaryForm('HiddenForm');$('#newLabelForm').hide();">Add new food diary</button>
 		<button type='button' onclick="hideHiddenForm('HiddenForm');$('#newLabelForm').show();setOperationMode('addLabel');">Create new label</button>
 	</div>	
@@ -504,7 +508,7 @@
 	<div id="HiddenForm" name="Hiddenform"
 		style="display: <%=!dataAllCorrect||toEdit? "block" : "none"%>">
 		<form action="myFoodDiary.jsp" method="post" id="edit" align="center">
-			<td valign=top>
+			
 				<div class="row">
 					<table class="fTable" align="center">
 						<tr>
@@ -604,7 +608,7 @@
 					<input type="submit" id="saveBtn" name="action"
 						style="font-size: 16pt; font-weight: bold;"
 						value="Save">
-			</td>
+			
 			<div id="HiddenHelperFields">
 			<!-- operationMode: none, to_edit, edit, new, delete -->
 				<input name="form_top_banner_tag" id="form_top_banner_tag" value="New Food Diary"type="hidden">
@@ -645,6 +649,9 @@
 	</form>
 </div>
 
+<div id="hiddenMacro"  style="display: <%=!dataAllCorrect&&showGraph? "block" : "none" %>">
+	<%@include file="/auth/patient/macroNutrientsChart.jsp"%>
+</div>
 <script language="JavaScript">
 	function showHiddenForm(divID) {
 		document.getElementById(divID).style.display = "block";
@@ -681,6 +688,13 @@
 	function hideHiddenForm(divID){
 		document.getElementById(divID).style.display = "none";
 	}
+	
+	function scrollToDiv(divID){
+		$('html, body').animate({
+			scrollTop: $("#" + divID).offset().top - 100
+		}, 250);
+	}
+	
 	function runDeleteRecord(index){
 		if(confirm('Are you sure you want to delete the food diary record?')){
 			document.getElementById("operationMode").value = "delete";
@@ -694,6 +708,7 @@
 		document.getElementById("operationMode").value = "undo";
 		document.getElementById("saveBtn").click();
 	}
+	
 	
 	$('.changeLabelBtn').click(function() {
 		var me = $(this);
