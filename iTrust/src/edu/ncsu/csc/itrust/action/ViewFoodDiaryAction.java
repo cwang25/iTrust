@@ -7,6 +7,7 @@ import java.util.List;
 
 import edu.ncsu.csc.itrust.action.base.FoodDiaryBaseAction;
 import edu.ncsu.csc.itrust.beans.FoodDiaryBean;
+import edu.ncsu.csc.itrust.beans.FoodDiaryDailySummaryBean;
 import edu.ncsu.csc.itrust.beans.PersonnelBean;
 import edu.ncsu.csc.itrust.dao.DAOFactory;
 import edu.ncsu.csc.itrust.enums.TransactionType;
@@ -64,6 +65,38 @@ public class ViewFoodDiaryAction extends FoodDiaryBaseAction {
 			loggingAction.logEvent(TransactionType.VIEW_FDIARY, mid, mid, "Patient viewed food diary.");
 		else
 			loggingAction.logEvent(TransactionType.HCP_VIEW_FDIARY, mid, inputID, "Nutrionist viewed patientls view food diary.");
+		return answer;
+	}
+	
+	
+	/**
+	 * The method to retrieve food diary daily summary list by owner ID.
+	 * @param inputID  The owner ID to lookup(only available for Nutritionist (HCP).
+	 * @return The result list.
+	 * @throws DBException
+	 */
+	public List<FoodDiaryDailySummaryBean> getFoodDiaryDailySummaryListByOwnerID(long inputID) throws DBException{
+		long ownerID = inputID;
+		boolean isPatient = super.getFactory().getPatientDAO().checkPatientExists(mid);
+		//Get Declared HCP.
+		List<PersonnelBean> personnelList = super.getFactory().getPatientDAO().getDeclaredHCPs(inputID);
+		//Check if the HCP (Nutritionist) MID is in the patient's declared list.
+		//Doesn't matter if login ID is HCP or Patient.
+		//If it is patient this is always FALSE plus it will short-circuit the if loop later.
+		boolean isInDeclaredList = false;
+		for(PersonnelBean b : personnelList){
+			if(b.getMID() == mid){
+				isInDeclaredList = true;
+				break;
+			}
+		}
+		//Try to prevent patient from using some weird hack to see others info.
+		if(isPatient){
+			ownerID = mid;
+		}else if(!super.isNutritionist || !isInDeclaredList){
+			return null;
+		}
+		List<FoodDiaryDailySummaryBean> answer = foodDAO.getFoodDiaryDailySummaryListByOwnerID(ownerID);
 		return answer;
 	}
 	
