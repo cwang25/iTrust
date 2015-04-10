@@ -17,6 +17,7 @@
 <%@page import="edu.ncsu.csc.itrust.action.SuggestionAction"%>
 <%@page import="edu.ncsu.csc.itrust.action.GetFoodDiaryLabelAction"%>
 <%@page import="edu.ncsu.csc.itrust.beans.FoodDiaryBean"%>
+<%@page import="edu.ncsu.csc.itrust.beans.FoodDiaryDailySummaryBean" %>
 <%@page import="edu.ncsu.csc.itrust.beans.FoodDiaryLabelSetBean"%>
 
 <%@include file="/global.jsp" %>
@@ -39,6 +40,7 @@
 	SuggestionAction suggAction = new SuggestionAction(prodDAO, loggedInMID);
 	SuggestionAction suggPatientAction = new SuggestionAction(prodDAO, Long.parseLong(pidString));
 	List<FoodDiaryBean> foodDiaryList = action.getFoodDiaryListByOwnerID(Long.parseLong(pidString));
+	List<FoodDiaryDailySummaryBean> foodDiaryDailySummaryList = action.getFoodDiaryDailySummaryListByOwnerID(Long.parseLong(pidString));
 	session.setAttribute("foodDiaryList", foodDiaryList);
 	
 	SimpleDateFormat diaryDateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -64,6 +66,7 @@
 	}
 
 	if (foodDiaryList != null && foodDiaryList.size() > 0) {
+		foodDiaryList.add(null);
 %>	
 	<div align="center">
 		<span>Filter entries by date</span><br/>
@@ -74,7 +77,7 @@
 	</div>
 	<div style="margin-left: 5px;">
 	</br>
-	<table class="fTable" border=1 align="center">
+	<table class="foodDiaryTable" border=1 align="center">
 		<tr>
 			<th>Date</th>
 			<th>Type of meal</th>
@@ -94,25 +97,24 @@
 		int index = 0;
 		SimpleDateFormat sdf = new SimpleDateFormat("M/dd/YYYY");
 		String recordFlag = "";
-		//Use to keep on track of daily total nutritions info.
-		FoodDiaryBean totalBeanTmp = new FoodDiaryBean();
 		//Use to keep on daily total calories.
 		double dailyTotalCalories = 0;
 		FoodDiaryBean oldBean = null; // keeps track of the previous bean
-		for(FoodDiaryBean b : foodDiaryList) {
-			boolean needDailySummary = false;
-			String row = "<tr data-diarydate='" + (b != null ? diaryDateFormat.format(b.getDate()) : "") + "'";
-%>
-
-			<%=row+""+((index % 2 == 1)?" class=\"alt\"":"")+">"%>
-			<%
-				//SimpleDateFormat sdf = new SimpleDateFormat("M/dd/YYYY");
-			if(recordFlag.length() > 0 && !sdf.format(b.getDate()).equals(recordFlag)){
-				needDailySummary = true;
+		boolean needDailySummary = false;
+		int dailySummaryIndex = 0;
+		String label1="";
+		for(int i = 0 ; i < foodDiaryList.size() ; i++){
+			FoodDiaryBean b = foodDiaryList.get(i);
+			if(b != null){
+				if(recordFlag.length() > 0 && !sdf.format(b.getDate()).equals(recordFlag)){
+					needDailySummary = true;
+				}
+				recordFlag = sdf.format(b.getDate());
 			}
-						
-						
-			if(needDailySummary){
+			if(b==null|| needDailySummary){
+				needDailySummary = false;
+				FoodDiaryDailySummaryBean totalBeanTmp = foodDiaryDailySummaryList.get(dailySummaryIndex);
+				dailySummaryIndex++;
 				FoodDiaryLabelSetBean labelBean = labelAction.getSetFoodDiaryLabel(oldBean.getOwnerID(), new Date(oldBean.getDate().getTime()));
 				String label = "";
 				SimpleDateFormat sdf2 = new SimpleDateFormat("MM/dd/yyyy");
@@ -143,7 +145,7 @@
 				<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getGramsOfSugar())%></td>
 				<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getGramsOfFiber())%></td>
 				<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getGramsOfProtein())%></td>
-				<td><%=StringEscapeUtils.escapeHtml("" + dailyTotalCalories)%></td>
+				<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.totalCalories())%></td>
 			</tr>
 			<tr id="suggestion<%=index%>" style="display: none;">
 			<form action="viewPatientFoodDiary.jsp" method="POST"> 
@@ -176,107 +178,43 @@
 			</form>
 			</tr>
 			<%
-				totalBeanTmp = new FoodDiaryBean();
-				dailyTotalCalories = 0;
 			}
-						
-			totalBeanTmp.setGramsOfFat(totalBeanTmp.getGramsOfFat() + b.getGramsOfFat());
-			totalBeanTmp.setMilligramsOfSodium(totalBeanTmp.getMilligramsOfSodium() + b.getMilligramsOfSodium());
-			totalBeanTmp.setGramsOfCarbs(totalBeanTmp.getGramsOfCarbs() + b.getGramsOfCarbs());
-			totalBeanTmp.setGramsOfSugar(totalBeanTmp.getGramsOfSugar() + b.getGramsOfSugar());
-			totalBeanTmp.setGramsOfFiber(totalBeanTmp.getGramsOfFiber() + b.getGramsOfFiber());
-			totalBeanTmp.setGramsOfProtein(totalBeanTmp.getGramsOfProtein() + b.getGramsOfProtein());
-			dailyTotalCalories += b.totalCalories();
-			recordFlag = sdf.format(b.getDate());
-			oldBean = b;
-			%>
-			<tr data-diarydate="<%= b != null ? diaryDateFormat.format(b.getDate()) : "" %>">
-				<td><%= StringEscapeUtils.escapeHtml("" + sdf.format(b.getDate()))%></td>
-				<td><%= StringEscapeUtils.escapeHtml("" + b.getTypeOfMeal().toString()) %></td>
-				<td><%= StringEscapeUtils.escapeHtml("" + b.getNameOfFood()) %></td>
-				<td><%= StringEscapeUtils.escapeHtml("" + b.getNumberOfServings()) %></td>
-				<td><%= StringEscapeUtils.escapeHtml("" + b.getCaloriesPerServing()) %></td>
-				<td><%= StringEscapeUtils.escapeHtml("" + b.getGramsOfFat()) %></td>
-				<td><%= StringEscapeUtils.escapeHtml("" + b.getMilligramsOfSodium()) %></td>
-				<td><%= StringEscapeUtils.escapeHtml("" + b.getGramsOfCarbs()) %></td>
-				<td><%= StringEscapeUtils.escapeHtml("" + b.getGramsOfSugar()) %></td>
-				<td><%= StringEscapeUtils.escapeHtml("" + b.getGramsOfFiber()) %></td>
-				<td><%= StringEscapeUtils.escapeHtml("" + b.getGramsOfProtein()) %></td>
-				<td><%= StringEscapeUtils.escapeHtml("" + b.totalCalories()) %></td>
-				</tr>
-			</tr>
-	<%		index ++; %>
-	<%	} 
-		FoodDiaryLabelSetBean labelBean = labelAction.getSetFoodDiaryLabel(oldBean.getOwnerID(), new Date(oldBean.getDate().getTime()));
-		String label = "";
-		if(labelBean != null)
-			label = labelBean.getLabel();
-	%>
-			<tr data-diarydate="<%= oldBean != null ? diaryDateFormat.format(oldBean.getDate()) : "" %>">
-				<td>
-				<b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b>
-				<button id="toggle<%=index%>" style="border:none; background-color:Transparent"><img src="/iTrust/image/icons/addSuggestionPlus.png" height="20" width="20"></button>
-				<span style="<%= label.length() > 0 ? "border-radius:5px; padding:3px; color:white; background-color:red;" : "" %>"><%=StringEscapeUtils.escapeHtml(label)%></span>
-				</td>
-				<script language="JavaScript">
-				$(document).ready(function(){
-					$("#toggle<%=index%>").click(
-					function(){
-						$("#suggestion<%=index%>").toggle();
-					});
-				}); 
-				</script>
-				<td></td>
-				<td><%=StringEscapeUtils.escapeHtml("")%></td>
-				<td></td>
-				<td><%=StringEscapeUtils.escapeHtml("")%></td>
-				<td><%=StringEscapeUtils.escapeHtml(""
-						+ totalBeanTmp.getGramsOfFat())%></td>
-				<td><%=StringEscapeUtils.escapeHtml(""
-						+ totalBeanTmp.getMilligramsOfSodium())%></td>
-				<td><%=StringEscapeUtils.escapeHtml(""
-						+ totalBeanTmp.getGramsOfCarbs())%></td>
-				<td><%=StringEscapeUtils.escapeHtml(""
-						+ totalBeanTmp.getGramsOfSugar())%></td>
-				<td><%=StringEscapeUtils.escapeHtml(""
-						+ totalBeanTmp.getGramsOfFiber())%></td>
-				<td><%=StringEscapeUtils.escapeHtml(""
-						+ totalBeanTmp.getGramsOfProtein())%></td>
-				<td><%=StringEscapeUtils.escapeHtml("" + dailyTotalCalories)%></td>
-			<tr id="suggestion<%=index%>" style="display: none;"> 
-				<form action="viewPatientFoodDiary.jsp" method="POST"> 
-				<td>New Suggestion:</td>
-				<td colspan="4">
-					<textarea rows="4" cols="50" name="suggestionText" id="suggestionText2"></textarea>
-					<input name="addNewSuggestion" value="true" type ="hidden" ></input>
-					<input name="date" value="<%=sdf.format(oldBean.getDate())%>" type ="hidden" ></input>
-				</td>
-				<td colspan="2"><button type="submit" name="submitMe">Submit Suggestion</button></td>
+			if(b != null){
+				String row = "<tr data-diarydate='" + (b != null ? diaryDateFormat.format(b.getDate()) : "") + "'";
+%>
+
+				<%=row+""+((index % 2 == 1)?" class=\"alt\"":"")+">"%>
 				<%
-					String suggestionList = "";
-					List<SuggestionBean> suggestionsToShow = suggPatientAction.getSuggestionsByDate(new java.sql.Date(oldBean.getDate().getTime()), Long.parseLong(pidString));
-					
-					if(suggestionsToShow.size() != 0){
-						int suggestionNum = 1;
-						for(SuggestionBean sBean : suggestionsToShow){
-							suggestionList += "" + suggestionNum + ". " + sBean.getSuggestion() + "\n";
-							suggPatientAction.editSuggestion(sBean);
-							suggestionNum++;
-						}
-					}else{
-						suggestionList += "No suggestions";
-					}
-					
+					//SimpleDateFormat sdf = new SimpleDateFormat("M/dd/YYYY");
+				if(recordFlag.length() > 0 && !sdf.format(b.getDate()).equals(recordFlag)){
+					needDailySummary = true;
+				}
+							
+				recordFlag = sdf.format(b.getDate());
+				oldBean = b;
 				%>
-				<td>Patient's Suggestions:</td>
-				<td colspan="4"><textarea id="tarea<%=index%>" rows="4" cols="50" readonly><%=StringEscapeUtils.escapeHtml(suggestionList)%></textarea>
-				</td>
-			</form>
-			</tr>
-			</tr>
+				<tr data-diarydate="<%= b != null ? diaryDateFormat.format(b.getDate()) : "" %>">
+					<td><%= StringEscapeUtils.escapeHtml("" + sdf.format(b.getDate()))%></td>
+					<td><%= StringEscapeUtils.escapeHtml("" + b.getTypeOfMeal().toString()) %></td>
+					<td><%= StringEscapeUtils.escapeHtml("" + b.getNameOfFood()) %></td>
+					<td><%= StringEscapeUtils.escapeHtml("" + b.getNumberOfServings()) %></td>
+					<td><%= StringEscapeUtils.escapeHtml("" + b.getCaloriesPerServing()) %></td>
+					<td><%= StringEscapeUtils.escapeHtml("" + b.getGramsOfFat()) %></td>
+					<td><%= StringEscapeUtils.escapeHtml("" + b.getMilligramsOfSodium()) %></td>
+					<td><%= StringEscapeUtils.escapeHtml("" + b.getGramsOfCarbs()) %></td>
+					<td><%= StringEscapeUtils.escapeHtml("" + b.getGramsOfSugar()) %></td>
+					<td><%= StringEscapeUtils.escapeHtml("" + b.getGramsOfFiber()) %></td>
+					<td><%= StringEscapeUtils.escapeHtml("" + b.getGramsOfProtein()) %></td>
+					<td><%= StringEscapeUtils.escapeHtml("" + b.totalCalories()) %></td>
+					</tr>
+				</tr>
+		<%		index ++; 
+			}
+		}
+		
+%>		
+
 	</table>
-	
-	
 	</div>
 <%	} else { 
 		if(action.isNutritionist() && foodDiaryList != null){ %>
