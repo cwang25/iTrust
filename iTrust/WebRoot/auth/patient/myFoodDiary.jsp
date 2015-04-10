@@ -202,6 +202,8 @@
 		//-----created food diary list---
 	 	ViewFoodDiaryAction action = new ViewFoodDiaryAction(prodDAO, loggedInMID.toString());
 	 	List<FoodDiaryBean> foodDiaryList = action.getFoodDiaryListByOwnerID(loggedInMID);
+	 	foodDiaryList.add(null);
+	 	List<FoodDiaryDailySummaryBean> foodDiaryDailySummaryList = action.getFoodDiaryDailySummaryListByOwnerID(loggedInMID);
 	 	session.setAttribute("foodDiaryList", foodDiaryList);
 		
 		if (foodDiaryList.size() > 0) {
@@ -229,7 +231,7 @@
 	</div>
 	<br/>
 	<div style="margin-left: 5px;">
-		<table id="fTable" class="fTable" border=1 align="center">
+		<table id="foodDiaryTable" class="foodDiaryTable" border=1 align="center">
 			<tr>
 				<th>Date</th>
 				<th>Type of meal</th>
@@ -249,247 +251,156 @@
 				int index = 0;
 				SimpleDateFormat sdf = new SimpleDateFormat("M/dd/YYYY");
 				String recordFlag = "";
-				//Use to keep on track of daily total nutritions info.
-				FoodDiaryBean totalBeanTmp = new FoodDiaryBean();
+				boolean needDailySummary = false;
+				int dailySummaryIndex = 0;
 				//Use to keep on daily total calories.
 				double dailyTotalCalories = 0;
 				FoodDiaryBean oldBean = null; // keeps track of the previous bean
-				for(FoodDiaryBean b : foodDiaryList) {
-					FoodDiaryLabelSetBean labelBean1 = labelGetAction.getSetFoodDiaryLabel(b.getOwnerID(), new java.sql.Date(b.getDate().getTime()));
-					String label1 = "";
-					if(labelBean1 != null)
-						label1 = labelBean1.getLabel();
-					
-					boolean needDailySummary = false;
-					String row = "<tr class='diaryLabelRow " + label1 + "' data-diarydate='" + (b != null ? diaryDateFormat.format(b.getDate()) : "") + "'";
-			%>
-
-				<%=row+""+((index%2 == 1)?" class=\"alt\"":"")+">"%>
-			<%
-				//SimpleDateFormat sdf = new SimpleDateFormat("M/dd/YYYY");
+				String label1 = "";
+				for(int i = 0 ; i < foodDiaryList.size() ; i++){
+					FoodDiaryBean b = foodDiaryList.get(i);
+					if(b != null){
 						if(recordFlag.length() > 0 && !sdf.format(b.getDate()).equals(recordFlag)){
 							needDailySummary = true;
 						}
-						
-						
-						if(needDailySummary){
-							FoodDiaryLabelSetBean labelBean = labelGetAction.getSetFoodDiaryLabel(oldBean.getOwnerID(), new java.sql.Date(oldBean.getDate().getTime()));
-							String label = "";
-							if(labelBean != null)
-								label = labelBean.getLabel();
-			%>
-			<tr class="diaryLabelRow <%= label %>" data-diarydate="<%= (oldBean != null ? diaryDateFormat.format(oldBean.getDate()) : "") %>">
-				<td><b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b><br><button id="toggle<%=index%>" style="border:none; background-color:Transparent" onclick="readSuggestion(<%=oldBean.getDate().getTime() %>, <%=loggedInMID%>);"><img id="img<%=index%>" src="/iTrust/image/icons/greenplus.png" height="20" width="20"></button></td>
-				<script language="JavaScript">
-				$(document).ready(function(){					
-					$("#toggle<%=index%>").click(
-					function(){
-						$("#suggestion<%=index%>").toggle();
-						$('#img<%=index%>')[0].src="/iTrust/image/icons/greenplus.png";
-						$('#img<%=index%>')[0].height="20";
-						$('#img<%=index%>')[0].width="20";
-					});
-				}); 
-				</script>
-				<td><%=StringEscapeUtils.escapeHtml("")%></td>
-				<td><%=StringEscapeUtils.escapeHtml("")%></td>
-				<td><%=StringEscapeUtils.escapeHtml("")%></td>
-				<td><%=StringEscapeUtils.escapeHtml("")%></td>
-				<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getGramsOfFat())%></td>
-				<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getMilligramsOfSodium())%></td>
-				<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getGramsOfCarbs())%></td>
-				<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getGramsOfSugar())%></td>
-				<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getGramsOfFiber())%></td>
-				<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getGramsOfProtein())%></td>
-				<td><%=StringEscapeUtils.escapeHtml("" + dailyTotalCalories)%></td>
-				<td>
-					<span style="<%= label.length() > 0 ? "border-radius:5px; padding:3px; color:white; background-color:red;" : "" %>"><%=StringEscapeUtils.escapeHtml(label)%></span>
-					<%= label.length() > 0 ? "<br/><br/>" : "" %>
-					<select value="<%=label %>">
-						<option value="none">none</option>
-						<%
-							List<FoodDiaryLabelBean> labelList = labelGetAction.getAllFoodDiaryLabels(loggedInMID);
-							for(FoodDiaryLabelBean lb : labelList) {
-								String labelText = StringEscapeUtils.escapeHtml(lb.getLabel());
-								%><option value="<%=labelText %>"><%=labelText %></option><%	
-							}								
-						%>
-					</select>
-					<button class="changeLabelBtn" data-date="<%=(new java.sql.Date(oldBean.getDate().getTime())).toString() %>">Change Label</button>
-				</td>
-			</tr>
-			<tr id="suggestion<%=index%>" style="display: none"> 
-					<td>Suggestions:</td>
-				<%
-					String suggestionList = "";
-					List<SuggestionBean> suggestionsToShow = suggestionAction.getSuggestionsByDate(new java.sql.Date(oldBean.getDate().getTime()), loggedInMID);
-					boolean isNew = false;
-					
-					if(suggestionsToShow.size() != 0){
-						for(SuggestionBean sBean: suggestionsToShow){
-							if(sBean.getIsNew().equals("true")){isNew = true; break;}
-						}
-						if(isNew){
-							%><script language="JavaScript">
-								$(document).ready(
-									function(){
-										$('#img<%=index%>')[0].src="/iTrust/image/icons/notification.gif";
-										$('#img<%=index%>')[0].height="35";
-										$('#img<%=index%>')[0].width="35";
-								});
-							</script>
-							<%
-						}
-						int suggestionNum = 1;
-						for(SuggestionBean sBean: suggestionsToShow){
-							suggestionList += "" + suggestionNum + ". " + sBean.getSuggestion() + "\n";
-							//sBean.setIsNew("False");
-							//suggestionAction.editSuggestion(sBean);
-							suggestionNum++;
-						}
-					}else{
-						suggestionList += "No suggestions";
-					}
-					
-				%>
-				<td colspan="12"><textarea id="tarea<%=index%>" rows="4" cols="50" readonly><%=StringEscapeUtils.escapeHtml(suggestionList)%></textarea>
-				</td>
-			</tr>
-			<tr class="diaryLabelRow <%= label1 %>" data-diarydate="<%= (b != null ? diaryDateFormat.format(b.getDate()) : "") %>">
-			<%
-				totalBeanTmp = new FoodDiaryBean();
-							dailyTotalCalories = 0;
-						}
-						
-						totalBeanTmp.setGramsOfFat(totalBeanTmp.getGramsOfFat() + b.getGramsOfFat());
-						totalBeanTmp.setMilligramsOfSodium(totalBeanTmp.getMilligramsOfSodium() + b.getMilligramsOfSodium());
-						totalBeanTmp.setGramsOfCarbs(totalBeanTmp.getGramsOfCarbs() + b.getGramsOfCarbs());
-						totalBeanTmp.setGramsOfSugar(totalBeanTmp.getGramsOfSugar() + b.getGramsOfSugar());
-						totalBeanTmp.setGramsOfFiber(totalBeanTmp.getGramsOfFiber() + b.getGramsOfFiber());
-						totalBeanTmp.setGramsOfProtein(totalBeanTmp.getGramsOfProtein() + b.getGramsOfProtein());
-						dailyTotalCalories += b.totalCalories();
 						recordFlag = sdf.format(b.getDate());
-			%>
-			<td><%=StringEscapeUtils.escapeHtml("" + sdf.format(b.getDate()))%></td>
-			<td><%=StringEscapeUtils.escapeHtml("" + b.getTypeOfMeal().toString())%></td>
-			<td><%=StringEscapeUtils.escapeHtml("" + b.getNameOfFood())%></td>
-			<td><%=StringEscapeUtils.escapeHtml("" + b.getNumberOfServings())%></td>
-			<td><%=StringEscapeUtils.escapeHtml("" + b.getCaloriesPerServing())%></td>
-			<td><%=StringEscapeUtils.escapeHtml("" + b.getGramsOfFat())%></td>
-			<td><%=StringEscapeUtils.escapeHtml("" + b.getMilligramsOfSodium())%></td>
-			<td><%=StringEscapeUtils.escapeHtml("" + b.getGramsOfCarbs())%></td>
-			<td><%=StringEscapeUtils.escapeHtml("" + b.getGramsOfSugar())%></td>
-			<td><%=StringEscapeUtils.escapeHtml("" + b.getGramsOfFiber())%></td>
-			<td><%=StringEscapeUtils.escapeHtml("" + b.getGramsOfProtein())%></td>
-			<td><%=StringEscapeUtils.escapeHtml("" + b.totalCalories())%></td>
+					}
+					if(b == null || needDailySummary){
+						needDailySummary = false;
+						FoodDiaryDailySummaryBean totalBeanTmp = foodDiaryDailySummaryList.get(dailySummaryIndex);
+						dailySummaryIndex++;
+						FoodDiaryLabelSetBean labelBean = labelGetAction.getSetFoodDiaryLabel(oldBean.getOwnerID(), new java.sql.Date(oldBean.getDate().getTime()));
+						String label = "";
+						if(labelBean != null)
+							label = labelBean.getLabel();
+		%>
+		<tr class="diaryLabelRow <%= label %>" data-diarydate="<%= (oldBean != null ? diaryDateFormat.format(oldBean.getDate()) : "") %>">
+			<td><b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b><br><button id="toggle<%=index%>" style="border:none; background-color:Transparent" onclick="readSuggestion(<%=oldBean.getDate().getTime() %>, <%=loggedInMID%>);"><img id="img<%=index%>" src="/iTrust/image/icons/greenplus.png" height="20" width="20"></button></td>
+			<script language="JavaScript">
+			$(document).ready(function(){					
+				$("#toggle<%=index%>").click(
+				function(){
+					$("#suggestion<%=index%>").toggle();
+					$('#img<%=index%>')[0].src="/iTrust/image/icons/greenplus.png";
+					$('#img<%=index%>')[0].height="20";
+					$('#img<%=index%>')[0].width="20";
+				});
+			}); 
+			</script>
+			<td><%=StringEscapeUtils.escapeHtml("")%></td>
+			<td><%=StringEscapeUtils.escapeHtml("")%></td>
+			<td><%=StringEscapeUtils.escapeHtml("")%></td>
+			<td><%=StringEscapeUtils.escapeHtml("")%></td>
+			<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getGramsOfFat())%></td>
+			<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getMilligramsOfSodium())%></td>
+			<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getGramsOfCarbs())%></td>
+			<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getGramsOfSugar())%></td>
+			<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getGramsOfFiber())%></td>
+			<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getGramsOfProtein())%></td>
+			<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.totalCalories())%></td>
 			<td>
-			<button name="editBtn" style="margin: 2px;" type='button' onclick="showHiddenEditFoodDiaryForm('HiddenForm', <%=index %>)" style="width:100;height:100">
-			Edit</button>
-			
-			<button name="deleteBtn" style="margin: 2px;" type='button' onclick="runDeleteRecord(<%=index %>)" style="width:100;height:100">
-			Delete</button>
+				<span style="<%= label.length() > 0 ? "border-radius:5px; padding:3px; color:white; background-color:red;" : "" %>"><%=StringEscapeUtils.escapeHtml(label)%></span>
+				<%= label.length() > 0 ? "<br/><br/>" : "" %>
+				<select value="<%=label %>">
+					<option value="none">none</option>
+					<%
+						List<FoodDiaryLabelBean> labelList = labelGetAction.getAllFoodDiaryLabels(loggedInMID);
+						for(FoodDiaryLabelBean lb : labelList) {
+							String labelText = StringEscapeUtils.escapeHtml(lb.getLabel());
+							%><option value="<%=labelText %>"><%=labelText %></option><%	
+						}								
+					%>
+				</select>
+				<button class="changeLabelBtn" data-date="<%=(new java.sql.Date(oldBean.getDate().getTime())).toString() %>">Change Label</button>
 			</td>
-			</tr>
+		</tr>
+		<tr id="suggestion<%=index%>" style="display: none"> 
+				<td>Suggestions:</td>
 			<%
-				oldBean = b;
-				index ++;
-			%>
-			<%
+				String suggestionList = "";
+				List<SuggestionBean> suggestionsToShow = suggestionAction.getSuggestionsByDate(new java.sql.Date(oldBean.getDate().getTime()), loggedInMID);
+				boolean isNew = false;
+				
+				if(suggestionsToShow.size() != 0){
+					for(SuggestionBean sBean: suggestionsToShow){
+						if(sBean.getIsNew().equals("true")){isNew = true; break;}
+					}
+					if(isNew){
+						%><script language="JavaScript">
+							$(document).ready(
+								function(){
+									$('#img<%=index%>')[0].src="/iTrust/image/icons/notification.gif";
+									$('#img<%=index%>')[0].height="35";
+									$('#img<%=index%>')[0].width="35";
+							});
+						</script>
+						<%
+					}
+					int suggestionNum = 1;
+					for(SuggestionBean sBean: suggestionsToShow){
+						suggestionList += "" + suggestionNum + ". " + sBean.getSuggestion() + "\n";
+						//sBean.setIsNew("False");
+						//suggestionAction.editSuggestion(sBean);
+						suggestionNum++;
+					}
+				}else{
+					suggestionList += "No suggestions";
 				}
 				
-				FoodDiaryLabelSetBean labelBean = labelGetAction.getSetFoodDiaryLabel(oldBean.getOwnerID(), new java.sql.Date(oldBean.getDate().getTime()));
-				String label = "";
-				if(labelBean != null)
-					label = labelBean.getLabel();
 			%>
-
-			<tr class="diaryLabelRow <%= label %>" data-diarydate="<%= (oldBean != null ? diaryDateFormat.format(oldBean.getDate()) : "") %>">
-				<td><b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b><br><button id="toggle<%=index%>" style="border:none; background-color:Transparent" onclick="readSuggestion(<%=oldBean.getDate().getTime() %>, <%=loggedInMID%>);"><img id="img<%=index%>" src="/iTrust/image/icons/greenplus.png" height="20" width="20"></button></td>
-				<script language="JavaScript">
-				$(document).ready(function(){
-					$("#toggle<%=index%>").click(
-					function(){
-						$("#suggestion<%=index%>").toggle();
-						$('#img<%=index%>')[0].src="/iTrust/image/icons/greenplus.png";
-						$('#img<%=index%>')[0].height="20";
-						$('#img<%=index%>')[0].width="20";
-					});
-				});
-				</script>
-				<td><%=StringEscapeUtils.escapeHtml("")%></td>
-				<td><%=StringEscapeUtils.escapeHtml("")%></td>
-				<td><%=StringEscapeUtils.escapeHtml("")%></td>
-				<td><%=StringEscapeUtils.escapeHtml("")%></td>
-				<td><%=StringEscapeUtils.escapeHtml(""
-						+ totalBeanTmp.getGramsOfFat())%></td>
-				<td><%=StringEscapeUtils.escapeHtml(""
-						+ totalBeanTmp.getMilligramsOfSodium())%></td>
-				<td><%=StringEscapeUtils.escapeHtml(""
-						+ totalBeanTmp.getGramsOfCarbs())%></td>
-				<td><%=StringEscapeUtils.escapeHtml(""
-						+ totalBeanTmp.getGramsOfSugar())%></td>
-				<td><%=StringEscapeUtils.escapeHtml(""
-						+ totalBeanTmp.getGramsOfFiber())%></td>
-				<td><%=StringEscapeUtils.escapeHtml(""
-						+ totalBeanTmp.getGramsOfProtein())%></td>
-				<td><%=StringEscapeUtils.escapeHtml("" + dailyTotalCalories)%></td>
-				<td>
-					<span style="<%= label.length() > 0 ? "border-radius:5px; padding:3px; color:white; background-color:red;" : "" %>"><%=StringEscapeUtils.escapeHtml(label)%></span>
-					<%= label.length() > 0 ? "<br/><br/>" : "" %>
-					<select value="<%=label %>">
-						<option value="none">none</option>
-						<%
-							List<FoodDiaryLabelBean> labelList = labelGetAction.getAllFoodDiaryLabels(loggedInMID);
-							for(FoodDiaryLabelBean lb : labelList) {
-								String labelText = StringEscapeUtils.escapeHtml(lb.getLabel());
-								%><option value="<%=labelText %>"><%=labelText %></option><%	
-							}								
-						%>
-					</select>
-					<button class="changeLabelBtn" data-date="<%=(new java.sql.Date(oldBean.getDate().getTime())).toString() %>">Change Label</button>
-				</td>
-			</tr>
-			<tr id="suggestion<%=index%>" style="display: none"> 
-				<td>Suggestions:</td>
-				<%
-					String suggestionList = "";
-					List<SuggestionBean> suggestionsToShow = suggestionAction.getSuggestionsByDate(new java.sql.Date(oldBean.getDate().getTime()), loggedInMID);
-					boolean isNew = false;
-					
-					if(suggestionsToShow.size() != 0){
-						for(SuggestionBean sBean: suggestionsToShow){
-							if(sBean.getIsNew().equals("true")){isNew = true; break;}
-						}
-						if(isNew){
-							%><script language="JavaScript">
-								$(document).ready(
-									function(){
-										$('#img<%=index%>')[0].src="/iTrust/image/icons/notification.gif";
-										$('#img<%=index%>')[0].height="35";
-										$('#img<%=index%>')[0].width="35";
-								});
-							</script>
-							<%
-						}
-						int suggestionNum = 1;
-						for(SuggestionBean sBean: suggestionsToShow){
-							suggestionList += "" + suggestionNum + ". " + sBean.getSuggestion() + "\n";
-							//sBean.setIsNew("False");
-							//suggestionAction.editSuggestion(sBean);
-							suggestionNum++;
-						}
-					}else{
-						suggestionList += "No suggestions";
+			<td colspan="12"><textarea id="tarea<%=index%>" rows="4" cols="50" readonly><%=StringEscapeUtils.escapeHtml(suggestionList)%></textarea>
+			</td>
+		</tr>
+		<tr class="diaryLabelRow <%= label1 %>" data-diarydate="<%= (b != null ? diaryDateFormat.format(b.getDate()) : "") %>">
+		<%
+						
 					}
+					
+					if(b != null){
+						FoodDiaryLabelSetBean labelBean1 = labelGetAction.getSetFoodDiaryLabel(b.getOwnerID(), new java.sql.Date(b.getDate().getTime()));
+						label1 = "";
+						if(labelBean1 != null)
+							label1 = labelBean1.getLabel();
+						
+						String row = "<tr class='diaryLabelRow " + label1 + "' data-diarydate='" + (b != null ? diaryDateFormat.format(b.getDate()) : "") + "'";
 				%>
-				<td colspan="12"><textarea id="tarea<%=index%>" rows="4" cols="50" readonly><%=StringEscapeUtils.escapeHtml(suggestionList)%></textarea>
+
+					<%=row+""+((index%2 == 1)?" class=\"alt\"":"")+">"%>
+				<%
+					//SimpleDateFormat sdf = new SimpleDateFormat("M/dd/YYYY");
+							
+				%>
+				<td><%=StringEscapeUtils.escapeHtml("" + sdf.format(b.getDate()))%></td>
+				<td><%=StringEscapeUtils.escapeHtml("" + b.getTypeOfMeal().toString())%></td>
+				<td><%=StringEscapeUtils.escapeHtml("" + b.getNameOfFood())%></td>
+				<td><%=StringEscapeUtils.escapeHtml("" + b.getNumberOfServings())%></td>
+				<td><%=StringEscapeUtils.escapeHtml("" + b.getCaloriesPerServing())%></td>
+				<td><%=StringEscapeUtils.escapeHtml("" + b.getGramsOfFat())%></td>
+				<td><%=StringEscapeUtils.escapeHtml("" + b.getMilligramsOfSodium())%></td>
+				<td><%=StringEscapeUtils.escapeHtml("" + b.getGramsOfCarbs())%></td>
+				<td><%=StringEscapeUtils.escapeHtml("" + b.getGramsOfSugar())%></td>
+				<td><%=StringEscapeUtils.escapeHtml("" + b.getGramsOfFiber())%></td>
+				<td><%=StringEscapeUtils.escapeHtml("" + b.getGramsOfProtein())%></td>
+				<td><%=StringEscapeUtils.escapeHtml("" + b.totalCalories())%></td>
+				<td>
+				<button name="editBtn" style="margin: 2px;" type='button' onclick="showHiddenEditFoodDiaryForm('HiddenForm', <%=index %>)" style="width:100;height:100">
+				Edit</button>
+				
+				<button name="deleteBtn" style="margin: 2px;" type='button' onclick="runDeleteRecord(<%=index %>)" style="width:100;height:100">
+				Delete</button>
 				</td>
 			</tr>
-		</table>
-
-
-	</div>
-	<%
+				<%
+					oldBean = b;
+					index ++;
+				
+					}
+					
+				}
+				%>
+				</table>
+				</div>
+				<%
 		} else {
 	%>
 	<div>

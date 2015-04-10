@@ -85,6 +85,25 @@ label {
 .fTable tbody tr:nth-child(odd) {
    background-color: #E7E7E7;
 }
+.foodDiaryTable {
+
+}
+.foodDiaryTable tbody {
+	background-color: #f1f1f1;
+	border: 1px solid #D5D5D5;
+	border-radius: 8px;
+}
+.foodDiaryTable tr {
+
+}
+.foodDiaryTable th {
+	text-align: left;
+	background-color: rgb(75, 75, 75);
+	color: white;
+}
+.foodDiaryTable tbody tr:nth-child(odd) {
+   background-color: #f1f1f1;
+}
 .navbar-brand img {
 	max-height: 26px;
 	margin-top: -3px;

@@ -37,7 +37,7 @@ public class FoodDiaryLabelTest extends iTrustSeleniumTest {
 	    driver.findElement(By.id("saveNewLabelBtn")).click();
 	    assertTrue(pageContains("Label has been added."));
 	    new Select(driver.findElement(By.xpath("(//select[@value=''])[2]"))).selectByVisibleText("test");
-	    driver.findElement(By.xpath("//table[@id='fTable']/tbody/tr[7]/td[13]/button")).click();
+	    driver.findElement(By.xpath("//table[@id='foodDiaryTable']/tbody/tr[7]/td[13]/button")).click();
 	    assertTrue(pageContains("Label has been set."));
 	}
 	
