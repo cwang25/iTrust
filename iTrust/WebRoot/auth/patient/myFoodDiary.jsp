@@ -202,11 +202,12 @@
 		//-----created food diary list---
 	 	ViewFoodDiaryAction action = new ViewFoodDiaryAction(prodDAO, loggedInMID.toString());
 	 	List<FoodDiaryBean> foodDiaryList = action.getFoodDiaryListByOwnerID(loggedInMID);
-	 	foodDiaryList.add(null);
 	 	List<FoodDiaryDailySummaryBean> foodDiaryDailySummaryList = action.getFoodDiaryDailySummaryListByOwnerID(loggedInMID);
 	 	session.setAttribute("foodDiaryList", foodDiaryList);
 		
 		if (foodDiaryList.size() > 0) {
+			foodDiaryList.add(null);
+			
 	%>
 	<div>
 		<span>Filter entries by label: </span>

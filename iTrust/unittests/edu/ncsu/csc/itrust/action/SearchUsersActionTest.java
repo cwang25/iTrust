@@ -74,7 +74,7 @@ public class SearchUsersActionTest extends TestCase {
 	public void testFuzzySearchForPatient3(){
 		SearchUsersAction act = new SearchUsersAction(factory, 9000000003L);
 		List<PatientBean> patient = act.fuzzySearchForPatients("2");
-		assertEquals("Andy Programmer", patient.get(patient.size()-1).getFullName());
+		assertEquals("Andy Programmer", patient.get(0).getFullName());
 	}
 	
 	public void testFuzzySearchForPatientDeactivated(){
