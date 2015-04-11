@@ -9,8 +9,10 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.support.ui.Select;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.meterware.httpunit.HttpUnitOptions;
@@ -58,9 +60,10 @@ abstract public class iTrustSeleniumTest extends TestCase{
 	 * Login helper function.
 	 * @param username
 	 * @param password
+	 * @return 
 	 * @throws Exception
 	 */
-	protected void login(String username, String password) throws Exception{
+	protected HtmlUnitDriver login(String username, String password) throws Exception{
 		try {
 			driver.get(ADDRESS);
 			driver.findElement(By.id("j_username")).clear();
@@ -72,6 +75,7 @@ abstract public class iTrustSeleniumTest extends TestCase{
 				throw new IllegalArgumentException("Error logging in, user not in database?");
 			}
 			assertLogged(TransactionType.LOGIN_SUCCESS, Long.parseLong(username), Long.parseLong(username), "");
+			return driver;
 		} catch (Exception e) {
 			throw new ConnectException("Tomcat must be running to run Selenium tests.");
 		}
@@ -236,5 +240,14 @@ abstract public class iTrustSeleniumTest extends TestCase{
 		w.click();
 		driver.setJavascriptEnabled(true);
 	}
-
+	/**
+	 * Integrated from Selenium-Test-15
+	 * @param elementName
+	 * @param value
+	 * @param driver
+	 */
+	public void selectComboValue(final String elementName, final String value, final WebDriver driver) {
+	    final Select selectBox = new Select(driver.findElement(By.name(elementName)));
+	    selectBox.selectByValue(value);
+	}
 }

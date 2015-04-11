@@ -202,24 +202,18 @@
 						 		console.log(nText);
 						 		var rowID =  document.getElementById("savedSuggestionList<%=index%>").value;
 						 		console.log(rowID);
+						 		//update text record on client side
 								document.getElementById("suggestionText"+rowID.toString()).value = nText;
+								//update list title
 								document.getElementById("textTitleList"+rowID.toString()).text = nText.length > 25 ? nText.substring(0, 25) : nText;
+								//Disable the update button
+								$('#updateSuggestion<%=index%>').attr('disabled','disabled');
+								$('#updateSuggestion<%=index %>').css('color', 'gray');
 							}else{
 								alert("Something went wrong :(");
 							}
 						});
-						<%-- var xmlhttp;
-						if (window.XMLHttpRequest)
-						  {// code for IE7+, Firefox, Chrome, Opera, Safari
-						  xmlhttp=new XMLHttpRequest();
-						  }
-						else
-						  {// code for IE6, IE5
-						  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-						  }
-						xmlhttp.open("GET","FoodDiarySuggestionUpdateServlet?loggedInMID="+<%=loggedInMID%>+"&suggestionRowID="+document.getElementById("savedSuggestionList<%=index%>".value)+"&newText"+ document.getElementById("tarea<%=index%>").value,true);
-						xmlhttp.send();
-						alert(xmlhttp.responseText); --%>
+						
 					});
 				</script>
 				<select style="margin:5px" id="savedSuggestionList<%=index%>" onchange="$('#updateSuggestion<%=index%>').attr('disabled','disabled');$('#updateSuggestion<%=index %>').css('color', 'gray');updateSuggestionText(document.getElementById('suggestionText'+(this.value).toString()).value,'tarea<%=index%>');">

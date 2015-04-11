@@ -1,4 +1,4 @@
-package edu.ncsu.csc.itrust.seleniumtests;
+package edu.ncsu.csc.itrust.seleniumteststests;
 
 import org.junit.Before;
 import org.junit.Test;
