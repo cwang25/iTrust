@@ -1,4 +1,4 @@
-package edu.ncsu.csc.itrust.seleniumteststests;
+package edu.ncsu.csc.itrust.seleniumtests;
 
 import static org.junit.Assert.*;
 import hirondelle.date4j.DateTime;
