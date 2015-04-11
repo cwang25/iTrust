@@ -83,3 +83,6 @@ ALTER TABLE fooddiarysetlabels AUTO_INCREMENT = 0;
 
 DELETE FROM suggestions;
 ALTER TABLE fooddiarytable AUTO_INCREMENT = 0;
+
+DELETE FROM weightlog;
+ALTER TABLE weightlog AUTO_INCREMENT = 0;

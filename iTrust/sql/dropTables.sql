@@ -90,3 +90,5 @@ DROP TABLE IF EXISTS fooddiarylabels;
 DROP TABLE IF EXISTS fooddiarysetlabels;
 DROP TABLE IF EXISTS suggestions;
 DROP TABLE IF EXISTS macronutrientplan;
+
+DROP TABLE IF EXISTS weightlog;
