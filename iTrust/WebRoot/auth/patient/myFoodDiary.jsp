@@ -325,7 +325,7 @@
 				
 				if(suggestionsToShow.size() != 0){
 					for(SuggestionBean sBean: suggestionsToShow){
-						if(sBean.getIsNew().equals("true")){isNew = true; break;}
+						if(sBean.getIsNew().toLowerCase().equals("true")){isNew = true; break;}
 					}
 					if(isNew){
 						%><script language="JavaScript">
@@ -565,7 +565,7 @@
 <div id="hiddenMacro"  style="display: <%=!dataAllCorrect&&showGraph? "block" : "none" %>">
 	<%@include file="/auth/patient/macroNutrientsChart.jsp"%>
 </div>
-<div id="hiddenDailyGraph" style="display: <%=!dataAllCorrect&&showDailyGraph? "block" : "none" %>">
+<div id="hiddenDailyGraph" style="display: <%=!dataAllCorrect&&showGraph? "block" : "none" %>">
 
 <canvas id="chart-area" width="300" height="300"></canvas>
 </div>

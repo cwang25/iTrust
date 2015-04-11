@@ -395,7 +395,9 @@ public class DAOFactory {
 		return new FoodDiaryLabelDAO(this);
 	}
 	
-	
+	public MacroNutrientPlanDAO getMacroNutrientPlanDAO(){
+		return new MacroNutrientPlanDAO(this);
+	}
 	public PreExistingConditionsDAO getPreExistingConditionsDAO() {
 		return new PreExistingConditionsDAO(this);
 	}

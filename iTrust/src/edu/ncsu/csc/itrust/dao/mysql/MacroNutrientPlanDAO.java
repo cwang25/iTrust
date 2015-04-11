@@ -111,7 +111,7 @@ public class MacroNutrientPlanDAO {
 		int row_update = 0;
 		try {
 			conn = factory.getConnection();
-			ps = conn.prepareStatement("UPDATE fooddiarytable SET ownerID=?, diaryDate=?, mealType=?, foodName=?, servingsNum=?, caloriesPerServing=?, gramsOfFatPerServing=?, milligramsOfSodiumPerServing=?, gramsOfCarbsPerServing=?, gramsOfSugarPerServing=?, gramsOfFiberPerServing=?, gramsOfProteinPerServing=? WHERE rowID =?");
+			ps = conn.prepareStatement("UPDATE macronutrientplan SET ownerID=?, protein=?, fat=?, carbs=? WHERE rowID =?");
 			ps = loader.loadParameters(ps, bean);
 			row_update = ps.executeUpdate();
 		} catch (SQLException e){
