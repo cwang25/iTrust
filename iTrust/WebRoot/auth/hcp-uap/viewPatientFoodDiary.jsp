@@ -19,6 +19,7 @@
 <%@page import="edu.ncsu.csc.itrust.beans.FoodDiaryBean"%>
 <%@page import="edu.ncsu.csc.itrust.beans.FoodDiaryDailySummaryBean" %>
 <%@page import="edu.ncsu.csc.itrust.beans.FoodDiaryLabelSetBean"%>
+<%@page import="edu.ncsu.csc.itrust.beans.FoodDiaryLabelBean"%>
 
 <%@include file="/global.jsp" %>
 
@@ -69,6 +70,20 @@
 		foodDiaryList.add(null);
 %>	
 	<div align="center">
+		<span>Filter entries by label: </span>
+		<select id="labelFilter" value="any">
+			<option value="any">any</option>
+			<%
+				List<FoodDiaryLabelBean> labelsList = labelAction.getAllFoodDiaryLabels(Long.parseLong(pidString));
+				for(FoodDiaryLabelBean lb : labelsList) {
+					String labeltxt = StringEscapeUtils.escapeHtml(lb.getLabel());
+					%><option value="<%=labeltxt %>"><%=labeltxt %></option><%	
+				}								
+			%>
+		</select>
+	</div>
+	<br/>
+	<div align="center">
 		<span>Filter entries by date</span><br/>
 		Filter by range: <input id="dateRangeCheckbox" type="checkbox"/><br/>
 		<input type="text" placeholder="MM/dd/yyyy" id="dateRangeFrom"/>&nbsp;<input type="text" placeholder="MM/dd/yyyy" id="dateRangeTo" style="display:none;" /><br/>
@@ -115,13 +130,13 @@
 				needDailySummary = false;
 				FoodDiaryDailySummaryBean totalBeanTmp = foodDiaryDailySummaryList.get(dailySummaryIndex);
 				dailySummaryIndex++;
+				SimpleDateFormat sdf2 = new SimpleDateFormat("MM/dd/yyyy");
 				FoodDiaryLabelSetBean labelBean = labelAction.getSetFoodDiaryLabel(oldBean.getOwnerID(), new Date(oldBean.getDate().getTime()));
 				String label = "";
-				SimpleDateFormat sdf2 = new SimpleDateFormat("MM/dd/yyyy");
 				if(labelBean != null)
 					label = labelBean.getLabel();
 			%>
-			<tr data-diarydate="<%= oldBean != null ? diaryDateFormat.format(oldBean.getDate()) : "" %>">
+			<tr class="diaryLabelRow <%= label %>" data-diarydate="<%= oldBean != null ? diaryDateFormat.format(oldBean.getDate()) : "" %>">
 				<td>
 					<b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b>
 					<button id="toggle<%=index%>" style="border:none; background-color:Transparent"><img id="img<%=index%>" src="/iTrust/image/icons/addSuggestionPlus.png" height="20" width="20"></button>
@@ -245,8 +260,13 @@
 							
 				recordFlag = sdf.format(b.getDate());
 				oldBean = b;
+				
+				FoodDiaryLabelSetBean labelBean = labelAction.getSetFoodDiaryLabel(oldBean.getOwnerID(), new Date(oldBean.getDate().getTime()));
+				String label = "";
+				if(labelBean != null)
+					label = labelBean.getLabel();
 				%>
-				<tr data-diarydate="<%= b != null ? diaryDateFormat.format(b.getDate()) : "" %>">
+				<tr class="diaryLabelRow <%= label %>" data-diarydate="<%= b != null ? diaryDateFormat.format(b.getDate()) : "" %>">
 					<td><%= StringEscapeUtils.escapeHtml("" + sdf.format(b.getDate()))%></td>
 					<td><%= StringEscapeUtils.escapeHtml("" + b.getTypeOfMeal().toString()) %></td>
 					<td><%= StringEscapeUtils.escapeHtml("" + b.getNameOfFood()) %></td>
@@ -285,6 +305,20 @@
 </div>
 
 <script type="text/javascript">
+	$('#labelFilter').change(function() {
+		$('[data-diarydate]').show();
+		$('#dateRangeTo').val('');
+		$('#dateRangeFrom').val('');
+		var label = $(this).val();
+		if(label == "any") {
+			$('.diaryLabelRow').show();
+		} else {
+			$('.diaryLabelRow').hide();
+			var selector = '.'+label;
+			$(selector).show();
+		}
+	});
+
 	$('#dateRangeCheckbox').click(function() {
 		if(this.checked)
 			$('#dateRangeTo').show();
@@ -293,12 +327,15 @@
 	});
 	
 	$('#dateFilterClear').click(function() {
+		$('[data-diarydate]').show();
 		$('#dateRangeTo').val('');
 		$('#dateRangeFrom').val('');
-		$('[data-diarydate]').show();
+		$('#labelFilter').val('any');
 	});
 	
 	$('#dateFilterSubmit').click(function() {
+		$('#labelFilter').val('any');
+		$('[data-diarydate]').show();
 		var goodDate = isDate($('#dateRangeFrom').val()); //validate from date
 		var dateRange = $('#dateRangeCheckbox')[0].checked;
 		if(dateRange)
