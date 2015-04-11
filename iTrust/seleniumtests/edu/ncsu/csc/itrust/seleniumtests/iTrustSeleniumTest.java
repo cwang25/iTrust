@@ -7,11 +7,13 @@ import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
@@ -42,7 +44,7 @@ abstract public class iTrustSeleniumTest extends TestCase{
 	/**htmlunitdriver**/
 	protected HtmlUnitDriver driver;
 	private boolean acceptNextAlert = true;
-	private StringBuffer verificationErrors = new StringBuffer();
+	protected StringBuffer verificationErrors = new StringBuffer();
 	
 	/**
 	 * Generic setUp
@@ -249,5 +251,32 @@ abstract public class iTrustSeleniumTest extends TestCase{
 	public void selectComboValue(final String elementName, final String value, final WebDriver driver) {
 	    final Select selectBox = new Select(driver.findElement(By.name(elementName)));
 	    selectBox.selectByValue(value);
+	}
+	
+	
+	/**
+	 * @deprecated THIS IS FOR INTEGRATING seleniumtests-7 test cases, they use it toooo many times, can't fix it in this short time. We will not suggest to use this method, the Webdriver itself can interact with the search patient Perfectly with no problem.
+	 * Enters the given patient MID into the "Select a Patient" search box and clicks the button for that patient.
+	 * This method will fail the calling test if the current page is not the search page or if a patient could not be found.
+	 * @param patientId the MID of the patient to look for.
+	 */
+	@Deprecated
+	public void selectPatientFromSearch(String patientId) throws Exception {
+		if (!driver.isJavascriptEnabled()) {
+			throw new IllegalArgumentException("Javascript is not enabled");
+		}
+		if (driver.getTitle().equals("iTrust - Please Select a Patient")) {
+			WebElement searchBox = driver.findElement(By.id("searchBox"));
+			searchBox.clear();
+			new Actions(driver).click(searchBox).sendKeys(patientId).sendKeys(Keys.TAB).perform();
+			List<WebElement> possibleButtons = driver.findElements(By.cssSelector("input[value='" + patientId + "'][type='button']"));
+			if (possibleButtons.size() < 1) {
+				fail("Unable to find patient with MID: " + patientId);
+			} else {
+				driver.findElements(By.cssSelector("input[value='" + patientId + "'][type='button']")).get(0).click();
+			}
+		} else {
+			fail("Attempted to search for a patient but was not on the 'Select a Patient' page!");
+		}
 	}
 }

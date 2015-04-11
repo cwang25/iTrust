@@ -1,4 +1,4 @@
-package edu.ncsu.csc.itrust.seleniumteststests;
+package edu.ncsu.csc.itrust.seleniumtests;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -21,7 +21,7 @@ public class PatientSeleniumTest extends iTrustSeleniumTest {
 	
 	@Test
 	public void testChangePassword() throws Exception {
-		login("2", "pw", "Patient");
+		login("2", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 2L, 0L, "");
 		
 		driver.findElement(By.cssSelector("a[href='/iTrust/logout.jsp']")).click();
@@ -45,17 +45,17 @@ public class PatientSeleniumTest extends iTrustSeleniumTest {
 		
 		driver.get(ADDRESS + "login.jsp");
 		
-		login("2", "pw", "Patient");
+		login("2", "pw");
 		assertTrue(driver.findElement(By.className("iTrustError")).getText().contains("Failed login"));
 		
-		login("2", "password2", "Patient");
+		login("2", "password2");
 		assertLogged(TransactionType.HOME_VIEW, 2L, 0L, "");
 		assertTrue(driver.getTitle().equals("iTrust - Patient Home"));
 	}
 	
 	@Test
 	public void testViewPrescriptionRecords1() throws Exception {
-		login("1", "pw", "Patient");
+		login("1", "pw");
 		assertTrue(driver.getTitle().equals("iTrust - Patient Home"));
 		assertLogged(TransactionType.HOME_VIEW, 1L, 0L, "");
 		
@@ -71,7 +71,7 @@ public class PatientSeleniumTest extends iTrustSeleniumTest {
 	
 	@Test
 	public void testViewPrescriptionRecords2() throws Exception {
-		login("2", "pw", "Patient");
+		login("2", "pw");
 		assertTrue(driver.getTitle().equals("iTrust - Patient Home"));
 		assertLogged(TransactionType.HOME_VIEW, 2L, 0L, "");
 		
@@ -88,7 +88,7 @@ public class PatientSeleniumTest extends iTrustSeleniumTest {
 	
 	@Test
 	public void testCodeInjection() throws Exception {
-		login("2", "pw", "Patient");
+		login("2", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 2L, 0L, "");
 		driver.get(ADDRESS + "auth/patient/myDiagnoses.jsp?icd=%3Cscript%3Ewindow.location=%22http://bit.ly/4kb77v%22%3C/script%3E"); //Gotta make ADDRESS work. Something with transaction types
 		assertFalse(driver.getPageSource().contains("RickRoll'D"));

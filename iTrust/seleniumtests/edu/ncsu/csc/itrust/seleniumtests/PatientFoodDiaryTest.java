@@ -1,4 +1,4 @@
-package edu.ncsu.csc.itrust.seleniumteststests;
+package edu.ncsu.csc.itrust.seleniumtests;
 
 import java.util.concurrent.TimeUnit;
 
@@ -27,7 +27,6 @@ public class PatientFoodDiaryTest extends iTrustSeleniumTest{
 	 * Confirm and approve the selection
 	 */
 	public void testScenario1Derek1() throws Exception {
-		driver.get(baseUrl + "auth/forwardUser.jsp");
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("684");
 	    driver.findElement(By.id("j_password")).clear();
@@ -94,7 +93,6 @@ public class PatientFoodDiaryTest extends iTrustSeleniumTest{
 	 * Confirm and approve the selection
 	 */
 	public void testScenarioJennifer2() throws Exception {
-		driver.get(baseUrl + "auth/forwardUser.jsp");
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("685");
 	    driver.findElement(By.id("j_password")).clear();
@@ -153,7 +151,6 @@ public class PatientFoodDiaryTest extends iTrustSeleniumTest{
 	 * Check and see if all fields exist
 	 */
 	public void testScenarioSReid() throws Exception {
-		driver.get(baseUrl + "auth/forwardUser.jsp");
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("9900000025");
 	    driver.findElement(By.id("j_password")).clear();
@@ -221,7 +218,6 @@ public class PatientFoodDiaryTest extends iTrustSeleniumTest{
 	 * 
 	 */
 	public void testAddFDBadDate() throws Exception {
-		driver.get(baseUrl + "auth/forwardUser.jsp");
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("685");
 	    driver.findElement(By.id("j_password")).clear();
@@ -276,7 +272,6 @@ public class PatientFoodDiaryTest extends iTrustSeleniumTest{
 	 *
 	 */
 	public void testAddFDInvalidDateFormat() throws Exception {
-		driver.get(baseUrl + "auth/forwardUser.jsp");
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("685");
 	    driver.findElement(By.id("j_password")).clear();
@@ -331,7 +326,6 @@ public class PatientFoodDiaryTest extends iTrustSeleniumTest{
 	 * 
 	 */
 	public void testInvalidServings() throws Exception {
-		driver.get(baseUrl + "auth/forwardUser.jsp");
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("684");
 	    driver.findElement(By.id("j_password")).clear();
@@ -388,7 +382,6 @@ public class PatientFoodDiaryTest extends iTrustSeleniumTest{
 	 * 
 	 */
 	public void testInvalidProteins() throws Exception {
-		driver.get(baseUrl + "auth/forwardUser.jsp");
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("684");
 	    driver.findElement(By.id("j_password")).clear();
@@ -438,7 +431,6 @@ public class PatientFoodDiaryTest extends iTrustSeleniumTest{
 	 * A No Entries message should be on the page
 	 */
 	public void testEmptyFoodDiary() throws Exception {
-		driver.get(baseUrl + "auth/forwardUser.jsp");
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("9900000025");
 	    driver.findElement(By.id("j_password")).clear();

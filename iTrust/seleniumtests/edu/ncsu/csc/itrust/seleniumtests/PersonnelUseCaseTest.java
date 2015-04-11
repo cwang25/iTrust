@@ -73,7 +73,7 @@ public class PersonnelUseCaseTest extends iTrustSeleniumTest {
 		String newMID = driver.findElement(
 				By.cssSelector("table").xpath("//tr[2]/td[2]")).getText();
 		// Verify new emergency responder data is present
-		assertTextPresent("New ER Nick Oftime succesfully added!", driver);
+		pageContains("New ER Nick Oftime succesfully added!");
 		assertLogged(TransactionType.ER_CREATE, 9000000001L,
 				Long.parseLong(newMID), "");
 	}
@@ -105,7 +105,7 @@ public class PersonnelUseCaseTest extends iTrustSeleniumTest {
 		String newMID = driver.findElement(
 				By.cssSelector("table").xpath("//tr[2]/td[2]")).getText();
 		// Verify new emergency responder data is present
-		assertTextPresent("New ER Nick Oftime succesfully added!", driver);
+		pageContains("New ER Nick Oftime succesfully added!");
 		assertLogged(TransactionType.ER_CREATE, 9000000001L,
 				Long.parseLong(newMID), "");
 
@@ -122,17 +122,8 @@ public class PersonnelUseCaseTest extends iTrustSeleniumTest {
 		driver.findElement(By.name("phone")).sendKeys("919-100-1000");
 		driver.findElement(By.name("action")).click();
 
-		assertTextPresent("Information Successfully Updated", driver);
+		pageContains("Information Successfully Updated");
 		assertLogged(TransactionType.ER_EDIT, 9000000001L,
 				Long.parseLong(newMID), "");
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		driver.quit();
-		String verificationErrorString = verificationErrors.toString();
-		if (!"".equals(verificationErrorString)) {
-			fail(verificationErrorString);
-		}
 	}
 }

@@ -1,4 +1,4 @@
-package edu.ncsu.csc.itrust.seleniumteststests;
+package edu.ncsu.csc.itrust.seleniumtests;
 
 import static org.junit.Assert.*;
 
@@ -33,7 +33,7 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 	public void testSelectPatientFromSearch() throws Exception {
 		driver.setJavascriptEnabled(true);
 		gen.hcp4();
-		login("9000000004", "pw", "HCP");
+		login("9000000004", "pw");
 		driver.get(ADDRESS + "auth/getPatientID.jsp");
 		selectPatientFromSearch("1");
 	}
@@ -46,7 +46,7 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 	public void testAcceptanceScenario1() throws Exception {
 		gen.hcp4();
 
-		login("9000000004", "pw", "HCP");
+		login("9000000004", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		// click Document Office Visit
 		driver.setJavascriptEnabled(true);
@@ -97,7 +97,7 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 		gen.hcp4();
 		gen.uc44_acceptance_scenario_2();
 		
-		login("9000000004", "pw", "HCP");
+		login("9000000004", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		// click Document Office Visit
 		driver.findElement(By.linkText("Document Office Visit")).click();

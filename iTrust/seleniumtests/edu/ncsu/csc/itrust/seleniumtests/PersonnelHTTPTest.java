@@ -39,7 +39,7 @@ public class PersonnelHTTPTest extends iTrustSeleniumTest {
 		driver.findElement(By.id("j_password")).clear();
 		driver.findElement(By.id("j_password")).sendKeys("pw");
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		assertTextPresent("Welcome, Kelly Doctor", driver);
+		pageContains("Welcome, Kelly Doctor");
 		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("All Patients")).click();
 		assertLogged(TransactionType.PATIENT_LIST_VIEW, 9000000000L, 0L, "");
@@ -51,22 +51,15 @@ public class PersonnelHTTPTest extends iTrustSeleniumTest {
 		assertLogged(TransactionType.PRESCRIPTION_REPORT_VIEW, 9000000000L, 2L, "");
 		assertEquals("iTrust - Get Prescription Report", driver.getTitle());
 
-		assertTextPresent("00904-2407", driver);
-		assertTextPresent("Tetracycline", driver);
-		assertTextPresent("10/10/2006 to 10/11/2006", driver);
-		assertTextPresent("Kelly Doctor", driver);
-		assertTextPresent("00904-2407", driver);
-		assertTextPresent("10/10/2006 to 10/11/2006", driver);
-		assertTextPresent("64764-1512", driver);
-		assertTextPresent("10/10/2006 to 10/11/2020", driver);
+		pageContains("00904-2407");
+		pageContains("Tetracycline");
+		pageContains("10/10/2006 to 10/11/2006");
+		pageContains("Kelly Doctor");
+		pageContains("00904-2407");
+		pageContains("10/10/2006 to 10/11/2006");
+		pageContains("64764-1512");
+		pageContains("10/10/2006 to 10/11/2020");
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		driver.quit();
-		String verificationErrorString = verificationErrors.toString();
-		if (!"".equals(verificationErrorString)) {
-			fail(verificationErrorString);
-		}
-	}
+
 }

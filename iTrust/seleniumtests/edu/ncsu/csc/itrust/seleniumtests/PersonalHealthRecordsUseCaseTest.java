@@ -1,4 +1,4 @@
-package edu.ncsu.csc.itrust.seleniumteststests;
+package edu.ncsu.csc.itrust.seleniumtests;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.Select;
@@ -8,12 +8,10 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		gen.clearAllTables();
 		gen.standardData();
 	}
 	
 	  public void testEditPatient() throws Exception {
-		    driver.get(baseUrl + "auth/forwardUser.jsp");
 		    driver.findElement(By.id("j_username")).clear();
 		    driver.findElement(By.id("j_username")).sendKeys("9000000000");
 		    driver.findElement(By.id("j_password")).clear();
@@ -33,7 +31,6 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 	  }
 	  
 	  public void testInvalidPatientDates() throws Exception {
-		  driver.get(baseUrl + "auth/forwardUser.jsp");
 		    try {
 		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
 		      } catch (Error e) {
@@ -66,7 +63,6 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 	  }
 	  
 	  public void testInvalidPatientBirthDates() throws Exception {
-		  driver.get(baseUrl + "auth/forwardUser.jsp");
 		    try {
 		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
 		      } catch (Error e) {
@@ -102,7 +98,6 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 	  }
 	  
 	  public void testRepresent() throws Exception {
-		  driver.get(baseUrl + "auth/forwardUser.jsp");
 		    try {
 		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
 		      } catch (Error e) {
@@ -150,7 +145,6 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 	  }
 	  
 	  public void testAllergy() throws Exception {
-		  driver.get(baseUrl + "auth/forwardUser.jsp");
 		    try {
 		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
 		      } catch (Error e) {
@@ -184,7 +178,6 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 	  }
 	  
 	  public void testAllergy2() throws Exception {
-		  driver.get(baseUrl + "auth/forwardUser.jsp");
 		    try {
 		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
 		      } catch (Error e) {
@@ -218,7 +211,6 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 	  }
 	  
 	  public void testEditSmokingStatus() throws Exception {
-		  driver.get(baseUrl + "auth/forwardUser.jsp");
 		    try {
 		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
 		      } catch (Error e) {
@@ -281,7 +273,6 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 	  }
 	  
 	  public void testAddAdditionalDemographics1() throws Exception {
-		  driver.get(baseUrl + "auth/forwardUser.jsp");
 		    try {
 		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
 		      } catch (Error e) {
@@ -322,7 +313,6 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 	  }
 	  
 	  public void testAddAdditionalDemographics2() throws Exception {
-		  driver.get(baseUrl + "auth/forwardUser.jsp");
 		    try {
 		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
 		      } catch (Error e) {
@@ -363,7 +353,6 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 	  }
 	  
 	  public void testAddAdditionalDemographics3() throws Exception {
-		  driver.get(baseUrl + "auth/forwardUser.jsp");
 		    try {
 		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
 		      } catch (Error e) {
@@ -404,7 +393,6 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 	  }
 	  
 	  public void testAddDupAllergy() throws Exception {
-		  driver.get(baseUrl + "auth/forwardUser.jsp");
 		    try {
 		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
 		      } catch (Error e) {
@@ -445,7 +433,6 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 	  }
 	  
 	  public void testAddAllergyPrevRX() throws Exception {
-		  driver.get(baseUrl + "auth/forwardUser.jsp");
 		    try {
 		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
 		      } catch (Error e) {
@@ -516,7 +503,6 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 	  }
 	  
 	  public void testAddAllergyFutRX() throws Exception {
-		  driver.get(baseUrl + "auth/forwardUser.jsp");
 		    try {
 		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
 		      } catch (Error e) {
@@ -547,7 +533,6 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 	  }
 	  
 	  public void testAddAllergyExistRX() throws Exception {
-		  driver.get(baseUrl + "auth/forwardUser.jsp");
 		    try {
 		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
 		      } catch (Error e) {

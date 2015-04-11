@@ -644,7 +644,7 @@ public class OVBasicHealthTest extends iTrustSeleniumTest {
 		assertTrue(driver.getPageSource().contains("Information Successfully Updated"));
 		
 		//Verify that date changed for to March 1st, 2014.
-		assertEquals(driver.findElement(By.name("visitDate")).getValue(), "03/01/2014");
+		assertEquals(driver.findElement(By.name("visitDate")).getText(), "03/01/2014");
 	}
 	
 	/**

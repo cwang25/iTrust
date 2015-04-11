@@ -1,4 +1,4 @@
-package edu.ncsu.csc.itrust.seleniumteststests;
+package edu.ncsu.csc.itrust.seleniumtests;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class PatientsWithExpiringPrescriptionsTest extends iTrustSeleniumTest {
 	@Test
 	public void testPatient9() throws Exception {
 		
-		login("9900000000", "pw", "Patient");
+		login("9900000000", "pw");
 		assertEquals(driver.getTitle(), "iTrust - HCP Home");
 		//assertLogged(TransactionType.HOME_VIEW, 9900000000L, 0L, "");
 		
@@ -53,7 +53,7 @@ public class PatientsWithExpiringPrescriptionsTest extends iTrustSeleniumTest {
 	@Test
 	public void testPatientTen() throws Exception {
 
-		login("9900000000", "pw", "Patient");
+		login("9900000000", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9900000000L, 0L, "");
 		
@@ -71,7 +71,7 @@ public class PatientsWithExpiringPrescriptionsTest extends iTrustSeleniumTest {
 	@Test
 	public void testPatientEleven() throws Exception {
 
-		login("9900000000", "pw", "Patient");
+		login("9900000000", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9900000000L, 0L, "");
 		
@@ -91,7 +91,7 @@ public class PatientsWithExpiringPrescriptionsTest extends iTrustSeleniumTest {
 	@Test
 	public void testPatientTwelve() throws Exception {
 
-		login("9900000000", "pw", "Patient");
+		login("9900000000", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9900000000L, 0L, "");
 		
@@ -110,7 +110,7 @@ public class PatientsWithExpiringPrescriptionsTest extends iTrustSeleniumTest {
 	@Test
 	public void testPatientThirteen() throws Exception {
 
-		login("9900000000", "pw", "Patient");
+		login("9900000000", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9900000000L, 0L, "");
 		
@@ -130,7 +130,7 @@ public class PatientsWithExpiringPrescriptionsTest extends iTrustSeleniumTest {
 	@Test
 	public void testPatientFourteen() throws Exception {
 
-		login("9900000000", "pw", "Patient");
+		login("9900000000", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9900000000L, 0L, "");
 		
@@ -151,7 +151,7 @@ public class PatientsWithExpiringPrescriptionsTest extends iTrustSeleniumTest {
 	@Test
 	public void testPatientFifteen() throws Exception {
 
-		login("9900000000", "pw", "Patient");
+		login("9900000000", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9900000000L, 0L, "");
 		
@@ -170,7 +170,7 @@ public class PatientsWithExpiringPrescriptionsTest extends iTrustSeleniumTest {
 	@Test
 	public void testPatientOrdering() throws Exception {
 
-		login("9900000000", "pw", "Patient");
+		login("9900000000", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9900000000L, 0L, "");
 		
@@ -203,7 +203,7 @@ public class PatientsWithExpiringPrescriptionsTest extends iTrustSeleniumTest {
 	public void testAcceptance() throws Exception {
 		gen.UC32Acceptance();
 
-		login("9000000003", "pw", "Patient");
+		login("9000000003", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000003L, 0L, "");
 		

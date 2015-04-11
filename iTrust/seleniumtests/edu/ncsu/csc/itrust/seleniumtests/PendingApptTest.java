@@ -1,4 +1,4 @@
-package edu.ncsu.csc.itrust.seleniumteststests;
+package edu.ncsu.csc.itrust.seleniumtests;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -20,7 +20,7 @@ public class PendingApptTest extends iTrustSeleniumTest {
 	
 	@Test
 	public void testPendingAppointmentAlert () throws Exception {
-		login("9000000000", "pw", "HCP");
+		login("9000000000", "pw");
 		assertTrue(driver.getPageSource().contains("Appointment requests."));
 	}
 	
@@ -30,7 +30,7 @@ public class PendingApptTest extends iTrustSeleniumTest {
 		gen.standardData();
 		gen.pendingAppointmentAlert();
 		
-		login("9000000000", "pw", "HCP");
+		login("9000000000", "pw");
 		driver.findElement(By.linkText("Appointment Requests")).click();
 		driver.findElement(By.linkText("Approve")).click();
 		driver.findElement(By.xpath("//a[text() = 'Home']")).click();
@@ -44,7 +44,7 @@ public class PendingApptTest extends iTrustSeleniumTest {
 		gen.standardData();
 		gen.pendingAppointmentConflict();
 		
-		login("9000000000", "pw", "HCP");
+		login("9000000000", "pw");
 		driver.findElement(By.linkText("Appointment Requests")).click();
 		driver.findElement(By.linkText("Approve")).click();
 		driver.findElement(By.xpath("//a[text() = 'Home']")).click();
@@ -63,7 +63,7 @@ public class PendingApptTest extends iTrustSeleniumTest {
 		gen.standardData();
 		gen.pendingAppointmentAlert();
 		
-		login("9000000000", "pw", "HCP");
+		login("9000000000", "pw");
 		driver.findElement(By.linkText("Appointment Requests")).click();
 		driver.findElement(By.linkText("Reject")).click();
 		driver.findElement(By.xpath("//a[text() = 'Home']")).click();
