@@ -104,6 +104,7 @@ label {
 .foodDiaryTable tbody tr:nth-child(odd) {
    background-color: #f1f1f1;
 }
+
 .navbar-brand img {
 	max-height: 26px;
 	margin-top: -3px;

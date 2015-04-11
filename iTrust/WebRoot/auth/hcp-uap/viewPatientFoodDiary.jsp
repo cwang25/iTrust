@@ -155,7 +155,10 @@
 					<input name="addNewSuggestion" value="true" type ="hidden" ></input>
 					<input name="date" value="<%=sdf.format(oldBean.getDate())%>" type ="hidden" ></input>
 				</td>
-				<td colspan="2"><button type="submit" id="addNewSuggestion">Submit Suggestion</button></td>
+				<td colspan="2">
+				<button type="submit" id="addNewSuggestion">Submit Suggestion</button>
+				
+				</td>
 				<%
 					String suggestionList = "";
 					List<SuggestionBean> suggestionsToShow = suggPatientAction.getSuggestionsByDate(new java.sql.Date(oldBean.getDate().getTime()), Long.parseLong(pidString));
@@ -173,7 +176,63 @@
 					
 				%>
 				<td>Patient's Suggestions:</td>
-				<td colspan="4"><textarea id="tarea<%=index%>" rows="4" cols="50" readonly><%=StringEscapeUtils.escapeHtml(suggestionList)%></textarea>
+				<td colspan="4">
+				<%
+				for(SuggestionBean bitem: suggestionsToShow){
+					%>
+					<textarea id="suggestionText<%=bitem.getRowID()%>" style="display: none"><%=bitem.getSuggestion()%></textarea>
+					<%
+				}
+				%>
+				
+				<button type="button" id="updateSuggestion<%=index%>"  style="color:gray;" disabled>Update</button>
+				<script type="text/javascript">
+					$("#updateSuggestion<%=index%>").click(function(){
+						
+						 $.post("FoodDiarySuggestionUpdateServlet",
+						 {
+							loggedInMID: <%=loggedInMID%>,
+							suggestionRowID: document.getElementById("savedSuggestionList<%=index%>").value,
+							newText: document.getElementById("tarea<%=index%>").value
+						 },
+						function(data, status){
+							if(data === "Success"){
+								alert("Your changes have been saved! :)");
+						 		var nText = document.getElementById("tarea<%=index%>").value;
+						 		console.log(nText);
+						 		var rowID =  document.getElementById("savedSuggestionList<%=index%>").value;
+						 		console.log(rowID);
+								document.getElementById("suggestionText"+rowID.toString()).value = nText;
+								document.getElementById("textTitleList"+rowID.toString()).text = nText.length > 25 ? nText.substring(0, 25) : nText;
+							}else{
+								alert("Something went wrong :(");
+							}
+						});
+						<%-- var xmlhttp;
+						if (window.XMLHttpRequest)
+						  {// code for IE7+, Firefox, Chrome, Opera, Safari
+						  xmlhttp=new XMLHttpRequest();
+						  }
+						else
+						  {// code for IE6, IE5
+						  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+						  }
+						xmlhttp.open("GET","FoodDiarySuggestionUpdateServlet?loggedInMID="+<%=loggedInMID%>+"&suggestionRowID="+document.getElementById("savedSuggestionList<%=index%>".value)+"&newText"+ document.getElementById("tarea<%=index%>").value,true);
+						xmlhttp.send();
+						alert(xmlhttp.responseText); --%>
+					});
+				</script>
+				<select style="margin:5px" id="savedSuggestionList<%=index%>" onchange="$('#updateSuggestion<%=index%>').attr('disabled','disabled');$('#updateSuggestion<%=index %>').css('color', 'gray');updateSuggestionText(document.getElementById('suggestionText'+(this.value).toString()).value,'tarea<%=index%>');">
+				<%
+					for(SuggestionBean bitem : suggestionsToShow){
+						%>
+							<option id="textTitleList<%=bitem.getRowID()%>" value=<%=bitem.getRowID() %>  style="width:50px;" ><%=bitem.getSuggestion().length() > 25 ? bitem.getSuggestion().substring(0, 25) : bitem.getSuggestion() %></option>
+						<%
+					}
+				%>
+				</select>
+				
+				<textarea onkeyup="$('#updateSuggestion<%=index%>').removeAttr('disabled');$('#updateSuggestion<%=index %>').css('color', 'black');" id="tarea<%=index%>" rows="4" cols="50" ><%=suggestionsToShow.get(0).getSuggestion()%></textarea>
 				</td>
 			</form>
 			</tr>
@@ -321,6 +380,10 @@
 	                return false;
 	    }
 	    return true;
+	}
+	function updateSuggestionText(content, id){
+		var textarea = document.getElementById(id);
+		textarea.value = content;
 	}
 </script>
 

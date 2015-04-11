@@ -374,6 +374,14 @@
 		<servlet-name>FoodDiarySuggestionNotificationUpdateServlet</servlet-name>
 		<url-pattern>/auth/patient/FoodDiarySuggestionNotificationUpdateServlet</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>FoodDiarySuggestionUpdateServlet</servlet-name>
+		<servlet-class>edu.ncsu.csc.itrust.server.FoodDiarySuggestionUpdateServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FoodDiarySuggestionUpdateServlet</servlet-name>
+		<url-pattern>/auth/hcp-uap/FoodDiarySuggestionUpdateServlet</url-pattern>
+	</servlet-mapping>
 	
 </web-app>
 
