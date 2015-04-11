@@ -313,6 +313,7 @@
 					%>
 				</select>
 				<button class="changeLabelBtn" data-date="<%=(new java.sql.Date(oldBean.getDate().getTime())).toString() %>">Change Label</button>
+				<button style="margin-top: 5px" class="button" id="viewMacroNutrientGraph">View Graph</button> 
 			</td>
 		</tr>
 		<tr id="suggestion<%=index%>" style="display: none"> 
@@ -563,6 +564,10 @@
 
 <div id="hiddenMacro"  style="display: <%=!dataAllCorrect&&showGraph? "block" : "none" %>">
 	<%@include file="/auth/patient/macroNutrientsChart.jsp"%>
+</div>
+<div id="hiddenDailyGraph" style="display: <%=!dataAllCorrect&&showDailyGraph? "block" : "none" %>">
+
+<canvas id="chart-area" width="300" height="300"></canvas>
 </div>
 <script language="JavaScript">
 	function showHiddenForm(divID) {

@@ -11,7 +11,7 @@ import edu.ncsu.csc.itrust.beans.FoodDiaryBean;
 
 public class FoodDiaryBeanLoader implements BeanLoader<FoodDiaryBean> {
 	/**
-	 * loadList simply takes a ResultSet from a query to the Billing table, and
+	 * loadList simply takes a ResultSet from a queryand
 	 * then it creates a list of FoodDiaryBean from it.
 	 * @param rs The ResultSet that is being converted into a list.
 	 * @return The list that contains all the FoodDiaryBean in the ResultSet.
