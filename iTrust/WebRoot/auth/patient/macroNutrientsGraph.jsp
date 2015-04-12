@@ -12,7 +12,7 @@
 <%@page import="edu.ncsu.csc.itrust.dao.DAOFactory"%>
 <%@page import="edu.ncsu.csc.itrust.exception.FormValidationException"%>
 <%@page import="edu.ncsu.csc.itrust.beans.FoodDiaryDailySummaryBean"%>
-<%@page %>
+<%@page import="edu.ncsu.csc"%>
 
 <%@page import="java.util.Calendar"%>
 <script src="/iTrust/js/Chart.js"></script>

@@ -454,7 +454,19 @@ public enum TransactionType {
 	/**HCP_LEFT_SUGGESTION_IN_FOOD_DIARY**/
 	HCP_LEFT_SUGGESTION(7500, "Nutritionist left suggestion in Food Diary", "left suggestion in food diary", true),
 	/**HCP_LEFT_SUGGESTION_IN_FOOD_DIARY**/
-	PATIENT_VIEW_SUGGESTION(7501, "Viewed Suggestion in Food Diary", "viewed your suggestions", true)
+	PATIENT_VIEW_SUGGESTION(7501, "Viewed Suggestion in Food Diary", "viewed your suggestions", true),
+	/**PATEINT_ADD_MACRONUTRIENTPLAN**/
+	PATIENT_ADD_MACRONUTRIENTPLAN(7200, "Patient created a new macronutrient plan.", "created a new macronutrient plan", true),
+	/**PATIENT_EDIT_MACRONUTRIENTPLAN**/
+	PATIENT_EDIT_MACRONUTRIENTPLAN(7201, "Patient edited a macronutrient plan.", "edited a macronutrient plan", true),
+	/**PATIENT_REMOVE_MACRONUTRIENTPLAN**/
+	PATIENT_REMOVE_MACRONUTRIENTPLAN(7202, "Patient removed a macrountrient plan.", "removed a macronutrient plan", true),
+	/**HCP_ADD_MACRONUTRIENTPLAN**/
+	HCP_ADD_MACRONUTRIENTPLAN(7210, "HCP created a new macronutrient plan.", "created a new macronutrient plan", true),
+	/**HCP_EDIT_MACRONUTRIENTPLAN**/
+	HCP_EDIT_MACRONUTRIENTPLAN(7211, "HCP edited a macronutrient plan.", "editted a macronutrient plan", true),
+	/**HCP_REMOVE_MACRONUTRIENTPLAN**/
+	HCP_REMOVE_MACRONUTRIENTPLAN(7212, "HCP removed a macronutrient plan.", "removed a macronutrient plan", true)
 	;
 	/**
 	 * This string is used in the SQL statement associated with pulling events for
