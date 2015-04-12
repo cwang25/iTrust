@@ -16,8 +16,6 @@
 
 <%@page import="java.util.Calendar"%>
 
-
-
 <%
 //Add java stuff here
 %>
