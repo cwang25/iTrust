@@ -1,5 +1,6 @@
 var chart = null;
 var allValid = true;
+var totalCalories;
 function graphIt() {
 	//Calculate BMR by Mifflin method
 	//men = 10 * weightInKg + 6.25*height in cm - 5*ageinyears + 5
@@ -105,7 +106,6 @@ function graphIt() {
 
 	var activityLevel = document.macroForm.activityLevel.value;
 
-	var totalCalories;
 	if (activityLevel === "sedentary")
 		totalCalories = bmr * 1.2;
 	else if (activityLevel === "light")
@@ -153,6 +153,21 @@ function graphIt() {
 		animateRotate : true,
 		animationEasing : "noBounce",
 		animationSteps : 30
+//		onAnimationComplete: function () {
+//			var ctx = $('#chart-area').get(0).getContext("2d");
+//		    var canvasWidthvar = $('#chart-area').width();
+//		    var canvasHeight = $('#chart-area').height();
+//		    var constant = 700;
+//		    var fontsize = (canvasHeight/constant).toFixed(2);
+//		    //ctx.font="2.8em Verdana";
+//		    ctx.font=fontsize +"em Verdana";
+//		    ctx.textBaseline="middle"; 
+//		    var calories = "Total Calories: " + parseInt(totalCalories);
+//		    var textWidth = ctx.measureText(calories).width;
+//		    
+//		     var txtPosx = Math.round((canvasWidthvar - textWidth)/2);
+//		      ctx.fillText(calories, txtPosx, canvasHeight/2);
+//		}
 	};
 
 	if (chart == null) {
@@ -163,7 +178,7 @@ function graphIt() {
 		chart.segments[2].value = parseInt(totalCarbs);
 		chart.update();
 	}
-	legend(document.getElementById('legendDiv'), pieData);
+	legendPie(document.getElementById('legendDiv'), pieData);
 }
 
 function radioChange() {
@@ -172,24 +187,27 @@ function radioChange() {
 	}
 }
 
-function legend(parent, data) {
-   var title = document.createElement('h3');
-   title.innerHTML = "Legend";
-   title.align = "center";
+function legendPie(parent, data) {
+   while(parent.hasChildNodes()){
+	   parent.removeChild(parent.lastChild);
+   }
+	
    var ul = document.createElement('ul');
-   ul.align="left";
-   parent.appendChild(title);
    parent.appendChild(ul);
    for(var i = 0; i < data.length; i++){
 	   var item = data[i];
 	   var li = document.createElement('li');
 	   var imageUrl = "/iTrust/image/sq_" + item.color.substring(1) + ".png";
 	   li.style.listStyleImage = "url(" + "\'" + imageUrl + "\'" + ")";
-	   li.style.height = "10px";
-	   li.style.width = "10px";
 	   //li.style.fontSize = "300%";
-	   var label = item.label;
+	   var label = item.label.substring(0 , item.label.indexOf('(') - 1) + ": " + item.value + " gms";
 	   li.innerHTML = "<p style=\"font-size:18px;\"><span style=\"color:black; gravity:left\">"+label+"</span></p>";
 	   ul.appendChild(li);
    }
+   var calorieDisplay = document.createElement('div');
+   calorieDisplay.style.fontSize = "18px";
+   calorieDisplay.marginLeft = "30px";
+   
+   calorieDisplay.innerHTML = "Total Calories: " + parseInt(totalCalories);
+   parent.appendChild(calorieDisplay);
 }

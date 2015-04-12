@@ -112,8 +112,8 @@
 		</td>
 		<td>
 			<div id="canvas-holder">
-				<canvas id="chart-area" width="300" height="300"></canvas>
-				<div id="legendDiv"></div>
+				<canvas id="chart-area" width="400" height="400"></canvas>
+				<div id="legendOuterDiv" align="center"><table style="border:none"><tr><td id="legendDiv"></td></tr></table></div>
 			</div>
 		</td>
 	</tr>
