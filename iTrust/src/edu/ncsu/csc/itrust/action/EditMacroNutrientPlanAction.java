@@ -53,7 +53,7 @@ public class EditMacroNutrientPlanAction extends MacroNutrientPlanBaseAction{
 	 * @throws FormValidationException 
 	 * @throws DBException 
 	 */
-	public int editMacroNutrientPlanByStrForNutritionist(long oldMacronutrientPlanRowID, String oID, String p, String f, String c) throws FormValidationException, DBException{
+	public int editMacroNutrientPlanByStrForNutritionist(long oldMacronutrientPlanRowID, String oID, String p, String f, String c, String t) throws FormValidationException, DBException{
 		//if nutritionist is patient's designated HCP or not.
 		boolean isInDeclaredList = false;
 		List<PersonnelBean> personnelList = super.getFactory().getPatientDAO().getDeclaredHCPs(Long.parseLong(oID));
@@ -64,7 +64,7 @@ public class EditMacroNutrientPlanAction extends MacroNutrientPlanBaseAction{
 			}
 		}
 		if(isInDeclaredList)
-			return editMacroNutrientPlanByStr(oldMacronutrientPlanRowID, oID, p, f, c);
+			return editMacroNutrientPlanByStr(oldMacronutrientPlanRowID, oID, p, f, c, t);
 		else
 			return 0;
 	}
@@ -80,13 +80,14 @@ public class EditMacroNutrientPlanAction extends MacroNutrientPlanBaseAction{
 	 * @return Rows that get updated
 	 * @throws FormValidationException 
 	 */
-	public int editMacroNutrientPlanByStr(long oldMacronutrientPlanRowID, String oID, String p, String f, String c) throws FormValidationException{
+	public int editMacroNutrientPlanByStr(long oldMacronutrientPlanRowID, String oID, String p, String f, String c, String t) throws FormValidationException{
 		MacroNutrientPlanBean b = null;
 		int rowUpdate = 0;
 		long ownerID = -1;
 		long protein = -1;
 		long fat = -1;
 		long carbs = -1;
+		long totalCal = -1;
 		String errorMsg="";
 		boolean passed = true;
 		try {
@@ -117,10 +118,17 @@ public class EditMacroNutrientPlanAction extends MacroNutrientPlanBaseAction{
 			errorMsg += "Need valid value for carbs.";
 			passed = false;
 		}
+		try {
+			totalCal = Long.parseLong(t);
+			if(totalCal <= 0) throw new NumberFormatException();
+		} catch (NumberFormatException e){
+			errorMsg += "Need valid value for total calories.";
+			passed = false;
+		}
 		if(!passed){
 			throw new FormValidationException(errorMsg);
 		}else{
-			b = new MacroNutrientPlanBean(ownerID, protein, fat, carbs);
+			b = new MacroNutrientPlanBean(ownerID, protein, fat, carbs, totalCal);
 			b.setRowID(oldMacronutrientPlanRowID);
 			try{
 				rowUpdate = editMacroNutrientPlan(b);

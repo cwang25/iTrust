@@ -36,8 +36,8 @@ public class MacroNutrientPlanDAOTest {
 		tables.createTables();
 		TestDataGenerator gen = new TestDataGenerator();
 		gen.clearAllTables();
-		b1 = new MacroNutrientPlanBean(PATIENT_MID, 50, 40, 60);
-		b2 = new MacroNutrientPlanBean(PATIENT_MID_2, 20, 100, 30);
+		b1 = new MacroNutrientPlanBean(PATIENT_MID, 50, 40, 60, 1220);
+		b2 = new MacroNutrientPlanBean(PATIENT_MID_2, 20, 100, 30, 1200);
 	}
 
 	@Test

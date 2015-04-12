@@ -27,7 +27,7 @@ public class MacroNutrientPlanBeanLoaderTest {
 		ctrl = createControl();
 		rs = ctrl.createMock(ResultSet.class);
 		load = new MacroNutrientPlanBeanLoader();
-		bean = new MacroNutrientPlanBean(0,0,0,0);
+		bean = new MacroNutrientPlanBean(0,0,0,0,0);
 	}
 
 	@Test
@@ -43,6 +43,7 @@ public class MacroNutrientPlanBeanLoaderTest {
 		expect(rs.getDouble("protein")).andReturn(50.0).once();
 		expect(rs.getDouble("fat")).andReturn(50.0).once();
 		expect(rs.getDouble("carbs")).andReturn(50.0).once();
+		expect(rs.getDouble("totalCalories")).andReturn(1500.0).once();
 		ctrl.replay();
 		bean = load.loadSingle(rs);
 		assertEquals(bean.getOwnerID(), 500L);

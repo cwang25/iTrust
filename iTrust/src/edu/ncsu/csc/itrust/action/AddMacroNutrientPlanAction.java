@@ -70,7 +70,7 @@ public class AddMacroNutrientPlanAction extends MacroNutrientPlanBaseAction {
 	 * @throws NumberFormatException 
 	 */
 	public long addMacroNutrientPlanByStrForNutritionist(String oID, String p,
-			String f, String c) throws FormValidationException, NumberFormatException, DBException {
+			String f, String c, String t) throws FormValidationException, NumberFormatException, DBException {
 		// if nutritionist is patient's designated HCP or not.
 		boolean isInDeclaredList = false;
 		List<PersonnelBean> personnelList = super.getFactory().getPatientDAO()
@@ -82,27 +82,29 @@ public class AddMacroNutrientPlanAction extends MacroNutrientPlanBaseAction {
 			}
 		}
 		if (isInDeclaredList)
-			return addMacroNutrientPlanByStr( oID,p, f, c);
+			return addMacroNutrientPlanByStr( oID,p, f, c, t);
 		else
 			return -1;
 	}
 	/**
 	 * Add macronutrient plan by inputting string value.
 	 * This method will check error for invalid input.
-	 * @param oID
-	 * @param p
-	 * @param f
-	 * @param carbs
+	 * @param oID ownerID
+	 * @param p protein
+	 * @param f fat
+	 * @param carbs carbonates
+	 * @param t total calories
 	 * @return
 	 * @throws FormValidationException 
 	 */
-	public long addMacroNutrientPlanByStr(String oID, String p, String f, String c) throws FormValidationException{
+	public long addMacroNutrientPlanByStr(String oID, String p, String f, String c, String t) throws FormValidationException{
 		MacroNutrientPlanBean b = null;
 		long rowID = -1;
 		long ownerID = -1;
-		long protein = -1;
-		long fat = -1;
-		long carbs = -1;
+		double protein = -1;
+		double fat = -1;
+		double carbs = -1;
+		double totalCal = -1;
 		String errorMsg="";
 		boolean passed = true;
 		try {
@@ -113,30 +115,37 @@ public class AddMacroNutrientPlanAction extends MacroNutrientPlanBaseAction {
 			passed = false;
 		}
 		try {
-			protein = Long.parseLong(p);
+			protein = Double.parseDouble(p);
 			if(protein <= 0) throw new NumberFormatException();
 		} catch (NumberFormatException e){
 			errorMsg += "Need valid value for protein.";
 			passed = false;
 		}
 		try {
-			fat = Long.parseLong(f);
-			if(ownerID <= 0) throw new NumberFormatException();
+			fat = Double.parseDouble(f);
+			if(fat <= 0) throw new NumberFormatException();
 		} catch (NumberFormatException e){
 			errorMsg += "Need valid value for fat.";
 			passed = false;
 		}
 		try {
-			carbs = Long.parseLong(c);
-			if(ownerID <= 0) throw new NumberFormatException();
+			carbs = Double.parseDouble(c);
+			if(carbs <= 0) throw new NumberFormatException();
 		} catch (NumberFormatException e){
 			errorMsg += "Need valid value for carbs.";
+			passed = false;
+		}
+		try {
+			totalCal = Double.parseDouble(c);
+			if(totalCal <= 0) throw new NumberFormatException();
+		} catch (NumberFormatException e){
+			errorMsg += "Need valid value for total calories.";
 			passed = false;
 		}
 		if(!passed){
 			throw new FormValidationException(errorMsg);
 		}else{
-			b = new MacroNutrientPlanBean(ownerID, protein, fat, carbs);
+			b = new MacroNutrientPlanBean(ownerID, protein, fat, carbs, totalCal);
 			try{
 				rowID = addMacroNutrientPlan(b);
 			}catch (DBException e){

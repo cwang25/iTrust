@@ -31,7 +31,7 @@ public class ViewMacroNutrientPlanActionTest {
 
 	@Test
 	public void testGetMacroNutrientPlanListByOwnerID() throws DBException, NumberFormatException, FormValidationException {
-		Nutritionsit_add_action.addMacroNutrientPlanByStrForNutritionist("500", "50", "50", "50");
+		Nutritionsit_add_action.addMacroNutrientPlanByStrForNutritionist("500", "50", "50", "50", "1500");
 		List<MacroNutrientPlanBean> MacroNutrientPlanlist = Nutritionist_action.getMacroNutrientPlanListByOwnerID(500L);
 		System.out.println(MacroNutrientPlanlist.size());
 		assertTrue(MacroNutrientPlanlist.size()== 1);
@@ -46,7 +46,7 @@ public class ViewMacroNutrientPlanActionTest {
 
 	@Test
 	public void testGetMacroNutrientPlanByRowID() throws DBException, NumberFormatException, FormValidationException {
-		Nutritionsit_add_action.addMacroNutrientPlanByStrForNutritionist("500", "50", "50", "50");
+		Nutritionsit_add_action.addMacroNutrientPlanByStrForNutritionist("500", "50", "50", "50","1500");
 		List<MacroNutrientPlanBean> MacroNutrientPlanlist = Nutritionist_action.getMacroNutrientPlanListByOwnerID(500L);
 		assertTrue(MacroNutrientPlanlist.size()== 1);
 		MacroNutrientPlanBean tmp = MacroNutrientPlanlist.get(0);

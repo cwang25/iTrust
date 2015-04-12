@@ -6,22 +6,41 @@ public class MacroNutrientPlanBean {
 	double protein;
 	double fat;
 	double carbs;
+	double totalCal;
 	/**
 	 * MacroNutrientPlanBean
 	 * @param owner  OwnerID (Patient)
 	 * @param p Protein in gram
 	 * @param f Fat in gram
 	 * @param c Carbs in gram
+	 * @param t total calories
 	 */
-	public MacroNutrientPlanBean(long owner, double p, double f, double c) {
+	public MacroNutrientPlanBean(long owner, double p, double f, double c, double t) {
 		// TODO Auto-generated constructor stub
 		this.ownerID = owner;
 		this.protein = p;
 		this.fat = f;
 		this.carbs = c;
+		this.totalCal = t;
 	}
 
 	
+	/**
+	 * @return the totalCal
+	 */
+	public double getTotalCal() {
+		return totalCal;
+	}
+
+
+	/**
+	 * @param totalCal the totalCal to set
+	 */
+	public void setTotalCal(double totalCal) {
+		this.totalCal = totalCal;
+	}
+
+
 	/**
 	 * @return the rowID
 	 */

@@ -49,7 +49,7 @@ public class EditMacroNutrientPlanActionTest {
 	 */
 	@Test
 	public void testEditMacroNutrientPlan() throws FormValidationException, DBException {
-		patientAddAction.addMacroNutrientPlanByStr("500", "40", "40", "40");
+		patientAddAction.addMacroNutrientPlanByStr("500", "40", "40", "40", "1200");
 		List <MacroNutrientPlanBean> list = patientViewAction.getMacroNutrientPlanListByOwnerID(701);
 		MacroNutrientPlanBean b = list.get(0);
 		double carbs = b.getCarbs();
@@ -68,7 +68,7 @@ public class EditMacroNutrientPlanActionTest {
 	 */
 	@Test
 	public void testEditMacroNutrientPlanByStrForNutritionist() throws DBException, FormValidationException {
-		patientAddAction.addMacroNutrientPlanByStr("500", "40", "40", "40");
+		patientAddAction.addMacroNutrientPlanByStr("500", "40", "40", "40", "1500");
 		List <MacroNutrientPlanBean> list = patientViewAction.getMacroNutrientPlanListByOwnerID(701);
 		MacroNutrientPlanBean b = list.get(0);
 		double carbs = b.getCarbs();
@@ -88,7 +88,7 @@ public class EditMacroNutrientPlanActionTest {
 	 */
 	@Test
 	public void testEditMacroNutrientPlanByStr() throws DBException, FormValidationException {
-		patientAddAction.addMacroNutrientPlanByStr("500", "40", "40", "40");
+		patientAddAction.addMacroNutrientPlanByStr("500", "40", "40", "40", "5000");
 		List <MacroNutrientPlanBean> list = patientViewAction.getMacroNutrientPlanListByOwnerID(701);
 		MacroNutrientPlanBean b = list.get(0);
 		long rowID = b.getRowID();
@@ -96,35 +96,42 @@ public class EditMacroNutrientPlanActionTest {
 		patientEditAction.editMacroNutrientPlan(b);
 		patientViewAction.getMacroNutrientPlanByRowID(rowID);
 		try{
-			int newRow = patientEditAction.editMacroNutrientPlanByStr(rowID, "500", "50", "50", "50");
+			int newRow = patientEditAction.editMacroNutrientPlanByStr(rowID, "500", "50", "50", "50", "1200");
 			assertTrue(newRow > 0);
 		}catch(FormValidationException e){
 			fail("Edit macronutrient method failed. Expected no exception.");
 		}
 		try{
-			patientEditAction.editMacroNutrientPlanByStr(rowID, "abx", "50", "50", "50");
-			fail("Exception should be thrown due to empty name.");
+			patientEditAction.editMacroNutrientPlanByStr(rowID, "abx", "50", "50", "50", "1200");
+			fail("Exception should be thrown due to invalid input.");
 		}catch(FormValidationException e){
 			assertTrue(e.getMessage().contains(
 					"Need valid value"));		
 		}
 		try{
-			patientEditAction.editMacroNutrientPlanByStr(rowID, "50", "asbd", "50", "50");
-			fail("Exception should be thrown due to empty name.");
+			patientEditAction.editMacroNutrientPlanByStr(rowID, "50", "asbd", "50", "50","1200");
+			fail("Exception should be thrown due to invalid input.");
 		}catch(FormValidationException e){
 			assertTrue(e.getMessage().contains(
 					"Need valid value"));		
 		}
 		try{
-			patientEditAction.editMacroNutrientPlanByStr(rowID, "50", "50", "adb", "50");
-			fail("Exception should be thrown due to empty name.");
+			patientEditAction.editMacroNutrientPlanByStr(rowID, "50", "50", "adb", "50","1200");
+			fail("Exception should be thrown due to invalid input.");
 		}catch(FormValidationException e){
 			assertTrue(e.getMessage().contains(
 					"Need valid value"));		
 		}
 		try{
-			patientEditAction.editMacroNutrientPlanByStr(rowID, "50", "50", "50", "abd");
-			fail("Exception should be thrown due to empty name.");
+			patientEditAction.editMacroNutrientPlanByStr(rowID, "50", "50", "50", "abd","1200");
+			fail("Exception should be thrown due to invalid input.");
+		}catch(FormValidationException e){
+			assertTrue(e.getMessage().contains(
+					"Need valid value"));		
+		}
+		try{
+			patientEditAction.editMacroNutrientPlanByStr(rowID, "50", "50", "50", "50","fda");
+			fail("Exception should be thrown due to invalid input.");
 		}catch(FormValidationException e){
 			assertTrue(e.getMessage().contains(
 					"Need valid value"));		
@@ -140,7 +147,7 @@ public class EditMacroNutrientPlanActionTest {
 		List <MacroNutrientPlanBean> list = patientViewAction.getMacroNutrientPlanListByOwnerID(701);
 		int originalLength = list.size();
 		try {
-			patientAddAction.addMacroNutrientPlanByStr("500", "53", "34", "67");
+			patientAddAction.addMacroNutrientPlanByStr("500", "53", "34", "67","1200");
 		} catch (FormValidationException e) {
 			// TODO Auto-generated catch block
 			fail("DB failure, expected no problem.");

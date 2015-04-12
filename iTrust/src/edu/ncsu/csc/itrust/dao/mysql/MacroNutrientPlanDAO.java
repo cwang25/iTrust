@@ -30,8 +30,8 @@ public class MacroNutrientPlanDAO {
 		long lastInsertID = -1;
 		try {
 			conn = factory.getConnection();
-			ps = conn.prepareStatement("INSERT INTO macronutrientplan (ownerID, protein, fat, carbs)"
-					+ "VALUES (?,?,?,?)");
+			ps = conn.prepareStatement("INSERT INTO macronutrientplan (ownerID, protein, fat, carbs, totalCalories)"
+					+ "VALUES (?,?,?,?,?)");
 			ps = loader.loadParameters(ps, b);
 			ps.executeUpdate();
 			lastInsertID = DBUtil.getLastInsert(conn);
@@ -111,7 +111,7 @@ public class MacroNutrientPlanDAO {
 		int row_update = 0;
 		try {
 			conn = factory.getConnection();
-			ps = conn.prepareStatement("UPDATE macronutrientplan SET ownerID=?, protein=?, fat=?, carbs=? WHERE rowID =?");
+			ps = conn.prepareStatement("UPDATE macronutrientplan SET ownerID=?, protein=?, fat=?, carbs=?, totalCalories=? WHERE rowID =?");
 			ps = loader.loadParameters(ps, bean);
 			row_update = ps.executeUpdate();
 		} catch (SQLException e){

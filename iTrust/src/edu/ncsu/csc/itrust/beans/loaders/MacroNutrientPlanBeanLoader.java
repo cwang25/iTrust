@@ -41,7 +41,8 @@ public class MacroNutrientPlanBeanLoader implements BeanLoader<MacroNutrientPlan
 		double protein = rs.getDouble("protein");
 		double fat = rs.getDouble("fat");
 		double carbs = rs.getDouble("carbs");
-		MacroNutrientPlanBean b = new MacroNutrientPlanBean( ownerID, protein, fat, carbs);
+		double totalCal = rs.getDouble("totalCalories");
+		MacroNutrientPlanBean b = new MacroNutrientPlanBean( ownerID, protein, fat, carbs, totalCal);
 		b.setRowID(rowID);
 		return b;
 	}
@@ -64,6 +65,7 @@ public class MacroNutrientPlanBeanLoader implements BeanLoader<MacroNutrientPlan
 		ps.setDouble(i++, bean.getProtein());
 		ps.setDouble(i++, bean.getFat());
 		ps.setDouble(i++, bean.getCarbs());
+		ps.setDouble(i++, bean.getTotalCal());
 		//If the row ID is greater than -1, then meaning the data loadParameters is for UPDATE operation.
 		//So, added one row id at the end for WHERE rowID=?.
 		//New bean for INSERT should always have -1 rowID.
