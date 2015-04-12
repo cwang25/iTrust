@@ -67,6 +67,7 @@
 	 	boolean addLabel = mode!=null&&mode.equals("addLabel");
 	 	boolean setLabel = mode!=null&&mode.equals("setLabel");
 	 	boolean showGraph = mode!=null&&mode.equals("showGraph");
+	 	boolean showCompareGraph = mode!=null&&mode.equals("showCompareGraph");
 	 
 	 	SimpleDateFormat diaryDateFormat = new SimpleDateFormat("MM/dd/yyyy");
 	 	//out.println(mode);
@@ -97,7 +98,8 @@
 			(mode!=null&&!mode.equals("undo"))&&
 			(mode!=null&&!mode.equals("addLabel"))&&
 			(mode!=null&&!mode.equals("setLabel"))&&
-			(mode!=null&&!mode.equals("showGraph"))){
+			(mode!=null&&!mode.equals("showGraph"))&&
+			(mode!=null&&!mode.equals("showCompareGraph"))){
 			try {
 				if(mode.equals("edit")){
 					if(selectedIndex != null){
@@ -195,6 +197,8 @@
 			<p align="center"style="font-size: 16pt; font-weight: bold;" >Label has been set.</p>
 			<%
 		} else if (showGraph){
+			
+		} else if(showCompareGraph){
 			
 		}
 
@@ -313,7 +317,7 @@
 					%>
 				</select>
 				<button class="changeLabelBtn" data-date="<%=(new java.sql.Date(oldBean.getDate().getTime())).toString() %>">Change Label</button>
-				<button style="margin-top: 5px" class="button" id="viewMacroNutrientGraph">View Graph</button> 
+				<button style="margin-top: 5px" class="button" id="viewMacroNutrientGraph" onclick="switchHiddenForm('hiddenDailyGraph','showCompareGraph');setActualVal(<%=totalBeanTmp.getGramsOfProtein()%>,<%=totalBeanTmp.getGramsOfFat()%>,<%=totalBeanTmp.getGramsOfCarbs() %>,<%=totalBeanTmp.totalCalories()%>);toggleGraph('Pie');">View Graph</button> 
 			</td>
 		</tr>
 		<tr id="suggestion<%=index%>" style="display: none"> 
@@ -565,11 +569,18 @@
 <div id="hiddenMacro"  style="display: <%=!dataAllCorrect&&showGraph? "block" : "none" %>">
 	<%@include file="/auth/patient/macroNutrientsChart.jsp"%>
 </div>
-<div id="hiddenDailyGraph" style="display: <%=!dataAllCorrect&&showGraph? "block" : "none" %>">
-
-<canvas id="chart-area" width="300" height="300"></canvas>
+<div id="hiddenDailyGraph" style="display: <%=!dataAllCorrect&&showCompareGraph? "block" : "none" %>">
+	<%@include file="/auth/patient/macroNutrientsCompareGraph.jsp" %>
 </div>
 <script language="JavaScript">
+	function switchHiddenForm(divID, operationMode){
+		document.getElementById("hiddenMacro").style.display = "none";
+		document.getElementById("hiddenDailyGraph").style.display = "none";
+		document.getElementById("newLabelForm").style.display = "none";
+		document.getElementById("HiddenForm").style.display = "none";
+		setOperationMode(operationMode);
+		showHiddenForm(divID);
+	}
 	function showHiddenForm(divID) {
 		document.getElementById(divID).style.display = "block";
 	}
