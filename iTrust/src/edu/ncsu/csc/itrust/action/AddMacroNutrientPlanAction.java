@@ -31,11 +31,29 @@ public class AddMacroNutrientPlanAction extends MacroNutrientPlanBaseAction {
 	 */
 	public long addMacroNutrientPlan(MacroNutrientPlanBean b)throws DBException{
 		b.setRowID( -1);
-		long newid = macroDAO.insertMacroNutrientPlan(b);
-		if(!this.isNutritionist)
+		long newid= -1;
+		if(this.isNutritionist){
+			boolean isInDeclaredList = false;
+			List<PersonnelBean> personnelList = super.getFactory().getPatientDAO()
+					.getDeclaredHCPs(b.getOwnerID());
+			for (PersonnelBean tb : personnelList) {
+				if (tb.getMID() == mid) {
+					isInDeclaredList = true;
+					break;
+				}
+			}
+			if (isInDeclaredList){
+				newid = macroDAO.insertMacroNutrientPlan(b);
+				loggingAction.logEvent(TransactionType.HCP_ADD_MACRONUTRIENTPLAN, mid, b.getOwnerID(), "Nutritionist created patient's macronutrient plan.");
+			}else{
+				return -1;	
+			}
+				
+		}else{
+			newid = macroDAO.insertMacroNutrientPlan(b);
 			loggingAction.logEvent(TransactionType.PATIENT_ADD_MACRONUTRIENTPLAN, mid, mid, "Patient created macronutrient plan.");
-		else
-			loggingAction.logEvent(TransactionType.HCP_ADD_MACRONUTRIENTPLAN, mid, b.getOwnerID(), "Nutritionist created patient's macronutrient plan.");
+
+		}
 		return newid;
 	}
 	/**

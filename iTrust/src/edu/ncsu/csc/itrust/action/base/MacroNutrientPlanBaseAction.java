@@ -73,10 +73,12 @@ public class MacroNutrientPlanBaseAction {
 	 * Get owner id.
 	 * @return
 	 */
-	public long getOwnderID(){
+	public long getLoggedInID(){
 		return mid;
 	}
-	
+	public boolean isNutritionist(){
+		return this.isNutritionist;
+	}
 	protected DAOFactory getFactory(){
 		return factory;
 	}

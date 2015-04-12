@@ -72,12 +72,5 @@ public class ViewMacroNutrientPlanAction extends MacroNutrientPlanBaseAction {
 	public MacroNutrientPlanBean getMacroNutrientPlanByRowID(long recordID) throws DBException{
 		return macroDAO.getMacroNutrientPlanByRowID(recordID);
 	}
-	/**
-	 * Method to check if user is nutritionist.
-	 * @return
-	 */
-	public boolean isNutritionist(){
-		return super.isNutritionist;
-	}
 
 }
