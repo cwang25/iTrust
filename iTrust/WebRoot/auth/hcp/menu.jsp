@@ -20,6 +20,7 @@
 			<!--<li><a href="/iTrust/auth/hcp-uap/deactivatePatient.jsp">Deactivate Patient</a>  -->
 			<li><a href="/iTrust/auth/hcp/auditPage.jsp">Audit Patients</a>
 			<li><a href="/iTrust/auth/hcp-uap/viewPatientFoodDiary.jsp">Patient Food Diary</a>
+			<li><a href="/iTrust/auth/hcp-uap/viewPatientWeightLog.jsp">Patient Weight Log</a>			
 		</ul>
 	</div>
 </div>
