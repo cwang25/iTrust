@@ -23,6 +23,7 @@
 	double fatGram = 0;
 	double carbsGram = 0;
 	double totalCal = 0;
+	boolean hasExpected = true;
 	if(viewMacroNutrientPlanAction.isNutritionist()){
 		String pidString = (String)session.getAttribute("pid");
 		List<MacroNutrientPlanBean> list = viewMacroNutrientPlanAction.getMacroNutrientPlanListByOwnerID(Long.parseLong(pidString));
@@ -32,6 +33,8 @@
 			fatGram = b.getFat();
 			carbsGram = b.getCarbs();
 			totalCal = b.getTotalCal();	
+		}else{
+			hasExpected = false;
 		}
 	}else{
 		List<MacroNutrientPlanBean> list = viewMacroNutrientPlanAction.getMacroNutrientPlanListByOwnerID(loggedInMID);
@@ -41,6 +44,8 @@
 			fatGram = b.getFat();
 			carbsGram = b.getCarbs();
 			totalCal = b.getTotalCal();	
+		}else{
+			hasExpected = false;
 		}
 	}
 %>
@@ -53,12 +58,12 @@
 <table>
 	<tr>
 	<td>
-	<canvas id="chart-area" width="300" height="300"></canvas>
-	<div id="legend-area"></div>
+	<canvas id="compare-chart-area" width="300" height="300"></canvas>
+	<div id="compare-legend-area"></div>
 	</td>
 	<td>
-	<canvas id="chart-area-expected" width="300" height="300"></canvas>
-	<div id="legend-area-expected"></div>
+	<canvas id="compare-chart-area-expected" width="300" height="300"></canvas>
+	<div id="compare-legend-area-expected"></div>
 	</td>
 	</tr>
 
@@ -74,8 +79,8 @@
 		data.datasets[0].data[2] = act_carbs;
 		data.datasets[0].data[3] = act_totalCal;
 		actualPieData[0].value = act_protein;
-		actualPieData[0].value = act_fat;
-		actualPieData[0].value = act_carbs;
+		actualPieData[1].value = act_fat;
+		actualPieData[2].value = act_carbs;
 	}
 	function toggleGraph(type){
 		removeBar();
@@ -83,7 +88,13 @@
 		removeExpectedPie();
 		if(type == "Pie"){
 			graphPie();
+			<%
+			if(hasExpected){
+			%>
 			graphExpectedPie();
+			<%
+			}
+			%>
 		}
 		if(type =="Bar"){
 			graphBar();
@@ -106,19 +117,19 @@
 		}
 	}
 	function graphExpectedPie(){
-		var ctx = document.getElementById("chart-area-expected").getContext("2d");
+		var ctx = document.getElementById("compare-chart-area-expected").getContext("2d");
 		expectedPieChart = new Chart(ctx).Pie(expectedPieData, {animateRotate: true, animationEasing: "noBounce", animationSteps:30});
-		document.getElementById("legend-area-expected").innerHTML = expectedPieChart.generateLegend();
+		document.getElementById("compare-legend-area-expected").innerHTML = expectedPieChart.generateLegend();
 	}
 	function graphPie(){
-		var ctx = document.getElementById("chart-area").getContext("2d");
+		var ctx = document.getElementById("compare-chart-area").getContext("2d");
 		pieChart = new Chart(ctx).Pie(actualPieData, {animateRotate: true, animationEasing: "noBounce", animationSteps:30});
-		document.getElementById("legend-area").innerHTML = pieChart.generateLegend();
+		document.getElementById("compare-legend-area").innerHTML = pieChart.generateLegend();
 	}
 	function graphBar(){
-		var ctx = document.getElementById("chart-area").getContext("2d");
+		var ctx = document.getElementById("compare-chart-area").getContext("2d");
 		barChart= new Chart(ctx).Bar(data, {animateRotate: true, animationEasing: "noBounce", animationSteps:30});
-		document.getElementById("legend-area").innerHTML  =barChart.generateLegend();
+		document.getElementById("compare-legend-area").innerHTML  =barChart.generateLegend();
 
 	}
 	var data = {
@@ -131,8 +142,11 @@
 		            highlightFill: "rgba(220,220,220,0.75)",
 		            highlightStroke: "rgba(220,220,220,1)",
 		            data: [0, 0, 0, 0]
-		        },
-		        {
+		        }
+		        <%
+		     if(hasExpected){
+		        %>
+		        ,{
 		            label: "Expected Macronutrients",
 		            fillColor: "rgba(151,187,205,0.5)",
 		            strokeColor: "rgba(151,187,205,0.8)",
@@ -140,6 +154,9 @@
 		            highlightStroke: "rgba(151,187,205,1)",
 		            data: [<%=proteinGram%>, <%=fatGram%>, <%=carbsGram%>, <%=totalCal%>]
 		        }
+		        <%
+		     }
+		        %>
 		    ]
 	};
 	var actualPieData = [
