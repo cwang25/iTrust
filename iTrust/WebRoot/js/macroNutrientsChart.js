@@ -20,21 +20,33 @@ var totalCalories;
 function graphIt() {
 
 	/*
-	 * Algorithm for calculating macronutrients Calculate BMR by Mifflin method
-	 * men = 10 * weightInKg + 6.25 * height in cm - 5 * ageinyears + 5 women =
-	 * 10 * weightInKg + 6.25 * height in cm - 5 * ageinyears - 161
+	 * Algorithm for calculating macronutrients 
 	 * 
-	 * Total Calories (Energy expenditure) = BMR * activity Activity levels:
-	 * Sedentary: 1.2 Lightly active: 1.35 Moderately active: 1.55 Very active:
-	 * 1.75 Extremely active: 2.1
+	 * Calculate BMR by Mifflin method
+	 * men = 10 * weightInKg + 6.25 * height in cm - 5 * ageinyears + 5
+	 * women = 10 * weightInKg + 6.25 * height in cm - 5 * ageinyears - 161
 	 * 
-	 * Modify total calories based on goal Goals: Lose weight: -500 calories
-	 * Maintain weight: No change Gain weight: +400 calories
+	 * Total Calories (Energy expenditure) = BMR * activity 
+	 * Activity levels:
+	 *   Sedentary: 1.2 
+	 *   Lightly active: 1.35 
+	 *   Moderately active: 1.55 
+	 *   Very active:
+	 *   1.75 Extremely active: 2.1
 	 * 
-	 * Protein is .825g per pound of bodyweight Fat is 25% of total calories
-	 * (energy expenditure) Remaining calories come from carbohydrates
+	 * Modify total calories based on goal 
+	 * Goals: 
+	 *   Lose weight: -500 calories
+	 *   Maintain weight: No change 
+	 *   Gain weight: +400 calories
 	 * 
-	 * 1g protein = 4 calories 1g fat = 9 calories 1g carb = 4 calories
+	 * Protein is .825g per pound of bodyweight 
+	 * Fat is 25% of total calories (energy expenditure) 
+	 * Remaining calories come from carbohydrates
+	 * 
+	 * 1g protein = 4 calories 
+	 * 1g fat = 9 calories 
+	 * 1g carb = 4 calories
 	 */
 
 	// Set all valid to true
@@ -61,7 +73,7 @@ function graphIt() {
 	errorAge.style.display = "none";
 
 	// Check to see if weight input is valid and in the range 1 - 790 (Heaviest
-	// man ever - 790 pounds)
+	// man ever : 790 pounds)
 	if (weightElement.value === "" || weightElement.value.length > 3
 			|| !$.isNumeric(weightElement.value)
 			|| parseInt(weightElement.value) <= 0
@@ -74,7 +86,7 @@ function graphIt() {
 	}
 
 	// Check to see if height input is valid and in the range 1 - 273 (Tallest
-	// man ever-273cms)
+	// man ever:273cms)
 	if (heightElement.value === "" || heightElement.value.length > 3
 			|| !$.isNumeric(heightElement.value)
 			|| parseInt(heightElement.value) <= 0
@@ -87,7 +99,7 @@ function graphIt() {
 	}
 
 	// Check to see if age input is valid and in the range 1 - 130 (Oldest man
-	// ever-130 years)
+	// ever:130 years)
 	if (ageElement.value === "" || ageElement.value.length > 3
 			|| !$.isNumeric(ageElement.value)
 			|| parseInt(ageElement.value) <= 0
