@@ -23,7 +23,12 @@ public class MacroNutrientPlanBaseAction {
 	private DAOFactory factory;
 	protected MacroNutrientPlanDAO macroDAO;
 	protected EventLoggingAction loggingAction;
-	
+	/**
+	 * Flag to show if the user is Nutritionist.
+	 */
+	protected boolean isNutritionist = false;
+	private String nutritionistSpecialty = "Nutritionist";
+
 	/**
 	 * Stores the MID of the user associated with this action.
 	 */
@@ -39,6 +44,8 @@ public class MacroNutrientPlanBaseAction {
 		this.mid = checkOwnerID(midString);
 		macroDAO = factory.getMacroNutrientPlanDAO();
 		loggingAction = new EventLoggingAction(factory);
+		isNutritionist = checkIfNutritionist(midString);
+
 	}
 	
 	/**
@@ -72,6 +79,27 @@ public class MacroNutrientPlanBaseAction {
 	
 	protected DAOFactory getFactory(){
 		return factory;
+	}
+	/**
+	 * The method to check if the logged in user is Nutritionist.
+	 * @param input Logged in mid.
+	 * @return true of false if the user is Nutritionist or not.
+	 * @throws ITrustException 
+	 */
+	private boolean checkIfNutritionist(String input) throws ITrustException {
+		try {
+			long mid = Long.valueOf(input);
+			PersonnelBean t = factory.getPersonnelDAO().getPersonnel(mid);
+			if(t != null){
+				String nutritionist = nutritionistSpecialty.toUpperCase();
+				String personnelSpecialty = t.getSpecialty().toUpperCase();
+				return nutritionist.equals(personnelSpecialty);
+			}else{
+				return false;
+			}
+		} catch (NumberFormatException e) {
+			throw new ITrustException("User ID is not a number: " + HtmlEncoder.encode(input));
+		}
 	}
 	
 }

@@ -461,12 +461,16 @@ public enum TransactionType {
 	PATIENT_EDIT_MACRONUTRIENTPLAN(7201, "Patient edited a macronutrient plan.", "edited a macronutrient plan", true),
 	/**PATIENT_REMOVE_MACRONUTRIENTPLAN**/
 	PATIENT_REMOVE_MACRONUTRIENTPLAN(7202, "Patient removed a macrountrient plan.", "removed a macronutrient plan", true),
+	/**PAITENT_VIEW_MACRONUTRIENTPLAN**/
+	PATIENT_VIEW_MACRONUTRIENTPLAN(7203, "Patient viewed a macrountrient plan.", "viewed a macronutrient plan", true),
 	/**HCP_ADD_MACRONUTRIENTPLAN**/
 	HCP_ADD_MACRONUTRIENTPLAN(7210, "HCP created a new macronutrient plan.", "created a new macronutrient plan", true),
 	/**HCP_EDIT_MACRONUTRIENTPLAN**/
 	HCP_EDIT_MACRONUTRIENTPLAN(7211, "HCP edited a macronutrient plan.", "editted a macronutrient plan", true),
 	/**HCP_REMOVE_MACRONUTRIENTPLAN**/
-	HCP_REMOVE_MACRONUTRIENTPLAN(7212, "HCP removed a macronutrient plan.", "removed a macronutrient plan", true)
+	HCP_REMOVE_MACRONUTRIENTPLAN(7212, "HCP removed a macronutrient plan.", "removed a macronutrient plan", true),
+	/**HCP_VIEW_MACRONUTRIENTPLAN**/
+	HCP_VIEW_MACRONUTRIENTPLAN(7213, "HCP viewed a macronutrient plan.", "viewed a macronutrient plan", true)
 	;
 	/**
 	 * This string is used in the SQL statement associated with pulling events for
