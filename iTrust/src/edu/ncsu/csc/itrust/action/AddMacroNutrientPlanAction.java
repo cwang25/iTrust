@@ -1,7 +1,10 @@
 package edu.ncsu.csc.itrust.action;
 
+import java.util.List;
+
 import edu.ncsu.csc.itrust.action.base.MacroNutrientPlanBaseAction;
 import edu.ncsu.csc.itrust.beans.MacroNutrientPlanBean;
+import edu.ncsu.csc.itrust.beans.PersonnelBean;
 import edu.ncsu.csc.itrust.dao.DAOFactory;
 import edu.ncsu.csc.itrust.enums.TransactionType;
 import edu.ncsu.csc.itrust.exception.DBException;
@@ -29,8 +32,41 @@ public class AddMacroNutrientPlanAction extends MacroNutrientPlanBaseAction {
 	public long addMacroNutrientPlan(MacroNutrientPlanBean b)throws DBException{
 		b.setRowID( -1);
 		long newid = macroDAO.insertMacroNutrientPlan(b);
-		loggingAction.logEvent(TransactionType.PATIENT_ADD_MACRONUTRIENTPLAN, mid, mid, "Patient created macronutrient plan.");
+		if(!this.isNutritionist)
+			loggingAction.logEvent(TransactionType.PATIENT_ADD_MACRONUTRIENTPLAN, mid, mid, "Patient created macronutrient plan.");
+		else
+			loggingAction.logEvent(TransactionType.HCP_ADD_MACRONUTRIENTPLAN, mid, b.getOwnerID(), "Nutritionist created patient's macronutrient plan.");
 		return newid;
+	}
+	/**
+	 * Method for nutritionist to add macronutrientplan for patient.
+	 * Add macronutrient plan by inputting string value.
+	 * This method will check error for invalid input.
+	 * @param oID OwnerID (Patient)
+	 * @param p
+	 * @param f
+	 * @param carbs
+	 * @return The new insert rowID.
+	 * @throws FormValidationException 
+	 * @throws DBException 
+	 * @throws NumberFormatException 
+	 */
+	public long addMacroNutrientPlanByStrForNutritionist(String oID, String p,
+			String f, String c) throws FormValidationException, NumberFormatException, DBException {
+		// if nutritionist is patient's designated HCP or not.
+		boolean isInDeclaredList = false;
+		List<PersonnelBean> personnelList = super.getFactory().getPatientDAO()
+				.getDeclaredHCPs(Long.parseLong(oID));
+		for (PersonnelBean b : personnelList) {
+			if (b.getMID() == mid) {
+				isInDeclaredList = true;
+				break;
+			}
+		}
+		if (isInDeclaredList)
+			return addMacroNutrientPlanByStr( oID,p, f, c);
+		else
+			return -1;
 	}
 	/**
 	 * Add macronutrient plan by inputting string value.

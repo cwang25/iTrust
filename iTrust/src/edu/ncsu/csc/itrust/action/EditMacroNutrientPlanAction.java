@@ -1,8 +1,11 @@
 package edu.ncsu.csc.itrust.action;
 
+import java.util.List;
+
 import edu.ncsu.csc.itrust.action.base.MacroNutrientPlanBaseAction;
 import edu.ncsu.csc.itrust.beans.FoodDiaryBean;
 import edu.ncsu.csc.itrust.beans.MacroNutrientPlanBean;
+import edu.ncsu.csc.itrust.beans.PersonnelBean;
 import edu.ncsu.csc.itrust.dao.DAOFactory;
 import edu.ncsu.csc.itrust.enums.TransactionType;
 import edu.ncsu.csc.itrust.exception.DBException;
@@ -30,9 +33,42 @@ public class EditMacroNutrientPlanAction extends MacroNutrientPlanBaseAction{
 	 */
 	public int editMacroNutrientPlan(MacroNutrientPlanBean b) throws DBException{		
 		int row_update = macroDAO.updateMacroNutrientPlan(b);
-		loggingAction.logEvent(TransactionType.PATIENT_EDIT_MACRONUTRIENTPLAN, mid, mid, "Patient edited a macronutrient plan.");
+		if(!this.isNutritionist)
+			loggingAction.logEvent(TransactionType.PATIENT_EDIT_MACRONUTRIENTPLAN, mid, mid, "Patient edited a macronutrient plan.");
+		else
+			loggingAction.logEvent(TransactionType.HCP_EDIT_MACRONUTRIENTPLAN, mid, b.getOwnerID(), "Nutritionist edited patient's macronutrient plan.");
 		return row_update;
 	}
+	
+	/**
+	 * Method for Nutritionist role.
+	 * Edit  macronutrient plan by inputting string value.
+	 * This method will check error for invalid input.
+	 * @param oldMacronutrientPlanRowID RowID for the record to update.
+	 * @param oID OwnderID (Patient)
+	 * @param p Protein
+	 * @param f Fat
+	 * @param carbs Carbonates
+	 * @return Rows that get updated
+	 * @throws FormValidationException 
+	 * @throws DBException 
+	 */
+	public int editMacroNutrientPlanByStrForNutritionist(long oldMacronutrientPlanRowID, String oID, String p, String f, String c) throws FormValidationException, DBException{
+		//if nutritionist is patient's designated HCP or not.
+		boolean isInDeclaredList = false;
+		List<PersonnelBean> personnelList = super.getFactory().getPatientDAO().getDeclaredHCPs(Long.parseLong(oID));
+		for(PersonnelBean b : personnelList){
+			if(b.getMID() == mid){
+				isInDeclaredList = true;
+				break;
+			}
+		}
+		if(isInDeclaredList)
+			return editMacroNutrientPlanByStr(oldMacronutrientPlanRowID, oID, p, f, c);
+		else
+			return 0;
+	}
+	
 	/**
 	 * Edit  macronutrient plan by inputting string value.
 	 * This method will check error for invalid input.
@@ -44,7 +80,7 @@ public class EditMacroNutrientPlanAction extends MacroNutrientPlanBaseAction{
 	 * @return Rows that get updated
 	 * @throws FormValidationException 
 	 */
-	public int addMacroNutrientPlanByStr(long oldMacronutrientPlanRowID, String oID, String p, String f, String c) throws FormValidationException{
+	public int editMacroNutrientPlanByStr(long oldMacronutrientPlanRowID, String oID, String p, String f, String c) throws FormValidationException{
 		MacroNutrientPlanBean b = null;
 		int rowUpdate = 0;
 		long ownerID = -1;
@@ -106,7 +142,10 @@ public class EditMacroNutrientPlanAction extends MacroNutrientPlanBaseAction{
 		MacroNutrientPlanBean removedMacroNutrientPlanBean = null;
 		try {
 			removedMacroNutrientPlanBean = macroDAO.removeMacroNutrientPlan(macroNutrientToRemove);
-			loggingAction.logEvent(TransactionType.PATIENT_REMOVE_MACRONUTRIENTPLAN, mid, mid, "Patient removed a macronutrient plan.");
+			if(!this.isNutritionist)
+				loggingAction.logEvent(TransactionType.PATIENT_REMOVE_MACRONUTRIENTPLAN, mid, mid, "Patient removed a macronutrient plan.");
+			else
+				loggingAction.logEvent(TransactionType.HCP_REMOVE_MACRONUTRIENTPLAN, mid, macroNutrientToRemove.getOwnerID(), "Nutritionist removed patient's macronutrient plan.");
 
 		} catch (DBException e) {
 			// TODO Auto-generated catch block
