@@ -102,7 +102,7 @@ public class MacroNutrientPlanDAO {
 	 * @return The number of row impacted. 
 	 * @throws DBException
 	 */
-	public int updateFoodDiary(MacroNutrientPlanBean bean) throws DBException{
+	public int updateMacroNutrientPlan(MacroNutrientPlanBean bean) throws DBException{
 		if(bean.getRowID() < 0){
 			return 0;
 		}

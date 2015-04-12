@@ -70,7 +70,7 @@ public class MacroNutrientPlanDAOTest {
 		double proteitnComp = b1.getProtein();
 		MacroNutrientPlanBean tb = mDAO.getMacroNutrientPlanByRowID(r1);
 		tb.setProtein(100);
-		mDAO.updateFoodDiary(tb);
+		mDAO.updateMacroNutrientPlan(tb);
 		MacroNutrientPlanBean tb2 = mDAO.getMacroNutrientPlanByRowID(r1);
 		assertTrue(tb2.getProtein() != proteitnComp);
 		assertTrue(tb2.getProtein() == 100);
