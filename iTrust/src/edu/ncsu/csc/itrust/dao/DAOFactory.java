@@ -395,6 +395,14 @@ public class DAOFactory {
 		return new FoodDiaryLabelDAO(this);
 	}
 	
+	/**
+	 * Get the DAO for weight logs.
+	 * @return this DAO factory's WeightLogDAO
+	 */
+	public WeightLogDAO getWeightLogDAO() {
+		return new WeightLogDAO(this);
+	}
+	
 	public MacroNutrientPlanDAO getMacroNutrientPlanDAO(){
 		return new MacroNutrientPlanDAO(this);
 	}
