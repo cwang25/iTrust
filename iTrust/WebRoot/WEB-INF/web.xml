@@ -382,6 +382,5 @@
 		<servlet-name>FoodDiarySuggestionUpdateServlet</servlet-name>
 		<url-pattern>/auth/hcp-uap/FoodDiarySuggestionUpdateServlet</url-pattern>
 	</servlet-mapping>
-	
 </web-app>
 

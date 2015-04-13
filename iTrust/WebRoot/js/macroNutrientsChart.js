@@ -55,9 +55,10 @@ function graphIt() {
 	 */
 
 	// If invalid input is found, return without doing anything
-	if (!validateInput())
+	if (!validateInput()){
+		document.getElementById('opMode').value="";
 		return;
-
+	}
 	// All input is correct at this point, so
 	// Get the weight
 	var weight = parseFloat(weightElement.value);
@@ -105,19 +106,19 @@ function graphIt() {
 	// Calculate the user's daily energy expenditure based on activity level
 	if (activityLevel === "sedentary")
 		totalCalories = bmr * 1.2;
-	else if (activityLevel === "light")
+	else if (activityLevel === "lightly_active")
 		totalCalories = bmr * 1.35;
-	else if (activityLevel === "moderate")
+	else if (activityLevel === "moderately_active")
 		totalCalories = bmr * 1.55;
-	else if (activityLevel === "high")
+	else if (activityLevel === "very_active")
 		totalCalories = bmr * 1.75;
 	else
 		totalCalories = bmr * 2.1;
 
 	// Modify totalCalories based on user's goal
-	if (goal == 'losemode')
+	if (goal == 'lose_weight')
 		totalCalories -= 500;
-	else if (goal == 'gainmode')
+	else if (goal == 'gain_weight')
 		totalCalories += 400;
 
 	// Calculate macronutrients
@@ -187,6 +188,10 @@ function graphIt() {
 	}
 	// Draw legend for the chart drawn
 	legendPie(document.getElementById('legendDiv'), pieData);
+	document.getElementById('protein').value=parseInt(totalProtein);
+	document.getElementById('fat').value=parseInt(totalFat);
+	document.getElementById('carbs').value=parseInt(totalCarbs);
+	document.getElementById('calories').value=parseInt(totalCalories);
 }
 
 // If a radio button is clicked, update the chart, if a chart already exists
@@ -262,7 +267,7 @@ function validateInput(){
 
 	// Check to see if weight input is valid and in the range 1 - 790 (Heaviest
 	// man ever : 790 pounds)
-	if (weightElement.value === "" || weightElement.value.length > 3
+	if (weightElement.value === ""
 			|| !$.isNumeric(weightElement.value)
 			|| parseInt(weightElement.value) <= 0
 			|| parseInt(weightElement.value) > 790) {
@@ -275,7 +280,7 @@ function validateInput(){
 
 	// Check to see if height input is valid and in the range 1 - 273 (Tallest
 	// man ever:273cms)
-	if (heightElement.value === "" || heightElement.value.length > 3
+	if (heightElement.value === "" 
 			|| !$.isNumeric(heightElement.value)
 			|| parseInt(heightElement.value) <= 0
 			|| parseInt(heightElement.value) > 273) {
@@ -288,7 +293,7 @@ function validateInput(){
 
 	// Check to see if age input is valid and in the range 1 - 130 (Oldest man
 	// ever:130 years)
-	if (ageElement.value === "" || ageElement.value.length > 3
+	if (ageElement.value === ""
 			|| !$.isNumeric(ageElement.value)
 			|| parseInt(ageElement.value) <= 0
 			|| parseInt(ageElement.value) > 130) {
@@ -311,6 +316,8 @@ function validateInput(){
 }
 
 function saveForm(){
-	if(validateInput())
+	if(validateInput()){
+		document.getElementById('opMode').value="save";
 		document.getElementById('submitForm').click();
+	}
 }
