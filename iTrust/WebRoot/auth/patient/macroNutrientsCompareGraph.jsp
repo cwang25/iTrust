@@ -57,14 +57,16 @@
 </div>
 <table>
 	<tr>
-	<td>
-	<canvas id="compare-chart-area" width="300" height="300"></canvas>
+	<td >
+	<canvas id="compare-chart-area" width="400" height="400"></canvas>
 	<div id="compare-legend-area"></div>
 	</td>
+	<%if(hasExpected){%>
 	<td>
-	<canvas id="compare-chart-area-expected" width="300" height="300"></canvas>
+	<canvas id="compare-chart-area-expected" width="400" height="400"></canvas>
 	<div id="compare-legend-area-expected"></div>
 	</td>
+	<%} %>
 	</tr>
 
 </table>

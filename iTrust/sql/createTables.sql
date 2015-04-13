@@ -732,6 +732,18 @@ CREATE TABLE IF NOT EXISTS macronutrientplan(
 	totalCalories DOUBLE NOT NULL DEFAULT 0
 ) ENGINE=innoDB;
 
+CREATE TABLE IF NOT EXISTS macronutrientprofile(
+	rowID BIGINT unsigned AUTO_INCREMENT PRIMARY KEY,
+	gender enum('male','female') NOT NULL,
+	age INT NOT NULL,
+	weight DOUBLE NOT NULL,
+	height DOUBLE NOT NULL,
+	goals enum('lose_weight', 'maintain_weight', 'gain_weight') NOT NULL,
+	activity enum('sedentary','lightly_active','moderately_active', 'very_active', 'extremely_active') NOT NULL,
+	macroplanID BIGINT unsigned,
+	CONSTRAINT chk_macronutrientplan FOREIGN KEY (macroplanID) REFERENCES macronutrientplan (rowID) ON DELETE CASCADE
+)ENGINE=innoDB;
+
 CREATE TABLE IF NOT EXISTS weightlog(
 	rowid BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	mid BIGINT UNSIGNED NOT NULL,
