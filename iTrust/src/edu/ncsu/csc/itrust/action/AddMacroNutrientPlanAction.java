@@ -24,7 +24,7 @@ public class AddMacroNutrientPlanAction extends MacroNutrientPlanBaseAction {
 		// TODO Auto-generated constructor stub
 	}
 	/**
-	 * Add food diary into database.
+	 * Add MacroNutrientPlan into database.
 	 * @param b MacroNutrientPlanBean to isnert.
 	 * @return The long id of the new inserted record.
 	 * @throws DBException
