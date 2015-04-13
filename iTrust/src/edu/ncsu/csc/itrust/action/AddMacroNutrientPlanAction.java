@@ -136,7 +136,7 @@ public class AddMacroNutrientPlanAction extends MacroNutrientPlanBaseAction {
 			passed = false;
 		}
 		try {
-			totalCal = Double.parseDouble(c);
+			totalCal = Double.parseDouble(t);
 			if(totalCal <= 0) throw new NumberFormatException();
 		} catch (NumberFormatException e){
 			errorMsg += "Need valid value for total calories.";

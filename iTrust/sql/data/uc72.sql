@@ -202,6 +202,7 @@ VALUES(500, '2014-04-13', 150, 30, 20.2, 12, 11, 19.2, 14, 20),
 (500, '2014-05-04', 157, 30.3, 20.4, 12, 11, 19.5, 14.2, 20),
 (500, '2014-05-11', 160, 30.4, 20.5, 12, 11, 19.5, 14.3, 20);
 /*End of insert weight logs*/
+
 INSERT INTO macronutrientplan(rowID, ownerID, protein, fat, carbs, totalCalories)
 VALUES(1,500,100,64,337,2332);
 

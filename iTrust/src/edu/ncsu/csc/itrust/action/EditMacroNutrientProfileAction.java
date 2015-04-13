@@ -123,7 +123,7 @@ public class EditMacroNutrientProfileAction extends
 	 * @param macroNutrientToRemove FoodDiaryBean which is going to be removed from database.
 	 * @return The MacroNutrientPlanBean that has been removed. 
 	 */
-	public MacroNutrientProfileBean deleteMacroNutrientPlan(MacroNutrientProfileBean macroNutrientToRemove){
+	public MacroNutrientProfileBean deleteMacroNutrientProfile(MacroNutrientProfileBean macroNutrientToRemove){
 		MacroNutrientProfileBean removedMacroNutrientPlanBean = null;
 		try {
 			removedMacroNutrientPlanBean = macroDAO.removeMacroNutrientProfile(macroNutrientToRemove);
