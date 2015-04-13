@@ -68,6 +68,12 @@ public class AddMacroNutrientProfileAction extends MacroNutrientProfileBaseActio
 		String errorMsg="";
 		boolean passed = true;
 		try{
+			macroplanID = Long.parseLong(mcrID);
+		}catch(NumberFormatException e){
+			errorMsg +="Need valid macro plan row id input.";
+			passed = false;
+		}
+		try{
 			gender = MacroNutrientProfileBean.Gender.valueOf(gend.toUpperCase());
 		}catch(IllegalArgumentException e){
 			errorMsg +="Need valid gender input.";
