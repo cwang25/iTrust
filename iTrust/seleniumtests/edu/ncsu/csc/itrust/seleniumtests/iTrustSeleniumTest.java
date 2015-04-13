@@ -57,7 +57,6 @@ abstract public class iTrustSeleniumTest extends TestCase{
 		driver.setJavascriptEnabled(true);
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		gen.clearAllTables();
-		driver.get(ADDRESS);
 
 	}
 	/**
@@ -69,6 +68,7 @@ abstract public class iTrustSeleniumTest extends TestCase{
 	 */
 	protected HtmlUnitDriver login(String username, String password) throws Exception{
 		try {
+			driver.get(ADDRESS);
 			driver.findElement(By.id("j_username")).clear();
 		    driver.findElement(By.id("j_username")).sendKeys(username);
 		    driver.findElement(By.id("j_password")).clear();
