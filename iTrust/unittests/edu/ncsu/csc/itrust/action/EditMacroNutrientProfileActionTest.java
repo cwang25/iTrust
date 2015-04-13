@@ -27,7 +27,7 @@ public class EditMacroNutrientProfileActionTest {
 		add_plan_action = new AddMacroNutrientPlanAction(factory, "9900000012");
 		view_plan_action = new ViewMacroNutrientPlanAction(factory, "9900000012");
 		profile_view_action = new ViewMacroNutrientProfileAction(factory, "9900000012");
-		profile_edit_action =  new EditMacroNutrientProfileAction(factory, "9900000012");;
+		profile_edit_action =  new EditMacroNutrientProfileAction(factory, "9900000012");
 	}
 
 	@Test
