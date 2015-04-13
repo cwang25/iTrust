@@ -68,7 +68,7 @@ public class AddMacroNutrientProfileAction extends MacroNutrientProfileBaseActio
 		String errorMsg="";
 		boolean passed = true;
 		try{
-			gender = MacroNutrientProfileBean.Gender.valueOf(gend);
+			gender = MacroNutrientProfileBean.Gender.valueOf(gend.toUpperCase());
 		}catch(IllegalArgumentException e){
 			errorMsg +="Need valid gender input.";
 			passed = false;
@@ -92,13 +92,13 @@ public class AddMacroNutrientProfileAction extends MacroNutrientProfileBaseActio
 			passed = false;
 		}
 		try{
-			goal = MacroNutrientProfileBean.Goal.valueOf(g);
+			goal = MacroNutrientProfileBean.Goal.valueOf(g.toUpperCase());
 		}catch(IllegalArgumentException e){
 			errorMsg +="Need valid goal input.";
 			passed = false;
 		}
 		try{
-			activity = MacroNutrientProfileBean.Activity.valueOf(act);
+			activity = MacroNutrientProfileBean.Activity.valueOf(act.toUpperCase());
 		}catch(IllegalArgumentException e){
 			errorMsg +="Need valid activity input.";
 			passed = false;
