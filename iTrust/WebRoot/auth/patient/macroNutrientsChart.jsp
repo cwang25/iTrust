@@ -49,7 +49,7 @@
 	String carbs = request.getParameter("carbs") != null ? request.getParameter("carbs") : "";
 	String calories = request.getParameter("calories") != null ? request.getParameter("calories") : "";
 	String operationMode = request.getParameter("opMode") != null ? request.getParameter("opMode") : "";
-	System.out.println(operationMode + "weird");
+	//System.out.println(operationMode + "weird");
 	
 	if(operationMode.equals("save")){
 		long profId = -1;
