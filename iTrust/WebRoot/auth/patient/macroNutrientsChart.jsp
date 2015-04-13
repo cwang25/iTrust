@@ -10,6 +10,7 @@
 
 <script src="/iTrust/js/macroNutrientsChart.js"></script>
 <%
+	//Make instances for actions
 	ViewMacroNutrientPlanAction viewPlanAction = new ViewMacroNutrientPlanAction(prodDAO, loggedInMID.toString());
 	AddMacroNutrientPlanAction addPlanAction = new AddMacroNutrientPlanAction(prodDAO, loggedInMID.toString());
 	EditMacroNutrientPlanAction editPlanAction = new EditMacroNutrientPlanAction(prodDAO, loggedInMID.toString());
@@ -17,17 +18,22 @@
 	EditMacroNutrientProfileAction editProfileAction = new EditMacroNutrientProfileAction(prodDAO, loggedInMID.toString());
 	ViewMacroNutrientProfileAction viewProfileAction = new ViewMacroNutrientProfileAction(prodDAO, loggedInMID.toString());
 	
-	
+	//Get the planlist, if there exists one
 	List<MacroNutrientPlanBean> planBeanList = viewPlanAction.getMacroNutrientPlanListByOwnerID(loggedInMID);
+	//Get the plan bean, if there exists one
 	MacroNutrientPlanBean planBean = planBeanList.size() > 0 ? planBeanList.get(0) : null;
+	//Check to see if record exists
 	boolean noRecord = planBean == null;
+	//Make instances for profile list and profile bean
 	List<MacroNutrientProfileBean> profileList;
 	MacroNutrientProfileBean profileBean = null;
-	
+	//If there is a record
 	if(!noRecord){
+		//Initialize previously defined profile list and bean
 		profileList = viewProfileAction.getMacroNutrientProfileListByPlanID(planBean.getRowID());
 		profileBean = profileList.get(0);
 	}
+	//Get parameters if form was submitted
 	String gender = request.getParameter("gender") != null ? request.getParameter("gender") : "";
 	String age = request.getParameter("age") != null ? request.getParameter("age") : "";
 	String weight = request.getParameter("weight") != null ? request.getParameter("weight") : "";
@@ -49,8 +55,8 @@
 	String carbs = request.getParameter("carbs") != null ? request.getParameter("carbs") : "";
 	String calories = request.getParameter("calories") != null ? request.getParameter("calories") : "";
 	String operationMode = request.getParameter("opMode") != null ? request.getParameter("opMode") : "";
-	//System.out.println(operationMode + "weird");
 	
+	//If user clicked Save
 	if(operationMode.equals("save")){
 		long profId = -1;
 		if(noRecord){
@@ -60,8 +66,11 @@
 			editProfileAction.editMacroNutrientProfileByStr(profileBean.getRowID(), gender, age, weight, height, goal, activityLevel, ""+planBean.getRowID());
 			editPlanAction.editMacroNutrientPlanByStr(planBean.getRowID(), loggedInMID.toString(), protein, fat, carbs, calories);
 		}
+		//Used when user does not have a record and saves for the first time
 		long IDForUpdate = profId > -1?profId : planBean.getRowID();
+		//Update profileBean to view newly submitted values
 		profileBean = viewProfileAction.getMacroNutrientProfileListByPlanID(IDForUpdate).get(0);
+		//User now has a record
 		noRecord = false;
 	}
 %>
