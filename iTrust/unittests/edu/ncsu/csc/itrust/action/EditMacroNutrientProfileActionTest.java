@@ -53,6 +53,7 @@ public class EditMacroNutrientProfileActionTest {
 		assertTrue(b.getAge() == 20);
 		int oAge = b.getAge();
 		double oHeight = b.getHeight();
+		System.out.println(planID.toString());
 		profile_edit_action.editMacroNutrientProfileByStr(b.getRowID(), "male", "50", "80", "200", "lose_weight","very_active", planID.toString());
 		MacroNutrientProfileBean b2 = profile_view_action.getMacroNutrientProfileListByPlanID(planID).get(0);
 		assertFalse(oAge == b2.getAge());

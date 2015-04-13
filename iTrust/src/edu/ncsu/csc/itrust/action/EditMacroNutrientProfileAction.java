@@ -101,6 +101,12 @@ public class EditMacroNutrientProfileAction extends
 			errorMsg +="Need valid activity input.";
 			passed = false;
 		}
+		try{
+			macroplanID = Long.parseLong(mcrID);
+		}catch(IllegalArgumentException e){
+			errorMsg +="Need valid macro plan row id input.";
+			passed = false;
+		}
 		if(!passed){
 			throw new FormValidationException(errorMsg);
 		}else{
