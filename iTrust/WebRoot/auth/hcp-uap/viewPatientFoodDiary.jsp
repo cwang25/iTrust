@@ -29,6 +29,7 @@
 
 <%@include file="/header.jsp" %>
 <itrust:patientNav thisTitle="View Patient Food Diary" />
+
 <%
 	// Require a Patient ID first
 	String pidString = (String)session.getAttribute("pid");
@@ -45,8 +46,9 @@
 	session.setAttribute("foodDiaryList", foodDiaryList);
 	
 	SimpleDateFormat diaryDateFormat = new SimpleDateFormat("MM/dd/yyyy");
-	
+ 	String mode = request.getParameter("operationMode");
 	boolean needToAddSuggestion = (request.getParameter("addNewSuggestion") != null && request.getParameter("addNewSuggestion").equals("true"));
+ 	boolean showCompareGraph = mode!=null&&mode.equals("showCompareGraph");
 	if (needToAddSuggestion) {
 		String date = request.getParameter("date");
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -69,6 +71,10 @@
 	if (foodDiaryList != null && foodDiaryList.size() > 0) {
 		foodDiaryList.add(null);
 %>	
+<div id="HiddenHelperFields">
+<!-- operationMode: allow jsp to know what to do for different mode-->
+<input name="operationMode" id="operationMode" value = <%=(mode!=null &&mode.equals("to_edit"))?"edit":"none"%> type="hidden">
+</div>
 	<div align="center">
 		<span>Filter entries by label: </span>
 		<select id="labelFilter" value="any">
@@ -106,6 +112,7 @@
 			<th>Grams of fiber</th>
 			<th>Grams of protein</th>
 			<th>Total calories</th>
+			<th>Option</th>
 		</tr>
 <%		 
 
@@ -140,7 +147,6 @@
 				<td>
 					<b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b>
 					<button id="toggle<%=index%>" style="border:none; background-color:Transparent"><img id="img<%=index%>" src="/iTrust/image/icons/addSuggestionPlus.png" height="20" width="20"></button>
-					<span style="<%= label.length() > 0 ? "border-radius:5px; padding:3px; color:white; background-color:red;" : "" %>"><%=StringEscapeUtils.escapeHtml(label)%></span>
 				</td>
 				<script language="JavaScript">
 				$(document).ready(function(){
@@ -161,6 +167,11 @@
 				<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getGramsOfFiber())%></td>
 				<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getGramsOfProtein())%></td>
 				<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.totalCalories())%></td>
+				<td>
+				<span style="<%= label.length() > 0 ? "border-radius:5px; padding:3px; color:white; background-color:red;" : "" %>"><%=StringEscapeUtils.escapeHtml(label)%></span>
+				<%= label.length() > 0 ? "<br/><br/>" : "" %>
+				<button style="margin-top: 5px" class="button" id="viewMacroNutrientGraph" onclick="switchHiddenForm('hiddenDailyGraph','showCompareGraph');setActualVal(<%=totalBeanTmp.getGramsOfProtein()%>,<%=totalBeanTmp.getGramsOfFat()%>,<%=totalBeanTmp.getGramsOfCarbs() %>,<%=totalBeanTmp.totalCalories()%>);toggleGraph('Pie');">View Graph</button> 
+				</td>
 			</tr>
 			<tr id="suggestion<%=index%>" style="display: none;">
 			<form action="viewPatientFoodDiary.jsp" method="POST"> 
@@ -243,6 +254,7 @@
 				
 				<textarea onkeyup="$('#updateSuggestion<%=index%>').removeAttr('disabled');$('#updateSuggestion<%=index %>').css('color', 'black');" id="tarea<%=index%>" rows="4" cols="50" ><%=suggestionsToShow.get(0).getSuggestion()%></textarea>
 				</td>
+				<td></td>
 			</form>
 			</tr>
 			<%
@@ -279,6 +291,7 @@
 					<td><%= StringEscapeUtils.escapeHtml("" + b.getGramsOfFiber()) %></td>
 					<td><%= StringEscapeUtils.escapeHtml("" + b.getGramsOfProtein()) %></td>
 					<td><%= StringEscapeUtils.escapeHtml("" + b.totalCalories()) %></td>
+					<td></td>
 					</tr>
 				</tr>
 		<%		index ++; 
@@ -288,8 +301,17 @@
 %>		
 
 	</table>
+	<button type='button' onclick="switchHiddenForm('hiddenMacro','showGraph'); preGraph();">Macro Calculator</button>
 	</div>
+	</br>
+	<div id="hiddenMacro"  style="display: none">
 	<%@include file="/auth/patient/macroNutrientsChart.jsp"%>
+	</div>
+	<!-- Hidden compare daily summary diagram -->
+	<div align="center" id="hiddenDailyGraph" style="display:none">
+	<%@include file="/auth/patient/macroNutrientsCompareGraph.jsp" %>
+	</div>
+	
 <%	} else { 
 		if(action.isNutritionist() && foodDiaryList != null){ %>
 	<div>
@@ -306,6 +328,24 @@
 </div>
 
 <script type="text/javascript">
+	function switchHiddenForm(divID, operationMode){
+		document.getElementById("hiddenMacro").style.display = "none";
+		document.getElementById("hiddenDailyGraph").style.display = "none";
+		setOperationMode(operationMode);
+		showHiddenForm(divID);
+	}
+	function showHiddenForm(divID) {
+		document.getElementById(divID).style.display = "block";
+		scrollToDiv(divID);
+	}
+	function setOperationMode(operation){
+		document.getElementById("operationMode").value = operation;
+	}
+	function scrollToDiv(divID){
+		$('html, body').animate({
+			scrollTop: $("#" + divID).offset().top - 100
+		}, 250);
+	}
 	$('#labelFilter').change(function() {
 		$('[data-diarydate]').show();
 		$('#dateRangeTo').val('');

@@ -1,7 +1,6 @@
 <%@page errorPage="/auth/exceptionHandler.jsp"%>
 <%@page import="java.util.List"%>
 <%@page import="java.lang.Long"%>
-<%@page import="java.util.Date"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -25,8 +24,8 @@
 	double totalCal = 0;
 	boolean hasExpected = true;
 	if(viewMacroNutrientPlanAction.isNutritionist()){
-		String pidString = (String)session.getAttribute("pid");
-		List<MacroNutrientPlanBean> list = viewMacroNutrientPlanAction.getMacroNutrientPlanListByOwnerID(Long.parseLong(pidString));
+		String pidStringForCompare = (String)session.getAttribute("pid");
+		List<MacroNutrientPlanBean> list = viewMacroNutrientPlanAction.getMacroNutrientPlanListByOwnerID(Long.parseLong(pidStringForCompare));
 		if(list != null && list.size()>0){
 			MacroNutrientPlanBean b = list.get(0);
 			proteinGram = b.getProtein();
@@ -55,7 +54,12 @@
 	<button id="pieChartSwitch" onclick="toggleGraph('Pie');">Pie Chart</button>
 	<button id="barChartSwitch" onclick="toggleGraph('Bar');">Bar Chart</button>
 </div>
-<table>
+<div id="compareBarChart" style="display:none;">
+<canvas id="compare-chart-bar-area" width="400" height="400"></canvas>
+<div id="compare-legend-bar-area"></div>
+</div>
+<div id="comparePieChart" style="display:none;">
+<table >
 	<tr>
 	<td >
 	<canvas id="compare-chart-area" width="400" height="400"></canvas>
@@ -70,6 +74,7 @@
 	</tr>
 
 </table>
+</div>
 </div>
 <script language="JavaScript">
 	var pieChart;
@@ -89,6 +94,8 @@
 		removePie();
 		removeExpectedPie();
 		if(type == "Pie"){
+			document.getElementById("compareBarChart").style.display = "none";
+			document.getElementById("comparePieChart").style.display = "block";
 			graphPie();
 			<%
 			if(hasExpected){
@@ -99,6 +106,8 @@
 			%>
 		}
 		if(type =="Bar"){
+			document.getElementById("compareBarChart").style.display = "block";
+			document.getElementById("comparePieChart").style.display = "none";
 			graphBar();
 		}
 			
@@ -129,9 +138,9 @@
 		document.getElementById("compare-legend-area").innerHTML = pieChart.generateLegend();
 	}
 	function graphBar(){
-		var ctx = document.getElementById("compare-chart-area").getContext("2d");
+		var ctx = document.getElementById("compare-chart-bar-area").getContext("2d");
 		barChart= new Chart(ctx).Bar(data, {animateRotate: true, animationEasing: "noBounce", animationSteps:30});
-		document.getElementById("compare-legend-area").innerHTML  =barChart.generateLegend();
+		document.getElementById("compare-legend-bar-area").innerHTML  =barChart.generateLegend();
 
 	}
 	var data = {

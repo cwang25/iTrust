@@ -57,6 +57,7 @@ abstract public class iTrustSeleniumTest extends TestCase{
 		driver.setJavascriptEnabled(true);
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		gen.clearAllTables();
+
 	}
 	/**
 	 * Login helper function.
