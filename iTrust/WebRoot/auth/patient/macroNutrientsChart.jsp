@@ -12,12 +12,18 @@
 <%@page import="edu.ncsu.csc.itrust.dao.DAOFactory"%>
 <%@page import="edu.ncsu.csc.itrust.exception.FormValidationException"%>
 <%@page import="edu.ncsu.csc.itrust.beans.FoodDiaryDailySummaryBean"%>
-<%@page %>
+<%@page import="edu.ncsu.csc.itrust.beans.MacroNutrientPlanBean"%>
+<%@page import="edu.ncsu.csc.itrust.action.EditMacroNutrientPlanAction"%>
+<%@page import="edu.ncsu.csc.itrust.action.AddMacroNutrientPlanAction"%>
+<%@page import="edu.ncsu.csc.itrust.action.ViewMacroNutrientPlanAction"%>
 
 <%@page import="java.util.Calendar"%>
+<!--  -->
 
 <%
-//Add java stuff here
+	AddMacroNutrientPlanAction addMacroNutrientPlanAction = new AddMacroNutrientPlanAction(prodDAO, loggedInMID.toString());
+	EditMacroNutrientPlanAction editMacroNutrientPlanAction = new EditMacroNutrientPlanAction(prodDAO, loggedInMID.toString());
+	//ViewMacroNutrientPlanAction viewMacroNutrientPlanAction = new ViewMacroNutrientPlanAction(prodDAO, loggedInMID.toString());
 %>
 <script src="/iTrust/js/Chart.js"></script>
 <script src="/iTrust/js/macroNutrientsChart.js"></script>
@@ -25,13 +31,13 @@
 <table style="border:none" align="center">
 	<tr>
 		<td>
-			<form action="myfoodDiary.jsp" method="POST" id="macroForm" name="macroForm" align="left">
+			<form action="macroNutrientsChart.jsp" method="POST" id="macroForm" name="macroForm" align="left">
 					<table class="fTable" align="left">
 						<tr>
 							<th id="form_top_banner" colspan=1>Calculate Macronutrients</th>
 							<th>
 							<input type="button" name="cancel" style="color: black;font-size: 16pt; font-weight: bold; float: right;"
-						value="Cancel" onclick="hideHiddenForm('HiddenForm')" align="left">
+						value="Cancel" onclick="hideHiddenForm('hiddenMacro')" align="left">
 							</th>
 						<tr>
 						<tr align="left">
@@ -106,6 +112,7 @@
 							</td>
 						</tr>
 					</table>
+					<input type="submit" id="submitForm" style="display:none">
 			</form>
 		</td>
 		<td>
@@ -116,6 +123,9 @@
 		</td>
 	</tr>
 </table>
-
-<button onclick="graphIt();" id="preview" name="preview"
-			style="font-size: 16pt" align="center">Preview</button>
+<div id="buttons" align="center">
+	<button onclick="graphIt();" id="preview" name="preview"
+			style="font-size: 16pt">Preview</button>
+	<button onclick="saveForm();" id="saveMacroForm" name="saveMacroForm"
+			style="font-size: 16pt" disabled>Save</button> 
+</div>
