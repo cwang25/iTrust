@@ -17,11 +17,18 @@
 	AddMacroNutrientProfileAction addProfileAction = new AddMacroNutrientProfileAction(prodDAO, loggedInMID.toString());
 	EditMacroNutrientProfileAction editProfileAction = new EditMacroNutrientProfileAction(prodDAO, loggedInMID.toString());
 	ViewMacroNutrientProfileAction viewProfileAction = new ViewMacroNutrientProfileAction(prodDAO, loggedInMID.toString());
-	
+	//Use targetMID to store the target ID in order to make this jsp also work in Nutritionist HCP perspective.
+	long targetMID = -1;
+	if(viewPlanAction.isNutritionist()){
+		targetMID = Long.parseLong((String)session.getAttribute("pid"));
+	}else{
+		targetMID = loggedInMID;
+	}
 	//Get the planlist, if there exists one
-	List<MacroNutrientPlanBean> planBeanList = viewPlanAction.getMacroNutrientPlanListByOwnerID(loggedInMID);
+	List<MacroNutrientPlanBean> planBeanList = viewPlanAction.getMacroNutrientPlanListByOwnerID(targetMID);
 	//Get the plan bean, if there exists one
 	MacroNutrientPlanBean planBean = planBeanList.size() > 0 ? planBeanList.get(0) : null;
+
 	//Check to see if record exists
 	boolean noRecord = planBean == null;
 	//Make instances for profile list and profile bean
@@ -33,6 +40,7 @@
 		profileList = viewProfileAction.getMacroNutrientProfileListByPlanID(planBean.getRowID());
 		profileBean = profileList.get(0);
 	}
+
 	//Get parameters if form was submitted
 	String gender = request.getParameter("gender") != null ? request.getParameter("gender") : "";
 	String age = request.getParameter("age") != null ? request.getParameter("age") : "";
@@ -55,16 +63,16 @@
 	String carbs = request.getParameter("carbs") != null ? request.getParameter("carbs") : "";
 	String calories = request.getParameter("calories") != null ? request.getParameter("calories") : "";
 	String operationMode = request.getParameter("opMode") != null ? request.getParameter("opMode") : "";
-	
+
 	//If user clicked Save
 	if(operationMode.equals("save")){
 		long profId = -1;
 		if(noRecord){
-			profId = addPlanAction.addMacroNutrientPlanByStr(loggedInMID.toString(), protein, fat, carbs, calories);
+			profId = addPlanAction.addMacroNutrientPlanByStr(Long.toString(targetMID), protein, fat, carbs, calories);
 			addProfileAction.addMacroNutrientPlanByStr(gender, age, weight, height, goal, activityLevel, "" + profId);
 		}else{
 			editProfileAction.editMacroNutrientProfileByStr(profileBean.getRowID(), gender, age, weight, height, goal, activityLevel, ""+planBean.getRowID());
-			editPlanAction.editMacroNutrientPlanByStr(planBean.getRowID(), loggedInMID.toString(), protein, fat, carbs, calories);
+			editPlanAction.editMacroNutrientPlanByStr(planBean.getRowID(), Long.toString(targetMID), protein, fat, carbs, calories);
 		}
 		//Used when user does not have a record and saves for the first time
 		long IDForUpdate = profId > -1?profId : planBean.getRowID();
@@ -73,13 +81,14 @@
 		//User now has a record
 		noRecord = false;
 	}
+	
 %>
 <script src="/iTrust/js/Chart.js"></script>
 	
 <table style="border:none" align="center">
 	<tr>
 		<td>
-			<form action="/iTrust/auth/patient/myFoodDiary.jsp" method="POST" id="macroForm" name="macroForm" align="left">
+			<form action="<%=request.getRequestURI() %>" method="POST" id="macroForm" name="macroForm" align="left">
 					<table class="fTable" align="left">
 						<tr>
 							<th id="form_top_banner" colspan=1>Calculate Macronutrients</th>

@@ -58,11 +58,7 @@ public class MacroNutrientCalculatorTest extends iTrustSeleniumTest{
 	    driver.findElement(By.id("preview")).click();
 	    //Click on Save
 	    driver.findElement(By.id("saveMacroForm")).click();
-	    JavascriptExecutor js = (JavascriptExecutor)driver;
-
-	    js.executeScript("document.getElementById('submitForm').click()");
-	    //driver.findElement(By.id("submitForm")).click();
-	    //Click on 'Macro Calculator'
+	    
 	    driver.findElement(By.xpath("(//button[@type='button'])[3]")).click();
 	    
 	    assertTrue(pageContains("Total Calories: 2048"));
