@@ -94,7 +94,7 @@ public class AddMacroNutrientPlanAction extends MacroNutrientPlanBaseAction {
 	 * @param f fat
 	 * @param carbs carbonates
 	 * @param t total calories
-	 * @return
+	 * @return The new inserted macronutrientplan rowID.
 	 * @throws FormValidationException 
 	 */
 	public long addMacroNutrientPlanByStr(String oID, String p, String f, String c, String t) throws FormValidationException{
