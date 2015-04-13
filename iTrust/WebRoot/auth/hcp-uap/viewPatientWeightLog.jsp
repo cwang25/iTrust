@@ -8,6 +8,7 @@
 <script src="/iTrust/js/Chart.js"></script>
 <script language="JavaScript">
 var chart = null;
+var chart2 = null;
 
 function makeChart() {
 
@@ -51,33 +52,32 @@ function makeChart() {
         labels.push(row.cells[0].innerHTML);
     
     var measurements = ["", "Weight", "Chest", "Waist", "Upper Arm", "Forearm", "Thighs", "Calves", "Neck"];
+    var weightData = {
+    		labels: labels,
+    		datasets: [{
+                label: "Weight",
+                data: datasets[1],
+                fillColor: "rgba(220,220,220,0.2)",
+                pointColor: "rgba(220,220,220,1)"
+    		}]
+    };
+    
     var lineData = {
         labels: labels,
         datasets: [ {
-                	   label: "Weight",
-                	   data: datasets[1],
-                       fillColor: "rgba(220,220,220,0.2)",
-                       pointColor: "rgba(220,220,220,1)"
-                   },{
                 	   label: "Chest",
                 	   data: datasets[2],
-                	   fillColor: "rgba(101, 156, 239, 0.2)",
-                	   pointColor: "rgba(101, 156, 239, 1)"
+                	   fillColor: "rgba(101, 156, 239, 0.1)",
                    },{
                        label: "Waist",
                        data: datasets[3],
-                       fillColor: "rgba(125, 189, 0, 0)",
-                       pointColor: "rgba(125, 189, 0, 1)"
+
                    },{
                        label: "Upper Arm",
                        data: datasets[4],
-                       fillColor: "rgba(220, 246, 0, 0)",
-                       pointColor: "rgba(220, 246, 0, 1)"
                    },{
                        label: "Forearm",
                        data: datasets[5],
-                       fillColor: "rgba(255, 91, 0, 0)",
-                       pointColor: "rgba(255, 91, 0, 1)"
                    },{
                        label: "Thighs",
                        data: datasets[6]
@@ -92,19 +92,21 @@ function makeChart() {
 
     // Context for the canvas element where the chart will be drawn
     var ctx = document.getElementById("chart-area").getContext("2d");
+    var ctx2 = document.getElementById("chart-area2").getContext("2d");
     // Specify options for the chart
     var options = {
         //scaleShowGridLines : true,
         bezierCurve: true,
-        scaleShowLabels: true,
+        scaleGridLineColor: "rgba(0,0,0,.05)",
     };
 
     // Check to see if chart is being drawn for the first time
     // If yes, make a new chart
-    if (chart == null) {
-        chart = new Chart(ctx).Line(lineData, options);
-    }
-    //legendLine(document.getElementById('legendDiv'), lineData);
+    chart = new Chart(ctx).Line(lineData, options);
+    chart2 = new Chart(ctx2).Line(weightData, options);
+    legendLine(document.getElementById('legendDiv'));
+    legendLine2(document.getElementById('secondLegend'));
+
     
 }
     
@@ -112,8 +114,8 @@ function getCell(table, row, col) {
     return table.rows[row].cells[col].innerHTML;
 }
 
-function legendLine(parent, data) {
-    // Used while updating chart.
+function legendLine(parent) {
+    var measurements = ["", "Chest", "Waist", "Upper Arm", "Forearm", "Thighs", "Calves", "Neck"];
     // If a previous legend exists, delete it
     while (parent.hasChildNodes()) {
         parent.removeChild(parent.lastChild);
@@ -125,30 +127,27 @@ function legendLine(parent, data) {
     parent.appendChild(ul);
     // Using traditional for loop because chrome does not support for each loop
     // Iterate through all data points and add a legend entry
-    alert(data.length);
-    for (var i = 0; i < data.length; i++) {
-        var item = data[i];
+    for (var i = 1; i <= 7; i++) {
         // Make a new list element for this data item
         var li = document.createElement('li');
         //var imageUrl = "/iTrust/image/sq_" + item.color.substring(1) + ".png";
         // Set list to use an image for bullets instead of regular bullets
         //li.style.listStyleImage = "url(" + "\'" + imageUrl + "\'" + ")";
-        var label = item.label.substring(0, item.label.indexOf('(') - 1) + ": "
-                + item.value + " gms";
+        var label = measurements[i];
         li.innerHTML = "<p style=\"font-size:18px;\"><span style=\"color:black; gravity:left\">"
                 + label + "</span></p>";
         // Add this data point to the legend
         ul.appendChild(li);
     }
-    // Create a div to show total calorie count
-    var calorieDisplay = document.createElement('div');
-    // Set its font size to 18px
-    calorieDisplay.style.fontSize = "18px";
-    calorieDisplay.marginLeft = "30px";
-    // Set its content
-    calorieDisplay.innerHTML = "Total Calories: ";
-    // Add it to the legend
-    parent.appendChild(calorieDisplay);
+}
+
+function legendLine2(parent) {
+	var ul = document.createElement('ul');
+	parent.appendChild(ul);
+	var li = document.createElement('li');
+	var label = "Weight";
+	li.innerHTML = "<p style=\"font-size:18px;\"><span style =\"color:black; gravity:left\">"+label+"</span></p>";
+	ul.appendChild(li);
 }
 </script>
 
@@ -190,8 +189,7 @@ function legendLine(parent, data) {
             <th>Neck (in)</th>
         </tr>
         <%
-        for (int i = 0 ; i < weightLogList.size(); i++) {
-            WeightLogBean b = weightLogList.get(i);
+        for (WeightLogBean b : weightLogList) {
             %>
             <tr>
             <td><%=StringEscapeUtils.escapeHtml("" + b.getDate())%></td>
@@ -212,10 +210,18 @@ function legendLine(parent, data) {
         </div>
         <br/><br/>
         <button onclick='makeChart();' style="font-size: 16pt" align="center">View Chart</button>
+        <table><tr><td>
         <div id="canvas-holder">
         <canvas id="chart-area" width="400" height="400"></canvas>
+        </td><td>
         <div id="legendOuterDiv" align="center"><table style="border:none"><tr><td id="legendDiv"></td></tr></table></div>
-        </div>
+        </div></td></tr><tr><td>
+        <div id="canvas-holder2">
+        <canvas id="chart-area2" width="400" height="400"></canvas>
+        </td><td>
+        <div id="legendOuterDiv2" align="center"><table style="border:none"><tr><td id="secondLegend"></td></tr></table></div>
+        </div></td></tr>
+        </table>
     
     	<%
     } else {
