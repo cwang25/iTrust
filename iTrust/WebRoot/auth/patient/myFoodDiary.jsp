@@ -417,9 +417,9 @@
 	%>
 	<div>
 		</br>
-		<button type='button' onclick="switchHiddenForm('hiddenMacro','showGraph'); scrollToDiv('hiddenMacro')">Macro Calculator</button>
-		<button type='button' onclick="showHiddenAddNewFoodDiaryForm('HiddenForm');$('#newLabelForm').hide();">Add new food diary</button>
-		<button type='button' onclick="hideHiddenForm('HiddenForm');$('#newLabelForm').show();setOperationMode('addLabel');">Create new label</button>
+		<button type='button' onclick="switchHiddenForm('hiddenMacro','showGraph'); preGraph();">Macro Calculator</button>
+		<button type='button' onclick="switchHiddenForm('HiddenForm', 'new')">Add new food diary</button>
+		<button type='button' onclick="switchHiddenForm('newLabelForm', 'addLabel')">Create new label</button>
 	</div>	
 	<br />
 	<div id="HiddenForm" name="Hiddenform"
@@ -583,6 +583,7 @@
 	}
 	function showHiddenForm(divID) {
 		document.getElementById(divID).style.display = "block";
+		scrollToDiv(divID);
 	}
 	function showHiddenAddNewFoodDiaryForm(divID){
 		document.getElementById("form_top_banner_tag").value = "New Food Diary";

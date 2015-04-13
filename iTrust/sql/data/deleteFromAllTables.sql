@@ -87,5 +87,8 @@ ALTER TABLE suggestions AUTO_INCREMENT = 0;
 DELETE FROM weightlog;
 ALTER TABLE weightlog AUTO_INCREMENT = 0;
 
+DELETE FROM macronutrientprofile;
+ALTER TABLE macronutrientprofile AUTO_INCREMENT = 0;
+
 DELETE FROM macronutrientplan;
 ALTER TABLE macronutrientplan AUTO_INCREMENT = 0;

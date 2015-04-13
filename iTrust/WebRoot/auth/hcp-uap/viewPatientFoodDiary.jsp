@@ -289,6 +289,7 @@
 
 	</table>
 	</div>
+	<%@include file="/auth/patient/macroNutrientsChart.jsp"%>
 <%	} else { 
 		if(action.isNutritionist() && foodDiaryList != null){ %>
 	<div>

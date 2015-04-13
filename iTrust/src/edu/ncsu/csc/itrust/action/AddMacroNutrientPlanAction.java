@@ -24,7 +24,7 @@ public class AddMacroNutrientPlanAction extends MacroNutrientPlanBaseAction {
 		// TODO Auto-generated constructor stub
 	}
 	/**
-	 * Add food diary into database.
+	 * Add MacroNutrientPlan into database.
 	 * @param b MacroNutrientPlanBean to isnert.
 	 * @return The long id of the new inserted record.
 	 * @throws DBException
@@ -94,7 +94,7 @@ public class AddMacroNutrientPlanAction extends MacroNutrientPlanBaseAction {
 	 * @param f fat
 	 * @param carbs carbonates
 	 * @param t total calories
-	 * @return
+	 * @return The new inserted macronutrientplan rowID.
 	 * @throws FormValidationException 
 	 */
 	public long addMacroNutrientPlanByStr(String oID, String p, String f, String c, String t) throws FormValidationException{
@@ -136,7 +136,7 @@ public class AddMacroNutrientPlanAction extends MacroNutrientPlanBaseAction {
 			passed = false;
 		}
 		try {
-			totalCal = Double.parseDouble(c);
+			totalCal = Double.parseDouble(t);
 			if(totalCal <= 0) throw new NumberFormatException();
 		} catch (NumberFormatException e){
 			errorMsg += "Need valid value for total calories.";

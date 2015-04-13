@@ -154,7 +154,7 @@ public class EditMacroNutrientPlanActionTest {
 		}
 		assertTrue(originalLength + 1 == patientViewAction.getMacroNutrientPlanListByOwnerID(701).size());
 		list = patientViewAction.getMacroNutrientPlanListByOwnerID(701);
-		patientEditAction.deleteFoodDiary(list.get(0));
+		patientEditAction.deleteMacroNutrientPlan(list.get(0));
 		assertTrue(originalLength == patientViewAction.getMacroNutrientPlanListByOwnerID(701).size());
 
 	}

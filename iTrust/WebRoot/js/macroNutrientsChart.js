@@ -16,6 +16,11 @@ var allValid = true;
 // Variable to keep track of total calories a user needs per day
 var totalCalories;
 
+//Get all the required elements
+var weightElement;
+var ageElement;
+var heightElement;
+
 // Function that graphs the daily macronutrient requirement for a user
 function graphIt() {
 
@@ -49,72 +54,11 @@ function graphIt() {
 	 * 1g carb = 4 calories
 	 */
 
-	// Set all valid to true
-	allValid = true;
-
-	// Get all the required elements
-	var weightElement = document.getElementById('weight');
-	var ageElement = document.getElementById("age");
-	var heightElement = document.getElementById("height");
-
-	// Get hidden elements in order to show error message, if any
-	var errorWeight = document.getElementById('errorTextWeight');
-	var errorHeight = document.getElementById('errorTextHeight');
-	var errorAge = document.getElementById('errorTextAge');
-
-	// Remove all error highlighting
-	weightElement.style.border = "1px solid #DDDDDD";
-	heightElement.style.border = "1px solid #DDDDDD";
-	ageElement.style.border = "1px solid #DDDDDD";
-
-	// Remove all error messages
-	errorWeight.style.display = "none";
-	errorHeight.style.display = "none";
-	errorAge.style.display = "none";
-
-	// Check to see if weight input is valid and in the range 1 - 790 (Heaviest
-	// man ever : 790 pounds)
-	if (weightElement.value === "" || weightElement.value.length > 3
-			|| !$.isNumeric(weightElement.value)
-			|| parseInt(weightElement.value) <= 0
-			|| parseInt(weightElement.value) > 790) {
-		// If so, highlight the text box and display error message
-		weightElement.style.border = "1px solid rgba(255, 37, 14, 0.7)";
-		errorWeight.style.display = "block";
-		errorWeight.innerHTML = "Enter value in range 1-790";
-		allValid = false;
-	}
-
-	// Check to see if height input is valid and in the range 1 - 273 (Tallest
-	// man ever:273cms)
-	if (heightElement.value === "" || heightElement.value.length > 3
-			|| !$.isNumeric(heightElement.value)
-			|| parseInt(heightElement.value) <= 0
-			|| parseInt(heightElement.value) > 273) {
-		// If so, highlight the text box and display error message
-		heightElement.style.border = "1px solid rgba(255, 37, 14, 0.7)";
-		errorHeight.style.display = "block";
-		errorHeight.innerHTML = "Enter value in range: 1-273";
-		allValid = false;
-	}
-
-	// Check to see if age input is valid and in the range 1 - 130 (Oldest man
-	// ever:130 years)
-	if (ageElement.value === "" || ageElement.value.length > 3
-			|| !$.isNumeric(ageElement.value)
-			|| parseInt(ageElement.value) <= 0
-			|| parseInt(ageElement.value) > 130) {
-		// If so, highlight the text box and display error message
-		ageElement.style.border = "1px solid rgba(255, 37, 14, 0.7)";
-		errorAge.style.display = "block";
-		errorAge.innerHTML = "Enter value in range: 1-130";
-		allValid = false;
-	}
-
 	// If invalid input is found, return without doing anything
-	if (!allValid)
+	if (!validateInput()){
+		document.getElementById('opMode').value="";
 		return;
-
+	}
 	// All input is correct at this point, so
 	// Get the weight
 	var weight = parseFloat(weightElement.value);
@@ -139,7 +83,7 @@ function graphIt() {
 		heightInInches = height * 0.393701;
 
 	// Get the age
-	var age = parseInt(document.getElementById("age").value);
+	var age = parseInt(ageElement.value);
 
 	// Get gender
 	var gender = document.macroForm.gender.value;
@@ -162,19 +106,19 @@ function graphIt() {
 	// Calculate the user's daily energy expenditure based on activity level
 	if (activityLevel === "sedentary")
 		totalCalories = bmr * 1.2;
-	else if (activityLevel === "light")
+	else if (activityLevel === "lightly_active")
 		totalCalories = bmr * 1.35;
-	else if (activityLevel === "moderate")
+	else if (activityLevel === "moderately_active")
 		totalCalories = bmr * 1.55;
-	else if (activityLevel === "high")
+	else if (activityLevel === "very_active")
 		totalCalories = bmr * 1.75;
 	else
 		totalCalories = bmr * 2.1;
 
 	// Modify totalCalories based on user's goal
-	if (goal == 'losemode')
+	if (goal == 'lose_weight')
 		totalCalories -= 500;
-	else if (goal == 'gainmode')
+	else if (goal == 'gain_weight')
 		totalCalories += 400;
 
 	// Calculate macronutrients
@@ -244,6 +188,10 @@ function graphIt() {
 	}
 	// Draw legend for the chart drawn
 	legendPie(document.getElementById('legendDiv'), pieData);
+	document.getElementById('protein').value=parseInt(totalProtein);
+	document.getElementById('fat').value=parseInt(totalFat);
+	document.getElementById('carbs').value=parseInt(totalCarbs);
+	document.getElementById('calories').value=parseInt(totalCalories);
 }
 
 // If a radio button is clicked, update the chart, if a chart already exists
@@ -263,6 +211,7 @@ function legendPie(parent, data) {
 
 	// Make a new unordered list
 	var ul = document.createElement('ul');
+	ul.style.paddingTop = "10px";
 	// Add it under the legendDiv element
 	parent.appendChild(ul);
 	// Using traditional for loop because chrome does not support for each loop
@@ -285,9 +234,90 @@ function legendPie(parent, data) {
 	var calorieDisplay = document.createElement('div');
 	// Set its font size to 18px
 	calorieDisplay.style.fontSize = "18px";
-	calorieDisplay.marginLeft = "30px";
+	calorieDisplay.style.paddingLeft = "15px";
 	// Set its content
 	calorieDisplay.innerHTML = "Total Calories: " + parseInt(totalCalories);
 	// Add it to the legend
 	parent.appendChild(calorieDisplay);
+}
+
+function validateInput(){
+	// Set all valid to true
+	allValid = true;
+	
+	//Get all the required elements
+	weightElement = document.getElementById('weight');
+	ageElement = document.getElementById("age");
+	heightElement = document.getElementById("height");
+
+	// Get hidden elements in order to show error message, if any
+	var errorWeight = document.getElementById('errorTextWeight');
+	var errorHeight = document.getElementById('errorTextHeight');
+	var errorAge = document.getElementById('errorTextAge');
+
+	// Remove all error highlighting
+	weightElement.style.border = "1px solid #DDDDDD";
+	heightElement.style.border = "1px solid #DDDDDD";
+	ageElement.style.border = "1px solid #DDDDDD";
+
+	// Remove all error messages
+	errorWeight.style.display = "none";
+	errorHeight.style.display = "none";
+	errorAge.style.display = "none";
+
+	// Check to see if weight input is valid and in the range 1 - 790 (Heaviest
+	// man ever : 790 pounds)
+	if (weightElement.value === ""
+			|| !$.isNumeric(weightElement.value)
+			|| parseInt(weightElement.value) <= 0
+			|| parseInt(weightElement.value) > 790) {
+		// If so, highlight the text box and display error message
+		weightElement.style.border = "1px solid rgba(255, 37, 14, 0.7)";
+		errorWeight.style.display = "block";
+		errorWeight.innerHTML = "Enter value in range 1-790";
+		allValid = false;
+	}
+
+	// Check to see if height input is valid and in the range 1 - 273 (Tallest
+	// man ever:273cms)
+	if (heightElement.value === "" 
+			|| !$.isNumeric(heightElement.value)
+			|| parseInt(heightElement.value) <= 0
+			|| parseInt(heightElement.value) > 273) {
+		// If so, highlight the text box and display error message
+		heightElement.style.border = "1px solid rgba(255, 37, 14, 0.7)";
+		errorHeight.style.display = "block";
+		errorHeight.innerHTML = "Enter value in range: 1-273";
+		allValid = false;
+	}
+
+	// Check to see if age input is valid and in the range 1 - 130 (Oldest man
+	// ever:130 years)
+	if (ageElement.value === ""
+			|| !$.isNumeric(ageElement.value)
+			|| parseInt(ageElement.value) <= 0
+			|| parseInt(ageElement.value) > 130) {
+		// If so, highlight the text box and display error message
+		ageElement.style.border = "1px solid rgba(255, 37, 14, 0.7)";
+		errorAge.style.display = "block";
+		errorAge.innerHTML = "Enter value in range: 1-130";
+		allValid = false;
+	}
+	//If there is invalid input disable save button
+	if(allValid){
+		document.getElementById("saveMacroForm").disabled = false;
+		document.getElementById("saveMacroForm").style.color = "black";
+	}
+	else {
+		document.getElementById("saveMacroForm").disabled = true;
+		document.getElementById("saveMacroForm").style.color = "#D8D8D8";
+	}
+	return allValid;
+}
+
+function saveForm(){
+	if(validateInput()){
+		document.getElementById('opMode').value="save";
+		document.getElementById('submitForm').click();
+	}
 }

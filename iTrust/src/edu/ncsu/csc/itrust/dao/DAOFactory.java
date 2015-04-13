@@ -406,6 +406,11 @@ public class DAOFactory {
 	public MacroNutrientPlanDAO getMacroNutrientPlanDAO(){
 		return new MacroNutrientPlanDAO(this);
 	}
+	
+	public MacroNutrientProfileDAO getMacroNutrientProfileDAO(){
+		return new MacroNutrientProfileDAO(this);
+	}
+	
 	public PreExistingConditionsDAO getPreExistingConditionsDAO() {
 		return new PreExistingConditionsDAO(this);
 	}
