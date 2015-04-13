@@ -92,8 +92,8 @@
 							<td class="subHeaderVertical">Gender:</td>
 							<td>
 								<table border=0>
-									<tr><td><input onclick="radioChange();" type="radio" name="gender" value="male" <%=profileBean!=null && profileBean.getGender().toString().equalsIgnoreCase("male") ? "checked" : ""%>> Male</td></tr>
-									<tr><td><input onclick="radioChange();" type="radio" name="gender" value="female" <%=profileBean != null&&profileBean.getGender().toString().equalsIgnoreCase("female") ? "checked" : ""%>> Female</td></tr>
+									<tr><td><input onclick="radioChange();" type="radio" id="male" name="gender" value="male" <%=profileBean!=null && profileBean.getGender().toString().equalsIgnoreCase("male") ? "checked" : ""%>> Male</td></tr>
+									<tr><td><input onclick="radioChange();" type="radio" id="female" name="gender" value="female" <%=profileBean != null&&profileBean.getGender().toString().equalsIgnoreCase("female") ? "checked" : ""%>> Female</td></tr>
 								</table>
 							</td>
 						<tr>
