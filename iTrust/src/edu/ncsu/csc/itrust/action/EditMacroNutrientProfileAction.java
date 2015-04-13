@@ -1,8 +1,10 @@
 package edu.ncsu.csc.itrust.action;
 
 import edu.ncsu.csc.itrust.action.base.MacroNutrientProfileBaseAction;
+import edu.ncsu.csc.itrust.beans.MacroNutrientPlanBean;
 import edu.ncsu.csc.itrust.beans.MacroNutrientProfileBean;
 import edu.ncsu.csc.itrust.dao.DAOFactory;
+import edu.ncsu.csc.itrust.enums.TransactionType;
 import edu.ncsu.csc.itrust.exception.DBException;
 import edu.ncsu.csc.itrust.exception.FormValidationException;
 import edu.ncsu.csc.itrust.exception.ITrustException;
@@ -111,6 +113,26 @@ public class EditMacroNutrientProfileAction extends
 			}
 		}
 		return rowUpdate;
+	}
+	
+	/**
+	 * Method to remove macronutrient profile record from SQL.
+	 * The macroNutrientToRemove has to be the one retrieved from database. (The objects in table list.) instead of creating a new one.
+	 * Only MacroNutrientProfileBean object from DAO will has valid rowID attribute.
+	 * rowID attribute is essential for DAO to decide which record to remove. 
+	 * @param macroNutrientToRemove FoodDiaryBean which is going to be removed from database.
+	 * @return The MacroNutrientPlanBean that has been removed. 
+	 */
+	public MacroNutrientProfileBean deleteMacroNutrientPlan(MacroNutrientProfileBean macroNutrientToRemove){
+		MacroNutrientProfileBean removedMacroNutrientPlanBean = null;
+		try {
+			removedMacroNutrientPlanBean = macroDAO.removeMacroNutrientProfile(macroNutrientToRemove);
+		} catch (DBException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			removedMacroNutrientPlanBean = null;
+		}
+		return removedMacroNutrientPlanBean;
 	}
 
 }
