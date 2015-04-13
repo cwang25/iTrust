@@ -44,41 +44,40 @@ function makeChart() {
             dataPoint.push(getCell(table, k, i));
         }
         datasets.push(dataPoint);
-        
     }
     
-    // Loop through each row after table headings
-  for (var i = 1, row; row = table.rows[i]; i++) {
-        
-        var dataPoint = []; // create array of data for first entry
-        // Add Data to labels
+    // Loop through each row after table headings to populate labels array
+    for (var i = 1, row; row = table.rows[i]; i++)
         labels.push(row.cells[0].innerHTML);
-        for (var j = 0, val; val = table.rows[j]; j++) {
-       //for (var j = 1, col; col = row.cells[j]; j++) {
-            dataPoint.push(val.innerHTML);
-        }
-       
-       datasets.push(dataPoint);
-    }
-        
-   var measurements = ["", "Weight", "Chest", "Waist", "Upper Arm", "Forearm", "Thighs", "Calves", "Neck"];
+    
+    var measurements = ["", "Weight", "Chest", "Waist", "Upper Arm", "Forearm", "Thighs", "Calves", "Neck"];
     var lineData = {
         labels: labels,
         datasets: [ {
                 	   label: "Weight",
-                	   data: datasets[1]
+                	   data: datasets[1],
+                       fillColor: "rgba(220,220,220,0.2)",
+                       pointColor: "rgba(220,220,220,1)"
                    },{
                 	   label: "Chest",
-                	   data: datasets[2]
+                	   data: datasets[2],
+                	   fillColor: "rgba(101, 156, 239, 0.2)",
+                	   pointColor: "rgba(101, 156, 239, 1)"
                    },{
                        label: "Waist",
-                       data: datasets[3]
+                       data: datasets[3],
+                       fillColor: "rgba(125, 189, 0, 0)",
+                       pointColor: "rgba(125, 189, 0, 1)"
                    },{
                        label: "Upper Arm",
-                       data: datasets[4]
+                       data: datasets[4],
+                       fillColor: "rgba(220, 246, 0, 0)",
+                       pointColor: "rgba(220, 246, 0, 1)"
                    },{
                        label: "Forearm",
-                       data: datasets[5]
+                       data: datasets[5],
+                       fillColor: "rgba(255, 91, 0, 0)",
+                       pointColor: "rgba(255, 91, 0, 1)"
                    },{
                        label: "Thighs",
                        data: datasets[6]
@@ -88,15 +87,16 @@ function makeChart() {
                    },{
                        label: "Neck",
                        data: datasets[8]
-                   }
-                   ]
+                   } ]
     };
 
     // Context for the canvas element where the chart will be drawn
     var ctx = document.getElementById("chart-area").getContext("2d");
     // Specify options for the chart
     var options = {
-        scaleShowGridLines : true,
+        //scaleShowGridLines : true,
+        bezierCurve: true,
+        scaleShowLabels: true,
     };
 
     // Check to see if chart is being drawn for the first time
@@ -110,6 +110,45 @@ function makeChart() {
     
 function getCell(table, row, col) {
     return table.rows[row].cells[col].innerHTML;
+}
+
+function legendLine(parent, data) {
+    // Used while updating chart.
+    // If a previous legend exists, delete it
+    while (parent.hasChildNodes()) {
+        parent.removeChild(parent.lastChild);
+    }
+
+    // Make a new unordered list
+    var ul = document.createElement('ul');
+    // Add it under the legendDiv element
+    parent.appendChild(ul);
+    // Using traditional for loop because chrome does not support for each loop
+    // Iterate through all data points and add a legend entry
+    alert(data.length);
+    for (var i = 0; i < data.length; i++) {
+        var item = data[i];
+        // Make a new list element for this data item
+        var li = document.createElement('li');
+        //var imageUrl = "/iTrust/image/sq_" + item.color.substring(1) + ".png";
+        // Set list to use an image for bullets instead of regular bullets
+        //li.style.listStyleImage = "url(" + "\'" + imageUrl + "\'" + ")";
+        var label = item.label.substring(0, item.label.indexOf('(') - 1) + ": "
+                + item.value + " gms";
+        li.innerHTML = "<p style=\"font-size:18px;\"><span style=\"color:black; gravity:left\">"
+                + label + "</span></p>";
+        // Add this data point to the legend
+        ul.appendChild(li);
+    }
+    // Create a div to show total calorie count
+    var calorieDisplay = document.createElement('div');
+    // Set its font size to 18px
+    calorieDisplay.style.fontSize = "18px";
+    calorieDisplay.marginLeft = "30px";
+    // Set its content
+    calorieDisplay.innerHTML = "Total Calories: ";
+    // Add it to the legend
+    parent.appendChild(calorieDisplay);
 }
 </script>
 

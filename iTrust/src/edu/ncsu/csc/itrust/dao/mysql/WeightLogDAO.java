@@ -69,7 +69,7 @@ public class WeightLogDAO {
 		List<WeightLogBean> beanList;
 		try{
 			conn = factory.getConnection();
-			ps = conn.prepareStatement("SELECT * FROM weightlog WHERE mid=? ORDER BY logdate DESC");
+			ps = conn.prepareStatement("SELECT * FROM weightlog WHERE mid=? ORDER BY logdate ASC");
 			ps.setLong(1, mid);
 			ResultSet rs = ps.executeQuery();
 			beanList = loader.loadList(rs);
