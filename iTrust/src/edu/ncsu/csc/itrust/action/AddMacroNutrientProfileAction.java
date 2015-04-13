@@ -1,13 +1,9 @@
 package edu.ncsu.csc.itrust.action;
 
-import java.util.List;
 
 import edu.ncsu.csc.itrust.action.base.MacroNutrientProfileBaseAction;
-import edu.ncsu.csc.itrust.beans.MacroNutrientPlanBean;
 import edu.ncsu.csc.itrust.beans.MacroNutrientProfileBean;
-import edu.ncsu.csc.itrust.beans.PersonnelBean;
 import edu.ncsu.csc.itrust.dao.DAOFactory;
-import edu.ncsu.csc.itrust.enums.TransactionType;
 import edu.ncsu.csc.itrust.exception.DBException;
 import edu.ncsu.csc.itrust.exception.FormValidationException;
 import edu.ncsu.csc.itrust.exception.ITrustException;
@@ -110,7 +106,7 @@ public class AddMacroNutrientProfileAction extends MacroNutrientProfileBaseActio
 		if(!passed){
 			throw new FormValidationException(errorMsg);
 		}else{
-			b = new MacroNutrientProfileBean(gender, age, height, height, goal, activity, macroplanID);
+			b = new MacroNutrientProfileBean(gender, age, weight, height, goal, activity, macroplanID);
 			try{
 				rowID = this.addMacroNutrientProfile(b);
 			}catch (DBException e){
