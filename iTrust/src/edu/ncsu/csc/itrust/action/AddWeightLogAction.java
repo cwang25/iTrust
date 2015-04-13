@@ -41,21 +41,21 @@ public class AddWeightLogAction {
 		String errormsg = "";
 		
 		if(b.getWeight() <= 0)
-			errormsg += "Weight must be greater than 0.\n";
+			errormsg += "Weight must be greater than 0.<br/>";
 		if(b.getCalves() <= 0)
-			errormsg += "Calf measurement must be greather than 0.\n";
+			errormsg += "Calf measurement must be greather than 0.<br/>";
 		if(b.getChest() <= 0)
-			errormsg += "Chest measurement must be greather than 0.\n";
+			errormsg += "Chest measurement must be greather than 0.<br/>";
 		if(b.getForearm() <= 0)
-			errormsg += "Forearm measurement must be greather than 0.\n";
+			errormsg += "Forearm measurement must be greather than 0.<br/>";
 		if(b.getNeck() <= 0)
-			errormsg += "Neck measurement must be greather than 0.\n";
+			errormsg += "Neck measurement must be greather than 0.<br/>";
 		if(b.getThigh() <= 0)
-			errormsg += "Thigh measurement must be greather than 0.\n";
+			errormsg += "Thigh measurement must be greather than 0.<br/>";
 		if(b.getUpperarm() <= 0)
-			errormsg += "Upper arm measurement must be greather than 0.\n";
+			errormsg += "Upper arm measurement must be greather than 0.<br/>";
 		if(b.getWaist() <= 0)
-			errormsg += "Waist measurement must be greather than 0.\n";
+			errormsg += "Waist measurement must be greather than 0.";
 		
 		//data invalid, throw exception
 		if(errormsg.length() > 0)

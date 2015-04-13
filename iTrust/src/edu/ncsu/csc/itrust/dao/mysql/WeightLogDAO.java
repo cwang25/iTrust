@@ -43,7 +43,7 @@ public class WeightLogDAO {
 		long lastInsertID = -1;
 		try {
 			conn = factory.getConnection();
-			ps = conn.prepareStatement("INSERT INTO fooddiarytable (mid, logdate, weight, chest, waist, upperarm, forearm, thigh, calves, neck)"
+			ps = conn.prepareStatement("INSERT INTO weightlog (mid, logdate, weight, chest, waist, upperarm, forearm, thigh, calves, neck)"
 					+ "VALUES (?,?,?,?,?,?,?,?,?,?)");
 			ps = loader.loadParameters(ps, weightlog);
 			ps.executeUpdate();

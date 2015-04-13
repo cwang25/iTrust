@@ -27,6 +27,7 @@
 			<li><a href="/iTrust/auth/patient/findExpert.jsp">Find an Expert</a>
 			<li><a href="/iTrust/auth/patient/myBills.jsp">My Bills</a>
 			<li><a href="/iTrust/auth/patient/myFoodDiary.jsp">My Food Diary</a>
+			<li><a href="/iTrust/auth/patient/myWeightLog.jsp">My Weight Log</a>
 		</ul>
 	</div>
 </div>
