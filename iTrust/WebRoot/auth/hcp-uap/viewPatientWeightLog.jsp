@@ -57,8 +57,9 @@ function makeChart() {
     		datasets: [{
                 label: "Weight",
                 data: datasets[1],
-                fillColor: "rgba(220,220,220,0.2)",
-                pointColor: "rgba(220,220,220,1)"
+                fillColor: "blue",
+                pointColor: "blue",
+                strokeColor: "blue"
     		}]
     };
     
@@ -67,26 +68,46 @@ function makeChart() {
         datasets: [ {
                 	   label: "Chest",
                 	   data: datasets[2],
-                	   fillColor: "rgba(101, 156, 239, 0.1)",
+                       fillColor: "green",
+                       pointColor: "green",
+                       strokeColor: "green"
                    },{
                        label: "Waist",
                        data: datasets[3],
+                       fillColor: "red",
+                       pointColor: "red",
+                       strokeColor: "red"
 
                    },{
                        label: "Upper Arm",
                        data: datasets[4],
+                       fillColor: "orange",
+                       pointColor: "orange",
+                       strokeColor: "orange"
                    },{
                        label: "Forearm",
                        data: datasets[5],
+                       fillColor: "purple",
+                       pointColor: "purple",
+                       strokeColor: "purple"
                    },{
                        label: "Thighs",
-                       data: datasets[6]
+                       data: datasets[6],
+                       fillColor: "brown",
+                       pointColor: "brown",
+                       strokeColor: "brown"
                    },{
                        label: "Calves",
-                       data: datasets[7]
+                       data: datasets[7],
+                       fillColor: "blue",
+                       pointColor: "blue",
+                       strokeColor: "blue"
                    },{
                        label: "Neck",
-                       data: datasets[8]
+                       data: datasets[8],
+                       fillColor: "lightgreen",
+                       pointColor: "lightgreen",
+                       strokeColor: "lightgreen"
                    } ]
     };
 
@@ -98,6 +119,7 @@ function makeChart() {
         //scaleShowGridLines : true,
         bezierCurve: true,
         scaleGridLineColor: "rgba(0,0,0,.05)",
+        datasetFill : false,
     };
 
     // Check to see if chart is being drawn for the first time
