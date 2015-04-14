@@ -48,10 +48,8 @@ public class MacroNutrientCalculatorTest extends iTrustSeleniumTest{
 		//Click on 'View'
 	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 	    //Click on 'My Food Diary'
-	    Thread.sleep(1000);
 	    driver.findElement(By.linkText("My Food Diary")).click();
-	    //Click on 'Macro Calculator'
-	    Thread.sleep(1000);
+	    //Click on 'Macro Calculator
 	    driver.findElement(By.id("macroBtn")).click();
 	    
 	    
@@ -73,12 +71,5 @@ public class MacroNutrientCalculatorTest extends iTrustSeleniumTest{
 	    driver.findElement(By.id("light")).click();
 	    //Click on Preview
 	    driver.findElement(By.id("preview")).click();
-	    //Click on Save
-	    driver.findElement(By.id("saveMacroForm")).click();
-	    
-	    Thread.sleep(5000);
-	    driver.findElement(By.id("macroBtn")).click();
-	    //driver.findElement(By.id("submitForm")).click();
-	    //Click on 'Macro Calculator'
 	}
 }
