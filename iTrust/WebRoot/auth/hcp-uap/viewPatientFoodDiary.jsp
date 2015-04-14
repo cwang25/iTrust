@@ -301,7 +301,9 @@
 %>		
 
 	</table>
-	<button type='button' onclick="switchHiddenForm('hiddenMacro','showGraph'); preGraph();">Macro Calculator</button>
+	<div align="center" style="margin:10px;">
+	<button align="center" type='button' onclick="switchHiddenForm('hiddenMacro','showGraph'); preGraph();">Macro Calculator</button>
+	</div>
 	</div>
 	</br>
 	<div id="hiddenMacro"  style="display: none">
@@ -345,6 +347,9 @@
 		$('html, body').animate({
 			scrollTop: $("#" + divID).offset().top - 100
 		}, 250);
+	}
+	function hideHiddenForm(divID){
+		document.getElementById(divID).style.display = "none";
 	}
 	$('#labelFilter').change(function() {
 		$('[data-diarydate]').show();
