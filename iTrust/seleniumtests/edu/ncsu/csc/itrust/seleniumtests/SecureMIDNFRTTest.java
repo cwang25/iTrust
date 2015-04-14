@@ -15,23 +15,16 @@ import edu.ncsu.csc.itrust.enums.TransactionType;
 
 public class SecureMIDNFRTTest extends iTrustSeleniumTest{
 	
-	private HtmlUnitDriver driver;
-	private String baseUrl;
-
 	@Before
 	public void setUp() throws Exception {
 	  super.setUp();
 	  gen.clearAllTables();
 	  gen.standardData();	
-	  driver = new HtmlUnitDriver(BrowserVersion.FIREFOX_3_6);
-	  baseUrl = "http://localhost:8080/iTrust/";
-	  driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-	  driver.setJavascriptEnabled(true);
 	}
 	
 	  @Test
 	  public void testMIDShown1() throws Exception {
-	    driver.get(baseUrl);
+	    driver.get(ADDRESS);
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("8000000009");
 	    driver.findElement(By.id("j_password")).clear();
@@ -56,7 +49,7 @@ public class SecureMIDNFRTTest extends iTrustSeleniumTest{
 	  
 	  @Test
 	  public void testMIDShown2() throws Exception {
-	    driver.get(baseUrl);
+	    driver.get(ADDRESS);
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("9000000000");
 	    driver.findElement(By.id("j_password")).clear();
@@ -80,7 +73,7 @@ public class SecureMIDNFRTTest extends iTrustSeleniumTest{
 	  
 	  @Test
 	  public void testMIDShown3() throws Exception {
-	    driver.get(baseUrl);
+	    driver.get(ADDRESS);
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("9000000000");
 	    driver.findElement(By.id("j_password")).clear();

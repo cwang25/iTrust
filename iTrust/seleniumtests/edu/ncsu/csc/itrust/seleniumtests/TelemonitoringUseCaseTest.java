@@ -44,7 +44,7 @@ public class TelemonitoringUseCaseTest extends iTrustSeleniumTest {
 	    driver.findElement(By.name("weight")).click();
 	    driver.findElement(By.name("pedometer")).click();
 	    
-		assertEquals("Add Andy Programmer", driver.findElement(By.name("fSubmit")).getValue());
+		assertEquals("Add Andy Programmer", driver.findElement(By.name("fSubmit")).getText());
 		driver.findElement(By.name("fSubmit")).click();
 		assertTrue(driver.findElement(By.cssSelector("BODY")).getText().contains("Patient Andy Programmer Added"));
 
@@ -68,7 +68,7 @@ public class TelemonitoringUseCaseTest extends iTrustSeleniumTest {
 		driver.findElement(By.name("UID_PATIENTID")).sendKeys("1");
 		driver.findElement(By.xpath("//input[@value='1']")).submit();
 
-		assertEquals("Remove Random Person", driver.findElement(By.name("fSubmit")).getValue());
+		assertEquals("Remove Random Person", driver.findElement(By.name("fSubmit")).getText());
 		driver.findElement(By.name("fSubmit")).click();
 		assertTrue(driver.findElement(By.cssSelector("BODY")).getText().contains("Patient Random Person Removed"));
 
@@ -334,7 +334,7 @@ public class TelemonitoringUseCaseTest extends iTrustSeleniumTest {
 		driver.findElement(By.name("UID_PATIENTID")).sendKeys("2");
 		driver.findElement(By.xpath("//input[@value='2']")).submit();
 		
-		assertEquals("Add Andy Programmer", driver.findElement(By.cssSelector("input[type=\"submit\"]")).getValue());
+		assertEquals("Add Andy Programmer", driver.findElement(By.cssSelector("input[type=\"submit\"]")).getText());
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 
 		assertTrue(driver.findElement(By.cssSelector("BODY")).getText().contains("Patient Andy Programmer Added"));
@@ -355,7 +355,7 @@ public class TelemonitoringUseCaseTest extends iTrustSeleniumTest {
 		//search patient with mid 2
 		driver.findElement(By.name("UID_PATIENTID")).sendKeys("2");
 		driver.findElement(By.xpath("//input[@value='2']")).submit();
-		assertEquals("Add Andy Programmer", driver.findElement(By.cssSelector("input[type=\"submit\"]")).getValue());
+		assertEquals("Add Andy Programmer", driver.findElement(By.cssSelector("input[type=\"submit\"]")).getText());
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertTrue(driver.findElement(By.cssSelector("BODY")).getText().contains("Patient Andy Programmer Added"));
 		assertLogged(TransactionType.PATIENT_LIST_ADD, 8000000009L, 2L, "");
@@ -407,7 +407,7 @@ public class TelemonitoringUseCaseTest extends iTrustSeleniumTest {
 		//search patient with mid 2
 		driver.findElement(By.name("UID_PATIENTID")).sendKeys("2");
 		driver.findElement(By.xpath("//input[@value='2']")).submit();
-		assertEquals("Add Andy Programmer", driver.findElement(By.cssSelector("input[type=\"submit\"]")).getValue());
+		assertEquals("Add Andy Programmer", driver.findElement(By.cssSelector("input[type=\"submit\"]")).getText());
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertTrue(driver.findElement(By.cssSelector("BODY")).getText().contains("Patient Andy Programmer Added"));
 		assertLogged(TransactionType.PATIENT_LIST_ADD, 8000000009L, 2L, "");
@@ -424,7 +424,7 @@ public class TelemonitoringUseCaseTest extends iTrustSeleniumTest {
 
 		//remove Patient 2 from reporting list
 		driver.findElement(By.xpath("//a[text()='Edit Patient List']")).click();	
-		assertEquals("Remove Andy Programmer", driver.findElement(By.cssSelector("input[type=\"submit\"]")).getValue());
+		assertEquals("Remove Andy Programmer", driver.findElement(By.cssSelector("input[type=\"submit\"]")).getText());
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertTrue(driver.findElement(By.cssSelector("BODY")).getText().contains("Patient Andy Programmer Removed"));
 		assertLogged(TransactionType.PATIENT_LIST_REMOVE, 8000000009L, 2L, "");
@@ -485,7 +485,7 @@ public class TelemonitoringUseCaseTest extends iTrustSeleniumTest {
 		
 		driver.findElement(By.name("startDate")).clear();
 		driver.findElement(By.name("startDate")).sendKeys(sdf.format(date));
-		assertEquals(sdf.format(date), driver.findElement(By.name("startDate")).getValue());
+		assertEquals(sdf.format(date), driver.findElement(By.name("startDate")).getText());
 		driver.findElement(By.name("submit")).submit();
 				
 		// First entry:

@@ -10,6 +10,8 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 
+import edu.ncsu.csc.itrust.enums.TransactionType;
+
 /**
  * @author nishant
  *
@@ -58,12 +60,6 @@ public class MacroNutrientCalculatorTest extends iTrustSeleniumTest{
 	    driver.findElement(By.id("preview")).click();
 	    //Click on Save
 	    driver.findElement(By.id("saveMacroForm")).click();
-	    
-	    driver.findElement(By.xpath("(//button[@type='button'])[3]")).click();
-	    
-	    assertTrue(pageContains("Total Calories: 2048"));
-	    assertTrue(pageContains("Protein: 109 gms"));
-	    assertTrue(pageContains("Fat: 56 gms"));
-	    assertTrue(pageContains("Carbs: 274 gms"));
+	    assertLogged(TransactionType.PATIENT_EDIT_MACRONUTRIENTPLAN, 1, 1, "Patient edited a macronutrient plan");
 	}
 }

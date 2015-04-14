@@ -100,6 +100,16 @@ abstract public class iTrustSeleniumTest extends TestCase{
 		return driver.getPageSource().contains(str);
 	}
 	/**
+	 * Helper method for checking if the current page source (html) contains the given string texts.
+	 * Other team use this name.
+	 * @param str String texts to check.
+	 * @return true if contains, otherwise false.
+	 */
+	protected boolean assertTextPresent(String str, HtmlUnitDriver drive){
+		assertTrue(pageContains(str));
+		return true;
+	}
+	/**
 	 * assertLogged
 	 * @param code code
 	 * @param loggedInMID loggedInMID

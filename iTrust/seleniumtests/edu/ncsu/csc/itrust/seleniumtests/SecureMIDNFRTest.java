@@ -23,7 +23,7 @@ public class SecureMIDNFRTest extends iTrustSeleniumTest {
 	
 	public void testMIDShown1() throws Exception{
 		// login uap
-		logIn("8000000009", "uappass1");
+		login("8000000009", "uappass1");
 		assertEquals("iTrust - UAP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 8000000009L, 0L, "");	
 		
@@ -47,7 +47,7 @@ public class SecureMIDNFRTest extends iTrustSeleniumTest {
 	
 	public void testMIDShown2() throws Exception{
 		// login hcp
-		logIn("9000000000", "pw");
+		login("9000000000", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
@@ -71,7 +71,7 @@ public class SecureMIDNFRTest extends iTrustSeleniumTest {
 	
 	public void testMIDShown3() throws Exception {
 		//log in as hcp
-		logIn("9000000000", "pw");
+		login("9000000000", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		

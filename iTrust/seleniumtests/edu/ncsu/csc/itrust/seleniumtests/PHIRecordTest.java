@@ -40,14 +40,14 @@ public class PHIRecordTest extends iTrustSeleniumTest{
 	 * @throws Exception
 	 */
 	public void testCreatePHIRecord() throws Exception {
-		driver.get(baseUrl + "auth/forwardUser.jsp");
+		driver.get(ADDRESS + "auth/forwardUser.jsp");
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("9000000000");
 	    driver.findElement(By.id("j_password")).clear();
 	    driver.findElement(By.id("j_password")).sendKeys("pw");
 	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 	    
-	    driver.get(baseUrl + "/iTrust/auth/hcp/home.jsp");
+	    driver.get(ADDRESS + "/iTrust/auth/hcp/home.jsp");
 	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 	    driver.findElement(By.linkText("Document Office Visit")).click();
 	    driver.findElement(By.id("searchBox")).clear();
@@ -116,14 +116,14 @@ public class PHIRecordTest extends iTrustSeleniumTest{
 	 * @throws Exception
 	 */
 	public void testCreatePHIRecord1() throws Exception {
-		driver.get(baseUrl + "auth/forwardUser.jsp");
+		driver.get(ADDRESS + "auth/forwardUser.jsp");
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("9000000000");
 	    driver.findElement(By.id("j_password")).clear();
 	    driver.findElement(By.id("j_password")).sendKeys("pw");
 	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 	    
-	    driver.get(baseUrl + "/iTrust/auth/hcp/home.jsp");
+	    driver.get(ADDRESS + "/iTrust/auth/hcp/home.jsp");
 	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 	    driver.findElement(By.linkText("Document Office Visit")).click();
 	    driver.findElement(By.id("searchBox")).clear();
@@ -184,14 +184,14 @@ public class PHIRecordTest extends iTrustSeleniumTest{
 	 * @throws Exception
 	 */
 	public void testCreatePHIRecord6() throws Exception {
-		driver.get(baseUrl + "auth/forwardUser.jsp");
+		driver.get(ADDRESS + "auth/forwardUser.jsp");
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("9000000000");
 	    driver.findElement(By.id("j_password")).clear();
 	    driver.findElement(By.id("j_password")).sendKeys("pw");
 	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 	    
-	    driver.get(baseUrl + "/iTrust/auth/hcp/home.jsp");
+	    driver.get(ADDRESS + "/iTrust/auth/hcp/home.jsp");
 	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 	    driver.findElement(By.linkText("Document Office Visit")).click();
 	    driver.findElement(By.id("searchBox")).clear();
@@ -247,7 +247,7 @@ public class PHIRecordTest extends iTrustSeleniumTest{
 	 * @throws Exception
 	 */
 	public void testDetectExistingHeartDiseaseRiskTest() throws Exception {
-		driver.get(baseUrl + "auth/forwardUser.jsp");
+		driver.get(ADDRESS + "auth/forwardUser.jsp");
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("9000000000");
 	    driver.findElement(By.id("j_password")).clear();
@@ -296,7 +296,7 @@ public class PHIRecordTest extends iTrustSeleniumTest{
 	 * @throws Exception
 	 */
 	public void testNoHealthRecordException() throws Exception{
-		driver.get(baseUrl + "auth/forwardUser.jsp");
+		driver.get(ADDRESS + "auth/forwardUser.jsp");
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("9000000000");
 	    driver.findElement(By.id("j_password")).clear();
@@ -337,7 +337,7 @@ public class PHIRecordTest extends iTrustSeleniumTest{
 	 * @throws Exception
 	 */
 	public void testCreatePatient1() throws Exception {
-		driver.get(baseUrl + "auth/forwardUser.jsp");
+		driver.get(ADDRESS + "auth/forwardUser.jsp");
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("8000000009");
 	    driver.findElement(By.id("j_password")).clear();
@@ -419,7 +419,7 @@ public class PHIRecordTest extends iTrustSeleniumTest{
 	 * @throws Exception
 	 */
 	public void testCreatePHIRecord2() throws Exception {
-		driver.get(baseUrl + "auth/forwardUser.jsp");
+		driver.get(ADDRESS + "auth/forwardUser.jsp");
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("8000000009");
 	    driver.findElement(By.id("j_password")).clear();
@@ -485,7 +485,7 @@ public class PHIRecordTest extends iTrustSeleniumTest{
 	 * @throws Exception
 	 */
 	public void testCreatePHIRecord3() throws Exception {
-		driver.get(baseUrl + "auth/forwardUser.jsp");
+		driver.get(ADDRESS + "auth/forwardUser.jsp");
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("8000000009");
 	    driver.findElement(By.id("j_password")).clear();
@@ -559,7 +559,7 @@ public class PHIRecordTest extends iTrustSeleniumTest{
 	 * @throws Exception
 	 */
 	public void testCreatePHIRecord4() throws Exception {
-		driver.get(baseUrl + "auth/forwardUser.jsp");
+		driver.get(ADDRESS + "auth/forwardUser.jsp");
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("8000000009");
 	    driver.findElement(By.id("j_password")).clear();
@@ -631,7 +631,7 @@ public class PHIRecordTest extends iTrustSeleniumTest{
 	 * @throws Exception
 	 */
 	public void testCreatePHIRecord5() throws Exception {
-		driver.get(baseUrl + "auth/forwardUser.jsp");
+		driver.get(ADDRESS + "auth/forwardUser.jsp");
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("8000000009");
 	    driver.findElement(By.id("j_password")).clear();
