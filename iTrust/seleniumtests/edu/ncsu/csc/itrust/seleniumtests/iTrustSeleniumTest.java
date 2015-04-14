@@ -290,4 +290,108 @@ abstract public class iTrustSeleniumTest extends TestCase{
 			fail("Attempted to search for a patient but was not on the 'Select a Patient' page!");
 		}
 	}
+	
+	/**
+	 * Handles the common task of asserting that some text is somewhere in the body of the HTML document.
+	 * @param expectedText
+	 */
+	public void assertTextInBody(String expectedText) {
+		assertTrue(driver.findElement(By.tagName("body")).getText().contains(expectedText));
+	}
+
+	/**
+	 * Finds and clicks the specified navbar heading, expanding it and allowing links to be found and clicked.
+	 * @param heading The heading to expand.
+	 */
+	public void expandNavHeading(NavigationHeading heading) {
+		driver.findElementByXPath("//*[@anim-target = '" + heading.toString() + "']").click();
+	}
+
+	/**
+	 * @deprecated From other team code, not clear about the logic of it. Added for test cases integration.
+	 * @param name
+	 * @param rowNum
+	 * @return
+	 */
+	public String getTableRow(String name, int rowNum){
+		WebElement table = driver.findElement(By.id(name));
+		List<WebElement> rows = table.findElements(By.tagName("tr"));
+		WebElement row = rows.get(rowNum);
+		return row.getText();
+	}
+	/**
+	 * @deprecated From other team code, not clear about the logic of it. Added for test cases integration.
+	 * @param name
+	 * @param rowNum
+	 * @param colNum
+	 * @return
+	 */
+	public String getTableCell(String name, int rowNum, int colNum){
+		WebElement table = driver.findElement(By.id(name));
+		List<WebElement> rows = table.findElements(By.tagName("tr"));
+		WebElement row = rows.get(rowNum);
+		List<WebElement> cells = row.findElements(By.tagName("td"));
+
+		return cells.get(colNum).getText();
+	}
+	/**
+	 * @deprecated From other team code, not clear about the logic of it. Added for test cases integration.
+	 * @param name
+	 * @param rowNum
+	 * @param linkText
+	 */
+	public void clickTableButton(String name, int rowNum, String linkText){
+		WebElement table = driver.findElement(By.id(name));
+		List<WebElement> rows = table.findElements(By.tagName("tr"));
+		WebElement row = rows.get(rowNum);
+		row.findElement(By.partialLinkText(linkText)).click();
+	}
+	/**
+	 * @deprecated From other team code, not clear about the logic of it. Added for test cases integration.
+	 * @param name
+	 * @return
+	 */
+	public int tableRows(String name){
+		WebElement table = driver.findElement(By.id(name));
+		List<WebElement> rows = table.findElements(By.tagName("tr"));
+		return rows.size();
+	}
+	/**
+	 * @deprecated From other team code, not clear about the logic of it. Added for test cases integration.
+	 * @param name
+	 * @return
+	 */
+	public int tableColumns(String name){
+		WebElement table = driver.findElement(By.id(name));
+		List<WebElement> rows = table.findElements(By.tagName("tr"));
+		List<WebElement> cells = rows.get(1).findElements(By.tagName("td"));
+		return cells.size();
+	}
+	/**
+	 * @deprecated From other team code, not clear about the logic of it. Added for test cases integration. 
+	 *
+	 */
+	public enum NavigationHeading {
+		Info("#info-menu"),
+		Appointment("#appt-menu"),
+		OfficeVisits("#ov-menu"),
+		Messaging("#msg-menu"),
+		Telemedicine("#tele-menu"),
+		Add("#add-menu"),
+		PersonalInfo("#pi-menu"),
+		Obstetrics("#ob-menu"),
+		Nutrition("#nutrition-menu"),
+		Other("#other-menu");
+
+		private String identifier;
+
+		private NavigationHeading(String identifier) {
+			this.identifier = identifier;
+		}
+
+		@Override
+		public String toString() {
+			return this.identifier;
+		}
+	}
 }
