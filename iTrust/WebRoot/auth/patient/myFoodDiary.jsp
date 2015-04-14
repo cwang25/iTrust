@@ -417,7 +417,7 @@
 	%>
 	<div>
 		</br>
-		<button type='button' onclick="switchHiddenForm('hiddenMacro','showGraph'); preGraph();">Macro Calculator</button>
+		<button type='button' id="macroBtn" onclick="switchHiddenForm('hiddenMacro','showGraph'); preGraph();">Macro Calculator</button>
 		<button type='button' onclick="switchHiddenForm('HiddenForm', 'new')">Add new food diary</button>
 		<button type='button' onclick="switchHiddenForm('newLabelForm', 'addLabel')">Create new label</button>
 	</div>	
