@@ -74,4 +74,13 @@ public class SuggestionAction extends SuggestionBaseAction {
 	public SuggestionBean getSuggetionByRowID(long rowid) throws DBException{
 		return suggestionDAO.getSuggetionByID(rowid);
 	}
+	/**
+	 * Remove suggestionBean.
+	 * @param bToRemvoe The SuggestionBean that will be removed
+	 * @return The removed suggestionbean.
+	 * @throws DBException
+	 */
+	public SuggestionBean removeSuggestion(SuggestionBean bToRemvoe)throws DBException{
+		return suggestionDAO.removeSuggestion(bToRemvoe);
+	}
 }
