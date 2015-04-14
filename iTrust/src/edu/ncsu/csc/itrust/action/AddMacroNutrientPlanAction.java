@@ -118,7 +118,7 @@ public class AddMacroNutrientPlanAction extends MacroNutrientPlanBaseAction {
 			protein = Double.parseDouble(p);
 			if(protein <= 0) throw new NumberFormatException();
 		} catch (NumberFormatException e){
-			errorMsg += "Need valid value for protein.";
+			errorMsg += "Need valid value for protein"+p+".";
 			passed = false;
 		}
 		try {

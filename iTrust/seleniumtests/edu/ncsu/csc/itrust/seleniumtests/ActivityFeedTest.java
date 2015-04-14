@@ -11,12 +11,13 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.meterware.httpunit.WebConversation;
 import com.meterware.httpunit.WebForm;
+import com.meterware.httpunit.WebResponse;
 
 import edu.ncsu.csc.itrust.http.LoginTest;
 
 public class ActivityFeedTest extends iTrustSeleniumTest {
-	private WebDriver driver = null;
 	
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -119,108 +120,87 @@ public class ActivityFeedTest extends iTrustSeleniumTest {
 	
 	/**
 	 * Tests to see if hidden activities show up on activity page
-	 * DOES NOT SEEM TO ACTUALLY TEST THIS THOUGH!!!!!
 	 * @throws Exception
 	 */
 	public void testDLHCPActivityHiddenInFeed1() throws Exception {
-		//Login
-		driver = login("9000000008", "pw");
+		login("9000000008", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		
-		//Go to Patient Information page
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("Patient Information")).click();
 		assertEquals("iTrust - Please Select a Patient", driver.getTitle());
 		
-		WebElement element = driver.findElement(By.name("UID_PATIENTID"));
-		element.sendKeys("21");
-		element.submit();
+		driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("21");
+	    //waitFor(1);
+	    //Click on first MID button
+	    driver.findElement(By.xpath("//input[@value='21' and @type='button']")).click();
+	    
+	    
+		
 		assertEquals("iTrust - Edit Patient", driver.getTitle());
 		
-		driver.findElement(By.linkText("Basic Health History")).click();;
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
+	    driver.findElement(By.linkText("Basic Health Information")).click();
 		assertEquals("iTrust - Edit Basic Health Record", driver.getTitle());
 		
-		//FOR SOME F@*K!NG REASON LOGOUT DOES NOT WORK!
-		//driver.findElement(By.linkText("Logout")).click();
-		//List<WebElement> list = driver.findElements(By.tagName("a"));
-		//list.get(2).click();
-		driver.get("http://localhost:8080/iTrust/logout.jsp");
+		logout();
 		assertEquals("iTrust - Login", driver.getTitle());
 		
-		//Login
-		driver = login("9000000000", "pw");
+		login("9000000000", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
-		
-		//Go to Patient Information page
-		driver.findElement(By.linkText("Document Office Visit")).click();
+
+		//Click Document Office Visit Link
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div")).click();
+	    driver.findElement(By.linkText("Document Office Visit")).click();
 		assertEquals("iTrust - Please Select a Patient", driver.getTitle());
-		
-		element = driver.findElement(By.name("UID_PATIENTID"));
-		element.sendKeys("21");
-		element.submit();
-		
+
+		driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("21");
+	    //waitFor(1);
+	    //Click on first MID button
+	    driver.findElement(By.xpath("//input[@value='21' and @type='button']")).click();
+	    //Click Yes, Document Office Visit
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - Document Office Visit", driver.getTitle());
-				
-		driver.findElement(By.id("formMain")).submit();
-		assertEquals("iTrust - Document Office Visit", driver.getTitle());
 		
-		element = driver.findElement(By.id("mainForm"));
-		element.submit();
-		
-		assertTrue(driver.getPageSource().contains("Information Successfully Updated"));
-		
-		//FOR SOME F@*K!NG REASON LOGOUT DOES NOT WORK!
-		//driver.findElement(By.linkText("Logout")).click();
-		//list = driver.findElements(By.tagName("a"));
-		//list.get(2).click();
-		//Let's manually logout
-		driver.get("http://localhost:8080/iTrust/logout.jsp");
+		//Click the create button
+	    driver.findElement(By.id("update")).click();
+		assertTrue(pageContains("Information Successfully Updated"));
+
+		logout();
 		assertEquals("iTrust - Login", driver.getTitle());
 		
-		//Login
-		driver = login("21", "pw");
+		login("21", "pw");
 		assertEquals("iTrust - Patient Home", driver.getTitle());
+
+		assertTrue(pageContains("Kelly Doctor"));
+		assertTrue(pageContains("created an office visit"));
+		assertTrue(pageContains("Curious George"));
+		assertTrue(pageContains("viewed your health records history today at"));
+		assertTrue(pageContains("Curious George"));
+		assertTrue(pageContains("viewed your demographics"));
 		
-		//Find the activity log
-		//Without doing this, the whole getPageSource will format with random \n
-		element = driver.findElement(By.xpath("//div[@id='act-accord']//div[2]"));
-				
-		assertTrue(element.getText().contains("Kelly Doctor created an office visit"));
-		assertTrue(element.getText().contains("Curious George viewed your health records history today at"));
-		assertTrue(element.getText().contains("Curious George viewed your demographics"));
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div")).click();
+	    driver.findElement(By.linkText("My Providers")).click();
 		
-		//Enable javascript
-		((HtmlUnitDriver) driver).setJavascriptEnabled(true);
-		
-		driver.findElement(By.linkText("My Providers")).click();
 		assertEquals("iTrust - My Providers", driver.getTitle());
 		
-		//Find Gandalf Stormcrow checkbox
-		element = driver.findElement(By.xpath("//form[@id='mainForm']//input[@value='Gandalf Stormcrow']"));
-		//Deselect it
-		if(element.isSelected()) {
-			element.click();
-		}
+		driver.findElement(By.id("doctor1")).click();
+		assertEquals("iTrust - My Providers", driver.getTitle());
 		
-		//Find Kelly Doctor checkbox
-		element = driver.findElement(By.xpath("//form[@id='mainForm']//input[@value='Kelly Doctor']"));
-		//Select it
-		if(!element.isSelected()) {
-			element.click();
-		}
+		driver.findElement(By.id("doctor0")).click();
+		assertEquals("iTrust - My Providers", driver.getTitle());
+		
+		
+		logout();
+		assertEquals("iTrust - Login", driver.getTitle());
+		
+		login("21", "pw");
+		assertEquals("iTrust - Patient Home",driver.getTitle());
 
-		//Disable javascript or else some links will not appear
-		((HtmlUnitDriver) driver).setJavascriptEnabled(false);
-		
-		//Go to homepage
-		driver.get("http://localhost:8080/iTrust/logout.jsp");
-		driver = login("21", "pw");
-		assertEquals("iTrust - Patient Home", driver.getTitle());
-		
-		//Get the activity log as an element so that the text is not formatted
-		element = driver.findElement(By.xpath("//div[@id='act-accord']//div[2]"));
-		assertFalse(element.getText().contains("Kelly Doctor created an office visit"));
-		assertTrue(element.getText().contains("Curious George viewed your health records history today at"));
-		assertTrue(element.getText().contains("Curious George viewed your demographics"));
+		assertFalse(pageContains("NumberFormatException"));
+		assertFalse(pageContains("created an office visit"));
 	}
 	
 	public void testDLHCPActivityHiddenInFeed2() throws Exception {
