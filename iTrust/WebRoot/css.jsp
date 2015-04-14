@@ -104,7 +104,17 @@ label {
 .foodDiaryTable tbody tr:nth-child(odd) {
    background-color: #f1f1f1;
 }
-
+.circlePad {
+width:18px;
+height:18px;
+border-radius:50%;
+font-size:10px;
+color:#FFFFFF;
+line-height:18px;
+text-align:center;
+font-weight: bold;
+background: #F44330
+}
 .navbar-brand img {
 	max-height: 26px;
 	margin-top: -3px;
