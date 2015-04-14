@@ -6,12 +6,21 @@
 <%@page import="edu.ncsu.csc.itrust.action.ViewWeightLogAction"%>
 
 <script src="/iTrust/js/Chart.js"></script>
+
+<style type="text/css">
+	li {
+		list-style: none;
+	}
+</style>
+
 <script language="JavaScript">
 var chart = null;
 var chart2 = null;
 
 function makeChart() {
 
+	$('#ChartContainer').show();
+	
     /*// Define chart data
     var pieData = [ {
         value : parseInt(totalProtein),
@@ -105,9 +114,9 @@ function makeChart() {
                    },{
                        label: "Neck",
                        data: datasets[8],
-                       fillColor: "lightgreen",
-                       pointColor: "lightgreen",
-                       strokeColor: "lightgreen"
+                       fillColor: "black",
+                       pointColor: "black",
+                       strokeColor: "black"
                    } ]
     };
 
@@ -138,6 +147,7 @@ function getCell(table, row, col) {
 
 function legendLine(parent) {
     var measurements = ["", "Chest", "Waist", "Upper Arm", "Forearm", "Thighs", "Calves", "Neck"];
+    var colors = ["", "green", "red", "orange", "purple", "brown", "blue", "black"];
     // If a previous legend exists, delete it
     while (parent.hasChildNodes()) {
         parent.removeChild(parent.lastChild);
@@ -156,7 +166,7 @@ function legendLine(parent) {
         // Set list to use an image for bullets instead of regular bullets
         //li.style.listStyleImage = "url(" + "\'" + imageUrl + "\'" + ")";
         var label = measurements[i];
-        li.innerHTML = "<p style=\"font-size:18px;\"><span style=\"color:black; gravity:left\">"
+        li.innerHTML = "<p style=\"font-size:18px;\"><span style=\"color:white; padding:3px; border-radius:5px; border:solid thin black; background-color:"+colors[i]+"\">"
                 + label + "</span></p>";
         // Add this data point to the legend
         ul.appendChild(li);
@@ -164,11 +174,14 @@ function legendLine(parent) {
 }
 
 function legendLine2(parent) {
+	if (parent.hasChildNodes()) {
+        parent.removeChild(parent.lastChild);
+    }
 	var ul = document.createElement('ul');
 	parent.appendChild(ul);
 	var li = document.createElement('li');
 	var label = "Weight";
-	li.innerHTML = "<p style=\"font-size:18px;\"><span style =\"color:black; gravity:left\">"+label+"</span></p>";
+	li.innerHTML = "<p style=\"font-size:18px;\"><span style =\"color:white; padding:3px; border-radius:5px; border:solid thin black; background-color:blue;\">"+label+"</span></p>";
 	ul.appendChild(li);
 }
 </script>
@@ -198,7 +211,7 @@ function legendLine2(parent) {
         %>
         <br/>
         <div style="margin-left: 5px;">
-        <table id="weightLogTable" border=1 align="center">
+        <table id="weightLogTable" class="foodDiaryTable" border=1 align="center">
         <tr>
             <th>Date</th>
             <th>Weight (lbs)</th>
@@ -231,20 +244,22 @@ function legendLine2(parent) {
         </table>
         </div>
         <br/><br/>
-        <button onclick='makeChart();' style="font-size: 16pt" align="center">View Chart</button>
-        <table><tr><td>
-        <div id="canvas-holder">
-        <canvas id="chart-area" width="400" height="400"></canvas>
-        </td><td>
-        <div id="legendOuterDiv" align="center"><table style="border:none"><tr><td id="legendDiv"></td></tr></table></div>
-        </div></td></tr><tr><td>
-        <div id="canvas-holder2">
-        <canvas id="chart-area2" width="400" height="400"></canvas>
-        </td><td>
-        <div id="legendOuterDiv2" align="center"><table style="border:none"><tr><td id="secondLegend"></td></tr></table></div>
-        </div></td></tr>
-        </table>
-    
+        <div align="Center">
+	        <button onclick='makeChart();' style="font-size: 16pt; margin-bottom:20px;">View Chart</button>
+	        <br/>
+	        <div id="ChartContainer" style="display:none;">
+		        <div id="canvas-holder" style="display:table; margin:auto;">
+			        <canvas id="chart-area" width="600" height="400" style="float:left;"></canvas>
+			        <div id="legendOuterDiv" style="float:left;"><div id="legendDiv"></div></div>
+		        </div>
+		        <div style="clear:both;"></div>
+		        <br/><br/>
+		        <div id="canvas-holder2" style="display:table; margin:auto;">
+			        <canvas id="chart-area2" width="600" height="400" style="float:left;"></canvas>
+			        <div id="legendOuterDiv2" style="float:left;"><div id="secondLegend"></div></div>
+		        </div>
+	    	</div>
+    	</div>
     	<%
     } else {
     	%>

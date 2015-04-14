@@ -23,6 +23,7 @@
 
 <%@include file="/header.jsp"%>
 
+<script src="/iTrust/js/Chart.js"></script>
 <style type="text/css">
 	.foodDiaryTable td, .foodDiaryTable tr, .foodDiaryTable th {
 		border:1px solid black;
@@ -139,7 +140,7 @@ if(request.getParameter("confirmSubmit") != null) {
 		%><div>You have no logs.</div><%
 	} else {
 		%> 
-		<table class="foodDiaryTable">
+		<table id="weightLogTable" class="foodDiaryTable">
 			<tr>
 				<th>Date</th>
 				<th>Weight(pounds)</th>
@@ -167,9 +168,31 @@ if(request.getParameter("confirmSubmit") != null) {
 			</tr>
 			<%
 		}
+		
+		%> 		
+		
+		</table>
+		
+		<div align="Center">
+	        <button onclick='makeChart();' style="font-size: 16pt; margin-bottom:20px;">View Chart</button>
+	        <br/>
+	        <div id="ChartContainer" style="display:none;">
+		        <div id="canvas-holder" style="display:table; margin:auto;">
+			        <canvas id="chart-area" width="600" height="400" style="float:left;"></canvas>
+			        <div id="legendOuterDiv" style="float:left;"><div id="legendDiv"></div></div>
+		        </div>
+		        <div style="clear:both;"></div>
+		        <br/><br/>
+		        <div id="canvas-holder2" style="display:table; margin:auto;">
+			        <canvas id="chart-area2" width="600" height="400" style="float:left;"></canvas>
+			        <div id="legendOuterDiv2" style="float:left;"><div id="secondLegend"></div></div>
+		        </div>
+	    	</div>
+    	</div>
+    	
+		<%
 	}
 	%>	
-	</table>
 	
 	<br/>	
 	<input type="button" value="Add Log Entry" id="showNewLogForm"/>
@@ -232,4 +255,163 @@ if(request.getParameter("confirmSubmit") != null) {
 	$('#showNewLogForm').click(function() {
 		$('#weightLogForm').show();
 	});
+</script>
+
+<style type="text/css">
+	li {
+		list-style: none;
+	}
+</style>
+
+<script language="JavaScript">
+var chart = null;
+var chart2 = null;
+
+function makeChart() {
+
+	$('#ChartContainer').show();
+	
+    var count = $('#weightLogTable tr').length - 1;
+    var labels = [];
+    var datasets = [];
+    var table = document.getElementById("weightLogTable");
+    var numCol = table.rows[0].cells.length;
+
+    // Create datapoint for each column
+    for (var i = 0; i < numCol; i++) {
+        var dataPoint = [];
+        for (var k = 1; k <= count; k++) { // Add data points
+            dataPoint.push(getCell(table, k, i));
+        }
+        datasets.push(dataPoint);
+    }
+    
+    // Loop through each row after table headings to populate labels array
+    for (var i = 1, row; row = table.rows[i]; i++)
+        labels.push(row.cells[0].innerHTML);
+    
+    var measurements = ["", "Weight", "Chest", "Waist", "Upper Arm", "Forearm", "Thighs", "Calves", "Neck"];
+    var weightData = {
+    		labels: labels,
+    		datasets: [{
+                label: "Weight",
+                data: datasets[1],
+                fillColor: "blue",
+                pointColor: "blue",
+                strokeColor: "blue"
+    		}]
+    };
+    
+    var lineData = {
+        labels: labels,
+        datasets: [ {
+                	   label: "Chest",
+                	   data: datasets[2],
+                       fillColor: "green",
+                       pointColor: "green",
+                       strokeColor: "green"
+                   },{
+                       label: "Waist",
+                       data: datasets[3],
+                       fillColor: "red",
+                       pointColor: "red",
+                       strokeColor: "red"
+
+                   },{
+                       label: "Upper Arm",
+                       data: datasets[4],
+                       fillColor: "orange",
+                       pointColor: "orange",
+                       strokeColor: "orange"
+                   },{
+                       label: "Forearm",
+                       data: datasets[5],
+                       fillColor: "purple",
+                       pointColor: "purple",
+                       strokeColor: "purple"
+                   },{
+                       label: "Thighs",
+                       data: datasets[6],
+                       fillColor: "brown",
+                       pointColor: "brown",
+                       strokeColor: "brown"
+                   },{
+                       label: "Calves",
+                       data: datasets[7],
+                       fillColor: "blue",
+                       pointColor: "blue",
+                       strokeColor: "blue"
+                   },{
+                       label: "Neck",
+                       data: datasets[8],
+                       fillColor: "black",
+                       pointColor: "black",
+                       strokeColor: "black"
+                   } ]
+    };
+
+    // Context for the canvas element where the chart will be drawn
+    var ctx = document.getElementById("chart-area").getContext("2d");
+    var ctx2 = document.getElementById("chart-area2").getContext("2d");
+    // Specify options for the chart
+    var options = {
+        //scaleShowGridLines : true,
+        bezierCurve: true,
+        scaleGridLineColor: "rgba(0,0,0,.05)",
+        datasetFill : false,
+    };
+
+    // Check to see if chart is being drawn for the first time
+    // If yes, make a new chart
+    chart = new Chart(ctx).Line(lineData, options);
+    chart2 = new Chart(ctx2).Line(weightData, options);
+    legendLine(document.getElementById('legendDiv'));
+    legendLine2(document.getElementById('secondLegend'));
+
+    
+}
+    
+function getCell(table, row, col) {
+    return table.rows[row].cells[col].innerHTML;
+}
+
+function legendLine(parent) {
+    var measurements = ["", "Chest", "Waist", "Upper Arm", "Forearm", "Thighs", "Calves", "Neck"];
+    var colors = ["", "green", "red", "orange", "purple", "brown", "blue", "black"];
+    // If a previous legend exists, delete it
+    while (parent.hasChildNodes()) {
+        parent.removeChild(parent.lastChild);
+    }
+
+    // Make a new unordered list
+    var ul = document.createElement('ul');
+    // Add it under the legendDiv element
+    parent.appendChild(ul);
+    // Using traditional for loop because chrome does not support for each loop
+    // Iterate through all data points and add a legend entry
+    for (var i = 1; i <= 7; i++) {
+        // Make a new list element for this data item
+        var li = document.createElement('li');
+        //var imageUrl = "/iTrust/image/sq_" + item.color.substring(1) + ".png";
+        // Set list to use an image for bullets instead of regular bullets
+        //li.style.listStyleImage = "url(" + "\'" + imageUrl + "\'" + ")";
+        var label = measurements[i];
+        li.innerHTML = "<p style=\"font-size:18px;\"><span style=\"color:white; padding:3px; border-radius:5px; border:solid thin black; background-color:"+colors[i]+"\">"
+                + label + "</span></p>";
+        // Add this data point to the legend
+        ul.appendChild(li);
+    }
+}
+
+function legendLine2(parent) {
+	if (parent.hasChildNodes()) {
+        parent.removeChild(parent.lastChild);
+    }
+	var ul = document.createElement('ul');
+	parent.appendChild(ul);
+	var li = document.createElement('li');
+	var label = "Weight";
+	li.innerHTML = "<p style=\"font-size:18px;\"><span style =\"color:white; padding:3px; border-radius:5px; border:solid thin black; background-color:blue;\">"+label+"</span></p>";
+	ul.appendChild(li);
+}
 </script>
