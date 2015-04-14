@@ -128,6 +128,30 @@ public class SuggestionDAO {
 			DBUtil.closeConnection(conn, ps);
 		}
 		return bean;
-		
+	}
+	/**
+	 * Remove suggestion by given existing SuggestionBean.
+	 * @param b Bean to be removed.
+	 * @return SuggestionBean that has been removed.
+	 * @throws DBException
+	 */
+	public SuggestionBean removeSuggestion(SuggestionBean b) throws DBException{
+		Connection conn = null;
+		PreparedStatement ps = null;
+		SuggestionBean beanToRemove = b;
+		int row_update = 0;
+		try{
+			conn = factory.getConnection();
+			ps = conn.prepareStatement("DELETE FROM suggestions WHERE rowID = ?");
+			ps.setLong(1, beanToRemove.getRowID());
+			row_update = ps.executeUpdate();
+		}catch(SQLException e){
+			e.printStackTrace();
+			throw new DBException(e);
+		}finally{
+			DBUtil.closeConnection(conn, ps);
+		}
+		if(row_update > 0)return beanToRemove;
+		return null;
 	}
 }

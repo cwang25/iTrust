@@ -280,15 +280,21 @@
 							label = labelBean.getLabel();
 		%>
 		<tr class="diaryLabelRow <%= label %>" data-diarydate="<%= (oldBean != null ? diaryDateFormat.format(oldBean.getDate()) : "") %>">
-			<td><b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b><br><button id="toggle<%=index%>" style="border:none; background-color:Transparent" onclick="readSuggestion(<%=oldBean.getDate().getTime() %>, <%=loggedInMID%>);"><img id="img<%=index%>" src="/iTrust/image/icons/greenplus.png" height="20" width="20"></button></td>
+			<td>
+			<b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b>
+			<br/>
+			<button id="toggle<%=index%>" style="position:relative; width: 35px; height: 25px;border:none; background-color:Transparent" onclick="readSuggestion(<%=oldBean.getDate().getTime() %>, <%=loggedInMID%>);">
+			<img id="img<%=index%>" src="/iTrust/image/icons/greenplus.png" style="width:100%;height:100%;"></img>
+			<div id="notificationPad<%=index%>" class="circlePad" style="display: none;position:absolute; bottom:12px; left:18px">5</div>
+			</button>
+			</td>
 			<script language="JavaScript">
 			$(document).ready(function(){					
 				$("#toggle<%=index%>").click(
 				function(){
 					$("#suggestion<%=index%>").toggle();
-					$('#img<%=index%>')[0].src="/iTrust/image/icons/greenplus.png";
-					$('#img<%=index%>')[0].height="20";
-					$('#img<%=index%>')[0].width="20";
+					document.getElementById("notificationPad<%=index%>").style.display="none";
+
 				});
 			}); 
 			</script>
@@ -326,18 +332,17 @@
 				String suggestionList = "";
 				List<SuggestionBean> suggestionsToShow = suggestionAction.getSuggestionsByDate(new java.sql.Date(oldBean.getDate().getTime()), loggedInMID);
 				boolean isNew = false;
-				
+				int totalNewMsg = 0;
 				if(suggestionsToShow.size() != 0){
 					for(SuggestionBean sBean: suggestionsToShow){
-						if(sBean.getIsNew().toLowerCase().equals("true")){isNew = true; break;}
+						if(sBean.getIsNew().toLowerCase().equals("true")){isNew = true; totalNewMsg++; }
 					}
 					if(isNew){
 						%><script language="JavaScript">
 							$(document).ready(
 								function(){
-									$('#img<%=index%>')[0].src="/iTrust/image/icons/notification.gif";
-									$('#img<%=index%>')[0].height="35";
-									$('#img<%=index%>')[0].width="35";
+									document.getElementById("notificationPad<%=index%>").style.display="block";
+									document.getElementById("notificationPad<%=index%>").innerHTML = "<%=totalNewMsg > 10 ? "10+":totalNewMsg %>";
 							});
 						</script>
 						<%

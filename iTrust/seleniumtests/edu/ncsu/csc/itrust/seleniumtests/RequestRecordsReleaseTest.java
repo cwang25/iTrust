@@ -12,24 +12,18 @@ import com.gargoylesoftware.htmlunit.BrowserVersion;
 import edu.ncsu.csc.itrust.enums.TransactionType;
   
 public class RequestRecordsReleaseTest extends iTrustSeleniumTest {
-	
-	private HtmlUnitDriver driver;
-	private String baseUrl;
 
 	@Before
 	public void setUp() throws Exception {
 	  super.setUp();
 	  gen.clearAllTables();
 	  gen.standardData();	
-	  driver = new HtmlUnitDriver(BrowserVersion.FIREFOX_3_6);
-	  baseUrl = "http://localhost:8080/iTrust/";
-	  driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
 	
 	
     @Test
   public void testPatientRequestNewRecordsRelease() throws Exception {
-    driver.get(baseUrl);
+    driver.get(ADDRESS);
     driver.findElement(By.id("j_username")).clear();
     driver.findElement(By.id("j_username")).sendKeys("102");
     driver.findElement(By.id("j_password")).clear();
@@ -84,7 +78,7 @@ public class RequestRecordsReleaseTest extends iTrustSeleniumTest {
     
 	  @Test
 	  public void testMedicalRecordsReleasePatientNoSignature() throws Exception {
-	    driver.get(baseUrl);
+	    driver.get(ADDRESS);
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("102");
 	    driver.findElement(By.id("j_password")).clear();
@@ -121,7 +115,7 @@ public class RequestRecordsReleaseTest extends iTrustSeleniumTest {
 	  
 	  @Test
 	  public void testMedicalRecordsReleasePatientNotAllFields() throws Exception {
-	    driver.get(baseUrl);
+	    driver.get(ADDRESS);
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("102");
 	    driver.findElement(By.id("j_password")).clear();
@@ -142,7 +136,7 @@ public class RequestRecordsReleaseTest extends iTrustSeleniumTest {
 	  
 	  @Test
 	  public void testPatientViewApprovedRequest() throws Exception {
-	    driver.get(baseUrl);
+	    driver.get(ADDRESS);
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("102");
 	    driver.findElement(By.id("j_password")).clear();
@@ -164,7 +158,7 @@ public class RequestRecordsReleaseTest extends iTrustSeleniumTest {
 	  
 	 @Test
 	  public void testHCPApprovesRequest() throws Exception {
-	    driver.get(baseUrl);
+	    driver.get(ADDRESS);
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("9000000000");
 	    driver.findElement(By.id("j_password")).clear();
@@ -192,7 +186,7 @@ public class RequestRecordsReleaseTest extends iTrustSeleniumTest {
 	 
 	  @Test
 	  public void testHCPDeniesRequest() throws Exception {
-	    driver.get(baseUrl);
+	    driver.get(ADDRESS);
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("9000000000");
 	    driver.findElement(By.id("j_password")).clear();
@@ -221,7 +215,7 @@ public class RequestRecordsReleaseTest extends iTrustSeleniumTest {
 	  
 	  @Test
 	  public void testUAPDeniesRequest() throws Exception {
-	    driver.get(baseUrl);
+	    driver.get(ADDRESS);
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("8000000009");
 	    driver.findElement(By.id("j_password")).clear();
@@ -251,7 +245,7 @@ public class RequestRecordsReleaseTest extends iTrustSeleniumTest {
 	  
 	  @Test
 	  public void testUAPViewsApprovedRequest() throws Exception {
-	    driver.get(baseUrl);
+	    driver.get(ADDRESS);
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("8000000009");
 	    driver.findElement(By.id("j_password")).clear();
@@ -276,7 +270,7 @@ public class RequestRecordsReleaseTest extends iTrustSeleniumTest {
 	  
 	  @Test
 	  public void testViewDependents() throws Exception {
-	    driver.get(baseUrl);
+	    driver.get(ADDRESS);
 	    driver.findElement(By.id("j_username")).click();
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("2");
@@ -290,7 +284,7 @@ public class RequestRecordsReleaseTest extends iTrustSeleniumTest {
 	  
 	  @Test
 	  public void testInvalidInputSQLInjection() throws Exception {
-	    driver.get(baseUrl);
+	    driver.get(ADDRESS);
 	    driver.findElement(By.id("j_username")).click();
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("102");

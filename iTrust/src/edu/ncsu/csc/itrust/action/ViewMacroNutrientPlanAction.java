@@ -57,7 +57,7 @@ public class ViewMacroNutrientPlanAction extends MacroNutrientPlanBaseAction {
 		}
 		List<MacroNutrientPlanBean> answer = macroDAO.getMacroNutrientPlanByOwnerID(ownerID);
 		if(isPatient)
-			loggingAction.logEvent(TransactionType.PATIENT_VIEW_MACRONUTRIENTPLAN, mid, mid, "Patient viewed food diary.");
+			loggingAction.logEvent(TransactionType.PATIENT_VIEW_MACRONUTRIENTPLAN, mid, mid, "Patient viewed macronutrient plan.");
 		else
 			loggingAction.logEvent(TransactionType.HCP_VIEW_MACRONUTRIENTPLAN, mid, inputID, "Nutrionist viewed patients macronutrient plan.");
 		return answer;

@@ -25,8 +25,7 @@ import edu.ncsu.csc.itrust.testutils.TestDAOFactory;
 public class PrescriptionRefactoringUseCaseTest extends iTrustSeleniumTest {
 	
 	protected void setUp() throws Exception {
-		//super.setUp();
-		gen.clearAllTables();
+		super.setUp();
 		gen.standardData();
 	}
 	
@@ -36,7 +35,7 @@ public class PrescriptionRefactoringUseCaseTest extends iTrustSeleniumTest {
 	
 	private long getVisitID(WebDriver dr) throws Exception {
 		WebElement e = dr.findElement(By.name("ovID"));
-		String ovIDStr = e.getValue();
+		String ovIDStr = e.getText();
 		return Long.parseLong(ovIDStr);
 	}
 	
@@ -241,8 +240,8 @@ public class PrescriptionRefactoringUseCaseTest extends iTrustSeleniumTest {
 	    
 		// Check that the page contains the existing office visit
 		assertEquals("iTrust - Document Office Visit", driver.getTitle());
-		assertEquals(dateString, driver.findElement(By.name("visitDate")).getValue());
-		assertEquals("Hates getting shots", driver.findElement(By.name("notes")).getValue());
+		assertEquals(dateString, driver.findElement(By.name("visitDate")).getText());
+		assertEquals("Hates getting shots", driver.findElement(By.name("notes")).getText());
 
 		// Check for existing lab procedure
 	    assertEquals("13495-7", driver.findElement(By.xpath("//table[@id='labProceduresTable']/tbody/tr[3]/td")).getText());
@@ -307,8 +306,8 @@ public class PrescriptionRefactoringUseCaseTest extends iTrustSeleniumTest {
 		// Check that the page contains the existing office visit
 		assertEquals("iTrust - Document Office Visit", driver.getTitle());
 		assertEquals(390, getVisitID(driver));
-		assertEquals("02/02/2011", driver.findElement(By.name("visitDate")).getValue());
-		assertEquals("Second medical visit in two days", driver.findElement(By.name("notes")).getValue()); //get value or get text?
+		assertEquals("02/02/2011", driver.findElement(By.name("visitDate")).getText());
+		assertEquals("Second medical visit in two days", driver.findElement(By.name("notes")).getText()); //get value or get text?
 		
 		// Check for existing prescription
 	    assertEquals("Aspirin (081096)", driver.findElement(By.xpath("//table[@id='prescriptionsTable']/tbody/tr[3]/td")).getText());

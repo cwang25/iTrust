@@ -24,6 +24,8 @@ import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.google.api.client.auth.oauth2.BrowserClientRequestUrl;
 
 
+import edu.ncsu.csc.itrust.enums.TransactionType;
+
 /**
  * @author nishant
  *
