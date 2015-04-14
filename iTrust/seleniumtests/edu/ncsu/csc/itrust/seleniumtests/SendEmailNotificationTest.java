@@ -13,23 +13,16 @@ import com.gargoylesoftware.htmlunit.BrowserVersion;
 import edu.ncsu.csc.itrust.enums.TransactionType;
 
 public class SendEmailNotificationTest extends iTrustSeleniumTest{
-
-	private HtmlUnitDriver driver;
-	private String baseUrl;
-
 	@Before
 	public void setUp() throws Exception {
 	  super.setUp();
 	  gen.clearAllTables();
 	  gen.standardData();	
-	  driver = new HtmlUnitDriver(BrowserVersion.FIREFOX_3_6);
-	  baseUrl = "http://localhost:8080/iTrust/";
-	  driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
 	
 	  @Test
 	  public void testPrescriptionRenewalEmail() throws Exception {
-	    driver.get(baseUrl);
+	    driver.get(ADDRESS);
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("9900000000");
 	    driver.findElement(By.id("j_password")).clear();
@@ -47,7 +40,7 @@ public class SendEmailNotificationTest extends iTrustSeleniumTest{
 	  
 	  @Test
 	  public void testOfficeVisitRemindersEmail() throws Exception {
-	    driver.get(baseUrl);
+	    driver.get(ADDRESS);
 	    driver.findElement(By.id("j_username")).click();
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("9900000000");
@@ -69,7 +62,7 @@ public class SendEmailNotificationTest extends iTrustSeleniumTest{
 	  
 	  @Test
 	  public void testSendAnEmail() throws Exception {
-	    driver.get(baseUrl);
+	    driver.get(ADDRESS);
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("9900000000");
 	    driver.findElement(By.id("j_password")).clear();

@@ -15,18 +15,12 @@ import edu.ncsu.csc.itrust.enums.TransactionType;
  * Use Case 25
  */
 public class PhysicianSatisfactionUseCaseTest extends iTrustSeleniumTest {
-	private WebDriver driver;
-	private String baseUrl;
 	private StringBuffer verificationErrors = new StringBuffer();
 
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
-		gen.clearAllTables();
 		gen.standardData();		
-		driver = new HtmlUnitDriver();
-		baseUrl = "http://localhost:8080/iTrust/auth/forwardUser.jsp";
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
 
 
@@ -45,7 +39,7 @@ public class PhysicianSatisfactionUseCaseTest extends iTrustSeleniumTest {
 	public void testSearchForHCPSurveyResults1() throws Exception {
 		gen.surveyResults();
 		
-		driver.get(baseUrl + "/iTrust/auth/forwardUser.jsp");
+		driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
 		driver.findElement(By.id("j_username")).clear();
 		driver.findElement(By.id("j_username")).sendKeys("2");
 		driver.findElement(By.id("j_password")).clear();
@@ -83,7 +77,7 @@ public class PhysicianSatisfactionUseCaseTest extends iTrustSeleniumTest {
 	public void testSearchForHCPSurveyResults2() throws Exception {
 		gen.surveyResults();
 		
-		driver.get(baseUrl + "/iTrust/auth/forwardUser.jsp");
+		driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
 		driver.findElement(By.id("j_username")).clear();
 		driver.findElement(By.id("j_username")).sendKeys("8000000009");
 		driver.findElement(By.id("j_password")).clear();
@@ -118,7 +112,7 @@ public class PhysicianSatisfactionUseCaseTest extends iTrustSeleniumTest {
 	public void testSearchForHCPSurveyResults3() throws Exception {
 		gen.surveyResults();
 		
-		driver.get(baseUrl + "/iTrust/auth/surveyResults.jsp");
+		driver.get(ADDRESS + "/iTrust/auth/surveyResults.jsp");
 		driver.findElement(By.id("j_username")).clear();
 		driver.findElement(By.id("j_username")).sendKeys("9000000000");
 		driver.findElement(By.id("j_password")).clear();
@@ -170,7 +164,7 @@ public class PhysicianSatisfactionUseCaseTest extends iTrustSeleniumTest {
 	public void testSearchByHospitalSurveyResults1() throws Exception {
 		gen.surveyResults();
 		
-		driver.get(baseUrl + "/iTrust/auth/forwardUser.jsp");
+		driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
 		driver.findElement(By.id("j_username")).clear();
 		driver.findElement(By.id("j_username")).sendKeys("2");
 		driver.findElement(By.id("j_password")).clear();
@@ -194,7 +188,7 @@ public class PhysicianSatisfactionUseCaseTest extends iTrustSeleniumTest {
 	public void testSearchByHospitalSurveyResults2() throws Exception {
 		gen.surveyResults();
 		
-		driver.get(baseUrl + "/iTrust/auth/forwardUser.jsp");
+		driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
 		driver.findElement(By.id("j_username")).clear();
 		driver.findElement(By.id("j_username")).sendKeys("8000000009");
 		driver.findElement(By.id("j_password")).clear();
@@ -217,7 +211,7 @@ public class PhysicianSatisfactionUseCaseTest extends iTrustSeleniumTest {
 	public void testSearchByHospitalSurveyResults3() throws Exception {
 		gen.surveyResults();
 		
-		driver.get(baseUrl + "/iTrust/auth/forwardUser.jsp");
+		driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
 		driver.findElement(By.id("j_username")).clear();
 		driver.findElement(By.id("j_username")).sendKeys("9000000000");
 		driver.findElement(By.id("j_password")).clear();
@@ -240,7 +234,7 @@ public class PhysicianSatisfactionUseCaseTest extends iTrustSeleniumTest {
 
 	@Test
 	public void testSurveyResultsNoInput() throws Exception {
-		driver.get(baseUrl + "/iTrust/auth/forwardUser.jsp");
+		driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
 		driver.findElement(By.id("j_username")).click();
 		driver.findElement(By.id("j_username")).clear();
 		driver.findElement(By.id("j_username")).sendKeys("2");
@@ -258,7 +252,7 @@ public class PhysicianSatisfactionUseCaseTest extends iTrustSeleniumTest {
 
 	@Test
 	public void testSurveyResultsTooMuchInput() throws Exception {
-		driver.get(baseUrl + "/iTrust/auth/forwardUser.jsp");
+		driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
 		driver.findElement(By.id("j_username")).click();
 		driver.findElement(By.id("j_username")).clear();
 		driver.findElement(By.id("j_username")).sendKeys("2");
@@ -281,7 +275,7 @@ public class PhysicianSatisfactionUseCaseTest extends iTrustSeleniumTest {
 
 	@Test
 	public void testSurveyResultsZipCodeFormat1() throws Exception {
-		driver.get(baseUrl + "/iTrust/auth/forwardUser.jsp");
+		driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
 		driver.findElement(By.id("j_username")).click();
 		driver.findElement(By.id("j_username")).clear();
 		driver.findElement(By.id("j_username")).sendKeys("2");
@@ -300,7 +294,7 @@ public class PhysicianSatisfactionUseCaseTest extends iTrustSeleniumTest {
 
 	@Test
 	public void testSurveyResultsZipCodeFormat2() throws Exception {
-		driver.get(baseUrl + "/iTrust/auth/forwardUser.jsp");
+		driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
 		driver.findElement(By.id("j_username")).click();
 		driver.findElement(By.id("j_username")).clear();
 		driver.findElement(By.id("j_username")).sendKeys("2");
@@ -319,7 +313,7 @@ public class PhysicianSatisfactionUseCaseTest extends iTrustSeleniumTest {
 
 	@Test
 	public void testSurveyResultsZipCodeFormat3() throws Exception {
-		driver.get(baseUrl + "/iTrust/auth/forwardUser.jsp");
+		driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
 		driver.findElement(By.id("j_username")).click();
 		driver.findElement(By.id("j_username")).clear();
 		driver.findElement(By.id("j_username")).sendKeys("2");

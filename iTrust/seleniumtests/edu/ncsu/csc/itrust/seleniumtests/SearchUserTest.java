@@ -12,7 +12,7 @@ public class SearchUserTest extends iTrustSeleniumTest{
 	}
 	
 	public void testGetPatient() throws Exception {
-		driver.get(baseUrl + "auth/forwardUser.jsp");
+		driver.get(ADDRESS + "auth/forwardUser.jsp");
 		
 		
 		
@@ -41,7 +41,7 @@ public class SearchUserTest extends iTrustSeleniumTest{
 	
 	public void testGetPatient2() throws Exception {
 		
-		driver.get(baseUrl + "auth/forwardUser.jsp");
+		driver.get(ADDRESS + "auth/forwardUser.jsp");
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("9000000000");
 	    driver.findElement(By.id("j_password")).clear();
@@ -65,7 +65,7 @@ public class SearchUserTest extends iTrustSeleniumTest{
 	}
 	
 	public void testGetPatient3() throws Exception {
-		driver.get(baseUrl + "auth/forwardUser.jsp");
+		driver.get(ADDRESS + "auth/forwardUser.jsp");
 	    driver.findElement(By.id("j_username")).clear();
 	    driver.findElement(By.id("j_username")).sendKeys("9000000000");
 	    driver.findElement(By.id("j_password")).clear();

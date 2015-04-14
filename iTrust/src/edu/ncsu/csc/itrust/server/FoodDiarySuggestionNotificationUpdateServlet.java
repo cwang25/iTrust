@@ -25,7 +25,6 @@ public class FoodDiarySuggestionNotificationUpdateServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		super.doGet(req, resp);
 		String loggedInMid = req.getParameter("loggedInMID");
 		String suggestionDate = req.getParameter("suggestionDate");
 		Date date = new Date(Long.parseLong(suggestionDate));

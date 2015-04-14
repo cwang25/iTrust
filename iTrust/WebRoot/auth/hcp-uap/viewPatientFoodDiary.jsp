@@ -251,7 +251,36 @@
 					}
 				%>
 				</select>
-				
+				<button type="button" id="removeSuggestion<%=index%>"  style="float: right;" >Delete</button>
+				<script type="text/javascript">
+					$("#removeSuggestion<%=index%>").click(function(){
+						if(confirm('Are you sure you want to delete the food diary suggestion?')){
+							$.post("FoodDiarySuggestionRemovalServlet",
+							 {
+								loggedInMID: <%=loggedInMID%>,
+								suggestionRowID: document.getElementById("savedSuggestionList<%=index%>").value,
+								newText: document.getElementById("tarea<%=index%>").value
+							 },
+							function(data, status){
+								if(data === "Success"){
+									alert("Suggestion has been removed! ");
+							 		var rowID =  document.getElementById("savedSuggestionList<%=index%>").value;
+							 		console.log(rowID);
+							 		//update text record on client side
+							 		var suggTextRemove = document.getElementById("suggestionText"+rowID.toString());
+							 		suggTextRemove.parentNode.removeChild(suggTextRemove);
+									//update list title
+									var element = document.getElementById("textTitleList"+rowID.toString());
+									element.parentNode.removeChild(element);
+									var selector = document.getElementById("savedSuggestionList<%=index%>");
+									updateSuggestionText(document.getElementById('suggestionText'+(selector.value).toString()).value,'tarea<%=index%>');
+								}else{
+									alert("Something went wrong :(");
+								}
+							});
+						}
+					});
+				</script>
 				<textarea onkeyup="$('#updateSuggestion<%=index%>').removeAttr('disabled');$('#updateSuggestion<%=index %>').css('color', 'black');" id="tarea<%=index%>" rows="4" cols="50" ><%=suggestionsToShow.get(0).getSuggestion()%></textarea>
 				</td>
 				<td></td>
@@ -301,7 +330,9 @@
 %>		
 
 	</table>
-	<button type='button' onclick="switchHiddenForm('hiddenMacro','showGraph'); preGraph();">Macro Calculator</button>
+	<div align="center" style="margin:10px;">
+	<button align="center" type='button' onclick="switchHiddenForm('hiddenMacro','showGraph'); preGraph();">Macro Calculator</button>
+	</div>
 	</div>
 	</br>
 	<div id="hiddenMacro"  style="display: none">
@@ -345,6 +376,9 @@
 		$('html, body').animate({
 			scrollTop: $("#" + divID).offset().top - 100
 		}, 250);
+	}
+	function hideHiddenForm(divID){
+		document.getElementById(divID).style.display = "none";
 	}
 	$('#labelFilter').change(function() {
 		$('[data-diarydate]').show();

@@ -382,5 +382,13 @@
 		<servlet-name>FoodDiarySuggestionUpdateServlet</servlet-name>
 		<url-pattern>/auth/hcp-uap/FoodDiarySuggestionUpdateServlet</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>FoodDiarySuggestionRemovalServlet</servlet-name>
+		<servlet-class>edu.ncsu.csc.itrust.server.FoodDiarySuggestionRemovalServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FoodDiarySuggestionRemovalServlet</servlet-name>
+		<url-pattern>/auth/hcp-uap/FoodDiarySuggestionRemovalServlet</url-pattern>
+	</servlet-mapping>
 </web-app>
 

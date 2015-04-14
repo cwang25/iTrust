@@ -86,10 +86,10 @@ function graphIt() {
 	var age = parseInt(ageElement.value);
 
 	// Get gender
-	var gender = document.macroForm.gender.value;
+	var male = document.getElementById('male');
+	var female = document.getElementById('female');
+	var gender = male!=null && male.checked ? male.value : female.value;
 
-	// Get user's goal
-	var goal = document.macroForm.mode.value;
 
 	// Calculate base bmr
 	var bmr = (10 * weightInKg) + (6.25 * heightInCms) - (5 * age);
@@ -101,8 +101,21 @@ function graphIt() {
 		bmr -= 161;
 
 	// Get the user's activity level
-	var activityLevel = document.macroForm.activityLevel.value;
-
+	var sed = document.getElementById('sedentary');
+	var light = document.getElementById('light');
+	var mod = document.getElementById('moderate');
+	var high = document.getElementById('high');
+	var extreme = document.getElementById('extreme');
+	
+	var selected;
+	if(sed!=null && sed.checked) selected = sed;
+	if(light!=null && light.checked) selected = light;
+	if(mod!=null && mod.checked) selected = mod;
+	if(high!=null && high.checked) selected = high;
+	if(extreme!=null && extreme.checked) selected = extreme;
+	
+	var activityLevel = selected!=null ? selected.value : "";
+	
 	// Calculate the user's daily energy expenditure based on activity level
 	if (activityLevel === "sedentary")
 		totalCalories = bmr * 1.2;
@@ -114,7 +127,20 @@ function graphIt() {
 		totalCalories = bmr * 1.75;
 	else
 		totalCalories = bmr * 2.1;
-
+	
+	// Get user's goal
+	
+	var losew = document.getElementById('losemode');
+	var mainw = document.getElementById('maintainmode');
+	var gainw = document.getElementById('gainmode');
+	
+	var selectedmode;
+	if(losew!=null && losew.checked) selectedmode = losew;
+	if(mainw!=null && mainw.checked) selectedmode = mainw;
+	if(gainw!=null && gainw.checked) selectedmode = gainw;
+	
+	var goal = selectedmode!= null ? selectedmode.value : "maintain_weight";
+	
 	// Modify totalCalories based on user's goal
 	if (goal == 'lose_weight')
 		totalCalories -= 500;

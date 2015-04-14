@@ -140,7 +140,7 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 		gen.standardData();
 		gen.uc44_acceptance_scenario_3();
 		
-		login("9000000003", "pw", "hcp");
+		login("9000000003", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		// click Document Office Visit
 		driver.findElement(By.linkText("Document Office Visit")).click();
@@ -177,7 +177,7 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 		driver.setJavascriptEnabled(true);
 		gen.hcp4();
 
-		login("9000000004", "pw", "hcp");
+		login("9000000004", "pw");
 		assertEquals("iTrust - HCP Home",  driver.getTitle());
 		// click Document Office Visit
 		driver.findElement(By.linkText("Document Office Visit")).click();
@@ -228,7 +228,7 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 		gen.hcp5();
 		gen.uc44_acceptance_scenario_5();
 		
-		login("2", "pw", "patient");
+		login("2", "pw");
 		assertEquals("iTrust - Patient Home",  driver.getTitle());
 		// click Patient Specific Instructions
 		driver.findElement(By.linkText("Patient Specific Instructions")).click();
@@ -283,7 +283,7 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 		gen.hcp4();
 		gen.uc44_acceptance_scenario_2();
 		
-		login("1", "pw", "patient");
+		login("1", "pw");
 		assertEquals("iTrust - Patient Home",  driver.getTitle());
 		// click Patient Specific instructions
 		driver.findElement(By.linkText("Patient Specific Instructions")).click();
@@ -304,7 +304,7 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 		driver.setJavascriptEnabled(true);
 		gen.hcp4();
 
-		login("9000000004", "pw", "HCP");
+		login("9000000004", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		// click Document Office Visit
 		driver.findElement(By.partialLinkText("Document Office Visit")).click();
@@ -351,7 +351,7 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 		driver.setJavascriptEnabled(true);
 		gen.hcp4();
 
-		login("9000000004", "pw", "HCP");
+		login("9000000004", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		// click Document Office Visit
 		driver.findElement(By.partialLinkText("Document Office Visit")).click();
@@ -401,7 +401,7 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 		gen.hcp4();
 		gen.uc44_acceptance_scenario_2();
 		
-		login("9000000004", "pw", "HCP");
+		login("9000000004", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		// click Document Office Visit
 		driver.findElement(By.partialLinkText("Document Office Visit")).click();
@@ -457,7 +457,7 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 		gen.hcp4();
 		gen.uc44_acceptance_scenario_2();
 		
-		login("9000000004", "pw", "HCP");
+		login("9000000004", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		// click Document Office Visit
 		driver.findElement(By.partialLinkText("Document Office Visit")).click();
