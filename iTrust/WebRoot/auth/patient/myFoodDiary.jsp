@@ -310,7 +310,7 @@
 			<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getGramsOfProtein())%></td>
 			<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.totalCalories())%></td>
 			<td>
-				<span style="<%= label.length() > 0 ? "border-radius:5px; padding:3px; color:black; background-color:yellow; font-weight: bold;" : "" %>"><%=StringEscapeUtils.escapeHtml(label)%></span>
+				<span style="<%= label.length() > 0 ? "border-radius:35px; padding:5px 10px 5px 10px; color:black; background-color:#99CC00; font-weight: bold;" : "" %>"><%=StringEscapeUtils.escapeHtml(label)%></span>
 				<%= label.length() > 0 ? "<br/><br/>" : "" %>
 				<select value="<%=label %>">
 					<option value="none">none</option>
