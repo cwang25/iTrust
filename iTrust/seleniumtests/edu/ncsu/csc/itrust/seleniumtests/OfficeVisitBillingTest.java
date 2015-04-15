@@ -24,6 +24,7 @@ public class OfficeVisitBillingTest extends iTrustSeleniumTest{
   public void setUp() throws Exception {
 	super.setUp();
 	gen.uc60();
+	gen.standardData();
     driver = new HtmlUnitDriver();
     baseUrl = "http://localhost:8080";
   }
@@ -317,6 +318,7 @@ public class OfficeVisitBillingTest extends iTrustSeleniumTest{
 
     @After
   public void tearDown() throws Exception {
+    super.tearDown();
     driver.quit();
     String verificationErrorString = verificationErrors.toString();
     if (!"".equals(verificationErrorString)) {

@@ -245,3 +245,91 @@ background: #F44330
   }
 }
 
+/* ---------- SWITCH ---------- */
+/*http://codepen.io/anon/pen/RNXLMO*/
+
+.animated_switch_container {
+	height: 32px;
+	margin: 0 0 0 0;
+	position: relative;
+	width: 80px;
+	align: center;
+}
+
+.animated_switch {
+	background: #c1c1c1;
+	border-radius: 16px;
+	display: block;
+	height: 32px;
+	position: relative;
+	width: 80px;
+}
+
+.animated_switch label {
+	color: #fff;
+	font-size: 24px;
+	font-weight: 160;
+	line-height: 32px;
+	-webkit-transition: color .2s ease;
+	-moz-transition: color .2s ease;
+	-ms-transition: color .2s ease;
+	-o-transition: color .2s ease;
+	transition: color .2s ease;
+	width: 50px;
+}
+
+.animated_switch label:nth-of-type(1) {
+	left: -75%;
+	position: absolute;
+	text-align: right;
+}
+
+.animated_switch label:nth-of-type(2) {
+	position: absolute;
+  right: -75%;
+	text-align: left;
+}
+
+.animated_switch input {
+	height: 32px;
+	left: 0;
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	width: 80px;
+	z-index: 2;
+}
+
+.animated_switch input:checked~label:nth-of-type(1) { color: #4a4a4a; }
+.animated_switch input:checked~label:nth-of-type(2) { color: #c1c1c1; }
+
+.animated_switch input~:checked~label:nth-of-type(1) { color: #c1c1c1; }
+.animated_switch input~:checked~label:nth-of-type(2) { color: #4a4a4a; }
+
+.animated_switch input:checked~.animated_switch_toggle {
+	left: 2px;
+}
+
+.animated_switch input~:checked~.animated_switch_toggle {
+	left: 50px;
+}
+
+.animated_switch input:checked {
+	z-index: 0;
+}
+
+.animated_switch_toggle {
+	background: #4a4a4a;
+	border-radius: 50%;
+	height: 28px;
+	left: 0;
+	position: absolute;
+	top: 2px;
+	-webkit-transition: left .2s ease;
+	-moz-transition: left .2s ease;
+	-ms-transition: left .2s ease;
+	-o-transition: left .2s ease;
+	transition: left .2s ease;
+	width: 28px;
+	z-index: 1;
+}
