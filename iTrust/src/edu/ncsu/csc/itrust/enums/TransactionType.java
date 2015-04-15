@@ -453,6 +453,10 @@ public enum TransactionType {
 	PATIENT_REMOVE_LABEL(7304, "Removed a label", "Removed a label", true),
 	/**HCP_LEFT_SUGGESTION_IN_FOOD_DIARY**/
 	HCP_LEFT_SUGGESTION(7500, "Nutritionist left suggestion in Food Diary", "left suggestion in food diary", true),
+	/**HCP_EDIT_SUGGESTION**/
+	HCP_EDIT_SUGGESTION(7501, "Nutritionist edited suggestion in Food Diary", "edited suggestion in food diary", true),
+	/**HCP_DEELTE_SUGGESTION**/
+	HCP_DELETE_SUGGESTION(7503, "Nutritionist deleted suggestion in Food Diary", "deleted suggestion in food diary", true),
 	/**HCP_LEFT_SUGGESTION_IN_FOOD_DIARY**/
 	PATIENT_VIEW_SUGGESTION(7501, "Viewed Suggestion in Food Diary", "viewed your suggestions", true),
 	/**PATEINT_ADD_MACRONUTRIENTPLAN**/

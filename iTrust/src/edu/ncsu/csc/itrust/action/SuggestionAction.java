@@ -64,6 +64,8 @@ public class SuggestionAction extends SuggestionBaseAction {
 	 */
 	public void editSuggestion(SuggestionBean suggestionBean) throws DBException{
 		suggestionDAO.editSuggestion(suggestionBean);
+		loggingAction.logEvent(TransactionType.HCP_EDIT_SUGGESTION, loggedInMID, suggestionBean.getPatientID(), "");
+
 	}
 	/**
 	 * Get suggestion by rowid.
@@ -81,6 +83,9 @@ public class SuggestionAction extends SuggestionBaseAction {
 	 * @throws DBException
 	 */
 	public SuggestionBean removeSuggestion(SuggestionBean bToRemvoe)throws DBException{
-		return suggestionDAO.removeSuggestion(bToRemvoe);
+		SuggestionBean rs= suggestionDAO.removeSuggestion(bToRemvoe);
+		loggingAction.logEvent(TransactionType.HCP_DELETE_SUGGESTION, loggedInMID, bToRemvoe.getPatientID(), "");
+		return rs;
+
 	}
 }

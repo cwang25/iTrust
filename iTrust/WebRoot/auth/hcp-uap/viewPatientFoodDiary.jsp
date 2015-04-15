@@ -273,12 +273,12 @@
 									var selector = document.getElementById("savedSuggestionList<%=index%>");
 									var sugTextRemainSize = <%=suggestionsToShow == null ? 0: suggestionsToShow.size() - 1%>;
 									if(sugTextRemainSize < 1){
+										document.getElementById("tarea<%=index%>").innerHTML = "There is no suggestion.";
 										document.getElementById("tarea<%=index%>").onkeyup = null;
 										$('#updateSuggestion<%=index%>').attr('disabled','disabled');
 										$('#updateSuggestion<%=index %>').css('color', 'gray');
 										$('#removeSuggestion<%=index%>').attr('disabled','disabled');
 										$('#removeSuggestion<%=index%>').css('color', 'gray');
-										document.getElementById("tarea<%=index%>").innerHTML = "There is no suggestion.";
 										document.getElementById("tarea<%=index%>").readOnly = true ;
 									}else{
 										updateSuggestionText(document.getElementById('suggestionBeanText'+(selector.value).toString()).value,'tarea<%=index%>');
@@ -300,6 +300,7 @@
 				$('#updateSuggestion<%=index %>').css('color', 'gray');
 				$('#removeSuggestion<%=index%>').attr('disabled','disabled');
 				$('#removeSuggestion<%=index%>').css('color', 'gray');
+				document.getElementById("tarea<%=index%>").readOnly = true ;
 				</script>
 				<%
 				}
