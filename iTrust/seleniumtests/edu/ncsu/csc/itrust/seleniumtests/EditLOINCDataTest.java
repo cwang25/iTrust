@@ -1,15 +1,7 @@
 package edu.ncsu.csc.itrust.seleniumtests;
 import edu.ncsu.csc.itrust.seleniumtests.OSValidator; //Used for validating which OS the user is running on
 
-import static org.junit.Assert.*;
-
-import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
-
-import org.junit.*;
-
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
@@ -17,7 +9,6 @@ import org.openqa.selenium.support.ui.Select;
 import org.junit.Test;
 
 import edu.ncsu.csc.itrust.enums.TransactionType;
-import edu.ncsu.csc.itrust.http.iTrustHTTPTest;
 
 public class EditLOINCDataTest extends iTrustSeleniumTest {
 	private String baseUrl;

@@ -31,10 +31,11 @@ public class DependentsSTest extends iTrustSeleniumTest{
 	 */
 	public void testAddDependentPatient() throws Exception {
 		// Login
-		WebDriver driver = login("9000000000", "pw");
+		login("9000000000", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
 		//Navigate to the Add Patient page
+		driver.findElement(By.xpath("//[@id='iTrustContent']/div/div[6]/div/h2"));
 		driver.findElement(By.linkText("Patient")).click();
 		
         //Add new dependent patient Bob Marley
@@ -55,15 +56,18 @@ public class DependentsSTest extends iTrustSeleniumTest{
 	 */
 	public void testEditDependentRepresentative() throws Exception {
 		//Log in as Kelly Doctor
-		WebDriver driver = login("9000000000", "pw");
+		login("9000000000", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
 		//Navigate to the edit personal representatives page
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("Representatives")).click();
 
 		//Search for Fulton Gray (MID 103)
-		driver.findElement(By.name("UID_PATIENTID")).sendKeys("103");
-		driver.findElement(By.xpath(".//*[@value='103']")).submit();
+		driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("103");
+	    //waitFor(1);
+	    driver.findElement(By.xpath("//input[@value='103' and @type='button']")).click();
 		assertTrue(driver.getTitle().equals("iTrust - Manage Representatives"));
 		
 		//Add Caldwell Hudson as a representative
@@ -84,13 +88,12 @@ public class DependentsSTest extends iTrustSeleniumTest{
 
 		//Load UC58 data
 		gen.uc58();
-		WebDriver driver = new HtmlUnitDriver();
-		driver.get("http://localhost:8080/iTrust/");
-		
-		//Assure that Bob Marley the dependent can't log in
-		driver.findElement(By.name("j_username")).sendKeys("580");
-		driver.findElement(By.name("j_password")).sendKeys("pw");
-		driver.findElement(By.name("j_login")).click();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("580");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 
 		//If user is not on login page, then user logged in successfully.
 		assertTrue(driver.getTitle().equals("iTrust - Login"));
@@ -105,14 +108,17 @@ public class DependentsSTest extends iTrustSeleniumTest{
 		gen.uc58();
 		
 		//Log in as Kelly Doctor
-		WebDriver driver = login("9000000000", "pw");
+		login("9000000000", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
 		//Navigate to the edit personal representatives page
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("Representatives")).click();
 		//Search for Morgan Freeman (MID 581)
-		driver.findElement(By.name("UID_PATIENTID")).sendKeys("581");
-		driver.findElement(By.xpath(".//*[@value='581']")).submit();
+		driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("581");
+	    //waitFor(1);
+	    driver.findElement(By.xpath("//input[@value='581' and @type='button']")).click();
 		assertTrue(driver.getTitle().equals("iTrust - Manage Representatives"));
 
 
@@ -131,15 +137,18 @@ public class DependentsSTest extends iTrustSeleniumTest{
 		
 
 		//Log in as Kelly Doctor
-		WebDriver driver = login("9000000000", "pw");
+		login("9000000000", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
 		//Navigate to the edit personal representatives page
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("Representatives")).click();
 		
 		//Search for Bob Marley (MID 580)
-		driver.findElement(By.name("UID_PATIENTID")).sendKeys("580");
-		driver.findElement(By.xpath(".//*[@value='580']")).submit();
+		driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("580");
+	    //waitFor(1);
+	    driver.findElement(By.xpath("//input[@value='580' and @type='button']")).click();
 		assertTrue(driver.getTitle().equals("iTrust - Manage Representatives"));
 		assertTrue(driver.getPageSource().contains("Bob Marley is a dependent."));
 		assertTrue(driver.getPageSource().contains("Dependent users cannot represent others."));
@@ -152,10 +161,11 @@ public class DependentsSTest extends iTrustSeleniumTest{
 
 
 		//Log in as Bob Ross (MID 750)
-		WebDriver driver = login("750", "pw");
+		login("750", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 750L, 0L, "");
 
 		//Navigate to records for Billy Ross
+		driver.findElement(By.xpath("//[@id='iTrustContent']/div/div[3]/div/h2"));
 		driver.findElement(By.linkText("Request Records Release")).click();
 
 		//Submit request for dependent Billy Ross	    
@@ -210,10 +220,11 @@ public class DependentsSTest extends iTrustSeleniumTest{
 
 
 		//Log in as Bob Ross (MID 750)
-		WebDriver driver = login("750", "pw");
+		login("750", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 750L, 0L, "");
 
 		//Navigate to records for Billy Ross
+		driver.findElement(By.xpath("//[@id='iTrustContent']/div/div[3]/div/h2"));
 		driver.findElement(By.linkText("Request Records Release")).click();
 
 		//Submit request for dependent Billy Ross	    
@@ -254,21 +265,25 @@ public class DependentsSTest extends iTrustSeleniumTest{
 		gen.uc59();
 		
 		//Log in as Kelly Doctor 
-		WebDriver driver = login("9000000000", "pw");
+		login("9000000000", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("Representatives")).click();
 		
 		//Search for Bob Ross (MID 750)
-		driver.findElement(By.name("UID_PATIENTID")).sendKeys("750");
-		driver.findElement(By.xpath(".//*[@value='750']")).submit();
+		driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("750");
+	    //waitFor(1);
+	    driver.findElement(By.xpath("//input[@value='750' and @type='button']")).click();
 		assertTrue(driver.getTitle().equals("iTrust - Manage Representatives"));
 		
 		
 		driver.findElement(By.linkText("Remove")).click();
-		driver.findElement(By.name("Logout")).click();
+		logout();
 
 		//Log in as Bob Ross 
-		driver = login("750", "pw");
+		login("750", "pw");
+		driver.findElement(By.xpath("//[@id='iTrustContent']/div/div[3]/div/h2"));
 		driver.findElement(By.linkText("Request Records Release")).click();
 		
 		try{
@@ -287,10 +302,11 @@ public class DependentsSTest extends iTrustSeleniumTest{
 		gen.uc59();
 		
 		//Log in as Bob Ross (MID 750)
-		WebDriver driver = login("750", "pw");
+		login("750", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 750L, 0L, "");		
 
 		//Request records
+		driver.findElement(By.xpath("//[@id='iTrustContent']/div/div[3]/div/h2"));
 		driver.findElement(By.linkText("Request Records Release")).click();
 		//Submit request for dependent Billy Ross	    
 		Select oSelection = new Select(driver.findElement(By.name("selectedPatient")));
@@ -313,10 +329,11 @@ public class DependentsSTest extends iTrustSeleniumTest{
 		gen.uc59();
 
 		//Log in as Kelly Doctor 
-		WebDriver driver = login("9000000000", "pw");
+		login("9000000000", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
 		//Request records
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("Records Release Requests")).click();
 		
 

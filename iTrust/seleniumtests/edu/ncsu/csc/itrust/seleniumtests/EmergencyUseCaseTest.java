@@ -1,19 +1,12 @@
 package edu.ncsu.csc.itrust.seleniumtests;
 
-import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
-
-import org.junit.*;
-
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.junit.Test;
 
 import edu.ncsu.csc.itrust.enums.TransactionType;
-import edu.ncsu.csc.itrust.http.iTrustHTTPTest;
 
 public class EmergencyUseCaseTest extends iTrustSeleniumTest {
 	  private String baseUrl;

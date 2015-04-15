@@ -1,6 +1,7 @@
 package edu.ncsu.csc.itrust.seleniumtests;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
@@ -33,10 +34,10 @@ public class DependencyExtensionSeleniumTest extends iTrustSeleniumTest {
 		gen.doBaby();
 		
 		//login
-		WebDriver driver = new HtmlUnitDriver();
-		driver = login("2", "pw");
+		login("2", "pw");
 		
 		//make sure you can see baby
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("My Demographics")).click();
 		assertTrue(driver.getPageSource().contains("Baby Programmer"));
 	}
@@ -48,18 +49,21 @@ public class DependencyExtensionSeleniumTest extends iTrustSeleniumTest {
 		//add in baby again
 		TestDataGenerator gen = new TestDataGenerator();
 		gen.doBaby();
-		WebDriver driver = new HtmlUnitDriver();
-		driver = login("2", "pw");
+		login("2", "pw");
 		//make sure you can see baby
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("My Demographics")).click();
 		assertTrue(driver.getPageSource().contains("Baby Programmer"));
 		
 		//get the form to update baby's info
 		WebElement babyForm = driver.findElement(By.id("edit_2"));
 		WebElement babyName = babyForm.findElement(By.name("firstName"));
+		
+		driver.setJavascriptEnabled(false);
 		babyName.clear();
 		babyName.sendKeys("BabyO");
-		
+	    driver.setJavascriptEnabled(true);
+
 		//submit the form
 		babyForm.submit();
 		assertTrue(driver.getPageSource().contains("Information Successfully Updated"));
@@ -70,10 +74,10 @@ public class DependencyExtensionSeleniumTest extends iTrustSeleniumTest {
 	 * Test that without adding in baby, there are no dependents
 	 */
 	public void testNoDependentsInMyDemographics() throws Exception {
-		WebDriver driver = new HtmlUnitDriver();
-		driver = login("2", "pw");
+		login("2", "pw");
 		
 		//go to my demographics
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("My Demographics")).click();
 		assertFalse(driver.getPageSource().contains("Baby Programmer"));
 	}	
