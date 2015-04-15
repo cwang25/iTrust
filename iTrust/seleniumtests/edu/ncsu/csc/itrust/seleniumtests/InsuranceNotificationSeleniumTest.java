@@ -33,9 +33,9 @@ public class InsuranceNotificationSeleniumTest extends iTrustSeleniumTest {
 	private static final String PW = "pw";
 
 	@Override
-	protected void setUp() throws Exception {
+	public void setUp() throws Exception {
 		super.setUp();
-		gen.clearAllTables();
+		//gen.clearAllTables();
 		gen.hospitals();
 		gen.hospitals1();
 		gen.hcp0();
@@ -50,6 +50,7 @@ public class InsuranceNotificationSeleniumTest extends iTrustSeleniumTest {
 	public void testCantViewSubmitted() throws Exception {
 		driver = login("" + ALEX_PAUL, PW);
 		assertEquals(driver.getTitle(), "iTrust - Patient Home");
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("My Bills")).click();
 		assertEquals(driver.getTitle(), "iTrust - View My Bills");
 		driver.findElement(By.linkText("01/25/2014")).click();
@@ -64,10 +65,11 @@ public class InsuranceNotificationSeleniumTest extends iTrustSeleniumTest {
 		driver.findElement(By.name("billAddress")).sendKeys("206 Crest Road, Raleigh, NC 27606");
 		driver.findElement(By.name("cvv")).clear();
 		driver.findElement(By.name("cvv")).sendKeys("0123");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		
+		logout();
 		driver = login("" + ROGER_KING, PW);
 		assertTrue(driver.getPageSource().contains("No Pending Insurance Claims"));
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 		driver.findElement(By.linkText("View Insurance Claims")).click();
 		assertTrue(driver.getPageSource().contains("No claims to display."));
 	}
@@ -76,6 +78,7 @@ public class InsuranceNotificationSeleniumTest extends iTrustSeleniumTest {
 	public void testClaimNotification() throws Exception {
 		driver = login("" + JOHN_SMITH, PW);
 		assertEquals(driver.getTitle(), "iTrust - Patient Home");
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("My Bills")).click();
 		assertEquals(driver.getTitle(), "iTrust - View My Bills");
 		assertTrue(driver.getPageSource().contains("Shelly Vang"));
@@ -105,7 +108,8 @@ public class InsuranceNotificationSeleniumTest extends iTrustSeleniumTest {
 		driver.findElement(By.name("insPhone")).clear();
 		driver.findElement(By.name("insPhone")).sendKeys("919-112-8234");
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		
+
+		logout();
 		driver = login("" + MIKE_JONES, PW);
 		assertTrue(driver.getPageSource().contains("inboxUnread.png"));
 		assertTrue(driver.getPageSource().contains("Pending Insurance Claim."));
@@ -117,6 +121,7 @@ public class InsuranceNotificationSeleniumTest extends iTrustSeleniumTest {
 	public void testApprovalNotification() throws Exception {
 		driver = login("" + JOHN_SMITH, PW);
 		assertEquals(driver.getTitle(), "iTrust - Patient Home");
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("My Bills")).click();
 		assertEquals(driver.getTitle(), "iTrust - View My Bills");
 		assertTrue(driver.getPageSource().contains("Shelly Vang"));
@@ -143,11 +148,14 @@ public class InsuranceNotificationSeleniumTest extends iTrustSeleniumTest {
 		driver.findElement(By.name("insPhone")).sendKeys("919-112-8234");
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		
+		logout();
 		driver = login("" + MIKE_JONES, PW);
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 		driver.findElement(By.linkText("View Insurance Claims")).click();
 		driver.findElement(By.linkText(new SimpleDateFormat("MM/dd/YYYY").format(new Date()))).click();
 		driver.findElement(By.xpath("//input[@value='Approve']")).submit();
 		
+		logout();
 		driver = login("" + JOHN_SMITH, PW);
 		assertEquals(driver.getTitle(), "iTrust - Patient Home");
 		assertTrue(driver.getPageSource().contains("approved.png"));
@@ -160,6 +168,7 @@ public class InsuranceNotificationSeleniumTest extends iTrustSeleniumTest {
 	public void testDenialNotification() throws Exception{
 		driver = login("" + JOHN_SMITH, PW);
 		assertEquals(driver.getTitle(), "iTrust - Patient Home");
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("My Bills")).click();
 		assertEquals(driver.getTitle(), "iTrust - View My Bills");
 		assertTrue(driver.getPageSource().contains("Shelly Vang"));
@@ -189,12 +198,15 @@ public class InsuranceNotificationSeleniumTest extends iTrustSeleniumTest {
 		driver.findElement(By.name("insPhone")).clear();
 		driver.findElement(By.name("insPhone")).sendKeys("919-112-8234");
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		
+
+		logout();
 		driver = login("" + MIKE_JONES, PW);
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 		driver.findElement(By.linkText("View Insurance Claims")).click();
 		driver.findElement(By.linkText(new SimpleDateFormat("MM/dd/YYYY").format(new Date()))).click();
 		driver.findElement(By.xpath("//input[@value='Deny']")).submit();
-		
+
+		logout();
 		driver = login("" + JOHN_SMITH, PW);
 		assertTrue(driver.getPageSource().contains("denied.png"));
 		assertTrue(driver.getPageSource().contains("denied insurance claim."));
@@ -206,6 +218,7 @@ public class InsuranceNotificationSeleniumTest extends iTrustSeleniumTest {
 	public void testMultiplePatients() throws Exception {
 		driver = login("" + JOHN_SMITH, PW);
 		assertEquals(driver.getTitle(), "iTrust - Patient Home");
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("My Bills")).click();
 		assertEquals(driver.getTitle(), "iTrust - View My Bills");
 		assertTrue(driver.getPageSource().contains("Shelly Vang"));
@@ -235,9 +248,11 @@ public class InsuranceNotificationSeleniumTest extends iTrustSeleniumTest {
 		driver.findElement(By.name("insPhone")).clear();
 		driver.findElement(By.name("insPhone")).sendKeys("919-112-8234");
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		
+
+		logout();
 		driver = login("" + JUAN_CARLOS, PW);
 		assertEquals(driver.getTitle(), "iTrust - Patient Home");
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("My Bills")).click();
 		assertEquals(driver.getTitle(), "iTrust - View My Bills");
 		assertTrue(driver.getPageSource().contains("Shelly Vang"));
@@ -268,6 +283,7 @@ public class InsuranceNotificationSeleniumTest extends iTrustSeleniumTest {
 		driver.findElement(By.name("insPhone")).sendKeys("919-222-6579");
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		
+		logout();
 		driver = login("" + JANE_SMITH, PW);
 		assertTrue(driver.getPageSource().contains("2"));
 		assertTrue(driver.getPageSource().contains("Pending Insurance Claims."));

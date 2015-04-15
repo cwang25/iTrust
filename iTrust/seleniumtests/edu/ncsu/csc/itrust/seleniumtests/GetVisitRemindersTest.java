@@ -56,7 +56,7 @@ public class GetVisitRemindersTest extends iTrustSeleniumTest {
 		assertTrue(element.getText().contains("Immunization Needers"));	
 		
 		element = driver.findElement(By.id("getReminders"));
-		assertEquals(element.getText(), "Get Reminders");
+		assertEquals(element.getTagName(), "input");
 	}
 	
 	/*
@@ -133,25 +133,32 @@ public class GetVisitRemindersTest extends iTrustSeleniumTest {
 		assertEquals("NoRecords Has", element.getText());
 		element = tableList.get(0);
 		assertTrue(element.getText().contains("Phone Number:919-971-0000"));
-		assertTrue(element.getText().contains(pretext + " Medication: Flu Shot"));
+		assertTrue(element.getText().contains(pretext + " Medication:"));
+		assertTrue(element.getText().contains("Flu Shot"));
 		
 		element = driver.findElement(By.cssSelector("a[href='sendEmailNotification.jsp?mid=42']"));
 		assertEquals("Bad Horse", element.getText());
 		element = tableList.get(1);
 		assertTrue(element.getText().contains("Phone Number:919-123-4567"));
-		assertTrue(element.getText().contains(pretext + " Medication: Flu Shot"));
+		assertTrue(element.getText().contains(pretext + " Medication:"));
+		assertTrue(element.getText().contains("Flu Shot"));
 		
 		element = driver.findElement(By.cssSelector("a[href='sendEmailNotification.jsp?mid=3']"));
 		assertEquals("Care Needs", element.getText());
 		element = tableList.get(2);
 		assertTrue(element.getText().contains("Phone Number:919-971-0000"));
-		assertTrue(element.getText().contains(pretext + " Medication: Flu Shot"));
+		assertTrue(element.getText().contains(pretext + " Medication:"));
+		assertTrue(element.getText().contains("Flu Shot"));
+
 		
 		element = driver.findElement(By.cssSelector("a[href='sendEmailNotification.jsp?mid=1']"));
 		assertEquals("Random Person", element.getText());
 		element = tableList.get(3);
-		assertTrue(element.getText().contains("Phone Number:919-971-0000"));
-		assertTrue(element.getText().contains(pretext + " Medication: Flu Shot"));
+
+		assertTrue(element.getText().contains("Phone Number:919-471-4747"));
+		assertTrue(element.getText().contains(pretext + " Medication:"));
+		assertTrue(element.getText().contains("Flu Shot"));
+
 	}
 	
 	/*

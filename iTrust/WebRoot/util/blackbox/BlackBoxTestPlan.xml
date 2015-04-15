@@ -17526,4 +17526,59 @@
 	</expectedResults>
 </test>
 
+<test id="testAddValidWeightLogEntry">
+    <role>Patient</role>
+    <usecase>76</usecase>
+    <dateAdded>04/14/2015</dateAdded>
+    <description>
+        <precondition>Standard Data is loaded</precondition>
+        <precondition>Aaron Hotchner is a registered user of the iTrust system</precondition>
+        <step>Log in as Aaron Hotchner (MID: 500)</step>
+        <step>Click on View -> My Weight Log</step>
+        <step>Click "Add Log Entry"</step>
+        <step>In the form, fill out the following data: 170 weight, 30.8 chest, 20.9 waist, 12.3 upper arm,
+                11.5 forearm, 20.0 thigh, 14.7 calves, 19.5 neck</step>
+        <step>Click Save</step>
+    </description>
+    <expectedResults>
+        <eResult>"Log Successfully added!" appears at the top</eResult>
+    </expectedResults>
+</test>
+
+<test id="testAddInvalidWeightLogEntry">
+    <role>Patient</role>
+    <usecase>76</usecase>
+    <dateAdded>04/14/2015</dateAdded>
+    <description>
+        <precondition>Standard Data is loaded</precondition>
+        <precondition>Aaron Hotchner is a registered user of the iTrust system</precondition>
+        <step>Log in as Aaron Hotchner (MID: 500)</step>
+        <step>Click on View -> My Weight Log</step>
+        <step>Click "Add Log Entry"</step>
+        <step>In the form, fill out the following data: -170 weight, 30.8 chest, 20.9 waist, 12.3 upper arm,
+                -11.5 forearm, 20.0 thigh, 14.7 calves, 19.5 neck</step>
+        <step>Click Save</step>
+    </description>
+    <expectedResults>
+        <eResult>"Weight must be greater than 0" appears at the top</eResult>
+        <eResult>"Forearm measurement must be greater than 0" appears at the top</eResult>
+    </expectedResults>
+</test>
+
+<test id="testHCPViewPatientWeightLog">
+    <role>Nutritionist</role>
+    <usecase>76</usecase>
+    <dateAdded>04/14/2015</dateAdded>
+    <description>
+        <precondition>Standard Data is loaded</precondition>
+        <precondition>Spencer Reid is a registered user of the iTrust system</precondition>
+        <step>Log in as Spencer Reid (MID: 9900000012)</step>
+        <step>Click on Patient Info -> Patient Weight Log</step>
+        <step>Type "500" in the search box and click on Aaron Hotchner.</step>
+    </description>
+    <expectedResults>
+        <eResult>Aaron Hotchner's weight log entrie are displayed.</eResult>
+    </expectedResults>
+</test>
+
 </BlackBoxTestPlan>
