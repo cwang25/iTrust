@@ -1,68 +1,57 @@
 package edu.ncsu.csc.itrust.seleniumtests;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class CreateUAPTest extends iTrustSeleniumTest {
-
-	public void setUp() throws Exception {
+public class CreateUAPTest extends iTrustSeleniumTest{
+	
+	@Before
+	public void setUp() throws Exception{
 		super.setUp();
-		gen.clearAllTables();
-		gen.admin1();
-		gen.hcp0();
-		gen.cptCodes();
+		gen.standardData();
 	}
 	
+	@Test
 	public void testCreateUAP1() throws Exception {
-		WebDriver driver = new HtmlUnitDriver();
-		driver = login("9000000000", "pw");
-		driver.findElement(By.linkText("UAP")).click();
-		assertEquals("iTrust - Add UAP", driver.getTitle());
-		
-		WebElement firstName = driver.findElement(By.name("firstName"));
-		firstName.sendKeys("Drake");
-		WebElement lastName = driver.findElement(By.name("lastName"));
-		lastName.sendKeys("Ramoray");
-		WebElement email = driver.findElement(By.name("email"));
-		email.sendKeys("drake@drake.com");
-		WebElement form = driver.findElement(By.name("formIsFilled"));
-		form.submit();
-		
-		driver.findElement(By.linkText("Continue to personnel information.")).click();
-		assertEquals("iTrust - Edit Personnel", driver.getTitle());
-		
-		WebElement streetAddress1, streetAddress2, city, zip, phone;
-		Select state; 
-		firstName = driver.findElement(By.name("firstName"));
-		lastName = driver.findElement(By.name("lastName"));
-		streetAddress1 = driver.findElement(By.name("streetAddress1"));
-		streetAddress2 = driver.findElement(By.name("streetAddress2"));
-		city = driver.findElement(By.name("city"));
-		state = new Select(driver.findElement(By.name("state")));
-		zip = driver.findElement(By.name("zip"));
-		phone = driver.findElement(By.name("phone"));
-		
-		firstName.clear();
-		lastName.clear();
-		streetAddress1.clear();
-		streetAddress2.clear();
-		city.clear();
+		String expectedTitle = "iTrust - HCP Home";
 
-		zip.clear();
-		phone.clear();
+		login("9000000000", "pw");
+		// get the title of the page
+		String actualTitle = driver.getTitle();
+		// verify title
+		assertEquals(actualTitle, expectedTitle);
 		
-		firstName.sendKeys("Doctor");
-		lastName.sendKeys("Watson");
-		streetAddress1.sendKeys("1234 Varsity Ln");
-		streetAddress2.sendKeys("2nd Lane");
-		city.sendKeys("Cary");
-		state.selectByValue("NC");
-		zip.sendKeys("12345-1234");
-		phone.sendKeys("704-100-1000");
-		phone.submit();
-		assertTrue(driver.getPageSource().contains("Information Successfully Updated"));
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[6]/div/h2")).click();
+	    driver.findElement(By.linkText("UAP")).click();
+	    driver.findElement(By.name("firstName")).clear();
+	    driver.findElement(By.name("firstName")).sendKeys("Drake");
+	    driver.findElement(By.name("lastName")).clear();
+	    driver.findElement(By.name("lastName")).sendKeys("Ramoray");
+	    driver.findElement(By.name("email")).clear();
+	    driver.findElement(By.name("email")).sendKeys("drake@drake.com");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+	    driver.findElement(By.linkText("Continue to personnel information.")).click();
+	    driver.findElement(By.name("firstName")).clear();
+	    driver.findElement(By.name("firstName")).sendKeys("Doctor");
+	    driver.findElement(By.name("lastName")).clear();
+	    driver.findElement(By.name("lastName")).sendKeys("Watson");
+	    driver.findElement(By.name("streetAddress1")).clear();
+	    driver.findElement(By.name("streetAddress1")).sendKeys("1234 Varsity Ln");
+	    driver.findElement(By.name("streetAddress2")).clear();
+	    driver.findElement(By.name("streetAddress2")).sendKeys("2nd Lane");
+	    driver.findElement(By.name("city")).clear();
+	    driver.findElement(By.name("city")).sendKeys("Cary");
+	    new Select(driver.findElement(By.name("state"))).selectByVisibleText("North Carolina");
+	    driver.findElement(By.name("zip")).clear();
+	    driver.findElement(By.name("zip")).sendKeys("12345-1234");
+	    driver.findElement(By.name("phone")).clear();
+	    driver.findElement(By.name("phone")).sendKeys("704-100-1000");
+	    driver.findElement(By.name("action")).click();
+	    Assert.assertTrue(driver.getPageSource().contains(
+				"Information Successfully Updated"));
+	    //assertLogged(TransactionType.UAP_CREATE, 9000000000L, Long.parseLong(newMID), "");
 	}
 }

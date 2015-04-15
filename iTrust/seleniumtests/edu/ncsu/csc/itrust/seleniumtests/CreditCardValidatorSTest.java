@@ -22,11 +22,12 @@ public class CreditCardValidatorSTest extends iTrustSeleniumTest{
 	
 	@Test
 	public void testGoodMasterCards() throws Exception {
-		WebDriver driver = login("1", "pw");
+		login("1", "pw");
 
 		String title = driver.getTitle();
 		assertEquals("iTrust - Patient Home", title);
 		assertLogged(TransactionType.HOME_VIEW, 1L, 0L, "");
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("My Demographics")).click();
 		assertLogged(TransactionType.DEMOGRAPHICS_VIEW, 1L, 1L, "");
 	    Select oSelection = new Select(driver.findElement(By.name("creditCardType")));
@@ -52,11 +53,12 @@ public class CreditCardValidatorSTest extends iTrustSeleniumTest{
 	
 	@Test
 	public void testBadMasterCards() throws Exception {
-		WebDriver driver = login("1", "pw");
+		login("1", "pw");
 
 		String title = driver.getTitle();
 		assertEquals("iTrust - Patient Home", title);
 		assertLogged(TransactionType.HOME_VIEW, 1L, 0L, "");
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("My Demographics")).click();
 		assertLogged(TransactionType.DEMOGRAPHICS_VIEW, 1L, 1L, "");
 	    Select oSelection = new Select(driver.findElement(By.name("creditCardType")));
@@ -79,11 +81,12 @@ public class CreditCardValidatorSTest extends iTrustSeleniumTest{
 	
 	@Test
 	public void testGoodVisas() throws Exception {
-		WebDriver driver = login("1", "pw");
+		login("1", "pw");
 
 		String title = driver.getTitle();
 		assertEquals("iTrust - Patient Home", title);
 		assertLogged(TransactionType.HOME_VIEW, 1L, 0L, "");
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("My Demographics")).click();
 		assertLogged(TransactionType.DEMOGRAPHICS_VIEW, 1L, 1L, "");
 	    Select oSelection = new Select(driver.findElement(By.name("creditCardType")));
@@ -109,11 +112,12 @@ public class CreditCardValidatorSTest extends iTrustSeleniumTest{
 	
 	@Test
 	public void testBadVisas() throws Exception {
-		WebDriver driver = login("1", "pw");
+		login("1", "pw");
 
 		String title = driver.getTitle();
 		assertEquals("iTrust - Patient Home", title);
 		assertLogged(TransactionType.HOME_VIEW, 1L, 0L, "");
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("My Demographics")).click();
 		assertLogged(TransactionType.DEMOGRAPHICS_VIEW, 1L, 1L, "");
 	    Select oSelection = new Select(driver.findElement(By.name("creditCardType")));
@@ -139,11 +143,12 @@ public class CreditCardValidatorSTest extends iTrustSeleniumTest{
 	
 	@Test
 	public void testGoodDiscovers() throws Exception {
-		WebDriver driver = login("1", "pw");
+		login("1", "pw");
 
 		String title = driver.getTitle();
 		assertEquals("iTrust - Patient Home", title);
 		assertLogged(TransactionType.HOME_VIEW, 1L, 0L, "");
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("My Demographics")).click();
 		assertLogged(TransactionType.DEMOGRAPHICS_VIEW, 1L, 1L, "");
 	    Select oSelection = new Select(driver.findElement(By.name("creditCardType")));
@@ -169,11 +174,12 @@ public class CreditCardValidatorSTest extends iTrustSeleniumTest{
 	
 	@Test
 	public void testBadDiscovers() throws Exception {
-		WebDriver driver = login("1", "pw");
+		login("1", "pw");
 
 		String title = driver.getTitle();
 		assertEquals("iTrust - Patient Home", title);
 		assertLogged(TransactionType.HOME_VIEW, 1L, 0L, "");
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("My Demographics")).click();
 		assertLogged(TransactionType.DEMOGRAPHICS_VIEW, 1L, 1L, "");
 	    Select oSelection = new Select(driver.findElement(By.name("creditCardType")));
@@ -196,11 +202,12 @@ public class CreditCardValidatorSTest extends iTrustSeleniumTest{
 	
 	@Test
 	public void testGoodAmex() throws Exception {
-		WebDriver driver = login("1", "pw");
+		login("1", "pw");
 
 		String title = driver.getTitle();
 		assertEquals("iTrust - Patient Home", title);
 		assertLogged(TransactionType.HOME_VIEW, 1L, 0L, "");
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("My Demographics")).click();
 		assertLogged(TransactionType.DEMOGRAPHICS_VIEW, 1L, 1L, "");
 	    Select oSelection = new Select(driver.findElement(By.name("creditCardType")));
@@ -226,11 +233,12 @@ public class CreditCardValidatorSTest extends iTrustSeleniumTest{
 	
 	@Test
 	public void testBadAmex() throws Exception {
-		WebDriver driver = login("1", "pw");
+		login("1", "pw");
 
 		String title = driver.getTitle();
 		assertEquals("iTrust - Patient Home", title);
 		assertLogged(TransactionType.HOME_VIEW, 1L, 0L, "");
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("My Demographics")).click();
 		assertLogged(TransactionType.DEMOGRAPHICS_VIEW, 1L, 1L, "");
 	    Select oSelection = new Select(driver.findElement(By.name("creditCardType")));
@@ -252,12 +260,12 @@ public class CreditCardValidatorSTest extends iTrustSeleniumTest{
 	}
 	
 	public void testEmptyTypeEmptyNumber() throws Exception {
-		WebDriver driver = login("1", "pw");
+		login("1", "pw");
 
 		String title = driver.getTitle();
 		assertEquals("iTrust - Patient Home", title);
 		assertLogged(TransactionType.HOME_VIEW, 1L, 0L, "");
-
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("My Demographics")).click();
 		assertLogged(TransactionType.DEMOGRAPHICS_VIEW, 1L, 1L, "");
 
@@ -269,12 +277,12 @@ public class CreditCardValidatorSTest extends iTrustSeleniumTest{
 	}
 	
 	public void testEmptyTypeFilledNumber() throws Exception {
-		WebDriver driver = login("1", "pw");
+		login("1", "pw");
 
 		String title = driver.getTitle();
 		assertEquals("iTrust - Patient Home", title);
 		assertLogged(TransactionType.HOME_VIEW, 1L, 0L, "");
-		
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("My Demographics")).click();
 		assertLogged(TransactionType.DEMOGRAPHICS_VIEW, 1L, 1L, "");
 		

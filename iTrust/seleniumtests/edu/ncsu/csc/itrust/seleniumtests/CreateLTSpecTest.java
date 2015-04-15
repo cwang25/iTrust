@@ -34,12 +34,12 @@ public class CreateLTSpecTest extends iTrustSeleniumTest {
 	 */
 	public void testSpecialtyOnForm() throws Exception {
 		//login admin
-		WebDriver driver = new HtmlUnitDriver();
-		driver = login("9000000001", "pw");
+		login("9000000001", "pw");
 		assertEquals("iTrust - Admin Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000001L, 0L, "");
 		
 		//click on add hcp
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("Add LT")).click();
 		
 		//add the hcp
@@ -68,7 +68,7 @@ public class CreateLTSpecTest extends iTrustSeleniumTest {
 		 */
 		Select dropbox = new Select(form.findElement(By.name("specialty")));
 		assertEquals(1, dropbox.getAllSelectedOptions().size());
-		assertEquals("general", dropbox.getFirstSelectedOption().getText());
+		assertEquals("general", dropbox.getFirstSelectedOption().getText().toLowerCase());
 		form.submit();
 		
 		//make sure LT was added
