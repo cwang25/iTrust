@@ -132,7 +132,6 @@ if(request.getParameter("confirmSubmit") != null) {
 
 <div align="center">
 	<h2>My Weight Log</h2>
-	
 	<%	
 	List<WeightLogBean> weightLogs = viewAction.getWeightLogListByMID(loggedInMID);
 	
@@ -172,33 +171,37 @@ if(request.getParameter("confirmSubmit") != null) {
 		%> 		
 		
 		</table>
-		
-		<div align="Center">
-	        <button onclick='makeChart();' style="font-size: 16pt; margin-bottom:20px;">View Chart</button>
-	        <br/>
-	        <div id="ChartContainer" style="display:none;">
-		        <div id="canvas-holder" style="display:table; margin:auto;">
-			        <canvas id="chart-area" width="600" height="400" style="float:left;"></canvas>
-			        <div id="legendOuterDiv" style="float:left;"><div id="legendDiv"></div></div>
-		        </div>
-		        <div style="clear:both;"></div>
-		        <br/><br/>
-		        <div id="canvas-holder2" style="display:table; margin:auto;">
-			        <canvas id="chart-area2" width="600" height="400" style="float:left;"></canvas>
-			        <div id="legendOuterDiv2" style="float:left;"><div id="secondLegend"></div></div>
-		        </div>
-	    	</div>
-    	</div>
     	
 		<%
 	}
-	%>	
+	%>		
+	<div align="Center">
+	<input type="button" style="font-size: 16pt;" value="Add Log Entry" id="showNewLogForm"/>
+	<%if(weightLogs.size() != 0) {
+		%>
+		<button onclick='makeChart();' style="font-size: 16pt; margin-bottom:20px;">View Chart</button>
+        <br/>
+        <div id="ChartContainer" style="display:none;">
+	        <div id="canvas-holder" style="display:table; margin:auto;">
+		        <canvas id="chart-area" width="600" height="400" style="float:left;"></canvas>
+		        <div id="legendOuterDiv" style="float:left;"><div id="legendDiv"></div></div>
+	        </div>
+	        <div style="clear:both;"></div>
+	        <br/><br/>
+	        <div id="canvas-holder2" style="display:table; margin:auto;">
+		        <canvas id="chart-area2" width="600" height="400" style="float:left;"></canvas>
+		        <div id="legendOuterDiv2" style="float:left;"><div id="secondLegend"></div></div>
+	        </div>
+    	</div>
+		<%
+	}
 	
-	<br/>	
-	<input type="button" value="Add Log Entry" id="showNewLogForm"/>
+	%>
 	
+   	</div>
+   	
 	<form style="display:none;" action="myWeightLog.jsp" method="post" id="weightLogForm" name="weightLogForm" align="center">
-		<table>
+		<table class="fTable">
 			<tr>
 				<td>Date:</td>
 				<%
@@ -254,6 +257,7 @@ if(request.getParameter("confirmSubmit") != null) {
 <script type="text/javascript">
 	$('#showNewLogForm').click(function() {
 		$('#weightLogForm').show();
+		$('#ChartContainer').hide();
 	});
 </script>
 
@@ -268,7 +272,7 @@ var chart = null;
 var chart2 = null;
 
 function makeChart() {
-
+	$('#weightLogForm').hide();
 	$('#ChartContainer').show();
 	
     var count = $('#weightLogTable tr').length - 1;
