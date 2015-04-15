@@ -24,13 +24,14 @@ public class AppointmentTypeTest extends iTrustSeleniumTest{
 	}
 	
 	public void testAddAppointmentType() throws Exception {
-		WebDriver driver = login("9000000001", "pw");
+		login("9000000001", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 9000000001L, 0L, "");
 		
 		WebElement element;
 		List<WebElement> elements;
 		
 		//go to the Edit Appointment types page
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		element = driver.findElement(By.linkText("Edit Appointment Types"));
 		element.click();
 		assertEquals("iTrust - Maintain Appointment Types", driver.getTitle());
@@ -52,13 +53,14 @@ public class AppointmentTypeTest extends iTrustSeleniumTest{
 	}
 	
 	public void testEditAppointmentTypeDuration() throws Exception {
-		WebDriver driver = login("9000000001", "pw");
+		login("9000000001", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 9000000001L, 0L, "");
 		
 		WebElement element;
 		List<WebElement> elements;
 		
 		//go to the Edit Appointment types page
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		element = driver.findElement(By.linkText("Edit Appointment Types"));
 		element.click();
 		assertEquals("iTrust - Maintain Appointment Types", driver.getTitle());
@@ -83,12 +85,13 @@ public class AppointmentTypeTest extends iTrustSeleniumTest{
 	}
 	
 	public void testEditAppointmentTypeDurationStringInput() throws Exception {
-		WebDriver driver = login("9000000001", "pw");
+		login("9000000001", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 9000000001L, 0L, "");
 		
 		WebElement element;
 		
 		//go to the Edit Appointment types page
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		element = driver.findElement(By.linkText("Edit Appointment Types"));
 		element.click();
 		assertEquals("iTrust - Maintain Appointment Types", driver.getTitle());
@@ -111,20 +114,23 @@ public class AppointmentTypeTest extends iTrustSeleniumTest{
 	}
 	
 	public void testScheduleAppointment() throws Exception {
-		WebDriver driver = login("9000000000", "pw");
+		login("9000000000", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
 		WebElement element;
 		
 		//go to the Schedule Appointment page
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div")).click();
 		element = driver.findElement(By.linkText("Schedule Appointment"));
 		element.click();
 		
 		//use the old search to go to the patients page
-		element = driver.findElement(By.name("UID_PATIENTID"));
-		element.sendKeys("1");
-		element = driver.findElement(By.id("mainForm"));
-		element.submit();
+		driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("1");
+	    //waitFor(1);
+	    //Click on first MID button
+	    driver.findElement(By.xpath("//input[@value='1' and @type='button']")).click();
+	    
 		
 		element = driver.findElement(By.id("mainForm"));
 		int year = Calendar.getInstance().get(Calendar.YEAR) + 1;
@@ -147,6 +153,7 @@ public class AppointmentTypeTest extends iTrustSeleniumTest{
 		
 		//check to confirm appointment was added
 		assertEquals("iTrust - Schedule an Appointment",driver.getTitle());
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("View My Appointments")).click();
 		assertEquals(scheduledDate + " 01:00 PM",driver.findElement(By.xpath("//*[@id='iTrustContent']/div/table/tbody/tr[13]/td[3]")).getText());
 		assertLogged(TransactionType.APPOINTMENT_ALL_VIEW, 9000000000L, 0L, "");
@@ -157,12 +164,13 @@ public class AppointmentTypeTest extends iTrustSeleniumTest{
 		gen.clearAppointments();
 		gen.appointmentCase1();
 		
-		WebDriver driver = login("2", "pw");
+		login("2", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 2L, 0L, "");
 		
 		WebElement element;
 		
 		//go to the View my appointments page
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[4]/div")).click();
 		element = driver.findElement(By.linkText("View My Appointments"));
 		element.click();
 		
@@ -191,6 +199,7 @@ public class AppointmentTypeTest extends iTrustSeleniumTest{
 
 		WebElement element;
 		//go to the View my appointments page
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div")).click();
 		element = driver.findElement(By.linkText("View My Appointments"));
 		element.click();
 
@@ -209,6 +218,7 @@ public class AppointmentTypeTest extends iTrustSeleniumTest{
 		WebElement element;
 		
 		//go to the Edit Appointment types page
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div")).click();
 		element = driver.findElement(By.linkText("Edit Appointment Types"));
 		element.click();
 		assertEquals("iTrust - Maintain Appointment Types", driver.getTitle());

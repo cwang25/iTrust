@@ -12,12 +12,12 @@ import edu.ncsu.csc.itrust.enums.TransactionType;
 
 public class ChangePasswordTest extends iTrustSeleniumTest {
 	
-    private static WebDriver driver = null;
+    //private static WebDriver driver = null;
 	
 	@Before
 	public void setUp() throws Exception {
 	    // Create a new instance of the driver
-	    driver = new HtmlUnitDriver();
+	   // driver = new HtmlUnitDriver();
 		super.setUp();
 		gen.clearAllTables();
 		gen.standardData();
@@ -41,7 +41,7 @@ public class ChangePasswordTest extends iTrustSeleniumTest {
 			}
 		}
 		
-		links.get(count).click();
+		clickOnNonJavascriptElement(links.get(count));
 		
 		//User types in their current, new, and confirm passwords
         driver.findElement(By.name("oldPass")).sendKeys("pw");
@@ -53,11 +53,15 @@ public class ChangePasswordTest extends iTrustSeleniumTest {
 		assertLogged(TransactionType.PASSWORD_CHANGE, 1L, 0, "");
 		
 		//User logs out
-		links = driver.findElements(By.tagName("a"));
-		links.get(count - 1).click();		
+		logout();		
 		
 		//User can't log in with old password, but can with new one
-		driver = (HtmlUnitDriver)login("1", "pw");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("1");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - Login", driver.getTitle());
 		driver = (HtmlUnitDriver)login("1", "pass1");
 		assertEquals("iTrust - Patient Home", driver.getTitle());
@@ -65,7 +69,7 @@ public class ChangePasswordTest extends iTrustSeleniumTest {
 
 	public void testChangePassword_Acceptance_Long() throws Exception {
 		//Patient1 logs into iTrust
-		driver = (HtmlUnitDriver)login("1", "pw");
+		login("1", "pw");
 		assertTrue(driver.getTitle().contains("iTrust - Patient Home"));  
 		
 		//User goes to change password
@@ -81,8 +85,8 @@ public class ChangePasswordTest extends iTrustSeleniumTest {
 			}
 		}
 		
-		links.get(count).click();
-		
+		//links.get(count).click();
+		clickOnNonJavascriptElement(links.get(count));
 		//User types in their current, new, and confirm passwords
         driver.findElement(By.name("oldPass")).sendKeys("pw");
         driver.findElement(By.name("newPass")).sendKeys("pass12345abcde");
@@ -94,13 +98,17 @@ public class ChangePasswordTest extends iTrustSeleniumTest {
 		assertLogged(TransactionType.PASSWORD_CHANGE, 1L, 0, "");
 		
 		//User logs out
-		links = driver.findElements(By.tagName("a"));
-		links.get(count - 1).click();	
+		logout();
 		
 		//User can't log in with old password, but can with new one
-		driver = (HtmlUnitDriver)login("1", "pw");
-		assertEquals("iTrust - Login", driver.getTitle());
-		driver = (HtmlUnitDriver)login("1", "pass12345abcde");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("1");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+	    assertEquals("iTrust - Login", driver.getTitle());
+		login("1", "pass12345abcde");
 		assertEquals("iTrust - Patient Home", driver.getTitle());
 	}
 	
@@ -122,7 +130,7 @@ public class ChangePasswordTest extends iTrustSeleniumTest {
 			}
 		}
 		
-		links.get(count).click();
+		clickOnNonJavascriptElement(links.get(count));
 		
 		//User types in their current, new, and confirm passwords
         driver.findElement(By.name("oldPass")).sendKeys("pw");
@@ -135,11 +143,15 @@ public class ChangePasswordTest extends iTrustSeleniumTest {
 		assertLogged(TransactionType.PASSWORD_CHANGE_FAILED, 1L, 0, "");
 		
 		//User logs out
-		links = driver.findElements(By.tagName("a"));
-		links.get(count - 1).click();	
+		logout();	
 		
 		//User can log in with old password, but can't with new one
-		driver = (HtmlUnitDriver)login("1", "pas1");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("1");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pas1");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertTrue(driver.getTitle().contains("iTrust - Login"));  
 		driver = (HtmlUnitDriver)login("1", "pw");
 		assertTrue(driver.getTitle().contains("iTrust - Patient Home"));  
@@ -163,7 +175,7 @@ public class ChangePasswordTest extends iTrustSeleniumTest {
 			}
 		}
 		
-		links.get(count).click();
+		clickOnNonJavascriptElement(links.get(count));
 
 		//User types in their current, new, and confirm passwords
         driver.findElement(By.name("oldPass")).sendKeys("pw");
@@ -176,11 +188,15 @@ public class ChangePasswordTest extends iTrustSeleniumTest {
 		assertLogged(TransactionType.PASSWORD_CHANGE_FAILED, 1L, 0, "");
 		
 		//User logs out
-		links = driver.findElements(By.tagName("a"));
-		links.get(count - 1).click();	
+		logout();
 		
 		//User can log in with old password, but can't with new one
-		driver = (HtmlUnitDriver)login("1", "password");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("1");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("password");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertTrue(driver.getTitle().contains("iTrust - Login"));  
 		driver = (HtmlUnitDriver)login("1", "pw");
 		assertTrue(driver.getTitle().contains("iTrust - Patient Home"));  
@@ -204,7 +220,7 @@ public class ChangePasswordTest extends iTrustSeleniumTest {
 			}
 		}
 		
-		links.get(count).click();
+		clickOnNonJavascriptElement(links.get(count));
 		
 		//User types in their current, new, and confirm passwords
         driver.findElement(By.name("oldPass")).sendKeys("pw");
@@ -217,11 +233,15 @@ public class ChangePasswordTest extends iTrustSeleniumTest {
 		assertLogged(TransactionType.PASSWORD_CHANGE_FAILED, 1L, 0, "");
 		
 		//User logs out
-		links = driver.findElements(By.tagName("a"));
-		links.get(count - 1).click();	
+		logout();
 		
 		//User can log in with old password, but can't with new one
-		driver = (HtmlUnitDriver)login("1", "pas1");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("1");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pas1");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertTrue(driver.getTitle().contains("iTrust - Login"));  
 		driver = (HtmlUnitDriver)login("1", "pw");
 		assertTrue(driver.getTitle().contains("iTrust - Patient Home"));  
@@ -245,7 +265,7 @@ public class ChangePasswordTest extends iTrustSeleniumTest {
 			}
 		}
 		
-		links.get(count).click();
+		clickOnNonJavascriptElement(links.get(count));
 
 		//User types in their current, new, and confirm passwords
         driver.findElement(By.name("oldPass")).sendKeys("password");
@@ -258,11 +278,15 @@ public class ChangePasswordTest extends iTrustSeleniumTest {
 		assertLogged(TransactionType.PASSWORD_CHANGE_FAILED, 1L, 0, "");
 		
 		//User logs out
-		links = driver.findElements(By.tagName("a"));
-		links.get(count - 1).click();	
+		logout();
 		
 		//User can log in with old password, but can't with new one
-		driver = (HtmlUnitDriver)login("1", "pass1");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("1");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pass1");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertTrue(driver.getTitle().contains("iTrust - Login"));  
 		driver = (HtmlUnitDriver)login("1", "pw");
 		assertTrue(driver.getTitle().contains("iTrust - Patient Home"));  

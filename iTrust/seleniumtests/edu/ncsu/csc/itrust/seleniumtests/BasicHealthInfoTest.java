@@ -14,39 +14,46 @@ public class BasicHealthInfoTest extends iTrustSeleniumTest {
 	}
 	
 	public void testBasicHealthViewed() throws Exception{
-		WebDriver driver = login("9000000000", "pw");
+		login("9000000000", "pw");
 		
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
-		
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("Basic Health Information")).click();
-		driver.findElement(By.name("UID_PATIENTID")).sendKeys("2");
-		driver.findElement(By.cssSelector("input[value='2']")).submit();
+		
+		//use the old search to go to the patients page
+		driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("2");
+	    //waitFor(1);
+	    driver.findElement(By.xpath("//input[@value='2' and @type='button']")).click();
 		
 		assertEquals(ADDRESS + "auth/hcp-uap/viewBasicHealth.jsp", driver.getCurrentUrl());
 		
-		driver.findElement(By.cssSelector("a[href='/iTrust/logout.jsp']")).click(); //By.linkText won't work for some reason...
+		logout();
 		
 		assertEquals(ADDRESS + "auth/forwardUser.jsp", driver.getCurrentUrl());
 		
-		driver.quit();
 		
-		driver = login("2", "pw");
+		login("2", "pw");
 		
 		assertTrue(driver.getPageSource().contains("Kelly Doctor"));
 		assertTrue(driver.getPageSource().contains("viewed your health records history today at"));
 	}
 	
 	public void testBasicHealthSmokingStatus() throws Exception {
-		WebDriver driver = login("9000000000", "pw");
+		login("9000000000", "pw");
 		
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div")).click();
 		driver.findElement(By.linkText("Document Office Visit")).click();
 
 		assertEquals(ADDRESS + "auth/getPatientID.jsp?forward=/iTrust/auth/hcp-uap/documentOfficeVisit.jsp", driver.getCurrentUrl());
 		
-		driver.findElement(By.name("UID_PATIENTID")).sendKeys("2");
-		driver.findElement(By.cssSelector("input[value='2']")).submit();
+		//use the old search to go to the patients page
+		driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("2");
+	    //waitFor(1);
+	    driver.findElement(By.xpath("//input[@value='2' and @type='button']")).click();
 		
 		assertEquals(ADDRESS + "auth/hcp-uap/documentOfficeVisit.jsp", driver.getCurrentUrl());
 		

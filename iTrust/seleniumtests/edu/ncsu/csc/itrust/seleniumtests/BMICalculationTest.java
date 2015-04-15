@@ -18,21 +18,22 @@ public class BMICalculationTest extends iTrustSeleniumTest{
 	
 	public void testUnderweightEC() throws Exception {
 		//Login as HCP Kelly Doctor
-		WebDriver driver = login("9000000000", "pw");
+		login("9000000000", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
 		WebElement element;
 		List<WebElement> elements;
-		
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		//go to the basic health information search for patient page
 		element = driver.findElement(By.linkText("Basic Health Information"));
 		element.click();
 		
 		//use the old search to go to the patients page
-		element = driver.findElement(By.name("UID_PATIENTID"));
-		element.sendKeys("106");
-		element = driver.findElement(By.id("mainForm"));
-		element.submit();
+		//use the old search to go to the patients page
+		driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("106");
+	    //waitFor(1);
+	    driver.findElement(By.xpath("//input[@value='106' and @type='button']")).click();
 		
 		//Verify Basic Health Information page
 		assertEquals(ADDRESS + "auth/hcp-uap/viewBasicHealth.jsp", driver.getCurrentUrl());
@@ -78,21 +79,22 @@ public class BMICalculationTest extends iTrustSeleniumTest{
 	
 	public void testNormalEC() throws Exception {
 		//Login as HCP Kelly Doctor
-		WebDriver driver = login("9000000000", "pw");
+		login("9000000000", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
 		WebElement element;
 		List<WebElement> elements;
 		
 		//go to the basic health information search for patient page
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		element = driver.findElement(By.linkText("Basic Health Information"));
 		element.click();
 		
 		//use the old search to go to the patients page
-		element = driver.findElement(By.name("UID_PATIENTID"));
-		element.sendKeys("107");
-		element = driver.findElement(By.id("mainForm"));
-		element.submit();
+		driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("107");
+	    //waitFor(1);
+	    driver.findElement(By.xpath("//input[@value='107' and @type='button']")).click();
 		//Verify Basic Health Information page
 		assertEquals(ADDRESS + "auth/hcp-uap/viewBasicHealth.jsp", driver.getCurrentUrl());
 		
@@ -138,21 +140,22 @@ public class BMICalculationTest extends iTrustSeleniumTest{
 	
 	public void testOverweightEC() throws Exception {
 		//Login as HCP Kelly Doctor
-		WebDriver driver = login("9000000000", "pw");
+		login("9000000000", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
 		WebElement element;
 		List<WebElement> elements;
 		
 		//go to the basic health information search for patient page
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		element = driver.findElement(By.linkText("Basic Health Information"));
 		element.click();
 		
 		//use the old search to go to the patients page
-		element = driver.findElement(By.name("UID_PATIENTID"));
-		element.sendKeys("108");
-		element = driver.findElement(By.id("mainForm"));
-		element.submit();
+		driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("108");
+	    //waitFor(1);
+	    driver.findElement(By.xpath("//input[@value='108' and @type='button']")).click();
 		//Verify Basic Health Information page
 		assertEquals(ADDRESS + "auth/hcp-uap/viewBasicHealth.jsp", driver.getCurrentUrl());
 		

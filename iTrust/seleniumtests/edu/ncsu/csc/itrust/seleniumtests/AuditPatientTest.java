@@ -15,18 +15,20 @@ public class AuditPatientTest extends iTrustSeleniumTest{
 	}
 	
 	public void testHCPDeactivatePatient() throws Exception {
-		WebDriver driver = login("9000000000", "pw");	
+		login("9000000000", "pw");	
 		
 		WebElement element;
 		//go to the basic health information search for patient page
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		element = driver.findElement(By.linkText("Audit Patients"));
 		element.click();
-		
+		assertEquals("iTrust - Please Select a Patient", driver.getTitle());
 		//use the old search to go to the patients page
-		element = driver.findElement(By.name("UID_PATIENTID"));
-		element.sendKeys("2");
-		element = driver.findElement(By.id("mainForm"));
-		element.submit();
+		driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("2");
+	    //waitFor(1);
+	    //Click on first MID button
+	    driver.findElement(By.xpath("(//input[@value='Deactivate'])[1]")).click();
 		
 		//confirm we are on the right page
 		assertEquals(ADDRESS + "auth/hcp/auditPage.jsp", driver.getCurrentUrl());
@@ -41,18 +43,21 @@ public class AuditPatientTest extends iTrustSeleniumTest{
 	}
 	
 	public void testHCPDeactivatePatientWrongConfirmation() throws Exception{
-		WebDriver driver = login("9000000000", "pw");	
+		login("9000000000", "pw");	
 		
 		WebElement element;
 		//go to the basic health information search for patient page
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		element = driver.findElement(By.linkText("Audit Patients"));
 		element.click();
 		
+		
 		//use the old search to go to the patients page
-		element = driver.findElement(By.name("UID_PATIENTID"));
-		element.sendKeys("2");
-		element = driver.findElement(By.id("mainForm"));
-		element.submit();
+		driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("2");
+	    //waitFor(1);
+	    //Click on first MID button
+	    driver.findElement(By.xpath("(//input[@value='Deactivate'])[1]")).click();
 		
 		//confirm we are on the right page
 		assertEquals(ADDRESS + "auth/hcp/auditPage.jsp", driver.getCurrentUrl());
@@ -66,18 +71,22 @@ public class AuditPatientTest extends iTrustSeleniumTest{
 	}
 	
 	public void testHCPActivatePatient() throws Exception {
-		WebDriver driver = login("9000000000", "pw");	
+		login("9000000000", "pw");	
 		
 		WebElement element;
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		//go to the basic health information search for patient page
 		element = driver.findElement(By.linkText("Audit Patients"));
 		element.click();
 		
+		
 		//use the old search to go to the patients page
-		element = driver.findElement(By.name("UID_PATIENTID"));
-		element.sendKeys("314159");
-		element = driver.findElement(By.id("mainForm"));
-		element.submit();
+		driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("314159");
+	    //waitFor(1);
+	    //Click on first MID button
+	    driver.findElement(By.id("allowDeactivated")).click();
+	    driver.findElement(By.xpath("//input[@value='Activate']")).click();
 		
 		//confirm we are on the right page
 		assertEquals(ADDRESS + "auth/hcp/auditPage.jsp", driver.getCurrentUrl());
@@ -94,15 +103,20 @@ public class AuditPatientTest extends iTrustSeleniumTest{
 		WebDriver driver = login("9000000000", "pw");	
 		
 		WebElement element;
+		
 		//go to the basic health information search for patient page
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		element = driver.findElement(By.linkText("Audit Patients"));
 		element.click();
 		
 		//use the old search to go to the patients page
-		element = driver.findElement(By.name("UID_PATIENTID"));
-		element.sendKeys("314159");
-		element = driver.findElement(By.id("mainForm"));
-		element.submit();
+		driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("314159");
+	    //waitFor(1);
+	    //Click on first MID button
+	    driver.findElement(By.id("allowDeactivated")).click();
+	    driver.findElement(By.xpath("//input[@value='Activate']")).click();
+		
 		
 		//confirm we are on the right page
 		assertEquals(ADDRESS + "auth/hcp/auditPage.jsp", driver.getCurrentUrl());

@@ -38,6 +38,7 @@ public class CalendarTest extends iTrustSeleniumTest {
         assertTrue(driver.getTitle().contains("iTrust - HCP Home"));  
 
 		// Click Calendar
+        driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
         driver.findElement(By.linkText("Appointment Calendar")).click();
 
 		// check title
@@ -78,9 +79,11 @@ public class CalendarTest extends iTrustSeleniumTest {
         assertTrue(driver.getTitle().contains("iTrust - Patient Home"));
 
 		// Click Calendar
+        driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
         driver.findElement(By.linkText("Full Calendar")).click();
 
 		// check title
+        driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		assertTrue(driver.getTitle().contains("Appointment Calendar"));
 		assertLogged(TransactionType.CALENDAR_VIEW, 2L, 0L, "");
 
@@ -120,6 +123,7 @@ public class CalendarTest extends iTrustSeleniumTest {
         assertTrue(driver.getTitle().contains("iTrust - Patient Home"));
 
         // Click Calendar
+        driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
         driver.findElement(By.linkText("Full Calendar")).click();
 
 		// check title
@@ -165,6 +169,7 @@ public class CalendarTest extends iTrustSeleniumTest {
         assertTrue(driver.getTitle().contains("iTrust - HCP Home"));  
 
 		// Click Calendar
+        driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
         driver.findElement(By.linkText("Appointment Calendar")).click();
 
 		// check title
