@@ -15,9 +15,19 @@ import edu.ncsu.csc.itrust.enums.TransactionType;
 public class SendEmailNotificationTest extends iTrustSeleniumTest{
 	@Before
 	public void setUp() throws Exception {
-	  super.setUp();
-	  gen.clearAllTables();
-	  gen.standardData();	
+		super.setUp();
+		gen.clearAllTables();
+		gen.icd9cmCodes();
+		gen.ndCodes();
+		gen.hospitals();
+		gen.hcp1();
+		gen.hcp2();
+		gen.hcp3();
+		gen.er4();
+		gen.patient9();
+
+		gen.UC32Acceptance();
+		gen.clearLoginFailures();
 	}
 	
 	  @Test
