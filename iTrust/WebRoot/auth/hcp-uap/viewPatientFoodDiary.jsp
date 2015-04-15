@@ -252,7 +252,7 @@
 				<button type="button" id="removeSuggestion<%=index%>"  style="float: right;" >Delete</button>
 				<script type="text/javascript">
 
-					var suggestionToShowListSizeForReadonly = <%=suggestionsToShow == null ? 0: suggestionsToShow.size()%>;
+					var suggestionToShowListSizeForReadonly<%=index%> = <%=suggestionsToShow == null ? 0: suggestionsToShow.size()%>;
 					$("#removeSuggestion<%=index%>").click(function(){
 						if(confirm('Are you sure you want to delete the food diary suggestion?')){
 							$.post("FoodDiarySuggestionRemovalServlet",
@@ -273,9 +273,9 @@
 									var element = document.getElementById("textTitleList"+rowID.toString());
 									element.parentNode.removeChild(element);
 									var selector = document.getElementById("savedSuggestionList<%=index%>");
-									console.log(suggestionToShowListSizeForReadonly+" list-index");
-									suggestionToShowListSizeForReadonly = suggestionToShowListSizeForReadonly - 1;
-									if(suggestionToShowListSizeForReadonly < 1){
+									//console.log(suggestionToShowListSizeForReadonly+" list-index");
+									suggestionToShowListSizeForReadonly<%=index%> = suggestionToShowListSizeForReadonly<%=index%> - 1;
+									if(suggestionToShowListSizeForReadonly<%=index%> < 1){
 										document.getElementById("tarea<%=index%>").value = "There is no suggestion.";
 										console.log("changed text: "+ <%=index%>);
 										document.getElementById("tarea<%=index%>").onkeyup = null;
