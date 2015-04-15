@@ -1,4 +1,4 @@
-package edu.ncsu.csc.itrust.dio.weightlog;
+package edu.ncsu.csc.itrust.dao.weightlog;
 
 import java.sql.Date;
 import java.util.List;
