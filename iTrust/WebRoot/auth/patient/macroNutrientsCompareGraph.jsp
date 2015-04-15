@@ -51,12 +51,37 @@
 <script src="/iTrust/js/Chart.js"></script>
 <div id="macroNutrientsGraph" >
 <div id="graphSwitchGroup" align="center" >
-	<button id="pieChartSwitch" onclick="toggleGraph('Pie');">Pie Chart</button>
-	<button id="barChartSwitch" onclick="toggleGraph('Bar');">Bar Chart</button>
-	<button id="cancelCompareGraphBtn" onclick="hideHiddenForm('hiddenDailyGraph');">Cancel</button>
+<table>
+<tr>
+<td>
+	<input type="button" id="cancelCompareGraphBtn" name="cancel" style="color: black;font-size: 16pt; font-weight: bold; float: right;"
+					value="Cancel" onclick="hideHiddenForm('hiddenDailyGraph');">
+</td>
+</tr>
+<tr>
+<td>
+<div class="animated_switch_container" style= "padding-left: 5px;">
+
+		<div  class="animated_switch white">
+
+			<input type="radio" name="animated_switch" id="switch-barChart" onclick="toggleGraph('Bar');">
+			<input type="radio" name="animated_switch" id="switch-pieChart" onclick="toggleGraph('Pie');"checked>
+
+			<label for="switch-barChart">Bar</label>
+			<label for="switch-pieChart">Pie</label>
+
+			<span class="animated_switch_toggle"></span>
+
+		</div> <!-- end switch -->
+
+	</div> <!-- end container -->
+</td>
+</tr>
+</table>
+	
 </div>
 <div id="compareBarChart" style="display:none;">
-<canvas id="compare-chart-bar-area" width="400" height="400"></canvas>
+<canvas id="compare-chart-bar-area" width="500" height="520"></canvas>
 <div id="cocompare-legend-bar-area-expectedOuterDiv" align="center"><table style="border:none"><tr><td id="compare-legend-bar-area"></td></tr></table></div>
 </div>
 <div id="comparePieChart" style="display:none;">
@@ -64,18 +89,18 @@
 	<tr>
 	<td >
 	<canvas id="compare-chart-area" width="400" height="400"></canvas>
-	<div id="compare-legend-areaOuterDiv" align="center"><table style="border:none"><tr><td id="compare-legend-area"></td></tr></table></div>
+	<div id="compare-legend-areaOuterDiv" align="center"><table style="border:none"><tr><label style="font-size:24px;font-weight: bold;">Actual</label></tr><tr><td id="compare-legend-area"></td></tr></table></div>
 	</td>
 	<%if(hasExpected){%>
 	<td>
 	<canvas id="compare-chart-area-expected" width="400" height="400"></canvas>
-	<div id="compare-legend-area-expectedOuterDiv" align="center"><table style="border:none"><tr><td id="compare-legend-area-expected"></td></tr></table></div>
+	<div id="compare-legend-area-expectedOuterDiv" align="center"><table style="border:none"><tr><label style="font-size:24px;font-weight: bold;">Expected</label></tr><tr><td id="compare-legend-area-expected"></td></tr></table></div>
 	</td>
 	<%} %>
 	</tr>
-
 </table>
 </div>
+
 </div>
 <script language="JavaScript">
 	var pieChart;
@@ -165,6 +190,8 @@
 		removePie();
 		removeExpectedPie();
 		if(type == "Pie"){
+			var radiobtn = document.getElementById("switch-pieChart");
+			radiobtn.checked = true;
 			document.getElementById("compareBarChart").style.display = "none";
 			document.getElementById("comparePieChart").style.display = "block";
 			graphPie();
@@ -177,12 +204,14 @@
 			<%
 			}
 			%>
+			scrollToDiv("comparePieChart");
 		}
 		if(type =="Bar"){
 			document.getElementById("compareBarChart").style.display = "block";
 			document.getElementById("comparePieChart").style.display = "none";
 			graphBar();
 			legendForCompareBar(document.getElementById('compare-legend-bar-area'), data);
+			scrollToDiv("compareBarChart");
 		}
 			
 	}

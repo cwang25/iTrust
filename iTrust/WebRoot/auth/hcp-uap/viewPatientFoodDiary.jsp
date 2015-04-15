@@ -145,7 +145,7 @@
 			%>
 			<tr class="diaryLabelRow <%= label %>" data-diarydate="<%= oldBean != null ? diaryDateFormat.format(oldBean.getDate()) : "" %>">
 				<td>
-					<b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b>
+					<b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b><br/>
 					<button id="toggle<%=index%>" style="border:none; background-color:Transparent"><img id="img<%=index%>" src="/iTrust/image/icons/addSuggestionPlus.png" height="20" width="20"></button>
 				</td>
 				<script language="JavaScript">
@@ -177,7 +177,7 @@
 			<form action="viewPatientFoodDiary.jsp" method="POST"> 
 				<td>New Suggestion:</td>
 				<td colspan="4">
-					<textarea rows="4" cols="50" name="suggestionText" id="suggestionText<%=index%>"></textarea>
+					<textarea rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;resize: none;" name="suggestionText" id="suggestionText<%=index%>"></textarea>
 					<input name="addNewSuggestion" value="true" type ="hidden" ></input>
 					<input name="date" value="<%=sdf.format(oldBean.getDate())%>" type ="hidden" ></input>
 				</td>
@@ -188,8 +188,7 @@
 				<%
 					String suggestionList = "";
 					List<SuggestionBean> suggestionsToShow = suggPatientAction.getSuggestionsByDate(new java.sql.Date(oldBean.getDate().getTime()), Long.parseLong(pidString));
-					
-					if(suggestionsToShow.size() != 0){
+					if(suggestionsToShow.size() > 0){
 						int suggestionNum = 1;
 						for(SuggestionBean sBean : suggestionsToShow){
 							suggestionList += "" + suggestionNum + ". " + sBean.getSuggestion() + "\n";
@@ -199,7 +198,6 @@
 					}else{
 						suggestionList += "No suggestions";
 					}
-					
 				%>
 				<td>Patient's Suggestions:</td>
 				<td colspan="4">
@@ -263,7 +261,7 @@
 							 },
 							function(data, status){
 								if(data === "Success"){
-									alert("Suggestion has been removed! ");
+									alert("Suggestion has been removed! ");						
 							 		var rowID =  document.getElementById("savedSuggestionList<%=index%>").value;
 							 		console.log(rowID);
 							 		//update text record on client side
@@ -273,7 +271,18 @@
 									var element = document.getElementById("textTitleList"+rowID.toString());
 									element.parentNode.removeChild(element);
 									var selector = document.getElementById("savedSuggestionList<%=index%>");
-									updateSuggestionText(document.getElementById('suggestionBeanText'+(selector.value).toString()).value,'tarea<%=index%>');
+									var sugTextRemainSize = <%=suggestionsToShow == null ? 0: suggestionsToShow.size() - 1%>;
+									if(sugTextRemainSize < 1){
+										document.getElementById("tarea<%=index%>").onkeyup = null;
+										$('#updateSuggestion<%=index%>').attr('disabled','disabled');
+										$('#updateSuggestion<%=index %>').css('color', 'gray');
+										$('#removeSuggestion<%=index%>').attr('disabled','disabled');
+										$('#removeSuggestion<%=index%>').css('color', 'gray');
+										document.getElementById("tarea<%=index%>").innerHTML = "There is no suggestion.";
+										document.getElementById("tarea<%=index%>").readOnly = true ;
+									}else{
+										updateSuggestionText(document.getElementById('suggestionBeanText'+(selector.value).toString()).value,'tarea<%=index%>');
+									}
 								}else{
 									alert("Something went wrong :(");
 								}
@@ -281,7 +290,20 @@
 						}
 					});
 				</script>
-				<textarea onkeyup="$('#updateSuggestion<%=index%>').removeAttr('disabled');$('#updateSuggestion<%=index %>').css('color', 'black');" id="tarea<%=index%>" rows="4" cols="50" ><%=suggestionsToShow.get(0).getSuggestion()%></textarea>
+				<textarea style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;resize: none;" onkeyup="$('#updateSuggestion<%=index%>').removeAttr('disabled');$('#updateSuggestion<%=index %>').css('color', 'black');" id="tarea<%=index%>" rows="4"  ><%=suggestionsToShow != null &&suggestionsToShow.size()> 0 ?suggestionsToShow.get(0).getSuggestion():"There is no suggestion."%></textarea>
+				<%
+				if(suggestionsToShow == null ||suggestionsToShow.size() < 1){
+				%>
+				<script>
+				document.getElementById("tarea<%=index%>").onkeyup = null;
+				$('#updateSuggestion<%=index%>').attr('disabled','disabled');
+				$('#updateSuggestion<%=index %>').css('color', 'gray');
+				$('#removeSuggestion<%=index%>').attr('disabled','disabled');
+				$('#removeSuggestion<%=index%>').css('color', 'gray');
+				</script>
+				<%
+				}
+				%>
 				</td>
 				<td></td>
 			</form>
