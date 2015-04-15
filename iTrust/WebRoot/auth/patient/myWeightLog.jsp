@@ -415,3 +415,5 @@ function legendLine2(parent) {
 	ul.appendChild(li);
 }
 </script>
+
+<%@include file="/footer.jsp"%>
