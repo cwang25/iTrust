@@ -284,7 +284,7 @@
 			<b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b>
 			<br/>
 			<button id="toggle<%=index%>" style="position:relative; width: 35px; height: 25px;border:none; background-color:Transparent" onclick="readSuggestion(<%=oldBean.getDate().getTime() %>, <%=loggedInMID%>);">
-			<img id="img<%=index%>" src="/iTrust/image/icons/greenplus.png" style="width:100%;height:100%;"></img>
+			<img id="img<%=index%>" src="/iTrust/image/icons/addSuggestionPlus.png" style="width:100%;height:100%;"></img>
 			<div id="notificationPad<%=index%>" class="circlePad" style="display: none;position:absolute; bottom:12px; left:18px">5</div>
 			</button>
 			</td>

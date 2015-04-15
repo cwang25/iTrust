@@ -12,10 +12,8 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 	}
 	
 	  public void testEditPatient() throws Exception {
-		    driver.findElement(By.id("j_username")).clear();
-		    driver.findElement(By.id("j_username")).sendKeys("9000000000");
-		    driver.findElement(By.id("j_password")).clear();
-		    driver.findElement(By.id("j_password")).sendKeys("pw");
+		    
+		    login("9000000000","pw");
 		    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		    
 		    driver.findElement(By.cssSelector("div.panel-heading")).click();
