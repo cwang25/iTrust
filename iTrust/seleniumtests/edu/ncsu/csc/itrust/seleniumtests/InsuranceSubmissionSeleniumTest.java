@@ -38,7 +38,7 @@ public class InsuranceSubmissionSeleniumTest extends iTrustSeleniumTest {
 	private static final String PW = "pw";
 
 	@Override
-	protected void setUp() throws Exception {
+	public void setUp() throws Exception {
 		super.setUp();
 		gen.clearAllTables();
 		gen.hospitals();
@@ -54,6 +54,7 @@ public class InsuranceSubmissionSeleniumTest extends iTrustSeleniumTest {
 	public void testUAPApproval() throws Exception {
 		driver = login("" + JOHN_SMITH, PW);
 		assertEquals(driver.getTitle(), "iTrust - Patient Home");
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("My Bills")).click();
 		assertEquals(driver.getTitle(), "iTrust - View My Bills");
 		assertTrue(driver.getPageSource().contains("Shelly Vang"));
@@ -80,14 +81,18 @@ public class InsuranceSubmissionSeleniumTest extends iTrustSeleniumTest {
 		driver.findElement(By.name("insPhone")).sendKeys("919-112-8234");
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		
+		logout();
 		driver = login("" + MIKE_JONES, PW);
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 		driver.findElement(By.linkText("View Insurance Claims")).click();
 		driver.findElement(By.linkText(new SimpleDateFormat("MM/dd/YYYY").format(new Date()))).click();
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertLogged(TransactionType.UAP_INITIAL_APPROVAL, MIKE_JONES, MIKE_JONES, "");
 		
+		logout();
 		driver = login("" + JOHN_SMITH, PW);
 		assertEquals(driver.getTitle(), "iTrust - Patient Home");
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("My Bills")).click();
 		assertTrue(driver.getPageSource().contains("Approved"));
 	}
@@ -95,6 +100,7 @@ public class InsuranceSubmissionSeleniumTest extends iTrustSeleniumTest {
 	public void testUAPDenialThenApproval() throws Exception {
 		driver = login("" + MARIA_LOPEZ, PW);
 		assertEquals(driver.getTitle(), "iTrust - Patient Home");
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("My Bills")).click();
 		assertEquals(driver.getTitle(), "iTrust - View My Bills");
 		assertTrue(driver.getPageSource().contains("Kelly Doctor"));
@@ -124,14 +130,18 @@ public class InsuranceSubmissionSeleniumTest extends iTrustSeleniumTest {
 		driver.findElement(By.name("insPhone")).sendKeys("919-468-1537");
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		
+		logout();
 		driver = login("" + DANIEL_WILLIAMS, PW);
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 		driver.findElement(By.linkText("View Insurance Claims")).click();
 		driver.findElement(By.linkText(new SimpleDateFormat("MM/dd/YYYY").format(new Date()))).click();
 		driver.findElement(By.xpath("//input[@value='Deny']")).submit();
 		assertLogged(TransactionType.UAP_INITIAL_DENIAL, DANIEL_WILLIAMS, DANIEL_WILLIAMS, "");
 		
+		logout();
 		driver = login("" + MARIA_LOPEZ, PW);
 		assertEquals(driver.getTitle(), "iTrust - Patient Home");
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("My Bills")).click();
 		assertEquals(driver.getTitle(), "iTrust - View My Bills");
 		assertTrue(driver.getPageSource().contains("Kelly Doctor"));
@@ -160,14 +170,19 @@ public class InsuranceSubmissionSeleniumTest extends iTrustSeleniumTest {
 		driver.findElement(By.name("insPhone")).clear();
 		driver.findElement(By.name("insPhone")).sendKeys("919-468-1537");
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		
+		logout();
 		driver = login("" + DANIEL_WILLIAMS, PW);
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 		driver.findElement(By.linkText("View Insurance Claims")).click();
 		driver.findElement(By.linkText(new SimpleDateFormat("MM/dd/YYYY").format(new Date()))).click();
 		driver.findElement(By.xpath("//input[@value='Approve']")).submit();
 		assertLogged(TransactionType.UAP_INITIAL_DENIAL, DANIEL_WILLIAMS, DANIEL_WILLIAMS, "");
 		
+		logout();
 		driver = login("" + MARIA_LOPEZ, PW);
 		assertEquals(driver.getTitle(), "iTrust - Patient Home");
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("My Bills")).click();
 		assertEquals(driver.getTitle(), "iTrust - View My Bills");
 		assertTrue(driver.getPageSource().contains("Approved"));
@@ -176,6 +191,7 @@ public class InsuranceSubmissionSeleniumTest extends iTrustSeleniumTest {
 	public void testTwoUAPDenials() throws Exception {
 		driver = login("" + JUAN_CARLOS, PW);
 		assertEquals(driver.getTitle(), "iTrust - Patient Home");
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("My Bills")).click();
 		assertEquals(driver.getTitle(), "iTrust - View My Bills");
 		assertTrue(driver.getPageSource().contains("Shelly Vang"));
@@ -205,14 +221,18 @@ public class InsuranceSubmissionSeleniumTest extends iTrustSeleniumTest {
 		driver.findElement(By.name("insPhone")).sendKeys("919-222-6579");
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		
+		logout();
 		driver = login("" + JANE_SMITH, PW);
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 		driver.findElement(By.linkText("View Insurance Claims")).click();
 		driver.findElement(By.linkText(new SimpleDateFormat("MM/dd/YYYY").format(new Date()))).click();
 		driver.findElement(By.xpath("//input[@value='Deny']")).submit();
 		assertLogged(TransactionType.UAP_INITIAL_DENIAL, JANE_SMITH, JANE_SMITH, "");
 		
+		logout();
 		driver = login("" + JUAN_CARLOS, PW);
 		assertEquals(driver.getTitle(), "iTrust - Patient Home");
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("My Bills")).click();
 		assertEquals(driver.getTitle(), "iTrust - View My Bills");
 		assertTrue(driver.getPageSource().contains("Shelly Vang"));
@@ -242,14 +262,18 @@ public class InsuranceSubmissionSeleniumTest extends iTrustSeleniumTest {
 		driver.findElement(By.name("insPhone")).sendKeys("919-222-6579");
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		
+		logout();
 		driver = login("" + JANE_SMITH, PW);
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 		driver.findElement(By.linkText("View Insurance Claims")).click();
 		driver.findElement(By.linkText(new SimpleDateFormat("MM/dd/YYYY").format(new Date()))).click();
 		driver.findElement(By.xpath("//input[@value='Deny']")).submit();
 		assertLogged(TransactionType.UAP_SECOND_DENIAL, JANE_SMITH, JANE_SMITH, "");
 		
+		logout();
 		driver = login("" + JUAN_CARLOS, PW);
 		assertEquals(driver.getTitle(), "iTrust - Patient Home");
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("My Bills")).click();
 		assertEquals(driver.getTitle(), "iTrust - View My Bills");
 		assertTrue(driver.getPageSource().contains("Denied"));
@@ -267,6 +291,7 @@ public class InsuranceSubmissionSeleniumTest extends iTrustSeleniumTest {
 		driver.findElement(By.name("cvv")).sendKeys("007");
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertTrue(driver.getPageSource().contains("Payment Information"));
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("My Bills")).click();
 		assertEquals(driver.getTitle(), "iTrust - View My Bills");
 		assertTrue(driver.getPageSource().contains("Submitted"));

@@ -191,7 +191,7 @@ public class ImmunizationUseCasesTest extends iTrustSeleniumTest {
 		element = driver.findElement(By.id("immunizationsTable"));
 		assertTrue(element.getText().contains("90696"));
 		
-		driver.findElement(By.cssSelector("a[href='javascript:removeImmID('3011');']")).submit();
+	    driver.findElement(By.linkText("Remove")).click();
 		driver.navigate().to("http://localhost:8080/iTrust/auth/hcp-uap/editOfficeVisit.jsp");
 		
 		element = driver.findElement(By.id("immunizationsTable"));

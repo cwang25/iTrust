@@ -39,8 +39,11 @@ public class LabProceduresSeleniumTest extends iTrustSeleniumTest {
 		
 		driver = login("9000000000", "pw");
 		assertEquals(driver.getTitle(), "iTrust - HCP Home");
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div")).click();
 		driver.findElement(By.linkText("Document Office Visit")).click();
-		driver.findElement(By.name("UID_PATIENTID")).sendKeys("2" + Keys.ENTER);
+	    driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("2");
+		driver.findElement(By.xpath("//input[@value='2' and @type='button']")).click();
 		driver.get(ADDRESS + "/auth/hcp-uap/editOfficeVisit.jsp?ovID=955");
 		assertEquals(driver.getTitle(), "iTrust - Document Office Visit");
 		selectComboValue("loinc", "10666-6", driver);
@@ -60,9 +63,12 @@ public class LabProceduresSeleniumTest extends iTrustSeleniumTest {
 		gen.standardData();
 		
 		driver = login("9000000000", "pw");
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div")).click();
 		assertEquals(driver.getTitle(), "iTrust - HCP Home");
 		driver.findElement(By.linkText("Document Office Visit")).click();
-		driver.findElement(By.name("UID_PATIENTID")).sendKeys("2" + Keys.ENTER);
+	    driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("2");
+		driver.findElement(By.xpath("//input[@value='2' and @type='button']")).click();
 		driver.get(ADDRESS + "/auth/hcp-uap/editOfficeVisit.jsp?ovID=955");
 		assertEquals(driver.getTitle(), "iTrust - Document Office Visit");
 		selectComboValue("loinc", "10666-6", driver);
@@ -77,8 +83,11 @@ public class LabProceduresSeleniumTest extends iTrustSeleniumTest {
 		
 		driver = login("9000000000", "pw");
 		assertEquals(driver.getTitle(), "iTrust - HCP Home");
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div")).click();
 		driver.findElement(By.linkText("Document Office Visit")).click();
-		driver.findElement(By.name("UID_PATIENTID")).sendKeys("2" + Keys.ENTER);
+	    driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("2");
+		driver.findElement(By.xpath("//input[@value='2' and @type='button']")).click();
 		driver.get(ADDRESS + "/auth/hcp-uap/editOfficeVisit.jsp?ovID=955");
 		assertEquals(driver.getTitle(), "iTrust - Document Office Visit");
 		//driver.findElement(By.id("editLabProcReassign")).click();
@@ -98,6 +107,7 @@ public class LabProceduresSeleniumTest extends iTrustSeleniumTest {
 		
 		driver = login("22", "pw");
 		assertEquals(driver.getTitle(), "iTrust - Patient Home");
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("My Lab Procedures")).click();
 		assertEquals(driver.getTitle(), "iTrust - View Lab Procedures");
 		assertTrue(driver.getPageSource().contains("7"));
@@ -128,6 +138,7 @@ public class LabProceduresSeleniumTest extends iTrustSeleniumTest {
 		
 		driver = login("2", "pw");
 		assertEquals(driver.getTitle(), "iTrust - Patient Home");
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("My Lab Procedures")).click();
 		assertEquals(driver.getTitle(), "iTrust - View Lab Procedures");
 		
@@ -149,6 +160,7 @@ public class LabProceduresSeleniumTest extends iTrustSeleniumTest {
 		
 		driver = login("1", "pw");
 		assertEquals(driver.getTitle(), "iTrust - Patient Home");
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("My Lab Procedures")).click();
 		assertEquals(driver.getTitle(), "iTrust - View Lab Procedures");
 		
@@ -170,6 +182,7 @@ public class LabProceduresSeleniumTest extends iTrustSeleniumTest {
 		
 		driver = login("21", "pw");
 		assertEquals(driver.getTitle(), "iTrust - Patient Home");
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("My Lab Procedures")).click();
 		assertEquals(driver.getTitle(), "iTrust - View Lab Procedures");
 		
@@ -182,9 +195,12 @@ public class LabProceduresSeleniumTest extends iTrustSeleniumTest {
 		assertEquals(driver.getTitle(), "iTrust - HCP Home");
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 		driver.findElement(By.linkText("Laboratory Procedures")).click();
-		driver.findElement(By.name("UID_PATIENTID")).sendKeys("2");
-		driver.findElement(By.xpath("//input[@value='2']")).submit();
+	    driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("2");
+		driver.findElement(By.xpath("//input[@value='2' and @type='button']")).click();
+		
 		assertEquals(driver.getTitle(), "iTrust - View Laboratory Procedures");
 		driver.findElement(By.linkText("Allow/Disallow Viewing")).click();
 		assertLogged(TransactionType.LAB_RESULTS_VIEW, 9000000000L, 2L, "");
@@ -195,6 +211,7 @@ public class LabProceduresSeleniumTest extends iTrustSeleniumTest {
 		assertEquals(driver.getTitle(), "iTrust - Patient Home");
 		assertLogged(TransactionType.HOME_VIEW, 2L, 0L, "");
 		
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 		driver.findElement(By.linkText("View My Records")).click();
 		assertEquals(driver.getTitle(), "iTrust - View My Records");
 		assertLogged(TransactionType.MEDICAL_RECORD_VIEW, 2L, 2L, "");
@@ -207,6 +224,7 @@ public class LabProceduresSeleniumTest extends iTrustSeleniumTest {
 		driver = login("5000000001", "pw");
 		assertEquals(driver.getTitle(), "iTrust - Lab Tech Home");
 		
+	    driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("All Lab Procedures")).click();
 		assertEquals(driver.getTitle(), "iTrust - View Laboratory Procedures");
 		

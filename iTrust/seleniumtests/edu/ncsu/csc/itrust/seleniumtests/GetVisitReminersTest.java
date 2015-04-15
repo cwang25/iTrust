@@ -103,10 +103,10 @@ public class GetVisitReminersTest {
 	    assertEquals("919-971-0000", driver.findElement(By.xpath("//div[@id='iTrustContent']/div/table/tbody/tr[3]/td[2]")).getText());
 	    assertEquals("Bad Horse", driver.findElement(By.xpath("//div[@id='iTrustContent']/div/table[2]/tbody/tr[2]/td[2]")).getText());
 	    assertEquals("919-123-4567", driver.findElement(By.xpath("//div[@id='iTrustContent']/div/table[2]/tbody/tr[3]/td[2]")).getText());
-	    assertEquals("Care Needs", driver.findElement(By.xpath("//div[@id='iTrustContent']/div/table[3]/tbody/tr[2]/td[2]")).getText());
-	    assertEquals("919-971-0000", driver.findElement(By.xpath("//div[@id='iTrustContent']/div/table[3]/tbody/tr[3]/td[2]")).getText());
-	    assertEquals("Random Person", driver.findElement(By.xpath("//div[@id='iTrustContent']/div/table[4]/tbody/tr[2]/td[2]")).getText());
-	    assertEquals("919-971-0000", driver.findElement(By.xpath("//div[@id='iTrustContent']/div/table[4]/tbody/tr[3]/td[2]")).getText());
+	    assertEquals("Care Needs", driver.findElement(By.xpath("//div[@id='iTrustContent']/div/table[6]/tbody/tr[2]/td[2]")).getText());
+	    assertEquals("919-971-0000", driver.findElement(By.xpath("//div[@id='iTrustContent']/div/table[6]/tbody/tr[3]/td[2]")).getText());
+	    assertEquals("Random Person", driver.findElement(By.xpath("//div[@id='iTrustContent']/div/table[7]/tbody/tr[2]/td[2]")).getText());
+	    assertEquals("919-971-0000", driver.findElement(By.xpath("//div[@id='iTrustContent']/div/table[7]/tbody/tr[3]/td[2]")).getText());
 	  }
 
 	  @Test
