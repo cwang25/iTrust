@@ -177,12 +177,12 @@
 			<form action="viewPatientFoodDiary.jsp" method="POST"> 
 				<td>New Suggestion:</td>
 				<td colspan="4">
-					<textarea rows="4" cols="50" name="suggestionText" id="suggestionText"></textarea>
+					<textarea rows="4" cols="50" name="suggestionText" id="suggestionText<%=index%>"></textarea>
 					<input name="addNewSuggestion" value="true" type ="hidden" ></input>
 					<input name="date" value="<%=sdf.format(oldBean.getDate())%>" type ="hidden" ></input>
 				</td>
 				<td colspan="2">
-				<button type="submit" id="addNewSuggestion">Submit Suggestion</button>
+				<button type="submit" id="addNewSuggestion<%=index%>">Submit Suggestion</button>
 				
 				</td>
 				<%
@@ -206,7 +206,7 @@
 				<%
 				for(SuggestionBean bitem: suggestionsToShow){
 					%>
-					<textarea id="suggestionText<%=bitem.getRowID()%>" style="display: none"><%=bitem.getSuggestion()%></textarea>
+					<textarea id="suggestionBeanText<%=bitem.getRowID()%>" style="display: none"><%=bitem.getSuggestion()%></textarea>
 					<%
 				}
 				%>
@@ -229,7 +229,7 @@
 						 		var rowID =  document.getElementById("savedSuggestionList<%=index%>").value;
 						 		console.log(rowID);
 						 		//update text record on client side
-								document.getElementById("suggestionText"+rowID.toString()).value = nText;
+								document.getElementById("suggestionBeanText"+rowID.toString()).value = nText;
 								//update list title
 								document.getElementById("textTitleList"+rowID.toString()).text = nText.length > 25 ? nText.substring(0, 25) : nText;
 								//Disable the update button
@@ -242,7 +242,7 @@
 						
 					});
 				</script>
-				<select style="margin:5px" id="savedSuggestionList<%=index%>" onchange="$('#updateSuggestion<%=index%>').attr('disabled','disabled');$('#updateSuggestion<%=index %>').css('color', 'gray');updateSuggestionText(document.getElementById('suggestionText'+(this.value).toString()).value,'tarea<%=index%>');">
+				<select style="margin:5px" id="savedSuggestionList<%=index%>" onchange="$('#updateSuggestion<%=index%>').attr('disabled','disabled');$('#updateSuggestion<%=index %>').css('color', 'gray');updateSuggestionText(document.getElementById('suggestionBeanText'+(this.value).toString()).value,'tarea<%=index%>');">
 				<%
 					for(SuggestionBean bitem : suggestionsToShow){
 						%>
@@ -267,13 +267,13 @@
 							 		var rowID =  document.getElementById("savedSuggestionList<%=index%>").value;
 							 		console.log(rowID);
 							 		//update text record on client side
-							 		var suggTextRemove = document.getElementById("suggestionText"+rowID.toString());
+							 		var suggTextRemove = document.getElementById("suggestionBeanText"+rowID.toString());
 							 		suggTextRemove.parentNode.removeChild(suggTextRemove);
 									//update list title
 									var element = document.getElementById("textTitleList"+rowID.toString());
 									element.parentNode.removeChild(element);
 									var selector = document.getElementById("savedSuggestionList<%=index%>");
-									updateSuggestionText(document.getElementById('suggestionText'+(selector.value).toString()).value,'tarea<%=index%>');
+									updateSuggestionText(document.getElementById('suggestionBeanText'+(selector.value).toString()).value,'tarea<%=index%>');
 								}else{
 									alert("Something went wrong :(");
 								}
