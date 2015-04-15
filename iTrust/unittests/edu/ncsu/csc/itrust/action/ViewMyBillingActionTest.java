@@ -22,11 +22,11 @@ public class ViewMyBillingActionTest extends TestCase{
 	}
 
 	public void testGetMyUnpaidBills() throws DBException, SQLException {
-		assertEquals(1, action.getMyUnpaidBills().size());
+		assertEquals(2, action.getMyUnpaidBills().size());
 	}
 
 	public void testGetAllMyBills() throws DBException, SQLException {
-		assertEquals(2, action.getAllMyBills().size());
+		assertEquals(4, action.getAllMyBills().size());
 	}
 
 }

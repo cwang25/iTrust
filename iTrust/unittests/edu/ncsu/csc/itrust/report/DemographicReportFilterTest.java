@@ -172,7 +172,8 @@ public class DemographicReportFilterTest extends TestCase {
 		List<PatientBean> res = filter.filter(allPatients);
 		//Three more patients for UC68 UC69 that have same zip code
 		//So.. yea
-		assertEquals(18, res.size());
+		for(PatientBean b : res)System.out.println(b.getMID());
+		assertEquals(23, res.size());
 		assertTrue(res.get(0).getMID() == 1L); // random person
 		assertTrue(res.get(1).getMID() == 3L); // care needs
 		assertTrue(res.get(2).getMID() == 4L); // norecords has
@@ -230,7 +231,7 @@ public class DemographicReportFilterTest extends TestCase {
 		filter = new DemographicReportFilter(DemographicReportFilterType.GENDER, "Female", factory);
 		List<PatientBean> res = filter.filter(allPatients);
 		//UC68 Jennifer patient is female.
-		assertEquals(17, res.size());
+		assertEquals(20, res.size());
 		assertTrue(res.get(0).getMID() == 1L);
 		assertTrue(res.get(1).getMID() == 5L);
 		assertTrue(res.get(2).getMID() == 6L);

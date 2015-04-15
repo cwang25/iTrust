@@ -66,7 +66,8 @@ public class MedicalReportFilterTest extends TestCase {
 	public void testFilterByLowerOfficeVisit() throws Exception {
 		filter = new MedicalReportFilter(MedicalReportFilterType.LOWER_OFFICE_VISIT_DATE, "01/01/2012", factory);
 		List<PatientBean> res = filter.filter(allPatients);
-		assertEquals(14, res.size());
+		for(PatientBean b : res) System.out.print(b.getMID());
+		assertEquals(20, res.size());
 		assertTrue(res.get(0).getMID() == 100L);
 	}
 

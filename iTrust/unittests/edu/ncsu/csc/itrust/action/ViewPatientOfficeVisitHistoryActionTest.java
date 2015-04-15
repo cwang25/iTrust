@@ -40,7 +40,7 @@ public class ViewPatientOfficeVisitHistoryActionTest extends TestCase{
 	public void testGetPatients() throws Exception {
 		List<PatientVisitBean> list = action.getPatients();
 		//UC68 UC69 created 4 more patients.
-		assertEquals(46, list.size());
+		assertEquals(54, list.size());
 		assertEquals("31", list.get(17).getLastOVDateD());
 		assertEquals("03", list.get(17).getLastOVDateM());
 	}
