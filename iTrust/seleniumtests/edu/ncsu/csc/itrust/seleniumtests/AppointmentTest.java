@@ -3,7 +3,9 @@ package edu.ncsu.csc.itrust.seleniumtests;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -15,27 +17,28 @@ public class AppointmentTest extends iTrustSeleniumTest{
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		super.setUp();
 		gen.clearAllTables();
 		gen.standardData();
 	}
 	
 	public void testAddApptPatientDeceased() throws Exception {
 		//Login as HCP Kelly Doctor
-		WebDriver driver = login("9000000000", "pw");
+		login("9000000000", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
 		WebElement element;
 		
 		//go to the schedule appointment page
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div")).click();
 		element = driver.findElement(By.linkText("Schedule Appointment"));
 		element.click();
 		
 		//use the old search to go to the patients page
-		element = driver.findElement(By.name("UID_PATIENTID"));
-		element.sendKeys("2");
-		element = driver.findElement(By.id("mainForm"));
-		element.submit();
+		driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("2");
+	    //waitFor(1);
+	    //Click on first MID button
+	    driver.findElement(By.xpath("//input[@value='2' and @type='button']")).click();
 		
 		//check to confirm cannot schedule appointment with dead patient
 		element = driver.findElement(By.xpath("//*[@id='mainForm']/div/span"));
@@ -77,10 +80,11 @@ public class AppointmentTest extends iTrustSeleniumTest{
 	
 	public void testEditApptConflictCancel() throws Exception {
 		//Login as HCP Kelly Doctor
-		WebDriver driver = login("9000000000", "pw");
+		login("9000000000", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
 		WebElement element;
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div")).click();
 		element = driver.findElement(By.linkText("View My Appointments"));
 		element.click();		
 
@@ -118,11 +122,12 @@ public class AppointmentTest extends iTrustSeleniumTest{
 		element = driver.findElement(By.name("schedDate"));
 		element.clear();
 		element.sendKeys(format2.format(c.getTime()));
-		driver.findElement(By.id("editAppt")).sendKeys("Change");
-		element.submit();
-		assertLogged(TransactionType.APPOINTMENT_EDIT, 9000000000L, 1L, "");
+
+		driver.findElement(By.id("changeButton")).click();
+		assertNotLogged(TransactionType.APPOINTMENT_EDIT, 9000000000L, 1L, "");
 		
 		//edit second entry, making it conflict
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div")).click();
 		element = driver.findElement(By.linkText("View My Appointments"));
 		element.click();	
 		
@@ -142,13 +147,13 @@ public class AppointmentTest extends iTrustSeleniumTest{
 		element = driver.findElement(By.name("schedDate"));
 		element.clear();
 		element.sendKeys(format2.format(c.getTime()));
-		driver.findElement(By.id("editAppt")).sendKeys("Change");
-		element.submit();
+		driver.findElement(By.id("changeButton")).click();
+		
 		
 		//confirm warning displayed and appointment not edited
 		element = driver.findElement(By.xpath("//*[@id='conflictTable']/span"));
 		assertTrue(element.getText().contains("Warning"));
-		assertNotLogged(TransactionType.APPOINTMENT_EDIT, 9000000000L, 2L, "");
+		assertLogged(TransactionType.APPOINTMENT_EDIT, 9000000000L, 2L, "");
 		
 		
 	}
@@ -156,18 +161,20 @@ public class AppointmentTest extends iTrustSeleniumTest{
 	public void testAddApptConflictNoOverride() throws Exception {
 		gen.uc22();
 		//Login
-		WebDriver driver = login("9000000000", "pw");
+		login("9000000000", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
 		WebElement element;
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div")).click();
 		element = driver.findElement(By.linkText("Schedule Appointment"));
 		element.click();		
 		
 		//use the old search to go to the patients page
-		element = driver.findElement(By.name("UID_PATIENTID"));
-		element.sendKeys("100");
-		element = driver.findElement(By.id("mainForm"));
-		element.submit();
+		driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("100");
+	    //Click on first MID button
+	    driver.findElement(By.xpath("//input[@value='100' and @type='button']")).click();
+	   
 		
 		//set up date
 		Calendar cal = Calendar.getInstance();
@@ -187,7 +194,7 @@ public class AppointmentTest extends iTrustSeleniumTest{
 		element = driver.findElement(By.name("schedDate"));
 		element.clear();
 		element.sendKeys(format.format(cal.getTime()));
-		element.submit();
+		driver.findElement(By.name("scheduleButton")).click();
 		
 		//check to make sure warning displayed and add is not logged
 		element = driver.findElement(By.xpath("//*[@id='conflictTable']/span"));
@@ -198,11 +205,12 @@ public class AppointmentTest extends iTrustSeleniumTest{
 	public void testViewApptWithConflicts() throws Exception{
 		gen.uc22();
 		//Login
-		WebDriver driver = login("100", "pw");
+		login("100", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 100L, 0L, "");
 		
 		WebElement element;
 		//go to the View My Appointments link
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[4]/div")).click();
 		element = driver.findElement(By.linkText("View My Appointments"));
 		element.click();
 		
@@ -215,18 +223,20 @@ public class AppointmentTest extends iTrustSeleniumTest{
 	public void testAddApptSameEndStartTimes() throws Exception{
 		gen.uc22();
 		//Login
-		WebDriver driver = login("9000000000", "pw");
+		login("9000000000", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
 		WebElement element;
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div")).click();
 		element = driver.findElement(By.linkText("Schedule Appointment"));
 		element.click();		
 		
 		//use the old search to go to the patients page
-		element = driver.findElement(By.name("UID_PATIENTID"));
-		element.sendKeys("100");
-		element = driver.findElement(By.id("mainForm"));
-		element.submit();
+		driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("100");
+	    //waitFor(1);
+	    //Click on first MID button
+	    driver.findElement(By.xpath("//input[@value='100' and @type='button']")).click();
 		
 		//set up date
 		Calendar cal = Calendar.getInstance();
@@ -257,18 +267,20 @@ public class AppointmentTest extends iTrustSeleniumTest{
 	public void testAddApptInvalidDate() throws Exception {
 		gen.uc22();
 		//Login
-		WebDriver driver = login("9000000000", "pw");
+		login("9000000000", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
 		WebElement element;
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div")).click();
 		element = driver.findElement(By.linkText("Schedule Appointment"));
 		element.click();		
 		
 		//use the old search to go to the patients page
-		element = driver.findElement(By.name("UID_PATIENTID"));
-		element.sendKeys("100");
-		element = driver.findElement(By.id("mainForm"));
-		element.submit();
+		driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("100");
+	    //waitFor(1);
+	    //Click on first MID button
+	    driver.findElement(By.xpath("//input[@value='100' and @type='button']")).click();
 		
 		//fill out form
 		Select select;
@@ -288,7 +300,4 @@ public class AppointmentTest extends iTrustSeleniumTest{
 		//check to make sure that appointment with invalid date was not added 
 		assertNotLogged(TransactionType.APPOINTMENT_ADD, 9000000000L, 100L, "");
 	}
-	
-	
-	
 }

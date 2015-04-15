@@ -1,14 +1,9 @@
 package edu.ncsu.csc.itrust.seleniumtests;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
 import edu.ncsu.csc.itrust.enums.TransactionType;
 
 public class AddNDTylenolTest extends iTrustSeleniumTest{
-	
-	protected WebDriver driver;
 	
 	@Override
 	protected void setUp() throws Exception {
@@ -22,7 +17,7 @@ public class AddNDTylenolTest extends iTrustSeleniumTest{
 		driver = login("9000000001", "pw");
 		assertEquals("iTrust - Admin Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000001L, 0L, "");
-		
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("Edit ND Codes")).click();
 		assertEquals("iTrust - Maintain ND Codes", driver.getTitle());
 		

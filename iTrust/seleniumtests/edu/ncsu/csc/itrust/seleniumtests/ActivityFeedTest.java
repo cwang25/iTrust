@@ -3,19 +3,7 @@ package edu.ncsu.csc.itrust.seleniumtests;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.ListIterator;
-
-import org.apache.bcel.verifier.statics.Pass1Verifier;
 import org.openqa.selenium.*;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import com.meterware.httpunit.WebConversation;
-import com.meterware.httpunit.WebForm;
-import com.meterware.httpunit.WebResponse;
-
-import edu.ncsu.csc.itrust.http.LoginTest;
 
 public class ActivityFeedTest extends iTrustSeleniumTest {
 	

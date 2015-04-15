@@ -10,8 +10,6 @@ import org.openqa.selenium.support.ui.Select;
 import edu.ncsu.csc.itrust.enums.TransactionType;
 
 public class AppointmentRequestTest  extends iTrustSeleniumTest{
-
-	WebDriver driver;
 	WebElement element;
 	
 	@Override
@@ -28,6 +26,7 @@ public class AppointmentRequestTest  extends iTrustSeleniumTest{
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		
 		//go to the page
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		element = driver.findElement(By.linkText("Appointment Requests"));
 		element.click();
 		
@@ -42,6 +41,7 @@ public class AppointmentRequestTest  extends iTrustSeleniumTest{
 		assertEquals("iTrust - Patient Home", driver.getTitle());
 		
 		//go to the page
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[4]/div/h2")).click();
 		element = driver.findElement(By.linkText("Appointment Requests"));
 		element.click();
 		assertEquals("iTrust - Appointment Requests", driver.getTitle());
@@ -79,11 +79,12 @@ public class AppointmentRequestTest  extends iTrustSeleniumTest{
 		assertLogged(TransactionType.APPOINTMENT_REQUEST_SUBMITTED, 26L, 9000000010L, "");
 		
 		//login to Zoidburg
-		driver.close();
-		driver = login("9000000010", "pw");
+		logout();
+		login("9000000010", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		
 		//go to the page
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		element = driver.findElement(By.linkText("Appointment Requests"));
 		element.click();
 		assertEquals("iTrust - View My Appointment Requests", driver.getTitle());
@@ -99,6 +100,7 @@ public class AppointmentRequestTest  extends iTrustSeleniumTest{
 		assertEquals("iTrust - Patient Home", driver.getTitle());
 		
 		//go to the page
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[4]/div/h2")).click();
 		element = driver.findElement(By.linkText("Appointment Requests"));
 		element.click();
 		assertEquals("iTrust - Appointment Requests", driver.getTitle());
@@ -132,11 +134,12 @@ public class AppointmentRequestTest  extends iTrustSeleniumTest{
 		assertLogged(TransactionType.APPOINTMENT_REQUEST_SUBMITTED, 26L, 9000000010L, "");
 		
 		//login to zoidburg
-		driver.close();
-		driver = login("9000000010", "pw");
+		logout();
+		login("9000000010", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		
 		//go to the page
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		element = driver.findElement(By.linkText("Appointment Requests"));
 		element.click();
 		assertEquals("iTrust - View My Appointment Requests", driver.getTitle());
@@ -157,6 +160,7 @@ public class AppointmentRequestTest  extends iTrustSeleniumTest{
 		assertEquals("iTrust - Patient Home", driver.getTitle());
 		
 		//go to the page
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[4]/div/h2")).click();
 		element = driver.findElement(By.linkText("Appointment Requests"));
 		element.click();
 		assertEquals("iTrust - Appointment Requests", driver.getTitle());
@@ -190,11 +194,12 @@ public class AppointmentRequestTest  extends iTrustSeleniumTest{
 		assertLogged(TransactionType.APPOINTMENT_REQUEST_SUBMITTED, 26L, 9000000010L, "");
 		
 		//login to zoidburg
-		driver.close();
-		driver = login("9000000010", "pw");
+		logout();
+		login("9000000010", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		
 		//go to the page
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		element = driver.findElement(By.linkText("Appointment Requests"));
 		element.click();
 		assertEquals("iTrust - View My Appointment Requests", driver.getTitle());
@@ -214,6 +219,7 @@ public class AppointmentRequestTest  extends iTrustSeleniumTest{
 		assertEquals("iTrust - Patient Home", driver.getTitle());
 		
 		//go to the page
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[4]/div/h2")).click();
 		element = driver.findElement(By.linkText("Appointment Requests"));
 		element.click();
 		assertEquals("iTrust - Appointment Requests", driver.getTitle());
@@ -253,11 +259,12 @@ public class AppointmentRequestTest  extends iTrustSeleniumTest{
 		
 		
 		//login to Zoidburg
-		driver.close();
-		driver = login("9000000010", "pw");
+		logout();
+		login("9000000010", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		
 		//go to the page
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		element = driver.findElement(By.linkText("Appointment Requests"));
 		element.click();
 		assertEquals("iTrust - View My Appointment Requests", driver.getTitle());
@@ -272,6 +279,7 @@ public class AppointmentRequestTest  extends iTrustSeleniumTest{
 		assertEquals("iTrust - Patient Home", driver.getTitle());
 		
 		//go to the page
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[4]/div/h2")).click();
 		element = driver.findElement(By.linkText("Appointment Requests"));
 		element.click();
 		assertEquals("iTrust - Appointment Requests", driver.getTitle());

@@ -9,8 +9,6 @@ import edu.ncsu.csc.itrust.enums.TransactionType;
 
 public class AddPatientTest extends iTrustSeleniumTest{
 	
-	protected WebDriver driver;
-	
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -25,6 +23,7 @@ public class AddPatientTest extends iTrustSeleniumTest{
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
 		//Click the add patients link
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[6]/div")).click();
 		driver.findElement(By.linkText("Patient")).click();
 		assertEquals("iTrust - Add Patient", driver.getTitle());
 
@@ -40,9 +39,9 @@ public class AddPatientTest extends iTrustSeleniumTest{
 		String pass =  driver.findElement(By.xpath("//table[1]//tr[3]/td[2]")).getText();
 		
 		//Logout
-		driver.close();
+		logout();
 		//Login with new user and check if it worked
-		driver = login(mid, pass);
+		login(mid, pass);
 		assertEquals("iTrust - Patient Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, Long.parseLong(mid), 0L, "");
 	}
@@ -54,6 +53,7 @@ public class AddPatientTest extends iTrustSeleniumTest{
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
 		//Click the add patients link
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[6]/div")).click();
 		driver.findElement(By.linkText("Patient")).click();
 		assertEquals("iTrust - Add Patient", driver.getTitle());
 
@@ -74,11 +74,12 @@ public class AddPatientTest extends iTrustSeleniumTest{
 	
 	public void testInvalidPatientName() throws Exception{
 		//Login
-		driver = login("9000000000", "pw");
+		login("9000000000", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
 		//Click the add patients link
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[6]/div")).click();
 		driver.findElement(By.linkText("Patient")).click();
 		assertEquals("iTrust - Add Patient", driver.getTitle());
 
@@ -99,11 +100,12 @@ public class AddPatientTest extends iTrustSeleniumTest{
 	
 	public void testInvalidPatientEmail() throws Exception{
 		//Login
-		driver = login("9000000000", "pw");
+		login("9000000000", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
 		//Click the add patients link
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[6]/div")).click();
 		driver.findElement(By.linkText("Patient")).click();
 		assertEquals("iTrust - Add Patient", driver.getTitle());
 	
