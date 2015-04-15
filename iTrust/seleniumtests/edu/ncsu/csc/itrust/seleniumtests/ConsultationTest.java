@@ -16,26 +16,18 @@ import org.openqa.selenium.support.ui.Select;
 
 public class ConsultationTest extends iTrustSeleniumTest{
 	
-	private WebDriver driver;
-
-	private StringBuffer verificationErrors = new StringBuffer();
-
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception{
 		// Create a new instance of the html unit driver
-		driver = new HtmlUnitDriver();
-
-		// Navigate to desired web page
-		driver.get("http://localhost:8080/iTrust/");
+		super.setUp();
+		gen.standardData();
 	}
 	
 	@Test
 	public void testSubmitAndReceiveConsultation() throws Exception {
 		String expectedTitle = "iTrust - HCP Home";
 
-		driver.findElement(By.id("j_username")).sendKeys("9000000000");
-		driver.findElement(By.id("j_password")).sendKeys("pw");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		login("9000000000", "pw");
 		// get the title of the page
 		String actualTitle = driver.getTitle();
 		// verify title
@@ -46,9 +38,7 @@ public class ConsultationTest extends iTrustSeleniumTest{
 	public void testSubmitAndEditConsultation() throws Exception {
 		String expectedTitle = "iTrust - HCP Home";
 
-		driver.findElement(By.id("j_username")).sendKeys("9000000000");
-		driver.findElement(By.id("j_password")).sendKeys("pw");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		login("9000000000", "pw");
 		// get the title of the page
 		String actualTitle = driver.getTitle();
 		// verify title
@@ -59,9 +49,7 @@ public class ConsultationTest extends iTrustSeleniumTest{
 	public void testReceiveAndEditConsultation() throws Exception {
 		String expectedTitle = "iTrust - HCP Home";
 
-		driver.findElement(By.id("j_username")).sendKeys("9000000000");
-		driver.findElement(By.id("j_password")).sendKeys("pw");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		login("9000000000", "pw");
 		// get the title of the page
 		String actualTitle = driver.getTitle();
 		// verify title

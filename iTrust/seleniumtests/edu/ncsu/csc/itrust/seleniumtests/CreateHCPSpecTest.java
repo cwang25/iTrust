@@ -24,7 +24,7 @@ public class CreateHCPSpecTest extends iTrustSeleniumTest {
 		
 		assertLogged(TransactionType.HOME_VIEW, 9000000001L, 0L, "");
 		assertEquals("iTrust - Admin Home", driver.getTitle());
-		
+		driver.findElement(By.cssSelector("div.panel-heading")).click();
 		driver.findElement(By.linkText("Add HCP")).click();
 
 		assertEquals("iTrust - Add HCP", driver.getTitle());

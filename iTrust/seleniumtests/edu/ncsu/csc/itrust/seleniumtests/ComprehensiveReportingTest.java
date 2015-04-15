@@ -1,72 +1,55 @@
 package edu.ncsu.csc.itrust.seleniumtests;
 
-import org.junit.Before;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.junit.*;
+import org.openqa.selenium.*;
 
-import edu.ncsu.csc.itrust.enums.TransactionType;
-
-public class ComprehensiveReportingTest extends iTrustSeleniumTest{
-	//private static WebDriver driver = null;
-	
+public class ComprehensiveReportingTest extends iTrustSeleniumTest {
 	@Before
-	public void setUp() throws Exception {
-	    // Create a new instance of the driver
-	    //driver = new HtmlUnitDriver();
+	public void setUp() throws Exception{
 		super.setUp();
 		gen.clearAllTables();
 		gen.standardData();
 	}
-	
+
+	@Test
 	public void testComprehensiveAcceptanceSuccess() throws Exception {
-		// HCP 9000000000 logs in
-		WebDriver driver = (HtmlUnitDriver)login("9000000000", "pw");
-		assertTrue(driver.getTitle().contains("iTrust - HCP Home"));
-		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
-		
-		// HCP 9000000000 moves to the add new report request page
+		String expectedTitle = "iTrust - HCP Home";
+
+		login("9000000000", "pw");
+		// get the title of the page
+		String actualTitle = driver.getTitle();
+		// verify title
+		assertEquals(actualTitle, expectedTitle);
+
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("My Report Requests")).click();
+		Assert.assertTrue(driver.getPageSource().contains("Report Requests"));
 		driver.findElement(By.linkText("Add a new Report Request")).click();
-		assertTrue(driver.getPageSource().contains("Please Select a Patient"));
-		
-		// HCP 9000000000 requests a report on patient 2
-		driver.findElement(By.name("UID_PATIENTID")).sendKeys("2");
-		driver.findElement(By.cssSelector("input[value='2']")).submit();
-		assertTrue(driver.getPageSource().contains("Report Request Accepted"));
-		assertLogged(TransactionType.COMPREHENSIVE_REPORT_ADD, 9000000000L, 2L, "Report ID:");
+		driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("2");
+	    //waitFor(1);
+	    driver.findElement(By.xpath("//input[@value='2' and @type='button']")).click();
+		Assert.assertTrue(driver.getPageSource().contains(
+				"Report Request Accepted"));
+
 	}
-	
+
+	@Test
 	public void testHCPChoosesInvalidPatient() throws Exception {
-		// HCP 9000000000 logs in
-		WebDriver driver = (HtmlUnitDriver)login("9000000000", "pw");
-		assertTrue(driver.getTitle().contains("iTrust - HCP Home"));
-		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
-		
-		// HCP 9000000000 moves to the add new report request page
+		String expectedTitle = "iTrust - HCP Home";
+
+		login("9000000000", "pw");
+		// get the title of the page
+		String actualTitle = driver.getTitle();
+		// verify title
+		assertEquals(actualTitle, expectedTitle);
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("My Report Requests")).click();
+		Assert.assertTrue(driver.getPageSource().contains("Report Requests"));
 		driver.findElement(By.linkText("Add a new Report Request")).click();
-		assertTrue(driver.getPageSource().contains("Please Select a Patient"));
-		
-		// HCP 9000000000 requests a report on patient 260
-		driver.findElement(By.name("UID_PATIENTID")).sendKeys("260");
-		driver.findElement(By.cssSelector("input[value='260']")).submit();
-        assertNotLogged(TransactionType.COMPREHENSIVE_REPORT_ADD, 9000000000L, 23L, "Report ID:");
-	}
-	
-	public void testHCPChoosesIncorrectPatient() throws Exception {
-		// HCP 9000000000 logs in
-		WebDriver driver = (HtmlUnitDriver)login("9000000000", "pw");
-		assertTrue(driver.getTitle().contains("iTrust - HCP Home"));
-		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
-				
-		// HCP 9000000000 moves to the add new report request page
-		driver.findElement(By.linkText("My Report Requests")).click();
-		driver.findElement(By.linkText("Add a new Report Request")).click();
-		assertTrue(driver.getPageSource().contains("Please Select a Patient"));
-		
-		// HCP 9000000000 requests a report on patient 260
-		driver.findElement(By.name("UID_PATIENTID")).sendKeys("2");
-		assertNotLogged(TransactionType.COMPREHENSIVE_REPORT_ADD, 9000000000L, 2L, "Report ID:");
+		driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("260");
+	    waitFor(1);
+	    Assert.assertTrue(driver.getPageSource().contains("Found 0 Records"));
 	}
 }

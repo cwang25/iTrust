@@ -10,9 +10,7 @@ public class CreateHCPTest extends iTrustSeleniumTest {
 	public void setUp() throws Exception {
 		super.setUp();
 		gen.clearAllTables();
-		gen.admin1();
-		gen.hcp0();
-		gen.cptCodes();
+		gen.standardData();
 	}
 	
 	public void testCreateValidHCP() throws Exception {
@@ -20,7 +18,7 @@ public class CreateHCPTest extends iTrustSeleniumTest {
 		WebDriver driver = new HtmlUnitDriver();
 		driver = login("9000000001", "pw");
 		assertEquals("iTrust - Admin Home", driver.getTitle());
-		
+		driver.findElement(By.cssSelector("div.panel-heading")).click();
 		driver.findElement(By.linkText("Add HCP")).click();
 		assertEquals("iTrust - Add HCP", driver.getTitle());
 		
@@ -72,7 +70,8 @@ public class CreateHCPTest extends iTrustSeleniumTest {
 		WebDriver driver = new HtmlUnitDriver();
 		driver = login("9000000001", "pw");
 		assertEquals("iTrust - Admin Home", driver.getTitle());
-		
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
+
 		driver.findElement(By.linkText("Edit Personnel")).click();
 		assertEquals("iTrust - Please Select a Personnel", driver.getTitle());
 		
@@ -94,26 +93,29 @@ public class CreateHCPTest extends iTrustSeleniumTest {
 	}
 	
 	public void testEditHospitalAssignments() throws Exception {
-		gen.clearAllTables();
-		gen.standardData();
-		
 		//login as admin
-		WebDriver driver = new HtmlUnitDriver();
-		driver = login("9000000001", "pw");
+		login("9000000001", "pw");
 		assertEquals("iTrust - Admin Home", driver.getTitle());
 		
-		driver.findElement(By.linkText("Edit HCP Assignment to Hospital")).click();
-		assertEquals("iTrust - Please Select a Personnel", driver.getTitle());
+
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
+	    driver.findElement(By.linkText("Edit HCP Assignment to Hospital")).click();
+	    driver.findElement(By.name("FIRST_NAME")).clear();
+	    driver.findElement(By.name("FIRST_NAME")).sendKeys("Kelly");
+	    driver.findElement(By.name("LAST_NAME")).clear();
+	    driver.findElement(By.name("LAST_NAME")).sendKeys("Doctor");
+	    driver.findElement(By.xpath("//input[@value='User Search']")).click();
 		
-		WebElement firstName = driver.findElement(By.name("FIRST_NAME"));
-		firstName.sendKeys("Kelly");
-		WebElement lastName = driver.findElement(By.name("LAST_NAME"));
-		lastName.sendKeys("Doctor");
-		WebElement form = driver.findElement(By.id("userSearchForm"));
-		form.submit();
-		WebElement user = driver.findElement(By.id("9000000000")); //mid of the user search result
-		user.submit();
-		assertEquals("iTrust - Hospital Staffing Assignments", driver.getTitle());
+	    
+	    assertTrue(pageContains("Found 1 Records"));
+	    WebElement b = driver.findElement(By.xpath("//input[@value='9000000000' and @type='submit']"));
+	    System.out.println(b.getAttribute("value"));
+	    System.out.println(b.getAttribute("type"));
+	    
+		System.out.println(driver.getPageSource());
+		clickOnNonJavascriptElement(b);
+		System.out.println(driver.getPageSource());
+	    assertEquals("iTrust - Hospital Staffing Assignments", driver.getTitle());
 		
 		driver.findElement(By.linkText("Assign")).click();
 		assertTrue(driver.getPageSource().contains("HCP has been assigned"));
