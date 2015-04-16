@@ -404,8 +404,8 @@ INSERT INTO fooddiarylabels (rowid, mid, label)
 VALUES 
 (1,500, 'Diet'),
 (2,500, 'FastFood'),
-(NULL, 500, 'Old diaries'),
-(NULL, 500, 'Before Diet');
+(NULL, 500, 'OldDiaries'),
+(NULL, 500, 'BeforeDiet');
 
 INSERT INTO fooddiarysetlabels (mid, diarydate, label, labelrowID)
 VALUES

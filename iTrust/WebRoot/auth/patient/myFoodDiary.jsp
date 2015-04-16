@@ -191,7 +191,7 @@
 				}
 			} catch (FormValidationException e) {
 				%>
-				<span class="iTrustError">Label name may only contain letters and numbers.</span>
+				<span class="iTrustError">Label name cannot accept spaces and may only contain letters and numbers.</span>
 				<%
 				dataAllCorrect = false;
 			}
