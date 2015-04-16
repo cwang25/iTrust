@@ -36,7 +36,7 @@ public class RemoveFoodDiaryLabelBucketAction {
 	public FoodDiaryLabelBean removeFoodDiaryLabel(FoodDiaryLabelBean b) throws FormValidationException, DBException {		
 		try{
 		FoodDiaryLabelBean ret = foodDAO.removeLabel(b);
-		loggingAction.logEvent(TransactionType.PATIENT_ADD_LABEL, mid, mid, "");
+		loggingAction.logEvent(TransactionType.PATIENT_REMOVE_LABEL, mid, mid, "");
 		return ret;
 		}catch(Exception e){
 			return null;

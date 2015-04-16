@@ -450,7 +450,9 @@ public enum TransactionType {
 	/**PATIENT_GET_ALL_LABELS**/
 	PATIENT_GET_ALL_LABELS(7303, "Retrieved all labels", "Retrieved all labels", true),
 	/**PATIENT_REMOVE_LABEL**/
-	PATIENT_REMOVE_LABEL(7304, "Removed a label", "Removed a label", true),
+	PATIENT_REMOVE_ATTACHED_LABEL(7304, "Removed a label from food diary", "removed a label from food diary", true),
+	/**PATIENT_REMOVE_LABEL**/
+	PATIENT_REMOVE_LABEL(7305, "Removed a label", "removed a label", true),
 	/**HCP_LEFT_SUGGESTION_IN_FOOD_DIARY**/
 	HCP_LEFT_SUGGESTION(7500, "Nutritionist left suggestion in Food Diary", "left suggestion in food diary", true),
 	/**HCP_LEFT_SUGGESTION_IN_FOOD_DIARY**/

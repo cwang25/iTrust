@@ -32,7 +32,7 @@ public class RemoveFoodDiaryLabelAction {
 	 */
 	public FoodDiaryLabelSetBean removeFoodDiaryLabel(FoodDiaryLabelSetBean bean) throws DBException {
 		FoodDiaryLabelSetBean ret = foodDAO.removeFoodDiaryLabel(bean);
-		loggingAction.logEvent(TransactionType.PATIENT_REMOVE_LABEL, mid, mid, "");
+		loggingAction.logEvent(TransactionType.PATIENT_REMOVE_ATTACHED_LABEL, mid, mid, "");
 		return ret;
 	}
 }

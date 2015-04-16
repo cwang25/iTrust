@@ -73,7 +73,7 @@
 	 	boolean showGraph = mode!=null&&mode.equals("showGraph");
 	 	boolean showCompareGraph = mode!=null&&mode.equals("showCompareGraph");
 	 	boolean removeLabel = mode!=null&&mode.equals("removeLabel");
-	 	System.out.println(removeLabel+"***"+mode);
+	 	//System.out.println(removeLabel+"***"+mode);
 	 	SimpleDateFormat diaryDateFormat = new SimpleDateFormat("MM/dd/yyyy");
 	 	//out.println(mode);
 /*  	String dateStr = "";
@@ -178,11 +178,17 @@
 			addAction.undoFoodDiary(b);
 		} else if(addLabel) {
 			try {
-				FoodDiaryLabelBean b = new FoodDiaryLabelBean(loggedInMID, newLabelName);
-				labelAddAction.addFoodDiaryLabel(b);
-				%>
-				<p align="center"style="font-size: 16pt; font-weight: bold;" >Label has been added.</p>
-				<%
+				if(newLabelName == null || newLabelName.length()<1){
+					%>
+					<p align="center"style="font-size: 16pt; font-weight: bold; color:red;" >Label cannot be blank.</p>
+					<%
+				}else{
+					FoodDiaryLabelBean b = new FoodDiaryLabelBean(loggedInMID, newLabelName);
+					labelAddAction.addFoodDiaryLabel(b);
+					%>
+					<p align="center"style="font-size: 16pt; font-weight: bold;" >Label has been added.</p>
+					<%
+				}
 			} catch (FormValidationException e) {
 				%>
 				<span class="iTrustError">Label name may only contain letters and numbers.</span>
@@ -580,6 +586,7 @@
 				</script>
 				</td>
 			</tr>
+			
 		</table>
 		<br/>
 		<input name="operationMode" value="addLabel" type="hidden">
@@ -607,11 +614,13 @@
 			<input type="button" id="mockRemoveLabelBtn" onclick="removeLabelBtnFunc();" value="Remove">
 				<script>
 				function removeLabelBtnFunc(){
-					var selector = document.getElementById("labelListToRemove");
-					if($.isNumeric(selector.value)){
-						document.getElementById("removeLabelRowID").value = selector.value;
-						//console.log(selector.value);
-						document.getElementById("removeSavedLabelBtn").click();
+					if(confirm('WARNING!  Are you sure you want to delete this label?  All food diaries that associate with this label will lose its labels.')){
+						var selector = document.getElementById("labelListToRemove");
+						if($.isNumeric(selector.value)){
+							document.getElementById("removeLabelRowID").value = selector.value;
+							//console.log(selector.value);
+							document.getElementById("removeSavedLabelBtn").click();
+						}		
 					}
 				}
 				</script>
