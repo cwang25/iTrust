@@ -20,6 +20,7 @@
 <%@page import="edu.ncsu.csc.itrust.action.AddFoodDiaryLabelAction"%>
 <%@page import="edu.ncsu.csc.itrust.action.SetFoodDiaryLabelAction"%>
 <%@page import="edu.ncsu.csc.itrust.action.RemoveFoodDiaryLabelAction"%>
+<%@page import="edu.ncsu.csc.itrust.action.RemoveFoodDiaryLabelBucketAction"%>
 <%@page import="edu.ncsu.csc.itrust.action.SuggestionAction"%>
 
 <%@page import="java.util.Calendar"%>
@@ -41,6 +42,7 @@
 		AddFoodDiaryLabelAction labelAddAction = new AddFoodDiaryLabelAction(prodDAO, loggedInMID);
 		SetFoodDiaryLabelAction labelSetAction = new SetFoodDiaryLabelAction(prodDAO, loggedInMID);
 		RemoveFoodDiaryLabelAction labelRemoveAction = new RemoveFoodDiaryLabelAction(prodDAO, loggedInMID);
+		RemoveFoodDiaryLabelBucketAction savedLabelRemoveAction = new RemoveFoodDiaryLabelBucketAction(prodDAO, loggedInMID);
 		SuggestionAction suggestionAction = new SuggestionAction(prodDAO, loggedInMID);
 		
 		boolean dataAllCorrect = true;
@@ -70,7 +72,8 @@
 	 	boolean setLabel = mode!=null&&mode.equals("setLabel");
 	 	boolean showGraph = mode!=null&&mode.equals("showGraph");
 	 	boolean showCompareGraph = mode!=null&&mode.equals("showCompareGraph");
-	 
+	 	boolean removeLabel = mode!=null&&mode.equals("removeLabel");
+	 	System.out.println(removeLabel+"***"+mode);
 	 	SimpleDateFormat diaryDateFormat = new SimpleDateFormat("MM/dd/yyyy");
 	 	//out.println(mode);
 /*  	String dateStr = "";
@@ -101,7 +104,8 @@
 			(mode!=null&&!mode.equals("addLabel"))&&
 			(mode!=null&&!mode.equals("setLabel"))&&
 			(mode!=null&&!mode.equals("showGraph"))&&
-			(mode!=null&&!mode.equals("showCompareGraph"))){
+			(mode!=null&&!mode.equals("showCompareGraph"))&&
+			(mode!=null&&!mode.equals("removeLabel"))){
 			try {
 				if(mode.equals("edit")){
 					if(selectedIndex != null){
@@ -199,7 +203,16 @@
 			%>
 			<p align="center"style="font-size: 16pt; font-weight: bold;" >Label has been set.</p>
 			<%
-		} else if (showGraph){
+		} else if(removeLabel) {
+			System.out.println(request.getParameter("removeLabelRowID"));
+			FoodDiaryLabelBean b = labelGetAction.getFoodDiaryLabelByRowID(Long.parseLong(request.getParameter("removeLabelRowID")));
+			FoodDiaryLabelBean removedB = savedLabelRemoveAction.removeFoodDiaryLabel(b);
+			if(removedB != null){
+				%>
+				<p align="center"style="font-size: 16pt; font-weight: bold;" >Label has been removed.</p>
+				<%
+			}
+		}else if (showGraph){
 			
 		} else if(showCompareGraph){
 			
@@ -554,10 +567,17 @@
 				<th><input type="button" style="color: black;font-size: 16pt; font-weight: bold; float: right;" value="Cancel" onclick="$('#newLabelForm').hide();"></th>
 			</tr>
 			<tr>
-				<td class="subHeaderVertical">Label Name:</td>
+				<td class="subHeaderVertical">Label:</td>
 				<td><input type="text" name="newLabelName" id="newLabelName" value="<%=StringEscapeUtils.escapeHtml(!dataAllCorrect&&addLabel ? newLabelName : "")%>"></td>
 				<td>
-				<input type="submit" id="saveNewLabelBtn" name="action"	style="font-size: 8pt; font-weight: bold; float: right;margin: 10px;" value="Save">
+				<input type="submit" id="saveNewLabelBtn" name="action"	style="display:none;font-size: 8pt; font-weight: bold; float: right;margin: 10px;" value="Save">
+				<input type="button" id="mockSaveNewLabelBtn" onclick="saveLabelBtnFunc();" value="Save">
+				<script>
+				function saveLabelBtnFunc(){
+					document.getElementById("operationMode").value = "addLabel";
+					document.getElementById("saveNewLabelBtn").click();
+				}
+				</script>
 				</td>
 			</tr>
 		</table>
@@ -567,10 +587,11 @@
 	<form action="myFoodDiary.jsp" method="post" id="removeLabel" align="center">
 		<table class="fTable" align="center" width="400px">
 			<tr>
-				<th colspan="2">Remove Label</th>
+				<th colspan="3">Remove Label</th>
 			</tr>
 			<tr>
-			<td width="200px">
+			<td class="subHeaderVertical">Label:</td>
+			<td>
 			<select id="labelListToRemove" class="fixedwidthlist" value="any" >
 			<%
 				List<FoodDiaryLabelBean> labelsList = labelGetAction.getAllFoodDiaryLabels(loggedInMID);
@@ -581,11 +602,25 @@
 			%>
 			</select>
 			</td>	
-			<td width="200px">
-			<input type="button" id="removeLabelBtn" name="action" style="margin: 10px;float: right;font-size: 8pt; font-weight: bold;"	value="Remove">
+			<td>
+			<input type="submit" id="removeSavedLabelBtn" name="action"	style="display:none;font-size: 8pt; font-weight: bold; float: right;margin: 10px;">
+			<input type="button" id="mockRemoveLabelBtn" onclick="removeLabelBtnFunc();" value="Remove">
+				<script>
+				function removeLabelBtnFunc(){
+					var selector = document.getElementById("labelListToRemove");
+					if($.isNumeric(selector.value)){
+						document.getElementById("removeLabelRowID").value = selector.value;
+						//console.log(selector.value);
+						document.getElementById("removeSavedLabelBtn").click();
+					}
+				}
+				</script>
 			</td>
 			</tr>
 		</table>
+		<br/>
+		<input type="hidden" name="operationMode" value="removeLabel">
+		<input type="hidden" id="removeLabelRowID" name="removeLabelRowID">
 	</form>
 </div>
 
@@ -593,7 +628,6 @@
 	<form action="myFoodDiary.jsp" method="post" id="hiddenLabelChange" align="center">
 		<input type="hidden" id="labelDate" name="labelDate">
 		<input type="hidden" id="changedLabelName" name="changedLabelName">
-		<input type="hidden" id="removeLabelRowID" name="removeLabelRowID">
 		<input type="hidden" name="operationMode" value="setLabel">
 		<input type="submit" class="hiddenSubmitBtn">
 	</form>

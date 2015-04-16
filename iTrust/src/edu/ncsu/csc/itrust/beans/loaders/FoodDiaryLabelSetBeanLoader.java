@@ -60,9 +60,9 @@ public class FoodDiaryLabelSetBeanLoader implements BeanLoader<FoodDiaryLabelSet
 		ps.setDate(i++, bean.getDate());
 		ps.setString(i++, bean.getLabel());
 		ps.setLong(i++, bean.getLabelReferenceRowID());
-		if(bean.getRowid() > 0){
-			ps.setLong(i++, bean.getRowid());
-		}
+		//if(bean.getRowid() > 0){
+		//	ps.setLong(i++, bean.getRowid());
+		//}
 		return ps;		
 	}
 }

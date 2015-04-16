@@ -8,7 +8,7 @@ import edu.ncsu.csc.itrust.exception.DBException;
 import edu.ncsu.csc.itrust.exception.FormValidationException;
 import edu.ncsu.csc.itrust.exception.ITrustException;
 
-public class RemoveFoodDiaryLabelSetAction {
+public class RemoveFoodDiaryLabelBucketAction {
 	
 	long mid;
 	protected FoodDiaryLabelDAO foodDAO;
@@ -20,7 +20,7 @@ public class RemoveFoodDiaryLabelSetAction {
 	 * @param midString The logged in user mid.
 	 * @throws ITrustException
 	 */
-	public RemoveFoodDiaryLabelSetAction(DAOFactory factory, long mid) throws ITrustException {
+	public RemoveFoodDiaryLabelBucketAction(DAOFactory factory, long mid) throws ITrustException {
 		this.mid = mid;
 		foodDAO = factory.getFoodDiaryLabelDAO();
 		loggingAction = new EventLoggingAction(factory);
@@ -34,15 +34,12 @@ public class RemoveFoodDiaryLabelSetAction {
 	 * @throws DBException
 	 */
 	public FoodDiaryLabelBean removeFoodDiaryLabel(FoodDiaryLabelBean b) throws FormValidationException, DBException {		
-		for(char c : b.getLabel().toCharArray()){
-			if(!Character.isLetterOrDigit(c)) {
-				throw new FormValidationException();
-			}
-		}
-		
+		try{
 		FoodDiaryLabelBean ret = foodDAO.removeLabel(b);
 		loggingAction.logEvent(TransactionType.PATIENT_ADD_LABEL, mid, mid, "");
-		
 		return ret;
+		}catch(Exception e){
+			return null;
+		}
 	}
 }

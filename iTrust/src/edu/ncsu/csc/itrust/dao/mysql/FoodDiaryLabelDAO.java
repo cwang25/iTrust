@@ -74,6 +74,7 @@ public class FoodDiaryLabelDAO {
 			lastInsertID = DBUtil.getLastInsert(conn);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			System.out.println(e.getMessage()+"123***");
 			throw new DBException(e);
 		} finally {
 			DBUtil.closeConnection(conn, ps);
