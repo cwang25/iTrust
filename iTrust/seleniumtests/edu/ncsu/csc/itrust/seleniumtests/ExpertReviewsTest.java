@@ -1,95 +1,61 @@
 package edu.ncsu.csc.itrust.seleniumtests;
 
-import java.util.regex.Pattern;
-import java.util.concurrent.TimeUnit;
-
 import org.junit.*;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.junit.Test;
 
-public class ExpertReviewsTest {
-	  private WebDriver driver;
-	  private String baseUrl;
-	  private boolean acceptNextAlert = true;
-	  private StringBuffer verificationErrors = new StringBuffer();
-
+public class ExpertReviewsTest extends iTrustSeleniumTest{
 	  @Before
 	  public void setUp() throws Exception {
-		WebDriver driver = new HtmlUnitDriver();
-	    baseUrl = "http://localhost:8080/";
-	    driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		super.setUp();
+		gen.standardData();
+		gen.reviews();
 	  }
 
 	  @Test
 	  public void testDirectRating() throws Exception {
-		WebDriver driver = new HtmlUnitDriver();
-		baseUrl = "http://localhost:8080/iTrust/";
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		driver.get(baseUrl + "auth/forwardUser.jsp");
 		
-	    driver.findElement(By.id("j_username")).clear();
-	    driver.findElement(By.id("j_username")).sendKeys("109");
-	    driver.findElement(By.id("j_password")).clear();
-	    driver.findElement(By.id("j_password")).sendKeys("pw");
-	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		
+	    login("109", "pw");
 	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[7]/div/h2")).click();
 	    assertEquals("iTrust - Patient Home", driver.getTitle());
 	    driver.findElement(By.linkText("Expert's Reviews")).click();
 	    assertEquals("iTrust - Please Select an Expert", driver.getTitle());
 	    
-	   // driver.findElement(By.id("searchBox")).clear();
-	   // driver.findElement(By.id("searchBox")).sendKeys("kelly");
-	   // driver.findElement(By.name("UID_PATIENTID")).sendKeys("kelly"); //still a problem
-	   // driver.findElement(By.linkText("View Reviews")).click();
-	   // driver.findElement(By.name("UID_PATIENTID")).submit();
-	    driver.get(baseUrl + "auth/patient/reviewsPage.jsp?expertID=9000000000");
+	    driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("kelly");
+	    clickOnJavascriptElement(By.linkText("View Reviews"));    
 	    
 	    assertEquals("iTrust - Reviews Page", driver.getTitle());
 	    assertEquals("Reviews for Kelly Doctor", driver.findElement(By.cssSelector("h1")).getText());
+	    assertTrue(pageContains("Kelly Doctor is horrible!"));
+	    assertTrue(driver.findElement(By.cssSelector("BODY")).getText().contains("Best doctor at this hospital!"));
+	    assertTrue(driver.findElement(By.cssSelector("BODY")).getText().contains("So Bad."));
+	    assertTrue(driver.findElement(By.cssSelector("BODY")).getText().contains("I am pretty happy"));
 	  }
 	  
 	  @Test
 	  public void testOverallRating() throws Exception {
-		WebDriver driver = new HtmlUnitDriver();
-		baseUrl = "http://localhost:8080/iTrust/";
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		driver.get(baseUrl + "auth/forwardUser.jsp");
-			
-	    driver.findElement(By.id("j_username")).clear();
-	    driver.findElement(By.id("j_username")).sendKeys("22");
-	    driver.findElement(By.id("j_password")).clear();
-	    driver.findElement(By.id("j_password")).sendKeys("pw");
-	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		login("22", "pw");
 	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[7]/div/h2")).click();
 	    assertEquals("iTrust - Patient Home", driver.getTitle());
 	    driver.findElement(By.linkText("Expert's Reviews")).click();
 	    assertEquals("iTrust - Please Select an Expert", driver.getTitle());
-	    //driver.findElement(By.id("searchBox")).clear();
-	    //driver.findElement(By.id("searchBox")).sendKeys("gan"); //not need with work around 
-	    //driver.findElement(By.linkText("View Reviews")).click();
-	    driver.get(baseUrl + "auth/patient/reviewsPage.jsp?expertID=9000000003");
+	    driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("gandalf");
+	    clickOnJavascriptElement(By.linkText("View Reviews"));
 	    assertEquals("iTrust - Reviews Page", driver.getTitle());
 	    assertEquals("Reviews for Gandalf Stormcrow", driver.findElement(By.cssSelector("h1")).getText());
 	  }
 	   
 	  @Test
 	  public void testInvaildHCP() throws Exception {
-		WebDriver driver = new HtmlUnitDriver();
-		baseUrl = "http://localhost:8080/iTrust/";
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		driver.get(baseUrl + "auth/forwardUser.jsp");
-			
-	    driver.findElement(By.id("j_username")).clear();
-	    driver.findElement(By.id("j_username")).sendKeys("109");
-	    driver.findElement(By.id("j_password")).clear();
-	    driver.findElement(By.id("j_password")).sendKeys("pw");
-	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		login("109", "pw");
 	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 	    assertEquals("iTrust - Patient Home", driver.getTitle());
 	    driver.findElement(By.linkText("Find an Expert")).click();
@@ -109,16 +75,7 @@ public class ExpertReviewsTest {
 	  
 	  @Test
 	  public void testVaildHCP() throws Exception {
-		WebDriver driver = new HtmlUnitDriver();
-		baseUrl = "http://localhost:8080/iTrust/";
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		driver.get(baseUrl + "auth/forwardUser.jsp");
-			
-	    driver.findElement(By.id("j_username")).clear();
-	    driver.findElement(By.id("j_username")).sendKeys("2");
-	    driver.findElement(By.id("j_password")).clear();
-	    driver.findElement(By.id("j_password")).sendKeys("pw");
-	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		login("2","pw");
 	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 	    assertEquals("iTrust - Patient Home", driver.getTitle());
 	    driver.findElement(By.linkText("Find an Expert")).click();
@@ -146,47 +103,4 @@ public class ExpertReviewsTest {
 	    // Warning: assertTextPresent may require manual changes
 	    assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Too Boared[\\s\\S]*$"));
 	  }
-	  
-	  /*@After
-	  public void tearDown() throws Exception {
-	    driver.quit();
-	    String verificationErrorString = verificationErrors.toString();
-	    if (!"".equals(verificationErrorString)) {
-	      fail(verificationErrorString);
-	    }
-	  }
-
-	  private boolean isElementPresent(By by) {
-	    try {
-	      driver.findElement(by);
-	      return true;
-	    } catch (NoSuchElementException e) {
-	      return false;
-	    }
-	  }
-
-	  private boolean isAlertPresent() {
-	    try {
-	      driver.switchTo().alert();
-	      return true;
-	    } catch (NoAlertPresentException e) {
-	      return false;
-	    }
-	  }
-
-	  private String closeAlertAndGetItsText() {
-	    try {
-	      Alert alert = driver.switchTo().alert();
-	      String alertText = alert.getText();
-	      if (acceptNextAlert) {
-	        alert.accept();
-	      } else {
-	        alert.dismiss();
-	      }
-	      return alertText;
-	    } finally {
-	      acceptNextAlert = true;
-	    }
-	  }*/
-
 }

@@ -10,18 +10,18 @@ import org.openqa.selenium.support.ui.Select;
 
 public class EditDiagnosesTest extends iTrustSeleniumTest{
   private WebDriver driver;
-  private StringBuffer verificationErrors = new StringBuffer();
 
   @Before
   public void setUp() throws Exception {
 	super.setUp();
+	gen.standardData();
     driver = new HtmlUnitDriver();
     driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
   }
 
   @Test
   public void testAdminEditDiagnoses() throws Exception {
-    driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
+    driver.get(ADDRESS);
     driver.findElement(By.id("j_password")).clear();
     driver.findElement(By.id("j_password")).sendKeys("pw");
     driver.findElement(By.id("j_username")).clear();
@@ -42,7 +42,7 @@ public class EditDiagnosesTest extends iTrustSeleniumTest{
   
   @Test
   public void testDiagnosesLink() throws Exception {
-    driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
+    driver.get(ADDRESS);
     driver.findElement(By.id("j_password")).clear();
     driver.findElement(By.id("j_password")).sendKeys("pw");
     driver.findElement(By.id("j_username")).clear();
@@ -75,7 +75,7 @@ public class EditDiagnosesTest extends iTrustSeleniumTest{
   
   @Test
   public void testHCPEditDiagnoses() throws Exception {
-    driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
+    driver.get(ADDRESS);
     driver.findElement(By.id("j_password")).clear();
     driver.findElement(By.id("j_password")).sendKeys("pw");
     driver.findElement(By.id("j_username")).clear();
@@ -92,14 +92,5 @@ public class EditDiagnosesTest extends iTrustSeleniumTest{
     assertEquals("iTrust - Maintain Diagnoses Links", driver.getTitle());
     // Warning: assertTextPresent may require manual changes
     assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Tuberculosis of the lung's \\(11\\.40\\) URL has been successfully updated to http://www\\.google\\.com/[\\s\\S]*$"));
-  }
-
-  @After
-  public void tearDown() throws Exception {
-    driver.quit();
-    String verificationErrorString = verificationErrors.toString();
-    if (!"".equals(verificationErrorString)) {
-      fail(verificationErrorString);
-    }
   }
 }

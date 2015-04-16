@@ -1,6 +1,5 @@
 package edu.ncsu.csc.itrust.seleniumtests;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
 import java.util.concurrent.TimeUnit;
 import org.junit.*;
@@ -16,13 +15,14 @@ public class DrugInteractionTest extends iTrustSeleniumTest{
   public void setUp() throws Exception {
 	super.setUp();
 	gen.admin1();
+	gen.standardData();
     driver = new HtmlUnitDriver();
     driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
   }
 
   @Test
   public void testAddNewOverrideReason() throws Exception {
-    driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
+    driver.get(ADDRESS);
     driver.findElement(By.id("j_username")).clear();
     driver.findElement(By.id("j_username")).sendKeys("9000000001");
     driver.findElement(By.id("j_password")).clear();
@@ -50,7 +50,7 @@ public class DrugInteractionTest extends iTrustSeleniumTest{
    */
   @Test
   public void testDeleteDrugInteraction() throws Exception {
-    driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
+    driver.get(ADDRESS);
     driver.findElement(By.id("j_username")).clear();
     driver.findElement(By.id("j_username")).sendKeys("9000000001");
     driver.findElement(By.id("j_password")).clear();
@@ -68,7 +68,7 @@ public class DrugInteractionTest extends iTrustSeleniumTest{
   
   @Test
   public void testEditOverrideReason() throws Exception {
-    driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
+    driver.get(ADDRESS);
     driver.findElement(By.id("j_password")).clear();
     driver.findElement(By.id("j_password")).sendKeys("pw");
     driver.findElement(By.id("j_username")).clear();
@@ -99,7 +99,7 @@ public class DrugInteractionTest extends iTrustSeleniumTest{
    */
   @Test
   public void testRecordDrugInteraction() throws Exception {
-    driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
+    driver.get(ADDRESS);
     driver.findElement(By.id("j_username")).clear();
     driver.findElement(By.id("j_username")).sendKeys("9000000001");
     driver.findElement(By.id("j_password")).clear();
@@ -130,7 +130,7 @@ public class DrugInteractionTest extends iTrustSeleniumTest{
    */
   @Test
   public void testRecordDrugInteractionSameDrugs() throws Exception {
-    driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
+    driver.get(ADDRESS);
     driver.findElement(By.id("j_username")).clear();
     driver.findElement(By.id("j_username")).sendKeys("9000000001");
     driver.findElement(By.id("j_password")).clear();

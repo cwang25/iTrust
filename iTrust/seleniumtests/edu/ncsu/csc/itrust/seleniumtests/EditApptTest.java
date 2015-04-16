@@ -27,7 +27,11 @@ public class EditApptTest extends iTrustSeleniumTest{
 
   @Test
   public void testSetPassedDate() throws Exception {
-    login("9000000000","pw");
+	driver.get(ADDRESS);
+	driver.findElement(By.id("j_username")).clear();
+    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+    driver.findElement(By.id("j_password")).clear();
+    driver.findElement(By.id("j_password")).sendKeys("pw");
     driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
     assertEquals("iTrust - HCP Home", driver.getTitle());
     driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
@@ -44,7 +48,7 @@ public class EditApptTest extends iTrustSeleniumTest{
 
   @Test
   public void testRemoveAppt() throws Exception {
-    driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
+    driver.get(ADDRESS);
     driver.findElement(By.id("j_username")).clear();
     driver.findElement(By.id("j_username")).sendKeys("9000000000");
     driver.findElement(By.id("j_password")).clear();
@@ -63,7 +67,7 @@ public class EditApptTest extends iTrustSeleniumTest{
   
   @Test
   public void testEditAppt() throws Exception {
-    driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
+    driver.get(ADDRESS);
     driver.findElement(By.id("j_username")).clear();
     driver.findElement(By.id("j_username")).sendKeys("9000000000");
     driver.findElement(By.id("j_password")).clear();

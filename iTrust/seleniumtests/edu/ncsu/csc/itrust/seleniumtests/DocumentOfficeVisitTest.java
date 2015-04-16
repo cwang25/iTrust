@@ -37,7 +37,12 @@ public class DocumentOfficeVisitTest extends iTrustSeleniumTest {
 	public void testDocumentOfficeVisit6() throws Exception {
 		//login UAP
 		WebDriver driver = new HtmlUnitDriver();
-		driver = login("8000000009", "uappass1");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("8000000009");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("uappass1");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		
 		//make sure we are on the home page for UAP's
 		assertEquals("iTrust - UAP Home",driver.getTitle());
@@ -90,7 +95,12 @@ public class DocumentOfficeVisitTest extends iTrustSeleniumTest {
 	public void testDocumentOfficeVisit1() throws Exception {
 		//login
 		WebDriver driver = new HtmlUnitDriver();
-		driver = login("9000000000", "pw");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		
 		//click Document Office Visit
@@ -139,7 +149,12 @@ public class DocumentOfficeVisitTest extends iTrustSeleniumTest {
 	public void testDocumentOfficeVisit2() throws Exception {
 		//login
 		WebDriver driver = new HtmlUnitDriver();
-		driver = login("9000000000", "pw");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		
 		//click document office visit
@@ -178,7 +193,12 @@ public class DocumentOfficeVisitTest extends iTrustSeleniumTest {
 	public void testUpdateOfficeVisitSemicolon() throws Exception {
 		//login UAP
 		WebDriver driver = new HtmlUnitDriver();
-		driver = login("8000000009", "uappass1");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("8000000009");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("uappass1");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - UAP Home", driver.getTitle());
 		//click document office visit
 		driver.findElement(By.linkText("Document Office Visit")).click();
@@ -220,7 +240,12 @@ public class DocumentOfficeVisitTest extends iTrustSeleniumTest {
 	public void testUpdateOfficeVisitOctothorpe() throws Exception {
 		//login UAP
 		WebDriver driver = new HtmlUnitDriver();
-		driver = login("8000000009", "uappass1");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("8000000009");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("uappass1");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - UAP Home", driver.getTitle());
 		//click document office visit
 		driver.findElement(By.linkText("Document Office Visit")).click();

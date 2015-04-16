@@ -1,6 +1,5 @@
 package edu.ncsu.csc.itrust.seleniumtests;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
 import java.util.concurrent.TimeUnit;
 import org.junit.*;
@@ -10,22 +9,23 @@ import edu.ncsu.csc.itrust.enums.TransactionType;
 
 public class EditDemographicsTest extends iTrustSeleniumTest{
   private WebDriver driver;
-  private StringBuffer verificationErrors = new StringBuffer();
-
   @Before
   public void setUp() throws Exception {
 	super.setUp();
     driver = new HtmlUnitDriver();
+    gen.uap1();
+    gen.patient1();
+    gen.patient2();
     driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
   }
 
   @Test
   public void testEditDemographics2() throws Exception {
-    driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
-    driver.findElement(By.id("j_password")).clear();
-    driver.findElement(By.id("j_password")).sendKeys("uappass1");
+    driver.get(ADDRESS);
     driver.findElement(By.id("j_username")).clear();
     driver.findElement(By.id("j_username")).sendKeys("8000000009");
+    driver.findElement(By.id("j_password")).clear();
+    driver.findElement(By.id("j_password")).sendKeys("uappass1");
     driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
     assertEquals("iTrust - UAP Home", driver.getTitle());
     driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
@@ -45,7 +45,7 @@ public class EditDemographicsTest extends iTrustSeleniumTest{
   
   @Test
   public void testEditDemographics3() throws Exception {
-    driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
+    driver.get(ADDRESS);
     driver.findElement(By.id("j_password")).clear();
     driver.findElement(By.id("j_password")).sendKeys("uappass1");
     driver.findElement(By.id("j_username")).clear();
@@ -73,7 +73,7 @@ public class EditDemographicsTest extends iTrustSeleniumTest{
   
   @Test
   public void testEditDemographics5() throws Exception {
-    driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
+    driver.get(ADDRESS);
     driver.findElement(By.id("j_password")).clear();
     driver.findElement(By.id("j_password")).sendKeys("uappass1");
     driver.findElement(By.id("j_username")).clear();
@@ -97,7 +97,7 @@ public class EditDemographicsTest extends iTrustSeleniumTest{
 
   @Test
   public void testEditDemographics6() throws Exception {
-    driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
+    driver.get(ADDRESS);
     driver.findElement(By.id("j_password")).clear();
     driver.findElement(By.id("j_password")).sendKeys("uappass1");
     driver.findElement(By.id("j_username")).clear();
@@ -123,7 +123,7 @@ public class EditDemographicsTest extends iTrustSeleniumTest{
   
   @Test
   public void testEditDemographics7() throws Exception {
-	driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
+	driver.get(ADDRESS);
 	driver.findElement(By.id("j_password")).clear();
 	driver.findElement(By.id("j_password")).sendKeys("pw");
 	driver.findElement(By.id("j_username")).clear();
@@ -142,7 +142,7 @@ public class EditDemographicsTest extends iTrustSeleniumTest{
   
   @Test
   public void testEditUpdatesImmediately() throws Exception {
-    driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
+    driver.get(ADDRESS);
     driver.findElement(By.id("j_username")).clear();
     driver.findElement(By.id("j_username")).sendKeys("1");
     driver.findElement(By.id("j_password")).clear();
@@ -155,14 +155,5 @@ public class EditDemographicsTest extends iTrustSeleniumTest{
     driver.findElement(By.name("action")).click();
     // Warning: assertTextPresent may require manual changes
     assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Information Successfully Updated[\\s\\S]*$"));
-  }
-
-  @After
-  public void tearDown() throws Exception {
-    driver.quit();
-    String verificationErrorString = verificationErrors.toString();
-    if (!"".equals(verificationErrorString)) {
-      fail(verificationErrorString);
-    }
   }
 }

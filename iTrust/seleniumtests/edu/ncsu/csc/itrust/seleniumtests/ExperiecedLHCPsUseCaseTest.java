@@ -2,19 +2,17 @@ package edu.ncsu.csc.itrust.seleniumtests;
 
 import java.util.concurrent.TimeUnit;
 import org.junit.*;
-import static org.junit.Assert.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import edu.ncsu.csc.itrust.enums.TransactionType;
 
 public class ExperiecedLHCPsUseCaseTest extends iTrustSeleniumTest{
   private WebDriver driver;
-  private StringBuffer verificationErrors = new StringBuffer();
-
   @Before
   public void setUp() throws Exception {
 	super.setUp();
     driver = new HtmlUnitDriver();
+    gen.standardData();
     gen.patient_hcp_vists();
     gen.hcp_diagnosis_data();
     driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -22,7 +20,7 @@ public class ExperiecedLHCPsUseCaseTest extends iTrustSeleniumTest{
 
   @Test
   public void testViewDiagnoses() throws Exception {
-    driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
+    driver.get(ADDRESS);
     driver.findElement(By.id("j_username")).clear();
     driver.findElement(By.id("j_username")).sendKeys("1");
     driver.findElement(By.id("j_password")).clear();
@@ -36,7 +34,7 @@ public class ExperiecedLHCPsUseCaseTest extends iTrustSeleniumTest{
 
   @Test
   public void testViewDiagnosesisEchoVirus() throws Exception {
-    driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
+    driver.get(ADDRESS);
     driver.findElement(By.id("j_username")).clear();
     driver.findElement(By.id("j_username")).sendKeys("1");
     driver.findElement(By.id("j_password")).clear();
@@ -53,7 +51,7 @@ public class ExperiecedLHCPsUseCaseTest extends iTrustSeleniumTest{
   
   @Test
   public void testViewHCPDetails() throws Exception {
-    driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
+    driver.get(ADDRESS);
     driver.findElement(By.id("j_username")).clear();
     driver.findElement(By.id("j_username")).sendKeys("1");
     driver.findElement(By.id("j_password")).clear();
