@@ -26,7 +26,7 @@
 <script src="/iTrust/js/Chart.js"></script>
 <style type="text/css">
 	.foodDiaryTable td, .foodDiaryTable tr, .foodDiaryTable th {
-		border:1px solid black;
+		border:1px solid #212121;
 		border-collapse: collapse;
 	}
 </style>
@@ -119,11 +119,11 @@ if(request.getParameter("confirmSubmit") != null) {
 			addAction.addWeightLog(b);
 			%><h2 align="center">Log successfully added!</h2><%
 		} catch(Exception e) {
-			%><div align="center" style="color:red;"><%= e.getMessage() %></div><%
+			%><div align="center" style="color:#F44336;"><%= e.getMessage() %></div><%
 		}
 	} else {
 		%>
-		<div align="center" style="color:red;"><%= errormsg %></div>
+		<div align="center" style="color:#F44336;"><%= errormsg %></div>
 		<%
 	}
 }
@@ -176,12 +176,12 @@ if(request.getParameter("confirmSubmit") != null) {
 	}
 	%>		
 	<div align="Center">
-	<input type="button" style="font-size: 16pt;" value="Add Log Entry" id="showNewLogForm"/>
+	<input type="button" style="font-size: 16pt; margin:5px;" value="Add New Entry" id="showNewLogForm"/>
 	<%if(weightLogs.size() != 0) {
 		%>
 		<button onclick='makeChart();' style="font-size: 16pt; margin-bottom:20px;">View Chart</button>
         <br/>
-        <div id="ChartContainer" style="display:none;">
+        <div align="center" id="ChartContainer" style="display:none;">
 	        <div id="canvas-holder" style="display:table; margin:auto;">
 		        <canvas id="chart-area" width="600" height="400" style="float:left;"></canvas>
 		        <div id="legendOuterDiv" style="float:left;"><div id="legendDiv"></div></div>
@@ -192,6 +192,8 @@ if(request.getParameter("confirmSubmit") != null) {
 		        <canvas id="chart-area2" width="600" height="400" style="float:left;"></canvas>
 		        <div id="legendOuterDiv2" style="float:left;"><div id="secondLegend"></div></div>
 	        </div>
+	        <input align="center" type="button" style="color: #212121;font-size: 16pt; font-weight: bold; " value="Cancel" onclick="$('#ChartContainer').hide();">
+	        
     	</div>
 		<%
 	}
@@ -201,7 +203,11 @@ if(request.getParameter("confirmSubmit") != null) {
    	</div>
    	
 	<form style="display:none;" action="myWeightLog.jsp" method="post" id="weightLogForm" name="weightLogForm" align="center">
-		<table class="fTable">
+		<table class="fTable"  align="center">
+			<tr>
+			<th>Add New Record</th>
+			<th><input type="button" style="color: #212121;font-size: 16pt; font-weight: bold; float: right;" value="Cancel" onclick="$('#weightLogForm').hide();"></th>
+			</tr>
 			<tr>
 				<td>Date:</td>
 				<%
@@ -249,7 +255,7 @@ if(request.getParameter("confirmSubmit") != null) {
 		</table>
 		<input type="hidden" name="confirmSubmit" value="true"/>
 		<input type="submit" id="saveBtn" name="action"
-			style="font-size: 16pt; font-weight: bold;"
+			style="margin: 10px;font-size: 16pt; font-weight: bold;"
 			value="Save">
 	</form>
 </div>
@@ -300,9 +306,9 @@ function makeChart() {
     		datasets: [{
                 label: "Weight",
                 data: datasets[1],
-                fillColor: "blue",
-                pointColor: "blue",
-                strokeColor: "blue"
+                fillColor: "#CDDC39",
+                pointColor: "#CDDC39",
+                strokeColor: "#CDDC39"
     		}]
     };
     
@@ -311,46 +317,46 @@ function makeChart() {
         datasets: [ {
                 	   label: "Chest",
                 	   data: datasets[2],
-                       fillColor: "green",
-                       pointColor: "green",
-                       strokeColor: "green"
+                       fillColor: "#8BC34A",
+                       pointColor: "#8BC34A",
+                       strokeColor: "#8BC34A"
                    },{
                        label: "Waist",
                        data: datasets[3],
-                       fillColor: "red",
-                       pointColor: "red",
-                       strokeColor: "red"
+                       fillColor: "#F44336",
+                       pointColor: "#F44336",
+                       strokeColor: "#F44336"
 
                    },{
                        label: "Upper Arm",
                        data: datasets[4],
-                       fillColor: "orange",
-                       pointColor: "orange",
-                       strokeColor: "orange"
+                       fillColor: "#FF9800",
+                       pointColor: "#FF9800",
+                       strokeColor: "#FF9800"
                    },{
                        label: "Forearm",
                        data: datasets[5],
-                       fillColor: "purple",
-                       pointColor: "purple",
-                       strokeColor: "purple"
+                       fillColor: "#BA68C8",
+                       pointColor: "#BA68C8",
+                       strokeColor: "#BA68C8"
                    },{
                        label: "Thighs",
                        data: datasets[6],
-                       fillColor: "brown",
-                       pointColor: "brown",
-                       strokeColor: "brown"
+                       fillColor: "#009688",
+                       pointColor: "#009688",
+                       strokeColor: "#009688"
                    },{
                        label: "Calves",
                        data: datasets[7],
-                       fillColor: "blue",
-                       pointColor: "blue",
-                       strokeColor: "blue"
+                       fillColor: "#CDDC39",
+                       pointColor: "#CDDC39",
+                       strokeColor: "#CDDC39"
                    },{
                        label: "Neck",
                        data: datasets[8],
-                       fillColor: "black",
-                       pointColor: "black",
-                       strokeColor: "black"
+                       fillColor: "#212121",
+                       pointColor: "#212121",
+                       strokeColor: "#212121"
                    } ]
     };
 
@@ -381,7 +387,7 @@ function getCell(table, row, col) {
 
 function legendLine(parent) {
     var measurements = ["", "Chest", "Waist", "Upper Arm", "Forearm", "Thighs", "Calves", "Neck"];
-    var colors = ["", "green", "red", "orange", "purple", "brown", "blue", "black"];
+    var colors = ["", "#8BC34A", "#F44336", "#FF9800", "#BA68C8", "#009688", "#CDDC39", "#212121"];
     // If a previous legend exists, delete it
     while (parent.hasChildNodes()) {
         parent.removeChild(parent.lastChild);
@@ -400,7 +406,7 @@ function legendLine(parent) {
         // Set list to use an image for bullets instead of regular bullets
         //li.style.listStyleImage = "url(" + "\'" + imageUrl + "\'" + ")";
         var label = measurements[i];
-        li.innerHTML = "<p style=\"font-size:18px;\"><span style=\"color:white; padding:3px; border-radius:5px; border:solid thin black; background-color:"+colors[i]+"\">"
+        li.innerHTML = "<p style=\"font-size:18px;\"><span style=\"color:white; padding:3px; border-radius:5px; border:solid thin #212121; background-color:"+colors[i]+"\">"
                 + label + "</span></p>";
         // Add this data point to the legend
         ul.appendChild(li);
@@ -415,7 +421,7 @@ function legendLine2(parent) {
 	parent.appendChild(ul);
 	var li = document.createElement('li');
 	var label = "Weight";
-	li.innerHTML = "<p style=\"font-size:18px;\"><span style =\"color:white; padding:3px; border-radius:5px; border:solid thin black; background-color:blue;\">"+label+"</span></p>";
+	li.innerHTML = "<p style=\"font-size:18px;\"><span style =\"color:white; padding:3px; border-radius:5px; border:solid thin #212121; background-color:#CDDC39;\">"+label+"</span></p>";
 	ul.appendChild(li);
 }
 </script>
