@@ -66,9 +66,9 @@ function makeChart() {
     		datasets: [{
                 label: "Weight",
                 data: datasets[1],
-                fillColor: "blue",
-                pointColor: "blue",
-                strokeColor: "blue"
+                fillColor: "#CDDC39",
+                pointColor: "#CDDC39",
+                strokeColor: "#CDDC39"
     		}]
     };
     
@@ -77,46 +77,46 @@ function makeChart() {
         datasets: [ {
                 	   label: "Chest",
                 	   data: datasets[2],
-                       fillColor: "green",
-                       pointColor: "green",
-                       strokeColor: "green"
+                       fillColor: "#8BC34A",
+                       pointColor: "#8BC34A",
+                       strokeColor: "#8BC34A"
                    },{
                        label: "Waist",
                        data: datasets[3],
-                       fillColor: "red",
-                       pointColor: "red",
-                       strokeColor: "red"
+                       fillColor: "#F44336",
+                       pointColor: "#F44336",
+                       strokeColor: "#F44336"
 
                    },{
                        label: "Upper Arm",
                        data: datasets[4],
-                       fillColor: "orange",
-                       pointColor: "orange",
-                       strokeColor: "orange"
+                       fillColor: "#FF9800",
+                       pointColor: "#FF9800",
+                       strokeColor: "#FF9800"
                    },{
                        label: "Forearm",
                        data: datasets[5],
-                       fillColor: "purple",
-                       pointColor: "purple",
-                       strokeColor: "purple"
+                       fillColor: "#BA68C8",
+                       pointColor: "#BA68C8",
+                       strokeColor: "#BA68C8"
                    },{
                        label: "Thighs",
                        data: datasets[6],
-                       fillColor: "brown",
-                       pointColor: "brown",
-                       strokeColor: "brown"
+                       fillColor: "#009688",
+                       pointColor: "#009688",
+                       strokeColor: "#009688"
                    },{
                        label: "Calves",
                        data: datasets[7],
-                       fillColor: "blue",
-                       pointColor: "blue",
-                       strokeColor: "blue"
+                       fillColor: "#CDDC39",
+                       pointColor: "#CDDC39",
+                       strokeColor: "#CDDC39"
                    },{
                        label: "Neck",
                        data: datasets[8],
-                       fillColor: "black",
-                       pointColor: "black",
-                       strokeColor: "black"
+                       fillColor: "#212121",
+                       pointColor: "#212121",
+                       strokeColor: "#212121"
                    } ]
     };
 
@@ -147,13 +147,13 @@ function getCell(table, row, col) {
 
 function legendLine(parent) {
     var measurements = ["", "Chest", "Waist", "Upper Arm", "Forearm", "Thighs", "Calves", "Neck"];
-    var colors = ["", "green", "red", "orange", "purple", "brown", "blue", "black"];
+    var colors = ["", "#8BC34A", "#F44336", "#FF9800", "#BA68C8", "#009688", "#CDDC39", "#212121"];
     // If a previous legend exists, delete it
     while (parent.hasChildNodes()) {
         parent.removeChild(parent.lastChild);
     }
 
-    // Make a new unordered list
+    // Make a new unorde#F44336 list
     var ul = document.createElement('ul');
     // Add it under the legendDiv element
     parent.appendChild(ul);
@@ -166,7 +166,7 @@ function legendLine(parent) {
         // Set list to use an image for bullets instead of regular bullets
         //li.style.listStyleImage = "url(" + "\'" + imageUrl + "\'" + ")";
         var label = measurements[i];
-        li.innerHTML = "<p style=\"font-size:18px;\"><span style=\"color:white; padding:3px; border-radius:5px; border:solid thin black; background-color:"+colors[i]+"\">"
+        li.innerHTML = "<p style=\"font-size:18px;\"><span style=\"color:white; padding:3px; border-radius:5px; border:solid thin #212121; background-color:"+colors[i]+"\">"
                 + label + "</span></p>";
         // Add this data point to the legend
         ul.appendChild(li);
@@ -181,7 +181,7 @@ function legendLine2(parent) {
 	parent.appendChild(ul);
 	var li = document.createElement('li');
 	var label = "Weight";
-	li.innerHTML = "<p style=\"font-size:18px;\"><span style =\"color:white; padding:3px; border-radius:5px; border:solid thin black; background-color:blue;\">"+label+"</span></p>";
+	li.innerHTML = "<p style=\"font-size:18px;\"><span style =\"color:white; padding:3px; border-radius:5px; border:solid thin #212121; background-color:#CDDC39;\">"+label+"</span></p>";
 	ul.appendChild(li);
 }
 </script>
@@ -258,6 +258,7 @@ function legendLine2(parent) {
 			        <canvas id="chart-area2" width="600" height="400" style="float:left;"></canvas>
 			        <div id="legendOuterDiv2" style="float:left;"><div id="secondLegend"></div></div>
 		        </div>
+		        <input align="center" type="button" style="color: #212121;font-size: 16pt; font-weight: bold; " value="Cancel" onclick="$('#ChartContainer').hide();">
 	    	</div>
     	</div>
     	<%

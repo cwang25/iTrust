@@ -162,6 +162,9 @@ if(isAudit){
  %>
 <div style="border: 1px solid Gray; padding:5px;float:left;">
 	<input id="searchBox" style="width: 250px;" type="text" value="<%= StringEscapeUtils.escapeHtml("" + ( firstName )) %>" />
+	<script>
+    document.getElementById("searchBox").focus();
+	</script>
 	<br />
 	<input id="allowDeactivated" type="checkbox" />
 	Show deactivated patients
@@ -171,6 +174,9 @@ else
 { %>
 <div style="border: 1px solid Gray; padding:5px;float:left;">
 	<input id="searchBox" style="width: 250px;" type="text" value="<%= StringEscapeUtils.escapeHtml("" + ( firstName )) %>" />
+	<script>
+    document.getElementById("searchBox").focus();
+	</script>
 	<br />
 	</div>
 <%}%>
