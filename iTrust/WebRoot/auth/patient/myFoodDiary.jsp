@@ -201,16 +201,19 @@
 				labelRemoveAction.removeFoodDiaryLabel(b);
 			} else if(!changedLabelName.equals("none")){
 				FoodDiaryLabelBean lebal = labelGetAction.getFoodDiaryLabelByRowID(Long.parseLong(changedLabelName));
+				//System.out.println("setLabe:"+lebal.getLabel()+" "+lebal.getRowid());
 				if(b == null)
 					b = new FoodDiaryLabelSetBean(loggedInMID, java.sql.Date.valueOf(labelDate), lebal.getLabel(), lebal.getRowid());
 				b.setLabel(lebal.getLabel());
+				b.setLabelReferenceRowID(lebal.getRowid());
+				//System.out.println("newLabel: "+b.getLabel()+" "+b.getRowid());
 				labelSetAction.setFoodDiaryLabel(b);
 			}
 			%>
 			<p align="center"style="font-size: 16pt; font-weight: bold;" >Label has been set.</p>
 			<%
 		} else if(removeLabel) {
-			System.out.println(request.getParameter("removeLabelRowID"));
+			//System.out.println(request.getParameter("removeLabelRowID"));
 			FoodDiaryLabelBean b = labelGetAction.getFoodDiaryLabelByRowID(Long.parseLong(request.getParameter("removeLabelRowID")));
 			FoodDiaryLabelBean removedB = savedLabelRemoveAction.removeFoodDiaryLabel(b);
 			if(removedB != null){
