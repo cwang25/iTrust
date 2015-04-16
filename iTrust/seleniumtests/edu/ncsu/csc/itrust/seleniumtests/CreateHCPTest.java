@@ -108,13 +108,8 @@ public class CreateHCPTest extends iTrustSeleniumTest {
 		
 	    
 	    assertTrue(pageContains("Found 1 Records"));
-	    WebElement b = driver.findElement(By.xpath("//input[@value='9000000000' and @type='submit']"));
-	    System.out.println(b.getAttribute("value"));
-	    System.out.println(b.getAttribute("type"));
+	    clickOnJavascriptElement(By.xpath("//input[@value='9000000000' and @type='submit']"));
 	    
-		System.out.println(driver.getPageSource());
-		clickOnNonJavascriptElement(b);
-		System.out.println(driver.getPageSource());
 	    assertEquals("iTrust - Hospital Staffing Assignments", driver.getTitle());
 		
 		driver.findElement(By.linkText("Assign")).click();

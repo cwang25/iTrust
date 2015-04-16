@@ -10,11 +10,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.meterware.httpunit.HttpUnitOptions;
@@ -235,10 +237,24 @@ abstract public class iTrustSeleniumTest extends TestCase{
 	 * If there is no delay, then the upcoming new elements or new interface will not be showed when the further process comes.
 	 * No delay may result in exception, or element not visible errors.
 	 * @param w WebElement to be clicked
+	 * @return True success, False Fail
 	 * @throws InterruptedException
 	 */
-	public void clickOnJavascriptElement(WebElement w) throws InterruptedException{
-		w.click();
+	public boolean clickOnJavascriptElement(By by) throws InterruptedException{
+		boolean result = false;
+		int attempt = 0;
+		while(attempt < 4){
+			try{
+				driver.findElement(by).click();
+				result = true;
+				break;
+			}catch(StaleElementReferenceException e){
+				
+			}
+			attempt++;
+		}
+		return result;
+
 		//Thread.sleep(500);
 	}
 	/**

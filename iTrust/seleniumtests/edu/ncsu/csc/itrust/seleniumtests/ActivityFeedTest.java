@@ -122,7 +122,7 @@ public class ActivityFeedTest extends iTrustSeleniumTest {
 	    driver.findElement(By.id("searchBox")).sendKeys("21");
 	    //waitFor(1);
 	    //Click on first MID button
-	    driver.findElement(By.xpath("//input[@value='21' and @type='button']")).click();
+	    clickOnJavascriptElement(By.xpath("//input[@value='21' and @type='button']"));
 	    
 	    
 		
@@ -147,7 +147,7 @@ public class ActivityFeedTest extends iTrustSeleniumTest {
 	    driver.findElement(By.id("searchBox")).sendKeys("21");
 	    //waitFor(1);
 	    //Click on first MID button
-	    driver.findElement(By.xpath("//input[@value='21' and @type='button']")).click();
+	    clickOnJavascriptElement(By.xpath("//input[@value='21' and @type='button']"));
 	    //Click Yes, Document Office Visit
 	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - Document Office Visit", driver.getTitle());

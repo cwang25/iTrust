@@ -38,7 +38,7 @@ public class AppointmentTest extends iTrustSeleniumTest{
 	    driver.findElement(By.id("searchBox")).sendKeys("2");
 	    //waitFor(1);
 	    //Click on first MID button
-	    driver.findElement(By.xpath("//input[@value='2' and @type='button']")).click();
+	    clickOnJavascriptElement(By.xpath("//input[@value='2' and @type='button']"));
 		
 		//check to confirm cannot schedule appointment with dead patient
 		element = driver.findElement(By.xpath("//*[@id='mainForm']/div/span"));
@@ -173,7 +173,7 @@ public class AppointmentTest extends iTrustSeleniumTest{
 		driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("100");
 	    //Click on first MID button
-	    driver.findElement(By.xpath("//input[@value='100' and @type='button']")).click();
+	    clickOnJavascriptElement(By.xpath("//input[@value='100' and @type='button']"));
 	   
 		
 		//set up date
@@ -236,7 +236,7 @@ public class AppointmentTest extends iTrustSeleniumTest{
 	    driver.findElement(By.id("searchBox")).sendKeys("100");
 	    //waitFor(1);
 	    //Click on first MID button
-	    driver.findElement(By.xpath("//input[@value='100' and @type='button']")).click();
+	    clickOnJavascriptElement(By.xpath("//input[@value='100' and @type='button']"));
 		
 		//set up date
 		Calendar cal = Calendar.getInstance();
@@ -280,7 +280,7 @@ public class AppointmentTest extends iTrustSeleniumTest{
 	    driver.findElement(By.id("searchBox")).sendKeys("100");
 	    //waitFor(1);
 	    //Click on first MID button
-	    driver.findElement(By.xpath("//input[@value='100' and @type='button']")).click();
+	    clickOnJavascriptElement(By.xpath("//input[@value='100' and @type='button']"));
 		
 		//fill out form
 		Select select;

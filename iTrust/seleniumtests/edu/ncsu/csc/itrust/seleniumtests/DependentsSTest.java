@@ -6,8 +6,6 @@ import java.util.logging.Level;
 
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.ui.Select;
 
 import edu.ncsu.csc.itrust.enums.TransactionType;
@@ -20,7 +18,6 @@ public class DependentsSTest extends iTrustSeleniumTest{
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		gen.clearAllTables();
 		gen.standardData();
 	}
 	
@@ -34,17 +31,18 @@ public class DependentsSTest extends iTrustSeleniumTest{
 		login("9000000000", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
-		//Navigate to the Add Patient page
-		driver.findElement(By.xpath("//[@id='iTrustContent']/div/div[6]/div/h2"));
-		driver.findElement(By.linkText("Patient")).click();
-		
-        //Add new dependent patient Bob Marley
-		driver.findElement(By.name("firstName")).sendKeys("Bob");
-		driver.findElement(By.name("lastName")).sendKeys("Marley");
-		driver.findElement(By.name("email")).sendKeys("bmarley@test.com");
-		driver.findElement(By.name("isDependent")).click();
-		driver.findElement(By.name("repId")).sendKeys("102");
-		driver.findElement(By.xpath(".//*[@value='Add patient']")).submit();
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[6]/div/h2")).click();
+	    driver.findElement(By.linkText("Patient")).click();
+	    driver.findElement(By.name("firstName")).clear();
+	    driver.findElement(By.name("firstName")).sendKeys("Bob");
+	    driver.findElement(By.name("lastName")).clear();
+	    driver.findElement(By.name("lastName")).sendKeys("Marley");
+	    driver.findElement(By.name("email")).clear();
+	    driver.findElement(By.name("email")).sendKeys("bmarley@test.com");
+	    driver.findElement(By.id("isDependent")).click();
+	    driver.findElement(By.id("repId")).clear();
+	    driver.findElement(By.id("repId")).sendKeys("102");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertTrue(driver.getPageSource().contains("successfully added"));
 		long mid = Long.parseLong(driver.findElement(By.xpath("//*[@id='iTrustContent']/div[1]/table/tbody/tr[2]/td[2]")).getText());
 		assertLogged(TransactionType.HCP_CREATED_DEPENDENT_PATIENT, 9000000000L, mid, "");
@@ -67,12 +65,14 @@ public class DependentsSTest extends iTrustSeleniumTest{
 		driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("103");
 	    //waitFor(1);
-	    driver.findElement(By.xpath("//input[@value='103' and @type='button']")).click();
+	    clickOnJavascriptElement(By.xpath("//input[@value='103' and @type='button']"));
 		assertTrue(driver.getTitle().equals("iTrust - Manage Representatives"));
 		
 		//Add Caldwell Hudson as a representative
+		driver.setJavascriptEnabled(false);
 		driver.findElement(By.name("UID_repID")).sendKeys("102");
 		driver.findElement(By.name("action")).submit();
+		driver.setJavascriptEnabled(true);
 		assertTrue(driver.getPageSource().contains("Caldwell Hudson"));
 	}
 
@@ -148,7 +148,7 @@ public class DependentsSTest extends iTrustSeleniumTest{
 		driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("580");
 	    //waitFor(1);
-	    driver.findElement(By.xpath("//input[@value='580' and @type='button']")).click();
+	    clickOnJavascriptElement(By.xpath("//input[@value='580' and @type='button']"));
 		assertTrue(driver.getTitle().equals("iTrust - Manage Representatives"));
 		assertTrue(driver.getPageSource().contains("Bob Marley is a dependent."));
 		assertTrue(driver.getPageSource().contains("Dependent users cannot represent others."));
@@ -165,8 +165,8 @@ public class DependentsSTest extends iTrustSeleniumTest{
 		assertLogged(TransactionType.HOME_VIEW, 750L, 0L, "");
 
 		//Navigate to records for Billy Ross
-		driver.findElement(By.xpath("//[@id='iTrustContent']/div/div[3]/div/h2"));
-		driver.findElement(By.linkText("Request Records Release")).click();
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
+	    driver.findElement(By.linkText("Request Records Release")).click();
 
 		//Submit request for dependent Billy Ross	    
 		Select oSelection = new Select(driver.findElement(By.name("selectedPatient")));
@@ -195,10 +195,11 @@ public class DependentsSTest extends iTrustSeleniumTest{
 		driver.findElement(By.name("verifyForm")).click();
 		driver.findElement(By.name("digitalSig")).sendKeys("Bob Ross");
 		driver.findElement(By.id("submit")).click();
-
+		
         assertTrue(driver.getPageSource().contains("Request successfully sent"));
         
 		//Check to see that the dependent's record is added
+        driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 		driver.findElement(By.linkText("Request Records Release")).click();
 		
 		//Submit request for dependent Billy Ross
@@ -219,44 +220,44 @@ public class DependentsSTest extends iTrustSeleniumTest{
 		gen.uc59();
 
 
-		//Log in as Bob Ross (MID 750)
 		login("750", "pw");
-		assertLogged(TransactionType.HOME_VIEW, 750L, 0L, "");
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
+	    driver.findElement(By.linkText("Request Records Release")).click();
+	    new Select(driver.findElement(By.name("selectedPatient"))).selectByVisibleText("Billy Ross");
+	    driver.findElement(By.id("submitDep")).click();
+	    driver.findElement(By.id("submitReq")).click();
+	    new Select(driver.findElement(By.name("releaseHospital"))).selectByVisibleText("Health Institute Dr. E");
+	    driver.findElement(By.id("recFirstName")).clear();
+	    driver.findElement(By.id("recFirstName")).sendKeys("Benedict");
+	    driver.findElement(By.id("recLastName")).clear();
+	    driver.findElement(By.id("recLastName")).sendKeys("Cucumberpatch");
+	    driver.findElement(By.id("recPhone")).clear();
+	    driver.findElement(By.id("recPhone")).sendKeys("555-666-7777");
+	    driver.findElement(By.id("recEmail")).clear();
+	    driver.findElement(By.id("recEmail")).sendKeys("a@b.com");
+	    driver.findElement(By.id("recHospitalName")).clear();
+	    driver.findElement(By.id("recHospitalName")).sendKeys("Rex Hospital");
+	    driver.findElement(By.id("recHospitalAddress1")).clear();
+	    driver.findElement(By.id("recHospitalAddress1")).sendKeys("123 Broad St.");
+	    driver.findElement(By.id("recHospitalAddress2")).clear();
+	    driver.findElement(By.id("recHospitalAddress2")).sendKeys("");
+	    driver.findElement(By.id("recHospitalCity")).clear();
+	    driver.findElement(By.id("recHospitalCity")).sendKeys("Cary");
+	    driver.findElement(By.id("recHospitalState")).clear();
+	    driver.findElement(By.id("recHospitalState")).sendKeys("NC");
+	    driver.findElement(By.id("recHospitalZip")).clear();
+	    driver.findElement(By.id("recHospitalZip")).sendKeys("27164");
+	    driver.findElement(By.id("releaseJustification")).clear();
+	    driver.findElement(By.id("releaseJustification")).sendKeys("Moving");
+	    driver.findElement(By.id("verifyForm")).click();
+	    driver.findElement(By.id("digitalSig")).clear();
+	    driver.findElement(By.id("digitalSig")).sendKeys("illy Ross");
+	    driver.findElement(By.id("submit")).click();
 
-		//Navigate to records for Billy Ross
-		driver.findElement(By.xpath("//[@id='iTrustContent']/div/div[3]/div/h2"));
-		driver.findElement(By.linkText("Request Records Release")).click();
-
-		//Submit request for dependent Billy Ross	    
-		Select oSelection = new Select(driver.findElement(By.name("selectedPatient")));
-        oSelection.selectByVisibleText("Billy Ross");
-		driver.findElement(By.id("submitDep")).click();
-        assertTrue(driver.getPageSource().contains("Billy Ross's Requested Records Release History"));
+		assertTrue(driver.getTitle().equals("iTrust - Records Release Request"));
+        System.out.println(driver.getPageSource());
+		assertTrue(driver.getPageSource().contains("Error"));
         
-        //Submit new request for Billy Ross
-		driver.findElement(By.id("submitRequest")).submit();
-		assertTrue(driver.getTitle().equals("iTrust - Records Release Request"));
-
-		//Fill in medical records release form
-		oSelection = new Select(driver.findElement(By.name("releaseHospital")));
-        oSelection.selectByVisibleText("Health Institute Dr. E");
-		driver.findElement(By.name("recFirstName")).sendKeys("Benedict");
-		driver.findElement(By.name("recLastName")).sendKeys("Cucumberpatch");
-		driver.findElement(By.name("recPhone")).sendKeys("555-666-7777");
-		driver.findElement(By.name("recEmail")).sendKeys("a@b.com");
-		driver.findElement(By.name("recHospitalName")).sendKeys("Rex Hospital");
-		driver.findElement(By.name("recHospitalAddress1")).sendKeys("123 Broad St.");
-		driver.findElement(By.name("recHospitalAddress2")).sendKeys(" ");
-		driver.findElement(By.name("recHospitalCity")).sendKeys("Cary");
-		driver.findElement(By.name("recHospitalState")).sendKeys("NC");
-		driver.findElement(By.name("recHospitalZip")).sendKeys("27164");
-		driver.findElement(By.name("releaseJustification")).sendKeys("Moving");
-		driver.findElement(By.name("verifyForm")).click();
-		driver.findElement(By.name("digitalSig")).sendKeys("illy Ross");
-		driver.findElement(By.id("submit")).click();
-
-		assertTrue(driver.getTitle().equals("iTrust - Records Release Request"));
-        assertTrue(driver.getPageSource().contains("Error"));
         
 	}
 	
@@ -283,8 +284,8 @@ public class DependentsSTest extends iTrustSeleniumTest{
 
 		//Log in as Bob Ross 
 		login("750", "pw");
-		driver.findElement(By.xpath("//[@id='iTrustContent']/div/div[3]/div/h2"));
-		driver.findElement(By.linkText("Request Records Release")).click();
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
+	    driver.findElement(By.linkText("Request Records Release")).click();
 		
 		try{
 			//Submit request for dependent Billy Ross	    
@@ -306,8 +307,8 @@ public class DependentsSTest extends iTrustSeleniumTest{
 		assertLogged(TransactionType.HOME_VIEW, 750L, 0L, "");		
 
 		//Request records
-		driver.findElement(By.xpath("//[@id='iTrustContent']/div/div[3]/div/h2"));
-		driver.findElement(By.linkText("Request Records Release")).click();
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
+	    driver.findElement(By.linkText("Request Records Release")).click();
 		//Submit request for dependent Billy Ross	    
 		Select oSelection = new Select(driver.findElement(By.name("selectedPatient")));
         oSelection.selectByVisibleText("Billy Ross");

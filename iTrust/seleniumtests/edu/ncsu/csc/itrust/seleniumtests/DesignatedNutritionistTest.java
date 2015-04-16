@@ -8,16 +8,12 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 
 public class DesignatedNutritionistTest extends iTrustSeleniumTest {
-	private HtmlUnitDriver driver;
 	private String baseUrl;
 
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
-		driver = new HtmlUnitDriver(BrowserVersion.FIREFOX_24);
-		driver.setJavascriptEnabled(true);
 		baseUrl = "http://localhost:8080/iTrust/";
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		gen.standardData();
 	}
 
@@ -35,7 +31,6 @@ public class DesignatedNutritionistTest extends iTrustSeleniumTest {
 		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("Patient Food Diary")).click();
 		driver.findElement(By.id("searchBox")).sendKeys("100");
-		//waitFor(2);
 		driver.findElement(By.xpath("//input[@value='100' and @type='button']")).click();
 		assertTrue((driver.getPageSource()).contains("2. Patient has to set you as his/her Designated Nutritionist in order to view it."));
 		driver.setJavascriptEnabled(false);
@@ -88,12 +83,12 @@ public class DesignatedNutritionistTest extends iTrustSeleniumTest {
 	    driver.findElement(By.linkText("Patient Food Diary")).click();
 		driver.findElement(By.id("searchBox")).clear();
 		driver.findElement(By.id("searchBox")).sendKeys("100");
-		driver.findElement(By.xpath("//input[@value='100' and @type='button']")).click();
+		super.clickOnJavascriptElement(By.xpath("//input[@value='100' and @type='button']"));
+		//driver.findElement().click();
 		assertTrue((driver.getPageSource()).contains("2. Patient has to set you as his/her Designated Nutritionist in order to view it."));
 		driver.setJavascriptEnabled(false);
 		driver.findElement(By.id("logoutBtn")).click();
 		driver.setJavascriptEnabled(true);
-		driver.findElement(By.id("j_username")).click();
 		driver.findElement(By.id("j_username")).clear();
 		driver.findElement(By.id("j_username")).sendKeys("100");
 		driver.findElement(By.id("j_password")).clear();
@@ -113,7 +108,10 @@ public class DesignatedNutritionistTest extends iTrustSeleniumTest {
 		driver.findElement(By.id("searchBox")).clear();
 		driver.findElement(By.id("searchBox")).sendKeys("100");
 		//waitFor(2);
-		driver.findElement(By.xpath("//input[@value='100' and @type='button']")).click();
+		
+		clickOnJavascriptElement(By.xpath("//input[@value='100' and @type='button']"));
+		
+		System.out.println(driver.getPageSource());
 		assertTrue((driver.getPageSource()).contains("The patient has no Food diary"));
 	}
 

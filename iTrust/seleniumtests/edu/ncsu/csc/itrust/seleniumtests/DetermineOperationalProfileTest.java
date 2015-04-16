@@ -30,7 +30,7 @@ public class DetermineOperationalProfileTest extends iTrustSeleniumTest {
 		wd.get(ADDRESS + "auth/uap/home.jsp");
 		assertEquals("iTrust - UAP Home", wd.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 8000000009L, 0L, "");
-		
+		wd.findElement(By.cssSelector("h2.panel-title")).click();
 		wd.findElement(By.linkText("Add Patient")).click();
 		WebElement firstName = wd.findElement(By.name("firstName"));
 		WebElement lastName = wd.findElement(By.name("lastName"));
@@ -46,9 +46,8 @@ public class DetermineOperationalProfileTest extends iTrustSeleniumTest {
 		String newMID = table1.findElements(By.xpath("tbody/tr/td")).get(1).getText();
 
 		assertLogged(TransactionType.PATIENT_CREATE, 8000000009L, Long.parseLong(newMID), "");
-		
-		List<WebElement> anchors = wd.findElements(By.tagName("a"));		
-		anchors.get(2).click();
+			
+		logout();
 		assertLogged(TransactionType.LOGOUT, 8000000009L, 8000000009L, "");
 		// login as tester to check the operational profile
 		wd = login("9999999999", "pw");
