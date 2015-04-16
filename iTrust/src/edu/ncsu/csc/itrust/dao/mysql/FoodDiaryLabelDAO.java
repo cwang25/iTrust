@@ -68,10 +68,8 @@ public class FoodDiaryLabelDAO {
 		long lastInsertID = -1;
 		try {
 			conn = factory.getConnection();
-			ps = conn.prepareStatement("INSERT INTO fooddiarysetlabels (mid, diarydate, label) VALUES (?,?,?)");
-			ps.setLong(1, label.getMid());
-			ps.setDate(2, label.getDate());
-			ps.setString(3, label.getLabel());
+			ps = conn.prepareStatement("INSERT INTO fooddiarysetlabels (mid, diarydate, label,labelrowID) VALUES (?,?,?,?)");
+			labelSetLoader.loadParameters(ps, label);
 			ps.executeUpdate();
 			lastInsertID = DBUtil.getLastInsert(conn);
 		} catch (SQLException e) {
@@ -81,6 +79,28 @@ public class FoodDiaryLabelDAO {
 			DBUtil.closeConnection(conn, ps);
 		}
 		return lastInsertID;
+	}
+	/**
+	 * Remove labels from the food diary label table.
+	 * @param bean FoodDiaryLabelBean to remove
+	 * @return The deleted FoodDiaryLabelBean.
+	 * @throws DBException
+	 */
+	public FoodDiaryLabelBean removeLabel(FoodDiaryLabelBean bean) throws DBException{
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try{
+			conn = factory.getConnection();
+			ps = conn.prepareStatement("DELETE FROM fooddiarylabels WHERE rowid=?");
+			ps.setLong(1, bean.getRowid());
+			ps.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();
+			throw new DBException(e);
+		} finally {
+			DBUtil.closeConnection(conn, ps);
+		}
+		return bean;
 	}
 	
 	/**
@@ -153,6 +173,32 @@ public class FoodDiaryLabelDAO {
 			ps = conn.prepareStatement("DELETE FROM fooddiarysetlabels WHERE rowid=?");
 			ps.setLong(1, bean.getRowid());
 			ps.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();
+			throw new DBException(e);
+		} finally {
+			DBUtil.closeConnection(conn, ps);
+		}
+		return bean;
+	}
+	/**
+	 * FoodDiaryLabelBean get record by long rowID.
+	 * @param rowID
+	 * @return
+	 * @throws DBException
+	 */
+	public FoodDiaryLabelBean getFoodDiaryLabelByRowID(long rowID) throws DBException{
+		Connection conn = null;
+		PreparedStatement ps = null;
+		FoodDiaryLabelBean bean = null;
+		try{
+			conn = factory.getConnection();
+			ps = conn.prepareStatement("SELECT * FROM fooddiarylabels WHERE rowid=?");
+			ps.setLong(1, rowID);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()){
+				bean = labelLoader.loadSingle(rs);
+			}
 		} catch(SQLException e) {
 			e.printStackTrace();
 			throw new DBException(e);

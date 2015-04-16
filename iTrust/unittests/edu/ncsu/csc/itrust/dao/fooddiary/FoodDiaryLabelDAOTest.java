@@ -42,7 +42,7 @@ public class FoodDiaryLabelDAOTest extends TestCase {
 	public void testInsertFoodDiaryLabel() throws DBException {
 		FoodDiaryLabelBean bean = new FoodDiaryLabelBean(730, "test");
 		long result = foodDAO.insertFoodDiaryLabel(bean);
-		assertEquals(5, result);
+		assertTrue(result>0);
 	}
 	
 	@Test
@@ -56,16 +56,21 @@ public class FoodDiaryLabelDAOTest extends TestCase {
 	
 	@Test
 	public void testSetFoodDiaryLabel() throws DBException {
-		FoodDiaryLabelSetBean bean = new FoodDiaryLabelSetBean(730, Date.valueOf("2012-09-30"), "Atkins");
+		FoodDiaryLabelSetBean bean = new FoodDiaryLabelSetBean(730, Date.valueOf("2012-09-30"), "Atkins", 3L);
 		long result = foodDAO.setFoodDiaryLabel(bean);
 		assertEquals(2, result);
 	}
 	
 	@Test
 	public void testSetFoodDiaryLabelFailure() {
-		FoodDiaryLabelSetBean bean = new FoodDiaryLabelSetBean(730, Date.valueOf("2012-09-30"), "Atkins");
+		FoodDiaryLabelSetBean bean = new FoodDiaryLabelSetBean(730, Date.valueOf("2012-09-30"), "Atkins", 3L);
 		try {
 			evilDAO.setFoodDiaryLabel(bean);
+			fail();
+		} catch (DBException e) { }
+		FoodDiaryLabelSetBean bean2 = new FoodDiaryLabelSetBean(730, Date.valueOf("2012-09-30"), "Atkins", 0L);
+		try {
+			foodDAO.setFoodDiaryLabel(bean2);
 			fail();
 		} catch (DBException e) { }
 	}

@@ -11,7 +11,7 @@ public class FoodDiaryLabelSetBeanTest extends TestCase {
 	
 	@Test
 	public void testLabelSetBeanGetSet() {
-		FoodDiaryLabelSetBean bean = new FoodDiaryLabelSetBean(12, null, "test");
+		FoodDiaryLabelSetBean bean = new FoodDiaryLabelSetBean(12, null, "test", 2L);
 		bean.setRowid(2);
 		bean.setMid(730);
 		bean.setDate(Date.valueOf("2012-09-12"));

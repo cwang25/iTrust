@@ -3,10 +3,11 @@ package edu.ncsu.csc.itrust.beans;
 import java.sql.Date;
 
 public class FoodDiaryLabelSetBean {
-	private long rowid;
+	private long rowid = -1;
 	private long mid;
 	private Date date;
 	private String label;
+	private long labelReferenceRowID;
 	
 	/**
 	 * Constructor for a new FoodDiaryLabelSetBean that isn't already in the database
@@ -14,8 +15,8 @@ public class FoodDiaryLabelSetBean {
 	 * @param date Date the label is set to
 	 * @param label Label to set
 	 */
-	public FoodDiaryLabelSetBean(long mid, Date date, String label) {
-		this(-1, mid, date, label);
+	public FoodDiaryLabelSetBean(long mid, Date date, String label, long referenceRowID) {
+		this(-1, mid, date, label, referenceRowID);
 	}
 	
 	/**
@@ -24,12 +25,14 @@ public class FoodDiaryLabelSetBean {
 	 * @param mid User's mid
 	 * @param date Date the label is set to
 	 * @param label Label to set
+	 * @param referenceRowID The reference row id connect to label table.
 	 */
-	public FoodDiaryLabelSetBean(long rowid, long mid, Date date, String label) {
+	public FoodDiaryLabelSetBean(long rowid, long mid, Date date, String label, long referenceRowID) {
 		this.rowid = rowid;
 		this.mid = mid;
 		this.date = date;
 		this.label = label;
+		this.labelReferenceRowID = referenceRowID;
 	}
 	
 	/**
@@ -79,5 +82,19 @@ public class FoodDiaryLabelSetBean {
 	 */
 	public void setLabel(String label) {
 		this.label = label;
+	}
+
+	/**
+	 * @return the labelReferenceRowID
+	 */
+	public long getLabelReferenceRowID() {
+		return labelReferenceRowID;
+	}
+
+	/**
+	 * @param labelReferenceRowID the labelReferenceRowID to set
+	 */
+	public void setLabelReferenceRowID(long labelReferenceRowID) {
+		this.labelReferenceRowID = labelReferenceRowID;
 	}
 }

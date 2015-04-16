@@ -1,6 +1,8 @@
 /*Table with foreign key constrain(Child table) has to drop before the parent tables*/
 DROP TABLE IF EXISTS fooddiarytable;
 DROP TABLE IF EXISTS macronutrientprofile;
+DROP TABLE IF EXISTS fooddiarysetlabels;
+
 /**/
 DROP TABLE IF EXISTS allergies;
 
@@ -88,7 +90,6 @@ DROP TABLE IF EXISTS obstetricshealthrecords;
 DROP TABLE IF EXISTS pregnancies;
 
 DROP TABLE IF EXISTS fooddiarylabels;
-DROP TABLE IF EXISTS fooddiarysetlabels;
 DROP TABLE IF EXISTS suggestions;
 DROP TABLE IF EXISTS macronutrientplan;
 

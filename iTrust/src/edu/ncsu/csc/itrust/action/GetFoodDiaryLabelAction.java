@@ -52,4 +52,8 @@ public class GetFoodDiaryLabelAction {
 		loggingAction.logEvent(TransactionType.PATIENT_GET_ALL_LABELS, mid, mid, "");
 		return list;
 	}
+	
+	public FoodDiaryLabelBean getFoodDiaryLabelByRowID(long rowID) throws DBException{
+		return foodDAO.getFoodDiaryLabelByRowID(rowID);
+	}
 }

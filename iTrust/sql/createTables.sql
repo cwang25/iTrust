@@ -711,7 +711,9 @@ CREATE TABLE IF NOT EXISTS fooddiarysetlabels (
 	rowid BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,	
 	mid BIGINT UNSIGNED NOT NULL,
 	diarydate DATE NOT NULL,
-	label VARCHAR(30) NOT NULL
+	label VARCHAR(30) NOT NULL,
+	labelrowID BIGINT unsigned,
+	CONSTRAINT chk_label_reference FOREIGN KEY (labelrowID) REFERENCES fooddiarylabels (rowid) ON DELETE CASCADE
 ) ENGINE=innoDB;
 
 CREATE TABLE IF NOT EXISTS suggestions (

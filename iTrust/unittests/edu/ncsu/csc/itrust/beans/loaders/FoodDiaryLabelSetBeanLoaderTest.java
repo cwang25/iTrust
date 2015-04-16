@@ -26,7 +26,7 @@ public class FoodDiaryLabelSetBeanLoaderTest {
 		ctrl = createControl();
 		rs = ctrl.createMock(ResultSet.class);
 		load = new FoodDiaryLabelSetBeanLoader();
-		bean = new FoodDiaryLabelSetBean(730, Date.valueOf("2012-09-02"), "Test");
+		bean = new FoodDiaryLabelSetBean(730, Date.valueOf("2012-09-02"), "Test", 2L);
 	}
 	
 	@Test

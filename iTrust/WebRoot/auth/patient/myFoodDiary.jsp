@@ -57,7 +57,9 @@
 		String gramsOfProtein = request.getParameter("gramsOfProtein")!= null ? request.getParameter("gramsOfProtein") : ""; 
 		String newLabelName = request.getParameter("newLabelName") != null ? request.getParameter("newLabelName") : "";
 		String labelDate = request.getParameter("labelDate") != null ? request.getParameter("labelDate") : "";
+		//ChangedLabelName now store the Label's rowID.
 		String changedLabelName = request.getParameter("changedLabelName") != null ? request.getParameter("changedLabelName") : "";
+		String removeLabelRowID = request.getParameter("removeLabelRowID") != null ? request.getParameter("removeLabelRowID"): "";
 	 	String mode = request.getParameter("operationMode");
 	 	String selectedIndex = request.getParameter("selectedIndex");
 	 	long selectedRowID = request.getParameter("row_id_to_edit")!=null?Long.parseLong(request.getParameter("row_id_to_edit")):-1;
@@ -188,9 +190,10 @@
 			if(changedLabelName.equals("none") && b != null) {
 				labelRemoveAction.removeFoodDiaryLabel(b);
 			} else if(!changedLabelName.equals("none")){
+				FoodDiaryLabelBean lebal = labelGetAction.getFoodDiaryLabelByRowID(Long.parseLong(changedLabelName));
 				if(b == null)
-					b = new FoodDiaryLabelSetBean(loggedInMID, java.sql.Date.valueOf(labelDate), changedLabelName);
-				b.setLabel(changedLabelName);
+					b = new FoodDiaryLabelSetBean(loggedInMID, java.sql.Date.valueOf(labelDate), lebal.getLabel(), lebal.getRowid());
+				b.setLabel(lebal.getLabel());
 				labelSetAction.setFoodDiaryLabel(b);
 			}
 			%>
@@ -318,7 +321,7 @@
 						List<FoodDiaryLabelBean> labelList = labelGetAction.getAllFoodDiaryLabels(loggedInMID);
 						for(FoodDiaryLabelBean lb : labelList) {
 							String labelText = StringEscapeUtils.escapeHtml(lb.getLabel());
-							%><option value="<%=labelText %>"><%=labelText %></option><%	
+							%><option value="<%=lb.getRowid() %>"><%=labelText %></option><%	
 						}								
 					%>
 				</select>
@@ -424,7 +427,7 @@
 		</br>
 		<button type='button' id="macroBtn" onclick="switchHiddenForm('hiddenMacro','showGraph'); preGraph();">Macro Calculator</button>
 		<button type='button' onclick="switchHiddenForm('HiddenForm', 'new')">Add new food diary</button>
-		<button type='button' onclick="switchHiddenForm('newLabelForm', 'addLabel')">Create new label</button>
+		<button type='button' onclick="switchHiddenForm('newLabelForm', 'addLabel')">Manage label</button>
 	</div>	
 	<br />
 	<div id="HiddenForm" name="Hiddenform"
@@ -545,20 +548,44 @@
 
 <div id="newLabelForm" name="newLabelForm" style="display: <%=!dataAllCorrect&&addLabel? "block" : "none"%>">
 	<form action="myFoodDiary.jsp" method="post" id="newLabel" align="center">
-		<table class="fTable" align="center">
+		<table class="fTable" align="center" width="400px">
 			<tr>
-				<th>New Label</th>
+				<th colspan="2">New Label</th>
 				<th><input type="button" style="color: black;font-size: 16pt; font-weight: bold; float: right;" value="Cancel" onclick="$('#newLabelForm').hide();"></th>
 			</tr>
 			<tr>
 				<td class="subHeaderVertical">Label Name:</td>
 				<td><input type="text" name="newLabelName" id="newLabelName" value="<%=StringEscapeUtils.escapeHtml(!dataAllCorrect&&addLabel ? newLabelName : "")%>"></td>
+				<td>
+				<input type="submit" id="saveNewLabelBtn" name="action"	style="font-size: 8pt; font-weight: bold; float: right;margin: 10px;" value="Save">
+				</td>
 			</tr>
 		</table>
 		<br/>
 		<input name="operationMode" value="addLabel" type="hidden">
-	
-		<input type="submit" id="saveNewLabelBtn" name="action"	style="font-size: 16pt; font-weight: bold;"	value="Save">
+	</form>
+	<form action="myFoodDiary.jsp" method="post" id="removeLabel" align="center">
+		<table class="fTable" align="center" width="400px">
+			<tr>
+				<th colspan="2">Remove Label</th>
+			</tr>
+			<tr>
+			<td width="200px">
+			<select id="labelListToRemove" class="fixedwidthlist" value="any" >
+			<%
+				List<FoodDiaryLabelBean> labelsList = labelGetAction.getAllFoodDiaryLabels(loggedInMID);
+				for(FoodDiaryLabelBean lb : labelsList) {
+					String labeltxt = StringEscapeUtils.escapeHtml(lb.getLabel());
+					%><option style="width:100px;" value="<%=lb.getRowid() %>"><%=labeltxt %></option><%	
+				}								
+			%>
+			</select>
+			</td>	
+			<td width="200px">
+			<input type="button" id="removeLabelBtn" name="action" style="margin: 10px;float: right;font-size: 8pt; font-weight: bold;"	value="Remove">
+			</td>
+			</tr>
+		</table>
 	</form>
 </div>
 
@@ -566,6 +593,7 @@
 	<form action="myFoodDiary.jsp" method="post" id="hiddenLabelChange" align="center">
 		<input type="hidden" id="labelDate" name="labelDate">
 		<input type="hidden" id="changedLabelName" name="changedLabelName">
+		<input type="hidden" id="removeLabelRowID" name="removeLabelRowID">
 		<input type="hidden" name="operationMode" value="setLabel">
 		<input type="submit" class="hiddenSubmitBtn">
 	</form>

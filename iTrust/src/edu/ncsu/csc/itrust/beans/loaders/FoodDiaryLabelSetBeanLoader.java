@@ -41,8 +41,8 @@ public class FoodDiaryLabelSetBeanLoader implements BeanLoader<FoodDiaryLabelSet
 		long mid = rs.getLong("mid");
 		Date date = rs.getDate("diarydate");
 		String label = rs.getString("label");
-		
-		return new FoodDiaryLabelSetBean(rowid, mid, date, label);
+		long referenceLabel = rs.getLong("labelrowID");
+		return new FoodDiaryLabelSetBean(rowid, mid, date, label, referenceLabel);
 	}
 
 	/**
@@ -56,10 +56,13 @@ public class FoodDiaryLabelSetBeanLoader implements BeanLoader<FoodDiaryLabelSet
 	@Override
 	public PreparedStatement loadParameters(PreparedStatement ps, FoodDiaryLabelSetBean bean) throws SQLException {
 		int i = 1;
-		ps.setLong(i++, bean.getRowid());
 		ps.setLong(i++, bean.getMid());
 		ps.setDate(i++, bean.getDate());
 		ps.setString(i++, bean.getLabel());
+		ps.setLong(i++, bean.getLabelReferenceRowID());
+		if(bean.getRowid() > 0){
+			ps.setLong(i++, bean.getRowid());
+		}
 		return ps;		
 	}
 }

@@ -33,7 +33,7 @@ public class RemoveFoodDiaryLabelActionTest extends TestCase {
 	
 	@Test
 	public void testSetFoodDiaryLabel() throws DBException {
-		FoodDiaryLabelSetBean b = new FoodDiaryLabelSetBean(1, 730, Date.valueOf("2012-09-30"), "Southbeach");
+		FoodDiaryLabelSetBean b = new FoodDiaryLabelSetBean(1, 730, Date.valueOf("2012-09-30"), "Southbeach", 2L);
 		FoodDiaryLabelSetBean ret = action.removeFoodDiaryLabel(b);
 		assertEquals(b.getRowid(), ret.getRowid());
 	}

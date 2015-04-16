@@ -153,14 +153,14 @@ NULL,
 /*End of insert food diary.*/
 
 /*Insert food diary labels.*/
-INSERT INTO fooddiarylabels (mid, label) 
+INSERT INTO fooddiarylabels (rowid, mid, label) 
 VALUES 
-(730, 'Southbeach'),
-(730, 'Atkins'),
-(730, 'Jenny Craig'),
-(730, 'Low carb');
+(2,730, 'Southbeach'),
+(3, 730, 'Atkins'),
+(NULL, 730, 'Jenny Craig'),
+(NULL, 730, 'Low carb');
 
-INSERT INTO fooddiarysetlabels (mid, diarydate, label)
+INSERT INTO fooddiarysetlabels (mid, diarydate, label, labelrowID)
 VALUES
-(730, '2012-09-30', 'Southbeach');
+(730, '2012-09-30', 'Southbeach',2);
 /*End of insert food diary labels.*/

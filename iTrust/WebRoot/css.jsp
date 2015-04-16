@@ -245,6 +245,16 @@ background: #F44330
   }
 }
 
+
+.fixedwidthlist{
+ width:150px;   
+}
+
+.fixedwidthlist option{
+ width:100px;   
+}
+
+
 /* ---------- SWITCH ---------- */
 /*http://codepen.io/anon/pen/RNXLMO*/
 
