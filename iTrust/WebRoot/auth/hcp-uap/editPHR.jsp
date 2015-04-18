@@ -357,7 +357,7 @@ function showRisks(){
                     	<!-- </option>-->
                		 <%//}%>
             		<!-- </select>-->
-					<input type="submit" name="addA" value="Add Allergy">
+					<input type="submit" id="addA" name="addA" value="Add Allergy">
 				</td>
 			</tr>
 			</form>
