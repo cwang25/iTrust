@@ -247,7 +247,7 @@ background: #F44330
 
 
 .fixedwidthlist{
- width:150px;   
+	width:150px;   
 }
 
 .fixedwidthlist option{

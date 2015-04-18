@@ -11,6 +11,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.ui.Select;
 
+import com.gargoylesoftware.htmlunit.BrowserVersion;
+
 import edu.ncsu.csc.itrust.enums.TransactionType;
 
 /**
@@ -179,26 +181,24 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest {
 	 * @throws Exception
 	 */
 	public void testAllergy2() throws Exception {
-		driver.get(baseUrl + "/iTrust/auth/forwardUser.jsp");
+		HtmlUnitDriver driver = new HtmlUnitDriver(BrowserVersion.FIREFOX_24);
+		driver.setJavascriptEnabled(true);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		driver.get(baseUrl + "/iTrust/");
 		driver.findElement(By.id("j_username")).clear();
 		driver.findElement(By.id("j_username")).sendKeys("9000000000");
 		driver.findElement(By.id("j_password")).clear();
 		driver.findElement(By.id("j_password")).sendKeys("pw");
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		assertTextPresent("Welcome, Kelly Doctor", driver);
-		driver.findElement(By.linkText("PHR Information")).click();
-		assertEquals("iTrust - Please Select a Patient", driver.getTitle());
-		driver.findElement(By.name("UID_PATIENTID")).sendKeys("2");
-		driver.findElement(By.xpath("//input[@value='2']")).submit();
-		assertLogged(TransactionType.PATIENT_HEALTH_INFORMATION_VIEW,
-				9000000000L, 2L, "");
-
-		// Add allergy
-		driver.findElement(By.name("description")).sendKeys("Penicillin");
-		driver.findElement(By.name("addA")).click();
-		System.out.println(driver.getPageSource());
-		assertLogged(TransactionType.PATIENT_HEALTH_INFORMATION_EDIT,
-				9000000000L, 2L, "");
+	    driver.findElement(By.cssSelector("div.panel-heading")).click();
+	    driver.findElement(By.linkText("PHR Information")).click();
+	    driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("2");
+	    driver.findElement(By.xpath("//input[@value='2' and @type='button']")).click();
+	    driver.findElement(By.id("description")).clear();
+	    driver.findElement(By.id("description")).sendKeys("Penicillin");
+	    driver.findElement(By.id("addA")).click();
+	    System.out.println(driver.getPageSource());
 		assertTextPresent("664662530 - Penicilli", driver);
 	}
 
