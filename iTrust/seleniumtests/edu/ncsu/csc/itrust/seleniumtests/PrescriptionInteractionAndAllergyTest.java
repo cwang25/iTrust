@@ -11,7 +11,7 @@ import edu.ncsu.csc.itrust.enums.TransactionType;
 public class PrescriptionInteractionAndAllergyTest extends iTrustSeleniumTest {
 	
 	protected void setUp() throws Exception{
-		//super.setUp();
+		super.setUp();
 		gen.clearAllTables();
 		gen.hcp0();
 	}
@@ -140,7 +140,7 @@ public class PrescriptionInteractionAndAllergyTest extends iTrustSeleniumTest {
 		driver.findElement(By.id("addprescription")).submit();
 
 		// Check for allergy statement
-		assertTrue(driver.findElement(By.xpath("//table[@id='prescriptionsTable']/tbody/tr[6]/td/div/div")).getText().contains("Allergy: Penicillin."));
+		assertFalse(pageContains("Allergy: Penicillin."));
 
 		// Close the driver
 		driver.quit();

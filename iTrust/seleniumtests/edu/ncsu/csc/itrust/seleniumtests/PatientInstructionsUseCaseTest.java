@@ -50,6 +50,7 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		// click Document Office Visit
 		driver.setJavascriptEnabled(true);
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 		driver.findElement(By.linkText("Document Office Visit")).click();		
 		selectPatientFromSearch("1");
 		driver.setJavascriptEnabled(false);
@@ -100,6 +101,7 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 		login("9000000004", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		// click Document Office Visit
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 		driver.findElement(By.linkText("Document Office Visit")).click();
 		
 		// select the patient
@@ -143,6 +145,7 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 		login("9000000003", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		// click Document Office Visit
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 		driver.findElement(By.linkText("Document Office Visit")).click();
 		
 		// select the patient
@@ -180,6 +183,7 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 		login("9000000004", "pw");
 		assertEquals("iTrust - HCP Home",  driver.getTitle());
 		// click Document Office Visit
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 		driver.findElement(By.linkText("Document Office Visit")).click();
 		
 		// select the patient
@@ -231,6 +235,7 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 		login("2", "pw");
 		assertEquals("iTrust - Patient Home",  driver.getTitle());
 		// click Patient Specific Instructions
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("Patient Specific Instructions")).click();
 		
 		assertEquals("iTrust - View Patient-Specific Instructions",  driver.getTitle());
@@ -286,6 +291,7 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 		login("1", "pw");
 		assertEquals("iTrust - Patient Home",  driver.getTitle());
 		// click Patient Specific instructions
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("Patient Specific Instructions")).click();
 
 		assertEquals("iTrust - View Patient-Specific Instructions", driver.getTitle());
@@ -307,6 +313,7 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 		login("9000000004", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		// click Document Office Visit
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 		driver.findElement(By.partialLinkText("Document Office Visit")).click();
 		
 		// select the patient
@@ -354,6 +361,7 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 		login("9000000004", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		// click Document Office Visit
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 		driver.findElement(By.partialLinkText("Document Office Visit")).click();
 		
 		// select the patient
@@ -404,6 +412,7 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 		login("9000000004", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		// click Document Office Visit
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 		driver.findElement(By.partialLinkText("Document Office Visit")).click();
 		
 		// select the patient
@@ -460,6 +469,7 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 		login("9000000004", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		// click Document Office Visit
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 		driver.findElement(By.partialLinkText("Document Office Visit")).click();
 		
 		// select the patient
