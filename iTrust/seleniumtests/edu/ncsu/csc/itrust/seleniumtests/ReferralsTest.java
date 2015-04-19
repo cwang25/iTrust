@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
@@ -59,6 +60,9 @@ public class ReferralsTest extends iTrustSeleniumTest {
 	    driver.findElement(By.name("LAST_NAME")).sendKeys("Stormcrow");
 	    driver.findElement(By.xpath("//input[@value='User Search']")).click();
 	    driver.findElement(By.xpath("(//input[@value='9000000003'])[2]")).click();
+	    System.out.println(driver.findElement(By.xpath("(//input[@value='9000000003'])[2]")));
+
+	    //System.out.println(driver.getPageSource());
 	    driver.findElement(By.name("referralDetails")).clear();
 	    driver.findElement(By.name("referralDetails")).sendKeys("See Gandalf. He will translate the engravings on that ring for you");
 	    new Select(driver.findElement(By.name("priority"))).selectByVisibleText("1");

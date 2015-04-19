@@ -155,7 +155,7 @@ public class AppointmentTypeTest extends iTrustSeleniumTest{
 		assertEquals("iTrust - Schedule an Appointment",driver.getTitle());
 		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("View My Appointments")).click();
-		assertEquals(scheduledDate + " 01:00 PM",driver.findElement(By.xpath("//*[@id='iTrustContent']/div/table/tbody/tr[13]/td[3]")).getText());
+		assertTrue(driver.getPageSource().contains(scheduledDate + " 01:00 PM"));
 		assertLogged(TransactionType.APPOINTMENT_ALL_VIEW, 9000000000L, 0L, "");
 		
 	}
