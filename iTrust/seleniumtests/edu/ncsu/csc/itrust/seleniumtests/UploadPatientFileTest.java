@@ -22,7 +22,7 @@ public class UploadPatientFileTest extends iTrustSeleniumTest {
 		HtmlUnitDriver driver = (HtmlUnitDriver)login("9000000000", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
-		
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[6]/div/h2")).click();
 		driver.findElement(By.linkText("Upload Patient File")).click();
 		assertEquals("iTrust - Upload Patient File", driver.getTitle());
 
@@ -46,7 +46,7 @@ public class UploadPatientFileTest extends iTrustSeleniumTest {
 		HtmlUnitDriver driver = (HtmlUnitDriver)login("9000000000", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
-		
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[6]/div/h2")).click();
 		driver.findElement(By.linkText("Upload Patient File")).click();
 		assertEquals("iTrust - Upload Patient File", driver.getTitle());
 
@@ -65,7 +65,7 @@ public class UploadPatientFileTest extends iTrustSeleniumTest {
 		HtmlUnitDriver driver = (HtmlUnitDriver)login("9000000000", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
-		
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[6]/div/h2")).click();
 		driver.findElement(By.linkText("Upload Patient File")).click();
 		assertEquals("iTrust - Upload Patient File", driver.getTitle());
 
@@ -84,7 +84,7 @@ public class UploadPatientFileTest extends iTrustSeleniumTest {
 		HtmlUnitDriver driver = (HtmlUnitDriver)login("9000000000", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
-		
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[6]/div/h2")).click();
 		driver.findElement(By.linkText("Upload Patient File")).click();
 		assertEquals("iTrust - Upload Patient File", driver.getTitle());
 
@@ -110,7 +110,7 @@ public class UploadPatientFileTest extends iTrustSeleniumTest {
 		HtmlUnitDriver driver = (HtmlUnitDriver)login("9000000000", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
-		
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[6]/div/h2")).click();
 		driver.findElement(By.linkText("Upload Patient File")).click();
 		assertEquals("iTrust - Upload Patient File", driver.getTitle());
 
@@ -133,7 +133,7 @@ public class UploadPatientFileTest extends iTrustSeleniumTest {
 		HtmlUnitDriver driver = (HtmlUnitDriver)login("9000000000", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
-		
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[6]/div/h2")).click();
 		driver.findElement(By.linkText("Upload Patient File")).click();
 		assertEquals("iTrust - Upload Patient File", driver.getTitle());
 
@@ -156,7 +156,7 @@ public class UploadPatientFileTest extends iTrustSeleniumTest {
 		HtmlUnitDriver driver = (HtmlUnitDriver)login("9000000000", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
-		
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[6]/div/h2")).click();
 		driver.findElement(By.linkText("Upload Patient File")).click();
 		assertEquals("iTrust - Upload Patient File", driver.getTitle());
 
