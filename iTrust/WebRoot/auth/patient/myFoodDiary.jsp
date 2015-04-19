@@ -256,7 +256,14 @@
 	<div>
 		<span>Filter entries by date</span><br/>
 		Filter by range: <input id="dateRangeCheckbox" type="checkbox"/><br/>
-		<input type="text" placeholder="MM/dd/yyyy" id="dateRangeFrom"/>&nbsp;<input type="text" placeholder="MM/dd/yyyy" id="dateRangeTo" style="display:none;" /><br/>
+		<input type="text" placeholder="MM/dd/yyyy" name="dateRangeFrom" id="dateRangeFrom"/>
+		<input type="button" value="Select Date" onclick="displayDatePicker('dateRangeFrom');">
+		&nbsp;
+		<span id="dateRangeToContainer" style="display:none;">
+			<input type="text" placeholder="MM/dd/yyyy" name="dateRangeTo" id="dateRangeTo" />
+			<input type="button" value="Select Date" onclick="displayDatePicker('dateRangeTo');">
+		</span>
+		<br/>
 		<input type="button" id="dateFilterSubmit" value="Filter"/><input type="button" id="dateFilterClear" value="Show All"/><br/>
 		<span style="color:red;" id="dateFilterErrorMsg"></span>
 	</div>
@@ -793,9 +800,9 @@
 	
 	$('#dateRangeCheckbox').click(function() {
 		if(this.checked)
-			$('#dateRangeTo').show();
+			$('#dateRangeToContainer').show();
 		else
-			$('#dateRangeTo').hide();
+			$('#dateRangeToContainer').hide();
 	});
 	
 	$('#dateFilterClear').click(function() {
