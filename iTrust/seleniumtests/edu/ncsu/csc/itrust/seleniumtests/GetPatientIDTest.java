@@ -12,31 +12,17 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.junit.Test;
 
-public class GetPatientIDTest {
-	private WebDriver driver;
-	  private String baseUrl;
-	  private boolean acceptNextAlert = true;
-	  private StringBuffer verificationErrors = new StringBuffer();
+public class GetPatientIDTest extends iTrustSeleniumTest{
 
 	  @Before
 	  public void setUp() throws Exception {
-		WebDriver driver = new HtmlUnitDriver();
-	    baseUrl = "http://localhost:8080/";
-	    driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		super.setUp();
+		gen.standardData();
 	  }
 
 	  @Test
 	  public void testSelectPatientButton() throws Exception {
-		WebDriver driver = new HtmlUnitDriver();
-		baseUrl = "http://localhost:8080/iTrust/";
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		driver.get(baseUrl + "auth/forwardUser.jsp");
-		
-	    driver.findElement(By.id("j_username")).clear();
-	    driver.findElement(By.id("j_username")).sendKeys("9000000003");
-	    driver.findElement(By.id("j_password")).clear();
-	    driver.findElement(By.id("j_password")).sendKeys("pw");
-	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		login("9000000003","pw");
 	    assertEquals("iTrust - HCP Home", driver.getTitle());
 	    driver.findElement(By.cssSelector("h2.panel-title")).click();
 	    driver.findElement(By.linkText("Patient Information")).click();

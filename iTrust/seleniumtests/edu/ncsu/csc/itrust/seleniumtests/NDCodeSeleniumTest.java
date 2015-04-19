@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 import edu.ncsu.csc.itrust.enums.TransactionType;
 
@@ -15,7 +16,7 @@ public class NDCodeSeleniumTest extends iTrustSeleniumTest {
 	 */
 	/**ADDRESS*/
 	public static final String ADDRESS = "http://localhost:8080/iTrust/";
-	private WebDriver driver;
+	
 
 	@Override
 	protected void setUp() throws Exception {
@@ -27,13 +28,19 @@ public class NDCodeSeleniumTest extends iTrustSeleniumTest {
 		gen.ndCodes2();
 		gen.ndCodes3();
 		gen.ndCodes4();
+		driver = new HtmlUnitDriver();
 		// turn off htmlunit warnings
 	    java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(java.util.logging.Level.OFF);
 	    java.util.logging.Logger.getLogger("org.apache.http").setLevel(java.util.logging.Level.OFF);
 	}
 	
 	public void testRemoveNDCode() throws Exception {
-		driver = login("9000000001", "pw");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000001");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals(driver.getTitle(), "iTrust - Admin Home");
 		assertLogged(TransactionType.HOME_VIEW, 9000000001L, 0L, "");
 		driver.findElement(By.linkText("Edit ND Codes")).click();
@@ -50,7 +57,12 @@ public class NDCodeSeleniumTest extends iTrustSeleniumTest {
 	}
 
 	public void testUpdateNDCode() throws Exception {
-		driver = login("9000000001", "pw");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000001");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals(driver.getTitle(), "iTrust - Admin Home");
 		assertLogged(TransactionType.HOME_VIEW, 9000000001L, 0L, "");
 		driver.findElement(By.linkText("Edit ND Codes")).click();

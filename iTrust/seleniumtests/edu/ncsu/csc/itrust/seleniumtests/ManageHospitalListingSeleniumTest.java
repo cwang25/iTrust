@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 import edu.ncsu.csc.itrust.enums.TransactionType;
 
@@ -20,6 +21,7 @@ public class ManageHospitalListingSeleniumTest extends iTrustSeleniumTest {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
+		driver = new HtmlUnitDriver();
 		gen.clearAllTables();
 		gen.standardData();
 		// turn off htmlunit warnings
@@ -28,7 +30,12 @@ public class ManageHospitalListingSeleniumTest extends iTrustSeleniumTest {
 	}
 	
 	public void testCreateHospital() throws Exception {
-		driver = login("9000000001", "pw");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000001");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertLogged(TransactionType.HOME_VIEW, 9000000001L, 0L, "");
 		driver.findElement(By.linkText("Manage Hospital Listing")).click();
 		assertEquals(driver.getTitle(), "iTrust - Maintain Hospital Listing and Assignments");
@@ -55,7 +62,12 @@ public class ManageHospitalListingSeleniumTest extends iTrustSeleniumTest {
 	}
 	
 	public void testUpdateHospital() throws Exception {
-		driver = login("9000000001", "pw");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000001");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertLogged(TransactionType.HOME_VIEW, 9000000001L, 0L, "");
 		driver.findElement(By.linkText("Manage Hospital Listing")).click();
 		assertEquals(driver.getTitle(), "iTrust - Maintain Hospital Listing and Assignments");
@@ -82,7 +94,12 @@ public class ManageHospitalListingSeleniumTest extends iTrustSeleniumTest {
 	}
 	
 	public void testUpdateWithoutID() throws Exception {
-		driver = login("9000000001", "pw");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000001");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertLogged(TransactionType.HOME_VIEW, 9000000001L, 0L, "");
 		driver.findElement(By.linkText("Manage Hospital Listing")).click();
 		assertEquals(driver.getTitle(), "iTrust - Maintain Hospital Listing and Assignments");
@@ -101,7 +118,12 @@ public class ManageHospitalListingSeleniumTest extends iTrustSeleniumTest {
 	}
 	
 	public void testNameTooLong() throws Exception {
-		driver = login("9000000001", "pw");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000001");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertLogged(TransactionType.HOME_VIEW, 9000000001L, 0L, "");
 		driver.findElement(By.linkText("Manage Hospital Listing")).click();
 		assertEquals(driver.getTitle(), "iTrust - Maintain Hospital Listing and Assignments");

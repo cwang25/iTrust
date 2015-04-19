@@ -92,7 +92,7 @@ public class FoodDiaryDateFilterTest extends iTrustSeleniumTest {
 	    driver.findElement(By.linkText("Patient Food Diary")).click();
 	    driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("500");
-	    driver.findElement(By.xpath("//input[@value='500' and @type='button']")).click();
+	    clickOnJavascriptElement(By.xpath("//input[@value='500' and @type='button']"));
 	    driver.findElement(By.id("dateRangeFrom")).clear();
 	    driver.findElement(By.id("dateRangeFrom")).sendKeys("04/13/14");
 	    driver.findElement(By.id("dateFilterSubmit")).click();

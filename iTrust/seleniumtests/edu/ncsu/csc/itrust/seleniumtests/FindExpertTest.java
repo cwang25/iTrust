@@ -1,5 +1,6 @@
 package edu.ncsu.csc.itrust.seleniumtests;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.*;
@@ -12,7 +13,6 @@ import edu.ncsu.csc.itrust.enums.TransactionType;
 //import com.sun.org.apache.bcel.internal.generic.Select;
 
 public class FindExpertTest extends iTrustSeleniumTest {
-	 private WebDriver driver;
 	  private String baseUrl;
 	  private boolean acceptNextAlert = true;
 	  private StringBuffer verificationErrors = new StringBuffer();
@@ -29,16 +29,7 @@ public class FindExpertTest extends iTrustSeleniumTest {
 
 	  @Test
 	  public void testEditAndFindExpert() throws Exception {
-		WebDriver driver = new HtmlUnitDriver();
-		baseUrl = "http://localhost:8080/iTrust/";
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		driver.get(baseUrl + "auth/forwardUser.jsp");
-		
-	    driver.findElement(By.id("j_username")).clear();
-	    driver.findElement(By.id("j_username")).sendKeys("9000000001");
-	    driver.findElement(By.id("j_password")).clear();
-	    driver.findElement(By.id("j_password")).sendKeys("pw");
-	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		login("9000000001", "pw");
 	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 	    assertEquals("iTrust - Admin Home", driver.getTitle());
 	    assertLogged(TransactionType.HOME_VIEW, 9000000001L, 0L, "");
@@ -49,7 +40,10 @@ public class FindExpertTest extends iTrustSeleniumTest {
 	    driver.findElement(By.name("LAST_NAME")).clear();
 	    driver.findElement(By.name("LAST_NAME")).sendKeys("Doctor");
 	    driver.findElement(By.xpath("//input[@value='User Search']")).click();
-	    driver.findElement(By.xpath("(//input[@value='9000000000'])[2]")).click();
+	    List<WebElement> elems = driver.findElements(By.xpath("//input[@value='9000000000']"));
+	    System.out.println(elems.size());
+	    
+	    elems.get(1).click();
 	    assertEquals("iTrust - Edit Personnel", driver.getTitle());
 	    driver.findElement(By.name("phone")).clear();
 	    driver.findElement(By.name("phone")).sendKeys("919-100-1000");
@@ -57,13 +51,9 @@ public class FindExpertTest extends iTrustSeleniumTest {
 	    assertEquals("Information Successfully Updated", driver.findElement(By.cssSelector("span.iTrustMessage")).getText());
 	    assertLogged(TransactionType.LHCP_EDIT, 9000000001L, 9000000000L, "");
 	    //here is the log out
-	    driver.findElement(By.cssSelector("a[href='/iTrust/logout.jsp']")).click();
+	    logout();
 	    assertEquals("iTrust - Login", driver.getTitle());
-	    driver.findElement(By.id("j_username")).clear();
-	    driver.findElement(By.id("j_username")).sendKeys("1");
-	    driver.findElement(By.id("j_password")).clear();
-	    driver.findElement(By.id("j_password")).sendKeys("pw");
-	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+	    login("1","pw");
 	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 	    assertEquals("iTrust - Patient Home", driver.getTitle());
 	    driver.findElement(By.linkText("Find an Expert")).click();

@@ -45,7 +45,12 @@ public class PatientHTTPTest extends iTrustSeleniumTest {
 		assertTrue(driver.getPageSource().contains("Password changed"));
 		assertLogged(TransactionType.PASSWORD_RESET, 2L, 2L, "");
 		
-		driver = login("2", "pw");
+		driver.get(ADDRESS + "/auth/forwardUser.jsp");
+	    driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("2");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		
 		assertTrue(driver.getPageSource().contains("Failed login"));
 		
@@ -96,7 +101,7 @@ public class PatientHTTPTest extends iTrustSeleniumTest {
 		assertEquals("Kelly Doctor", driver.findElement(By.xpath("//*[@id='iTrustContent']/div/table/tbody/tr[3]/td[4]")).getText());
 	}
 	
-	/*
+	
 	public void testCodeInjection() throws Exception {
 		driver.get(ADDRESS + "/auth/forwardUser.jsp");
 	    driver.findElement(By.id("j_username")).clear();
@@ -112,5 +117,4 @@ public class PatientHTTPTest extends iTrustSeleniumTest {
 		assertTrue(driver.getTitle().contains("iTrust - My Diagnoses"));
 		assertLogged(TransactionType.DIAGNOSES_LIST_VIEW, 2L, 2L, "");
 	}
-	*/
 }

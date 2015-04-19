@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 import edu.ncsu.csc.itrust.enums.TransactionType;
 
@@ -15,7 +16,6 @@ public class MonitorAdverseEventSeleniumTest extends iTrustSeleniumTest {
 	 */
 	/**ADDRESS*/
 	public static final String ADDRESS = "http://localhost:8080/iTrust/";
-	private WebDriver driver;
 
 	@Override
 	protected void setUp() throws Exception {
@@ -30,6 +30,7 @@ public class MonitorAdverseEventSeleniumTest extends iTrustSeleniumTest {
 		gen.patient4();
 		gen.patient10();
 		gen.patient13();
+		driver = new HtmlUnitDriver();
 		// turn off htmlunit warnings
 	    java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(java.util.logging.Level.OFF);
 	    java.util.logging.Logger.getLogger("org.apache.http").setLevel(java.util.logging.Level.OFF);
@@ -42,7 +43,12 @@ public class MonitorAdverseEventSeleniumTest extends iTrustSeleniumTest {
 	
 	public void testViewDrugAdverseEvents () throws Exception {
 		gen.adverseEvent1();
-		driver = login("7000000001", "pw");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("7000000001");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals(driver.getTitle(), "iTrust - PHA Home");
 		assertLogged(TransactionType.HOME_VIEW, 7000000001L, 0L, "");
 		
@@ -68,7 +74,12 @@ public class MonitorAdverseEventSeleniumTest extends iTrustSeleniumTest {
 	
 	public void testRemoveImmunizationAdverseEventReport() throws Exception {
 		gen.adverseEvent2();
-		driver = login("7000000001", "pw");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("7000000001");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals(driver.getTitle(), "iTrust - PHA Home");
 		assertLogged(TransactionType.HOME_VIEW, 7000000001L, 0L, "");
 		
@@ -93,7 +104,12 @@ public class MonitorAdverseEventSeleniumTest extends iTrustSeleniumTest {
 	
 	public void testGetBarChart() throws Exception {
 		gen.adverseEvent3();
-		driver = login("7000000001", "pw");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("7000000001");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals(driver.getTitle(), "iTrust - PHA Home");
 		assertLogged(TransactionType.HOME_VIEW, 7000000001L, 0L, "");
 		

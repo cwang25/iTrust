@@ -1,30 +1,8 @@
-/**
- * 
- */
 package edu.ncsu.csc.itrust.seleniumtests;
-
-import static org.junit.Assert.*;
-
-import java.util.NoSuchElementException;
-import java.util.concurrent.TimeUnit;
-
-import net.sourceforge.htmlunit.corejs.javascript.Function;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
-
-import com.gargoylesoftware.htmlunit.BrowserVersion;
-import com.google.api.client.auth.oauth2.BrowserClientRequestUrl;
-
-
-import edu.ncsu.csc.itrust.enums.TransactionType;
 
 /**
  * @author nishant

@@ -7,6 +7,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;*/
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+
 /*import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -35,9 +37,14 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 
 	/* Initializing Obstetrics Records UC63 */
 	public void testAddPatientNoPriors() throws Exception {
-		
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000012");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		// login HCP Kathryn Evans
-		WebDriver driver = login("9000000012", "pw");
 
 		driver.getCurrentUrl();
 		
@@ -97,8 +104,13 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 	
 	public void testAddPatient2Priors() throws Exception {
 		// login HCP Kathryn Evans
-		WebDriver driver = login("9000000012", "pw");
-		
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000012");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000012L, 0L, "");
 		
@@ -140,7 +152,13 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 	//TODO while this functionality exists, it is untestable because of HttpUnit not running complicated JavaScript
 	public void testAddPatientEnterPrior() throws Exception {
 		// login HCP Kathryn Evans
-		WebDriver driver = login("9000000012", "pw");
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000012");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000012L, 0L, "");
 		
@@ -177,7 +195,13 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 	
 	public void testAddPatientMale() throws Exception {
 		// login HCP Kathryn Evans
-		WebDriver driver = login("9000000012", "pw");
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000012");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000012L, 0L, "");
 		
@@ -195,7 +219,13 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 	public void testViewPatientNonObstetricsHCP() throws Exception {
 		testAddPatient2Priors();
 		// login HCP Kelly Doctor (not obstetrics)		
-		WebDriver driver = login("9000000000", "pw");
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
@@ -216,7 +246,13 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 	
 	public void testAddNonExistentPatient() throws Exception {
 		// login HCP Kathryn Evans
-		WebDriver driver = login("9000000012", "pw");
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000012");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000012L, 0L, "");
 		
@@ -232,7 +268,13 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 	
 	public void testAddPatientByID() throws Exception {
 		// login HCP Kathryn Evans
-		WebDriver driver = login("9000000012", "pw");
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000012");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000012L, 0L, "");
 		
@@ -272,7 +314,13 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 	public void testViewPatientObstetricsHCP() throws Exception {
 		testAddPatientByID();
 		// login HCP Harry Potter
-		WebDriver driver = login("9000000013", "pw");
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000013");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000013L, 0L, "");
 		
@@ -295,7 +343,13 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 	
 	public void testAddPatientFutureLMP() throws Exception {
 		// login HCP Kathryn Evans
-		WebDriver driver = login("9000000012", "pw");
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000012");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000012L, 0L, "");
 		
@@ -329,7 +383,13 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 	
 	public void testAddPatientChangeMind() throws Exception {
 		// login HCP Kathryn Evans
-		WebDriver driver = login("9000000012", "pw");
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000012");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000012L, 0L, "");
 		
@@ -357,7 +417,13 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 	/* Adding Obstetrics Office Visits UC64 */
 	public void testAddObstetricsOV() throws Exception {
 		// login HCP Kathryn Evans
-		WebDriver driver = login("9000000012", "pw");
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000012");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000012L, 0L, "");
 		
@@ -394,7 +460,13 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 	public void testAddEditObstetricsOV() throws Exception {
 		//-----Add-----//
 		// login HCP Kathryn Evans
-		WebDriver driver = login("9000000012", "pw");
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000012");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000012L, 0L, "");
 		
@@ -440,7 +512,13 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 	
 	public void testAddObstetricsNonObHCP() throws Exception {
 		// login HCP Kelly Doctor
-		WebDriver driver = login("9000000000", "pw");
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
@@ -460,7 +538,13 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 	
 	public void testAddObstetricsOVPregnancyOver() throws Exception {
 		// login HCP Kathryn Evans
-		WebDriver driver = login("9000000012", "pw");
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000012");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000012L, 0L, "");
 		
@@ -494,7 +578,13 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 	
 	public void testAddObstetricsOVNotInitialized() throws Exception {
 		// login HCP Kathryn Evans
-		WebDriver driver = login("9000000012", "pw");
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000012");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000012L, 0L, "");
 		
@@ -529,7 +619,13 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 	 */
 	public void testAllTwinsFlag() throws Exception {
 		// login HCP Kathryn Evans
-		WebDriver driver = login("9000000012", "pw");
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000012");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000012L, 0L, "");
 
@@ -640,7 +736,13 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 	 */
 	public void testAllPlacentaFlag() throws Exception {
 		// login HCP Kathryn Evans
-		WebDriver driver = login("9000000012", "pw");
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000012");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000012L, 0L, "");
 		
@@ -735,7 +837,13 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 	
 	public void testDocumentObOVAgeHBPWeight() throws Exception {
 		// login HCP Kathryn Evans
-		WebDriver driver = login("9000000012", "pw");
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000012");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000012L, 0L, "");
 		
@@ -798,7 +906,13 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 	
 	public void testDocumentObOVHighFHR() throws Exception {
 		// login HCP Kathryn Evans
-		WebDriver driver = login("9000000012", "pw");
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000012");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000012L, 0L, "");
 		
@@ -860,7 +974,13 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 	
 	public void testDocumentAbnormalFHRBoundaryValue() throws Exception {
 		// login HCP Kathryn Evans
-		WebDriver driver = login("9000000012", "pw");
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000012");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000012L, 0L, "");
 		
@@ -925,7 +1045,13 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 	
 	public void testAddAllergy() throws Exception {
 		// login HCP Kathryn Evans
-		WebDriver driver = login("9000000012", "pw");
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000012");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000012L, 0L, "");
 		
@@ -961,7 +1087,13 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 		testAddAllergy();
 		
 		// login HCP Kathryn Evans
-		WebDriver driver = login("9000000012", "pw");
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000012");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000012L, 0L, "");
 		
@@ -996,7 +1128,13 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 	
 	public void testAddInvalidAllergy() throws Exception {
 		// login HCP Kathryn Evans
-		WebDriver driver = login("9000000012", "pw");
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000012");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000012L, 0L, "");
 		
@@ -1015,7 +1153,7 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 		driver.findElement(By.name("description")).sendKeys("!@#$");
 		//submit the page
 		driver.findElement(By.name("addA")).click();
-		
+		System.out.println(driver.getPageSource());
 		//validate current page updated
 		assertTrue(!driver.getPageSource().contains("!@#$"));
 		assertTrue(driver.getPageSource().contains("This form has not been validated correctly. The following field are not properly filled in: [Allergy Description: Up to 30 characters, letters, numbers, and a space]"));
@@ -1030,7 +1168,13 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 	
 	public void testBasicLaborDeliveryReport() throws Exception {
 		// login HCP Kathryn Evans
-		WebDriver driver = login("9000000012", "pw");
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000012");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000012L, 0L, "");
 		
@@ -1083,7 +1227,13 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 	
 	public void testLaborDeliveryReportFlags() throws Exception {
 		// login HCP Kathryn Evans
-		WebDriver driver = login("9000000012", "pw");
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000012");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000012L, 0L, "");
 		

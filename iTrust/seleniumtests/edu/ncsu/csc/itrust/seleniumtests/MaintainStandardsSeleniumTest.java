@@ -15,7 +15,6 @@ public class MaintainStandardsSeleniumTest extends iTrustSeleniumTest {
 	 */
 	/**ADDRESS*/
 	public static final String ADDRESS = "http://localhost:8080/iTrust/";
-	private WebDriver driver;
 
 	@Override
 	protected void setUp() throws Exception {
@@ -29,9 +28,11 @@ public class MaintainStandardsSeleniumTest extends iTrustSeleniumTest {
 	}
 	
 	public void testMaintainStandardsList1() throws Exception {
-		driver = login("9000000001", "pw");
+		login("9000000001", "pw");
 		assertEquals(driver.getTitle(), "iTrust - Admin Home");
+		
 		assertLogged(TransactionType.HOME_VIEW, 9000000001L, 0L, "");
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("Edit CPT ProcedureCodes")).click();
 		driver.findElement(By.name("code")).clear();
 		driver.findElement(By.name("code")).sendKeys("90736");

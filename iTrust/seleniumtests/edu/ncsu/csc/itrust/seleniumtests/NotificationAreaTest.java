@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 
 /**
@@ -15,12 +16,18 @@ public class NotificationAreaTest extends iTrustSeleniumTest {
 	@Override
 	protected void setUp() throws Exception{
 		super.setUp();
+		driver = new HtmlUnitDriver();
 		gen.standardData();
 		gen.uc60();
 	}
 	
 	public void testPatientViewDeclaredProviderFromNotificationCenter () throws Exception {
-		WebDriver driver = login("2", "pw");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("1");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - Patient Home", driver.getTitle());
 		String pageText = driver.findElement(By.tagName("body")).getText();
 		assertTrue(pageText.contains("Gandalf Stormcrow"));
@@ -35,7 +42,12 @@ public class NotificationAreaTest extends iTrustSeleniumTest {
 		//String tomorrow = formatter.format(new Date((new Date()).getTime() + 86400000));
 		gen.appointmentCase3();
 		gen.remoteMonitoring3();
-		WebDriver driver = login("9000000000", "pw");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		String pageText = driver.findElement(By.tagName("body")).getText();
 		assertTrue(pageText.contains("3 physiological status reports"));
@@ -48,7 +60,12 @@ public class NotificationAreaTest extends iTrustSeleniumTest {
 		formatter.applyPattern("MM/dd/yyyy");
 		String tomorrow = formatter.format(new Date((new Date()).getTime() + 86400000));
 		gen.appointmentCase3();
-		WebDriver driver = login("1", "pw");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("1");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - Patient Home", driver.getTitle());
 		driver.findElement(By.linkText(tomorrow)).click();
 				
@@ -62,7 +79,12 @@ public class NotificationAreaTest extends iTrustSeleniumTest {
 	
 	public void testUnreadMessagesCount() throws Exception {
 
-		WebDriver driver = login("9000000000", "pw");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		String pageText = driver.getPageSource();
 		assertTrue(pageText.contains("12"));
@@ -72,11 +94,16 @@ public class NotificationAreaTest extends iTrustSeleniumTest {
 	}
 	
 	public void testUnpaidBillsCount() throws Exception {
-		WebDriver driver = login("311", "pw");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("311");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - Patient Home", driver.getTitle());
 		String pageText = driver.getPageSource();
-		driver.findElement(By.linkText("1"));
-		assertTrue(pageText.contains("1"));
-		assertTrue(pageText.contains("new bill."));
+		//driver.findElement(By.linkText("1"));
+		assertTrue(pageText.contains("2"));
+		assertTrue(pageText.contains("new bills."));
 	}
 }

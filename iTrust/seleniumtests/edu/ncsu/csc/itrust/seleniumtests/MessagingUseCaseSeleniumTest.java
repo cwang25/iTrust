@@ -9,6 +9,7 @@ import java.util.Date;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 import com.meterware.httpunit.HttpUnitOptions;
 
@@ -21,13 +22,13 @@ public class MessagingUseCaseSeleniumTest extends iTrustSeleniumTest {
 	 */
 	/**ADDRESS*/
 	public static final String ADDRESS = "http://localhost:8080/iTrust/";
-	private WebDriver driver;
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		gen.clearAllTables();
 		gen.standardData();
+		driver = new HtmlUnitDriver();
 		HttpUnitOptions.setScriptingEnabled(false);
 		// turn off htmlunit warnings
 	    java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(java.util.logging.Level.OFF);
@@ -35,7 +36,12 @@ public class MessagingUseCaseSeleniumTest extends iTrustSeleniumTest {
 	}
 	
 	public void testHCPSendMessage() throws Exception {
-		driver = login("9000000000", "pw");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		driver.findElement(By.linkText("Message Outbox")).click();
 		assertLogged(TransactionType.OUTBOX_VIEW, 9000000000L, 0L, "");
@@ -57,8 +63,14 @@ public class MessagingUseCaseSeleniumTest extends iTrustSeleniumTest {
 		assertTrue(driver.getPageSource().contains("Andy Programmer"));
 		assertTrue(driver.getPageSource().contains(stamp));
 		assertLogged(TransactionType.OUTBOX_VIEW, 9000000000L, 0L, "");
-		
-		driver = login("2", "pw");
+		driver.close();
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("2");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertLogged(TransactionType.HOME_VIEW, 2L, 0L, "");
 		driver.findElement(By.linkText("Message Inbox")).click();
 		assertLogged(TransactionType.INBOX_VIEW, 2L, 0L, "");
@@ -68,7 +80,12 @@ public class MessagingUseCaseSeleniumTest extends iTrustSeleniumTest {
 	}
 	
 	public void testPatientSendReply() throws Exception {
-		driver = login("2", "pw");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("2");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertLogged(TransactionType.HOME_VIEW, 2L, 0L, "");
 		driver.findElement(By.linkText("Message Inbox")).click();
 		assertLogged(TransactionType.INBOX_VIEW, 2L, 0L, "");
@@ -87,8 +104,14 @@ public class MessagingUseCaseSeleniumTest extends iTrustSeleniumTest {
 		assertTrue(driver.getPageSource().contains("Kelly Doctor"));
 		assertTrue(driver.getPageSource().contains(stamp));
 		assertLogged(TransactionType.OUTBOX_VIEW, 2L, 0L, "");
-		
-		driver = login("9000000000", "pw");
+		driver.close();
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		driver.findElement(By.linkText("Message Inbox")).click();
 		assertLogged(TransactionType.INBOX_VIEW, 9000000000L, 0L, "");
@@ -99,7 +122,12 @@ public class MessagingUseCaseSeleniumTest extends iTrustSeleniumTest {
 	
 	public void testPatientSendMessageMultiRecipients() throws Exception {
 		gen.messagingCcs();
-		driver = login("1", "pw");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("1");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertLogged(TransactionType.HOME_VIEW, 1L, 0L, "");
 		driver.findElement(By.linkText("Compose a Message")).click();
 		selectComboValue("dlhcp", "9000000003", driver);
@@ -117,7 +145,12 @@ public class MessagingUseCaseSeleniumTest extends iTrustSeleniumTest {
 	}
 	
 	public void testPatientSendReplyMultipleRecipients() throws Exception {
-		driver = login("2", "pw");
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("2");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertLogged(TransactionType.HOME_VIEW, 2L, 0L, "");
 		driver.findElement(By.linkText("Message Inbox")).click();
 		assertLogged(TransactionType.INBOX_VIEW, 2L, 0L, "");
@@ -138,7 +171,15 @@ public class MessagingUseCaseSeleniumTest extends iTrustSeleniumTest {
 		assertTrue(driver.getPageSource().contains(stamp));
 		assertLogged(TransactionType.OUTBOX_VIEW, 2L, 0L, "");
 		
-		driver = login("9000000000", "pw");
+		driver.close();
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		driver.findElement(By.linkText("Message Inbox")).click();
 		assertLogged(TransactionType.INBOX_VIEW, 9000000000L, 0L, "");
@@ -146,6 +187,8 @@ public class MessagingUseCaseSeleniumTest extends iTrustSeleniumTest {
 		assertTrue(driver.getPageSource().contains("RE: Office Visit Updated"));
 		assertTrue(driver.getPageSource().contains(stamp));
 		
+		driver.close();
+		driver = new HtmlUnitDriver();
 		driver = login("9000000003", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 9000000003L, 0L, "");
 		driver.findElement(By.linkText("Message Inbox")).click();
@@ -158,7 +201,13 @@ public class MessagingUseCaseSeleniumTest extends iTrustSeleniumTest {
 	public void testHCPSendReplySingleCCRecipient() throws Exception {
 		gen.clearMessages();
 		gen.messages6();
-		driver = login("9000000000", "pw");
+		
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		driver.findElement(By.linkText("Message Inbox")).click();
 		assertLogged(TransactionType.INBOX_VIEW, 9000000000L, 0L, "");
@@ -180,7 +229,14 @@ public class MessagingUseCaseSeleniumTest extends iTrustSeleniumTest {
 		assertTrue(driver.getPageSource().contains(stamp));
 		assertLogged(TransactionType.OUTBOX_VIEW, 9000000000L, 0L, "");
 		
-		driver = login("22", "pw");
+		driver.close();
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("22");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertLogged(TransactionType.HOME_VIEW, 22L, 0L, "");
 		driver.findElement(By.linkText("Message Inbox")).click();
 		assertLogged(TransactionType.INBOX_VIEW, 22L, 0L, "");
@@ -188,7 +244,14 @@ public class MessagingUseCaseSeleniumTest extends iTrustSeleniumTest {
 		assertTrue(driver.getPageSource().contains("RE: Appointment rescheduling"));
 		assertTrue(driver.getPageSource().contains(stamp));
 		
-		driver = login("9000000007", "pw");
+		driver.close();
+		driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000007");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertLogged(TransactionType.HOME_VIEW, 9000000007L, 0L, "");
 		driver.findElement(By.linkText("Message Inbox")).click();
 		assertLogged(TransactionType.INBOX_VIEW, 9000000007L, 0L, "");

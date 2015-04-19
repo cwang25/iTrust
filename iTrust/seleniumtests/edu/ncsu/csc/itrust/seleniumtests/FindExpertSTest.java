@@ -2,6 +2,7 @@ package edu.ncsu.csc.itrust.seleniumtests;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.ui.Select;
 
 import edu.ncsu.csc.itrust.enums.TransactionType;
@@ -21,7 +22,13 @@ public class FindExpertSTest extends iTrustSeleniumTest{
 	
 	public void testEditAndFindExpert() throws Exception {
 		// login admin
-		WebDriver driver = login("9000000001", "pw");
+		WebDriver driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+	    driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000001");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		String title = driver.getTitle();
 		assertEquals("iTrust - Admin Home", title);
 		assertLogged(TransactionType.HOME_VIEW, 9000000001L, 0L, "");
@@ -33,11 +40,12 @@ public class FindExpertSTest extends iTrustSeleniumTest{
 		assertEquals("iTrust - Please Select a Personnel", title);
 		driver.findElement(By.name("FIRST_NAME")).sendKeys("Kelly");
 		driver.findElement(By.name("LAST_NAME")).sendKeys("Doctor");
-		driver.findElement(By.name("SEARCH")).click();
+		//driver.findElement(By.name("SEARCH")).click();
+		driver.findElement(By.xpath("//input[@value='User Search']")).click();
 		//focus
 		driver.findElement(By.xpath(".//*[@value='9000000000']")).click();
 		//submit the form
-		driver.findElement(By.xpath(".//*[@value='9000000000']")).submit();
+		//driver.findElement(By.xpath(".//*[@value='9000000000']")).submit();
 		
 		title = driver.getTitle();
 		assertEquals("iTrust - Edit Personnel", title);
