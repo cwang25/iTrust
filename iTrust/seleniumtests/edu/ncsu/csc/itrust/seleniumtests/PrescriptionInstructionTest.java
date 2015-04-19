@@ -1,9 +1,6 @@
 package edu.ncsu.csc.itrust.seleniumtests;
 
-import java.util.concurrent.TimeUnit;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -16,7 +13,7 @@ public class PrescriptionInstructionTest extends iTrustSeleniumTest {
 	public static final String ADDRESS = "http://localhost:8080/iTrust/";
 	
 	protected void setUp() throws Exception {
-		//super.setUp();
+		super.setUp();
 		gen.clearAllTables();
 		gen.hcp0();
 		gen.ndCodes();
