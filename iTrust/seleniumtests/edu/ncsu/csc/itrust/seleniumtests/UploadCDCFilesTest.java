@@ -22,7 +22,7 @@ public class UploadCDCFilesTest extends iTrustSeleniumTest {
 		HtmlUnitDriver driver = (HtmlUnitDriver)login("9000000001", "pw");
 		assertEquals("iTrust - Admin Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000001L, 0L, "");
-		
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 		driver.findElement(By.linkText("Upload CDC Percentile Metrics")).click();
 		assertEquals("iTrust - Import CDC Percentile Metrics", driver.getTitle());
 		
@@ -51,7 +51,7 @@ public class UploadCDCFilesTest extends iTrustSeleniumTest {
 		HtmlUnitDriver driver = (HtmlUnitDriver)login("9000000001", "pw");
 		assertEquals("iTrust - Admin Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000001L, 0L, "");
-		
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 		driver.findElement(By.linkText("Upload CDC Percentile Metrics")).click();
 		assertEquals("iTrust - Import CDC Percentile Metrics", driver.getTitle());
 		
@@ -80,7 +80,7 @@ public class UploadCDCFilesTest extends iTrustSeleniumTest {
 		HtmlUnitDriver driver = (HtmlUnitDriver)login("9000000001", "pw");
 		assertEquals("iTrust - Admin Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000001L, 0L, "");
-		
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 		driver.findElement(By.linkText("Upload CDC Percentile Metrics")).click();
 		assertEquals("iTrust - Import CDC Percentile Metrics", driver.getTitle());
 		
@@ -109,7 +109,7 @@ public class UploadCDCFilesTest extends iTrustSeleniumTest {
 		HtmlUnitDriver driver = (HtmlUnitDriver)login("9000000001", "pw");
 		assertEquals("iTrust - Admin Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000001L, 0L, "");
-		
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 		driver.findElement(By.linkText("Upload CDC Percentile Metrics")).click();
 		assertEquals("iTrust - Import CDC Percentile Metrics", driver.getTitle());
 		
@@ -138,7 +138,7 @@ public class UploadCDCFilesTest extends iTrustSeleniumTest {
 		HtmlUnitDriver driver = (HtmlUnitDriver)login("9000000001", "pw");
 		assertEquals("iTrust - Admin Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000001L, 0L, "");
-		
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 		driver.findElement(By.linkText("Upload CDC Percentile Metrics")).click();
 		assertEquals("iTrust - Import CDC Percentile Metrics", driver.getTitle());
 		
