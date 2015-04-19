@@ -1,14 +1,9 @@
 package edu.ncsu.csc.itrust.seleniumtests;
 
-import java.util.concurrent.TimeUnit;
 
 import org.junit.*;
 import org.openqa.selenium.*;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.ui.Select;
-
-import com.gargoylesoftware.htmlunit.BrowserVersion;
-
 import edu.ncsu.csc.itrust.enums.TransactionType;
   
 public class RequestRecordsReleaseTest extends iTrustSeleniumTest {
@@ -66,7 +61,7 @@ public class RequestRecordsReleaseTest extends iTrustSeleniumTest {
 	assertLogged(TransactionType.PATIENT_RELEASE_HEALTH_RECORDS, 102L, 102L, "");
     assertEquals("Request successfully sent", driver.findElement(By.cssSelector("i")).getText());
     assertEquals("Pending", driver.findElement(By.xpath("//div[@id='iTrustContent']/div/span[2]/b/i")).getText());
-    assertEquals("Patient name: Caldwell Hudson\n \n Release hospital: Health Institute Dr. E\n \n Recipient doctor information: First name: Mike Last name: Myers Phone number: 919-123-1234 Email address: mike.myers@hospital.org \n Recipient hospital information: Hospital: Testing Hospital Hospital address: 101 Testing Hospital Drive , Raleigh, NC 27606 \n Release justification: Annual records request", driver.findElement(By.xpath("//div[@id='iTrustContent']/div[2]")).getText());
+    assertEquals("Patient name: Caldwell Hudson\n\nRelease hospital: Health Institute Dr. E\n\nRecipient doctor information: First name: Mike Last name: Myers Phone number: 919-123-1234 Email address: mike.myers@hospital.org\nRecipient hospital information: Hospital: Testing Hospital Hospital address: 101 Testing Hospital Drive , Raleigh, NC 27606\nRelease justification: Annual records request", driver.findElement(By.xpath("//div[@id='iTrustContent']/div[2]")).getText());
     assertEquals("First name: Mike", driver.findElement(By.cssSelector("dd")).getText());
     assertEquals("Last name: Myers", driver.findElement(By.xpath("//div[@id='iTrustContent']/div[2]/dl/dd[2]")).getText());
     assertEquals("Phone number: 919-123-1234", driver.findElement(By.xpath("//div[@id='iTrustContent']/div[2]/dl/dd[3]")).getText());
@@ -143,10 +138,11 @@ public class RequestRecordsReleaseTest extends iTrustSeleniumTest {
 	    driver.findElement(By.id("j_password")).sendKeys("pw");
 	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 	    assertLogged(TransactionType.HOME_VIEW, 102L, 0L, "");
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 	    driver.findElement(By.linkText("Request Records Release")).click();
 	    driver.findElement(By.xpath("(//a[contains(text(),'View')])[6]")).click();
 	    assertEquals("Approved", driver.findElement(By.cssSelector("span > b > i")).getText());
-	    assertEquals("Patient name: Caldwell Hudson\n \n Release hospital: Health Institute Dr. E\n \n Recipient doctor information: First name: Monica Last name: Brown Phone number: 329-818-7734 Email address: monica.brown@hartfordradiology.com \n Recipient hospital information: Hospital: Hartford Radiology Ltd. Hospital address: 8941 Hargett Way, Hartford, CT 01243 \n Release justification:", driver.findElement(By.xpath("//div[@id='iTrustContent']/div[2]")).getText());
+	    assertEquals("Patient name: Caldwell Hudson\n\nRelease hospital: Health Institute Dr. E\n\nRecipient doctor information: First name: Monica Last name: Brown Phone number: 329-818-7734 Email address: monica.brown@hartfordradiology.com\nRecipient hospital information: Hospital: Hartford Radiology Ltd. Hospital address: 8941 Hargett Way, Hartford, CT 01243\nRelease justification:", driver.findElement(By.xpath("//div[@id='iTrustContent']/div[2]")).getText());
 	    assertEquals("First name: Monica", driver.findElement(By.cssSelector("dd")).getText());
 	    assertEquals("Last name: Brown", driver.findElement(By.xpath("//div[@id='iTrustContent']/div[2]/dl/dd[2]")).getText());
 	    assertEquals("Phone number: 329-818-7734", driver.findElement(By.xpath("//div[@id='iTrustContent']/div[2]/dl/dd[3]")).getText());
@@ -168,11 +164,12 @@ public class RequestRecordsReleaseTest extends iTrustSeleniumTest {
 	    driver.findElement(By.cssSelector("h2.panel-title")).click();
 	    driver.findElement(By.linkText("Records Release Requests")).click();
 	    assertEquals("iTrust - Records Release Requests", driver.getTitle());
-	    assertEquals("08/08/2010", driver.findElement(By.xpath("//table[@id='requestHistory']/tbody/tr[6]/td")).getText());
-	    driver.findElement(By.xpath("(//a[contains(text(),'View')])[10]")).click();
+	    TableElement table = new TableElement(driver.findElement(By.id("requestHistory")));
+	    assertEquals("08/08/2010", table.getCellAsText(5, 0));
+	    driver.findElement(By.xpath("(//a[contains(text(),'View')])[8]")).click();
 	    assertEquals("Pending", driver.findElement(By.cssSelector("span > b > i")).getText());
 	    assertEquals("Patient name: Fozzie Bear", driver.findElement(By.xpath("//div[@id='iTrustContent']/div[2]/span")).getText());
-	    assertEquals("Patient name: Fozzie Bear\n \n Release hospital: Health Institute Dr. E\n \n Recipient doctor information: First name: Brian Last name: McIntyre Phone number: 744-239-9117 Email address: mcintyre@kellerheart.com \n Recipient hospital information: Hospital: Keller Drive Heart Specialists Hospital address: 622 Center Wood Avenue, Savannah, GA 42991 \n Release justification:", driver.findElement(By.xpath("//div[@id='iTrustContent']/div[2]")).getText());
+	    assertEquals("Patient name: Fozzie Bear\n\nRelease hospital: Health Institute Dr. E\n\nRecipient doctor information: First name: Brian Last name: McIntyre Phone number: 744-239-9117 Email address: mcintyre@kellerheart.com\nRecipient hospital information: Hospital: Keller Drive Heart Specialists Hospital address: 622 Center Wood Avenue, Savannah, GA 42991\nRelease justification:", driver.findElement(By.xpath("//div[@id='iTrustContent']/div[2]")).getText());
 	    assertEquals("First name: Brian", driver.findElement(By.cssSelector("dd")).getText());
 	    assertEquals("Last name: McIntyre", driver.findElement(By.xpath("//div[@id='iTrustContent']/div[2]/dl/dd[2]")).getText());
 	    assertEquals("Phone number: 744-239-9117", driver.findElement(By.xpath("//div[@id='iTrustContent']/div[2]/dl/dd[3]")).getText());
@@ -197,8 +194,8 @@ public class RequestRecordsReleaseTest extends iTrustSeleniumTest {
 	    driver.findElement(By.linkText("Records Release Requests")).click();
 	    assertEquals("iTrust - Records Release Requests", driver.getTitle());
 	    assertEquals("10/18/2013", driver.findElement(By.xpath("//table[@id='requestHistory']/tbody/tr[2]/td")).getText());
-	    driver.findElement(By.xpath("(//a[contains(text(),'View')])[6]")).click();
-	    assertEquals("Pending", driver.findElement(By.cssSelector("span > b > i")).getText());
+	    driver.findElement(By.xpath("(//a[contains(text(),'View')])[4]")).click();
+	    assertTrue(driver.getPageSource().contains("Pending"));
 	    assertEquals("First name: Michael", driver.findElement(By.cssSelector("dd")).getText());
 	    assertEquals("Last name: Garrison", driver.findElement(By.xpath("//div[@id='iTrustContent']/div[2]/dl/dd[2]")).getText());
 	    assertEquals("Phone number: 528-912-9103", driver.findElement(By.xpath("//div[@id='iTrustContent']/div[2]/dl/dd[3]")).getText());
@@ -228,7 +225,7 @@ public class RequestRecordsReleaseTest extends iTrustSeleniumTest {
 	    assertEquals("11/23/2013", driver.findElement(By.cssSelector("td")).getText());
 	    driver.findElement(By.linkText("View")).click();
 	    assertEquals("Pending", driver.findElement(By.cssSelector("span > b > i")).getText());
-	    assertEquals("Patient name: Fozzie Bear\n \n Release hospital: Health Institute Dr. E\n \n Recipient doctor information: First name: Connor Last name: DunBar Phone number: 919-733-1991 Email address: c.dunbar@rexhospital.org \n Recipient hospital information: Hospital: Rex Hospital Hospital address: 1829 Lake Boone Trail, Raleigh, NC 27612 \n Release justification: Blood test requested from specialist", driver.findElement(By.xpath("//div[@id='iTrustContent']/div[2]")).getText());
+	    assertEquals("Patient name: Fozzie Bear\n\nRelease hospital: Health Institute Dr. E\n\nRecipient doctor information: First name: Connor Last name: DunBar Phone number: 919-733-1991 Email address: c.dunbar@rexhospital.org\nRecipient hospital information: Hospital: Rex Hospital Hospital address: 1829 Lake Boone Trail, Raleigh, NC 27612\nRelease justification: Blood test requested from specialist", driver.findElement(By.xpath("//div[@id='iTrustContent']/div[2]")).getText());
 	    assertEquals("First name: Connor", driver.findElement(By.cssSelector("dd")).getText());
 	    assertEquals("Last name: DunBar", driver.findElement(By.xpath("//div[@id='iTrustContent']/div[2]/dl/dd[2]")).getText());
 	    assertEquals("Phone number: 919-733-1991", driver.findElement(By.xpath("//div[@id='iTrustContent']/div[2]/dl/dd[3]")).getText());
@@ -258,7 +255,7 @@ public class RequestRecordsReleaseTest extends iTrustSeleniumTest {
 	    assertEquals("05/03/2008", driver.findElement(By.xpath("//table[@id='requestHistory']/tbody/tr[7]/td")).getText());
 	    driver.findElement(By.xpath("(//a[contains(text(),'View')])[10]")).click();
 	    assertEquals("Approved", driver.findElement(By.cssSelector("span > b > i")).getText());
-	    assertEquals("Patient name: Random Person\n \n Release hospital: Health Institute Dr. E\n \n Recipient doctor information: First name: Harold Last name: McClain Phone number: 916-991-4124 Email address: hmcclain@easternhealth.com \n Recipient hospital information: Hospital: East Health Services Hospital address: 9002 Asheville Avenue, Cary, NC 27511 \n Release justification: Referred for services", driver.findElement(By.xpath("//div[@id='iTrustContent']/div[2]")).getText());
+	    assertEquals("Patient name: Random Person\n\nRelease hospital: Health Institute Dr. E\n\nRecipient doctor information: First name: Harold Last name: McClain Phone number: 916-991-4124 Email address: hmcclain@easternhealth.com\nRecipient hospital information: Hospital: East Health Services Hospital address: 9002 Asheville Avenue, Cary, NC 27511\nRelease justification: Referred for services", driver.findElement(By.xpath("//div[@id='iTrustContent']/div[2]")).getText());
 	    assertEquals("First name: Harold", driver.findElement(By.cssSelector("dd")).getText());
 	    assertEquals("Last name: McClain", driver.findElement(By.xpath("//div[@id='iTrustContent']/div[2]/dl/dd[2]")).getText());
 	    assertEquals("Phone number: 916-991-4124", driver.findElement(By.xpath("//div[@id='iTrustContent']/div[2]/dl/dd[3]")).getText());
