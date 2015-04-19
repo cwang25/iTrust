@@ -23,8 +23,7 @@ public class PatientSeleniumTest extends iTrustSeleniumTest {
 	public void testChangePassword() throws Exception {
 		login("2", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 2L, 0L, "");
-		
-		driver.findElement(By.cssSelector("a[href='/iTrust/logout.jsp']")).click();
+		this.logout();
 		assertLogged(TransactionType.LOGOUT, 2L, 2L, "");
 		
 		assertEquals(driver.getTitle(), "iTrust - Login");
@@ -44,8 +43,12 @@ public class PatientSeleniumTest extends iTrustSeleniumTest {
 		assertLogged(TransactionType.PASSWORD_RESET, 2L, 2L, "");
 		
 		driver.get(ADDRESS + "login.jsp");
-		
-		login("2", "pw");
+				
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("2");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertTrue(driver.findElement(By.className("iTrustError")).getText().contains("Failed login"));
 		
 		login("2", "password2");
@@ -58,7 +61,7 @@ public class PatientSeleniumTest extends iTrustSeleniumTest {
 		login("1", "pw");
 		assertTrue(driver.getTitle().equals("iTrust - Patient Home"));
 		assertLogged(TransactionType.HOME_VIEW, 1L, 0L, "");
-		
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div")).click();
 		driver.findElement(By.linkText("Prescription Records")).click();
 		assertEquals("iTrust - Get My Prescription Report", driver.getTitle());
 		driver.findElement(By.name("mine")).click();
@@ -74,7 +77,8 @@ public class PatientSeleniumTest extends iTrustSeleniumTest {
 		login("2", "pw");
 		assertTrue(driver.getTitle().equals("iTrust - Patient Home"));
 		assertLogged(TransactionType.HOME_VIEW, 2L, 0L, "");
-		
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div")).click();
+
 		driver.findElement(By.linkText("Prescription Records")).click();
 		assertEquals("iTrust - Get My Prescription Report", driver.getTitle());
 		driver.findElement(By.name("mine")).click();
