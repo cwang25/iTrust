@@ -741,7 +741,7 @@ public class TestDataGenerator {
 	 * @throws IOException
 	 */
 	public void uc69() throws SQLException, FileNotFoundException, IOException{
-		new DBBuilder(factory).executeSQLFile(DIR+"/DEMOuc69.sql");
+		new DBBuilder(factory).executeSQLFile(DIR+"/uc69.sql");
 	}
 	/**
 	 * Generate test data for uc70 acceptance scenarios.

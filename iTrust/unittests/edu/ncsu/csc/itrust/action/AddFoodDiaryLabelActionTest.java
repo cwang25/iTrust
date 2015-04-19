@@ -34,7 +34,10 @@ public class AddFoodDiaryLabelActionTest extends TestCase {
 	public void testAddFoodDiaryLabel() throws DBException, FormValidationException {
 		FoodDiaryLabelBean b = new FoodDiaryLabelBean(730, "Test");
 		long ret = action.addFoodDiaryLabel(b);
-		assertEquals(5, ret);
+		FoodDiaryLabelBean bFromDB = factory.getFoodDiaryLabelDAO().getFoodDiaryLabelByRowID(ret);
+		assertEquals(b.getMid(), bFromDB.getMid());
+		assertEquals(b.getLabel(), bFromDB.getLabel());
+
 	}
 	
 	@Test

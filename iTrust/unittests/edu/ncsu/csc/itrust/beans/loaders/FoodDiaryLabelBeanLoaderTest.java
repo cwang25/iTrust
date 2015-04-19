@@ -39,6 +39,7 @@ public class FoodDiaryLabelBeanLoaderTest extends TestCase {
 		expect(rs.getLong("rowid")).andReturn(-1L).once();
 		expect(rs.getLong("mid")).andReturn(730L).once();
 		expect(rs.getString("label")).andReturn("Test").once();
+		expect(rs.getString("colorcode")).andReturn("#FFFFFF").once();
 		ctrl.replay();
 		bean = load.loadSingle(rs);
 		assertEquals("Test", bean.getLabel());
