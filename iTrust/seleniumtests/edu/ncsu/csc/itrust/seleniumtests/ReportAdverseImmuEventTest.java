@@ -45,9 +45,7 @@ public class ReportAdverseImmuEventTest extends iTrustSeleniumTest {
 	assertLogged(TransactionType.HOME_VIEW, 1L, 0L, "");
 
 	
-    //driver.get(baseUrl + "/iTrust/auth/forwardUser.jsp");
-    //driver.findElement(By.linkText("Patient 1")).click();
-    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[4]/div/h2")).click();
+    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div")).click();
     driver.findElement(By.linkText("View My Records")).click();
     //I have no idea where this link actually is on the page.
     driver.findElement(By.linkText("Report")).click();

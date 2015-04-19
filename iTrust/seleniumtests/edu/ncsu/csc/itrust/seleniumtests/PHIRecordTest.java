@@ -52,7 +52,7 @@ public class PHIRecordTest extends iTrustSeleniumTest{
 	    driver.findElement(By.linkText("Document Office Visit")).click();
 	    driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("2");
-	    driver.findElement(By.xpath("//input[@value='2']")).click();
+	    driver.findElement(By.xpath("//input[@value='2' and @type='button']")).click();
 	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 	    driver.findElement(By.id("update")).click();
 	    try {
@@ -82,16 +82,7 @@ public class PHIRecordTest extends iTrustSeleniumTest{
 	    } catch (Error e) {
 	      verificationErrors.append(e.toString());
 	    }
-	    try {
-	      assertEquals("Height must be greater than 0\nWeight must be greater than 0", driver.findElement(By.cssSelector("div.errorList")).getText());
-	    } catch (Error e) {
-	      verificationErrors.append(e.toString());
-	    }
-	    try {
-	      assertEquals("Height must be greater than 0\nWeight must be greater than 0", driver.findElement(By.cssSelector("div.errorList")).getText());
-	    } catch (Error e) {
-	      verificationErrors.append(e.toString());
-	    }
+	    assertTrue(driver.findElement(By.cssSelector("div.errorList")).getText().contains("Height must be greater than 0\nWeight must be greater than 0"));
 	}
 
 	/*
@@ -128,7 +119,7 @@ public class PHIRecordTest extends iTrustSeleniumTest{
 	    driver.findElement(By.linkText("Document Office Visit")).click();
 	    driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("2");
-	    driver.findElement(By.xpath("//input[@value='2']")).click();
+	    driver.findElement(By.xpath("//input[@value='2' and @type='button']")).click();
 	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 	    
 	    driver.findElement(By.id("update")).click();
@@ -196,7 +187,7 @@ public class PHIRecordTest extends iTrustSeleniumTest{
 	    driver.findElement(By.linkText("Document Office Visit")).click();
 	    driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("2");
-	    driver.findElement(By.xpath("//input[@value='2']")).click();
+	    driver.findElement(By.xpath("//input[@value='2' and @type='button']")).click();
 	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 	    
 	    driver.findElement(By.id("update")).click();
@@ -258,34 +249,25 @@ public class PHIRecordTest extends iTrustSeleniumTest{
 	    driver.findElement(By.linkText("Chronic Disease Risks")).click();
 	    driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("2");
-	    driver.findElement(By.xpath("//input[@value='2']")).click();
+	    driver.findElement(By.xpath("//input[@value='2' and @type='button']")).click();
 	    try {
 	      assertEquals("Heart Disease", driver.findElement(By.cssSelector("td.subHeaderVertical")).getText());
 	    } catch (Error e) {
 	      verificationErrors.append(e.toString());
 	    }
 	    try {
-	      assertEquals("Patient is male\n Patient's body mass index is over 30\n Patient has hypertension\n Patient has bad cholesterol\n Patient is or was a smoker\n Patient has had related diagnoses\n Patient has a family history of this disease", driver.findElement(By.xpath("//div[@id='iTrustContent']/table/tbody/tr[3]/td")).getText());
+	      assertEquals("Patient is male\nPatient's body mass index is over 30\nPatient has hypertension\nPatient has bad cholesterol\nPatient is or was a smoker\nPatient has had related diagnoses\nPatient has a family history of this disease", driver.findElement(By.xpath("//div[@id='iTrustContent']/table/tbody/tr[3]/td")).getText());
 	    } catch (Error e) {
 	      verificationErrors.append(e.toString());
 	    }
-	    try {
-	      assertEquals("Patient is male\n Patient's body mass index is over 30\n Patient has hypertension\n Patient has bad cholesterol\n Patient is or was a smoker\n Patient has had related diagnoses\n Patient has a family history of this disease", driver.findElement(By.xpath("//div[@id='iTrustContent']/table/tbody/tr[3]/td")).getText());
-	    } catch (Error e) {
-	      verificationErrors.append(e.toString());
-	    }
+
 	    try {
 	      assertEquals("Type 2 Diabetes", driver.findElement(By.xpath("//div[@id='iTrustContent']/table/tbody/tr[4]/td")).getText());
 	    } catch (Error e) {
 	      verificationErrors.append(e.toString());
 	    }
 	    try {
-	      assertEquals("Patient's body mass index is over 25\n Patient has hypertension\n Patient has bad cholesterol\n Patient has had related diagnoses\n Patient has a family history of this disease", driver.findElement(By.xpath("//div[@id='iTrustContent']/table/tbody/tr[5]/td")).getText());
-	    } catch (Error e) {
-	      verificationErrors.append(e.toString());
-	    }
-	    try {
-	      assertEquals("Patient's body mass index is over 25\n Patient has hypertension\n Patient has bad cholesterol\n Patient has had related diagnoses\n Patient has a family history of this disease", driver.findElement(By.xpath("//div[@id='iTrustContent']/table/tbody/tr[5]/td")).getText());
+	      assertEquals("Patient's body mass index is over 25\nPatient has hypertension\nPatient has bad cholesterol\nPatient has had related diagnoses\nPatient has a family history of this disease", driver.findElement(By.xpath("//div[@id='iTrustContent']/table/tbody/tr[5]/td")).getText());
 	    } catch (Error e) {
 	      verificationErrors.append(e.toString());
 	    }
@@ -307,7 +289,8 @@ public class PHIRecordTest extends iTrustSeleniumTest{
 	    driver.findElement(By.linkText("Chronic Disease Risks")).click();
 	    driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("4");
-	    driver.findElement(By.xpath("//input[@value='4']")).click();
+	    driver.findElement(By.xpath("//input[@value='4' and @type='button']")).click();
+	    assertTrue(pageContains("No Data"));
 	}
 
 	/*
@@ -430,7 +413,7 @@ public class PHIRecordTest extends iTrustSeleniumTest{
 	    driver.findElement(By.linkText("Document Office Visit")).click();
 	    driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("2");
-	    driver.findElement(By.xpath("//input[@value='2']")).click();
+	    driver.findElement(By.xpath("//input[@value='2' and @type='button']")).click();
 	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 	    
 	    driver.findElement(By.id("update")).click();
@@ -496,7 +479,7 @@ public class PHIRecordTest extends iTrustSeleniumTest{
 	    driver.findElement(By.linkText("Document Office Visit")).click();
 	    driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("2");
-	    driver.findElement(By.xpath("//input[@value='2']")).click();
+	    driver.findElement(By.xpath("//input[@value='2' and @type='button']")).click();
 	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 	    
 	    driver.findElement(By.id("update")).click();
@@ -570,7 +553,7 @@ public class PHIRecordTest extends iTrustSeleniumTest{
 	    driver.findElement(By.linkText("Document Office Visit")).click();
 	    driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("2");
-	    driver.findElement(By.xpath("//input[@value='2']")).click();
+	    driver.findElement(By.xpath("//input[@value='2' and @type='button']")).click();
 	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 	    
 	    driver.findElement(By.id("update")).click();
@@ -642,7 +625,7 @@ public class PHIRecordTest extends iTrustSeleniumTest{
 	    driver.findElement(By.linkText("Document Office Visit")).click();
 	    driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("2");
-	    driver.findElement(By.xpath("//input[@value='2']")).click();
+	    driver.findElement(By.xpath("//input[@value='2' and @type='button']")).click();
 	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 	    
 	    driver.findElement(By.id("update")).click();

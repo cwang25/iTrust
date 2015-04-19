@@ -81,6 +81,7 @@ public class ViewDiagnosisStatisticsTest extends iTrustSeleniumTest {
   			
   	    assertEquals("iTrust - HCP Home", driver.getTitle());
   	    assertLogged(TransactionType.HOME_VIEW, 9000000008L, 0L, "");
+	    driver.findElement(By.cssSelector("h2.panel-title")).click();
   	    driver.findElement(By.linkText("Diagnosis Trends")).click();
   	    assertEquals("iTrust - View Diagnosis Statistics", driver.getTitle());
   	    new Select(driver.findElement(By.name("viewSelect"))).selectByVisibleText("Trends");
@@ -99,9 +100,9 @@ public class ViewDiagnosisStatisticsTest extends iTrustSeleniumTest {
   	    assertLogged(TransactionType.DIAGNOSIS_TRENDS_VIEW, 9000000008L, 0L, "");
   	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
   	    driver.findElement(By.linkText("Document Office Visit")).click();
-  	    driver.findElement(By.id("searchBox")).clear();
-	    driver.findElement(By.name("UID_PATIENTID")).sendKeys("25");
-	    driver.findElement(By.xpath("//input[@value='25']")).submit();
+	    driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("25");
+	    driver.findElement(By.xpath("//input[@value='25' and @type='button']")).click();
 	    assertEquals("iTrust - Document Office Visit", driver.getTitle());   
 	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 	    assertEquals("iTrust - Document Office Visit", driver.getTitle());
@@ -265,6 +266,7 @@ public class ViewDiagnosisStatisticsTest extends iTrustSeleniumTest {
 		HtmlUnitDriver driver = super.login("7000000001", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 7000000001L, 0L, "");
 		assertEquals("iTrust - PHA Home", driver.getTitle());
+	    driver.findElement(By.cssSelector("div.panel-heading")).click();
 	    driver.findElement(By.linkText("Diagnosis Trends")).click();
 	    assertEquals("iTrust - View Diagnosis Statistics", driver.getTitle());
 	    new Select(driver.findElement(By.name("viewSelect"))).selectByVisibleText("Trends");
@@ -319,7 +321,7 @@ public class ViewDiagnosisStatisticsTest extends iTrustSeleniumTest {
 	    driver.findElement(By.name("zipCode")).clear();
 	    driver.findElement(By.name("zipCode")).sendKeys("27607");
 	    driver.findElement(By.name("startDate")).clear();
-	    driver.findElement(By.name("startDate")).sendKeys("11/02/2011");
+	    driver.findElement(By.name("startDate")).sendKeys("11/02/2015");
 	    driver.findElement(By.id("select_diagnosis")).click();
 	    assertLogged(TransactionType.DIAGNOSIS_EPIDEMICS_VIEW, 9000000007L, 0L, "");
 	    assertEquals("THERE IS AN EPIDEMIC OCCURRING IN THIS REGION!", driver.findElement(By.cssSelector("font")).getText());

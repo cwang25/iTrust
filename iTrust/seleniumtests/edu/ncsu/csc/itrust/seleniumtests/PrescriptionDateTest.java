@@ -9,11 +9,11 @@ import org.openqa.selenium.support.ui.Select;
 
 import edu.ncsu.csc.itrust.enums.TransactionType;
 
-public class PrecsriptionDateTest extends iTrustSeleniumTest {
+public class PrescriptionDateTest extends iTrustSeleniumTest {
 
 	protected void setUp() throws Exception 
 	{
-		//super.setUp();
+		super.setUp();
 		gen.clearAllTables();
 		gen.hcp0();
 		gen.ndCodes();

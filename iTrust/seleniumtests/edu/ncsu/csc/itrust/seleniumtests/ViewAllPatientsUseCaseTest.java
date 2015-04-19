@@ -1,23 +1,18 @@
 package edu.ncsu.csc.itrust.seleniumtests;
 
-import java.util.concurrent.TimeUnit;
-
 import org.junit.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 public class ViewAllPatientsUseCaseTest extends iTrustSeleniumTest {
 	private WebDriver driver;
-	private String baseUrl;
-	private boolean acceptNextAlert = true;
 	private StringBuffer verificationErrors = new StringBuffer();
 
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
 		driver = new HtmlUnitDriver();
-		baseUrl = "http://localhost:8080/iTrust";
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		gen.standardData();
 	}
 
 	@Test
@@ -41,12 +36,12 @@ public class ViewAllPatientsUseCaseTest extends iTrustSeleniumTest {
 
 	@After
 	public void tearDown() throws Exception {
+		super.tearDown();
 		driver.quit();
 		String verificationErrorString = verificationErrors.toString();
 		if (!"".equals(verificationErrorString)) {
 			fail(verificationErrorString);
 		}
 	}
-
 
 }

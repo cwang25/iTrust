@@ -39,15 +39,9 @@ public class PhysicianSatisfactionUseCaseTest extends iTrustSeleniumTest {
 	public void testSearchForHCPSurveyResults1() throws Exception {
 		gen.surveyResults();
 		
-		driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
-		driver.findElement(By.id("j_username")).clear();
-		driver.findElement(By.id("j_username")).sendKeys("2");
-		driver.findElement(By.id("j_password")).clear();
-		driver.findElement(By.id("j_password")).sendKeys("pw");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		assertTextPresent("Welcome, Andy Programmer", driver);
-		driver.findElement(
-				By.xpath("//div[@id='iTrustMenu']/div/div[8]/div/h2")).click();
+		login("2", "pw");
+		assertTrue(driver.getTitle().equals("iTrust - Patient Home"));
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[7]/div/h2")).click();
 		driver.findElement(By.linkText("Satisfaction Survey Results")).click();
 		assertEquals("Search HCP Survey Results",
 				driver.findElement(By.cssSelector("#iTrustContent > div > h2"))
@@ -76,14 +70,8 @@ public class PhysicianSatisfactionUseCaseTest extends iTrustSeleniumTest {
 	@Test
 	public void testSearchForHCPSurveyResults2() throws Exception {
 		gen.surveyResults();
-		
-		driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
-		driver.findElement(By.id("j_username")).clear();
-		driver.findElement(By.id("j_username")).sendKeys("8000000009");
-		driver.findElement(By.id("j_password")).clear();
-		driver.findElement(By.id("j_password")).sendKeys("uappass1");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		assertTextPresent("Welcome, FirstUAP LastUAP", driver);
+		login("8000000009", "uappass1");
+		assertTrue(driver.getTitle().equals("iTrust - UAP Home"));
 		driver.findElement(
 				By.xpath("//div[@id='iTrustMenu']/div/div[5]/div/h2")).click();
 		driver.findElement(By.linkText("Satisfaction Survey Results")).click();
@@ -111,14 +99,8 @@ public class PhysicianSatisfactionUseCaseTest extends iTrustSeleniumTest {
 
 	public void testSearchForHCPSurveyResults3() throws Exception {
 		gen.surveyResults();
-		
-		driver.get(ADDRESS + "/iTrust/auth/surveyResults.jsp");
-		driver.findElement(By.id("j_username")).clear();
-		driver.findElement(By.id("j_username")).sendKeys("9000000000");
-		driver.findElement(By.id("j_password")).clear();
-		driver.findElement(By.id("j_password")).sendKeys("pw");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		assertTextPresent("Welcome, Kelly Doctor", driver);
+		login("9000000000", "pw");
+		assertTrue(driver.getTitle().equals("iTrust - HCP Home"));
 		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[9]/div"))
 				.click();
 		driver.findElement(By.linkText("Satisfaction Survey Results")).click();
@@ -164,15 +146,10 @@ public class PhysicianSatisfactionUseCaseTest extends iTrustSeleniumTest {
 	public void testSearchByHospitalSurveyResults1() throws Exception {
 		gen.surveyResults();
 		
-		driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
-		driver.findElement(By.id("j_username")).clear();
-		driver.findElement(By.id("j_username")).sendKeys("2");
-		driver.findElement(By.id("j_password")).clear();
-		driver.findElement(By.id("j_password")).sendKeys("pw");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		assertTextPresent("Welcome, Andy Programmer", driver);
+		login("2", "pw");
+		assertTrue(driver.getTitle().equals("iTrust - Patient Home"));
 		driver.findElement(
-				By.xpath("//div[@id='iTrustMenu']/div/div[8]/div/h2")).click();
+				By.xpath("//div[@id='iTrustMenu']/div/div[7]/div/h2")).click();
 		driver.findElement(By.linkText("Satisfaction Survey Results")).click();
 		assertTextPresent("Search HCP Survey Results", driver);
 		new Select(driver.findElement(By.name("hcpHospitalID")))
@@ -187,14 +164,8 @@ public class PhysicianSatisfactionUseCaseTest extends iTrustSeleniumTest {
 	@Test
 	public void testSearchByHospitalSurveyResults2() throws Exception {
 		gen.surveyResults();
-		
-		driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
-		driver.findElement(By.id("j_username")).clear();
-		driver.findElement(By.id("j_username")).sendKeys("8000000009");
-		driver.findElement(By.id("j_password")).clear();
-		driver.findElement(By.id("j_password")).sendKeys("uappass1");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		assertTextPresent("Welcome, FirstUAP LastUAP", driver);
+		login("8000000009", "uappass1");
+		assertTrue(driver.getTitle().equals("iTrust - UAP Home"));
 		driver.findElement(
 				By.xpath("//div[@id='iTrustMenu']/div/div[5]/div/h2")).click();
 		driver.findElement(By.linkText("Satisfaction Survey Results")).click();
@@ -211,13 +182,8 @@ public class PhysicianSatisfactionUseCaseTest extends iTrustSeleniumTest {
 	public void testSearchByHospitalSurveyResults3() throws Exception {
 		gen.surveyResults();
 		
-		driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
-		driver.findElement(By.id("j_username")).clear();
-		driver.findElement(By.id("j_username")).sendKeys("9000000000");
-		driver.findElement(By.id("j_password")).clear();
-		driver.findElement(By.id("j_password")).sendKeys("pw");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		assertTextPresent("Welcome, Kelly Doctor", driver);
+		login("9000000000", "pw");
+		assertTrue(driver.getTitle().equals("iTrust - HCP Home"));
 		driver.findElement(
 				By.xpath("//div[@id='iTrustMenu']/div/div[9]/div/h2")).click();
 		driver.findElement(By.linkText("Satisfaction Survey Results")).click();
@@ -234,16 +200,10 @@ public class PhysicianSatisfactionUseCaseTest extends iTrustSeleniumTest {
 
 	@Test
 	public void testSurveyResultsNoInput() throws Exception {
-		driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
-		driver.findElement(By.id("j_username")).click();
-		driver.findElement(By.id("j_username")).clear();
-		driver.findElement(By.id("j_username")).sendKeys("2");
-		driver.findElement(By.id("j_password")).clear();
-		driver.findElement(By.id("j_password")).sendKeys("pw");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		assertTextPresent("Welcome, Andy Programmer", driver);
+		login("2", "pw");
+		assertTrue(driver.getTitle().equals("iTrust - Patient Home"));
 		driver.findElement(
-				By.xpath("//div[@id='iTrustMenu']/div/div[8]/div/h2")).click();
+				By.xpath("//div[@id='iTrustMenu']/div/div[7]/div/h2")).click();
 		driver.findElement(By.linkText("Satisfaction Survey Results")).click();
 		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertTextPresent("You must enter either a zip code or a hospital ID.",
@@ -252,16 +212,10 @@ public class PhysicianSatisfactionUseCaseTest extends iTrustSeleniumTest {
 
 	@Test
 	public void testSurveyResultsTooMuchInput() throws Exception {
-		driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
-		driver.findElement(By.id("j_username")).click();
-		driver.findElement(By.id("j_username")).clear();
-		driver.findElement(By.id("j_username")).sendKeys("2");
-		driver.findElement(By.id("j_password")).clear();
-		driver.findElement(By.id("j_password")).sendKeys("pw");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		assertTextPresent("Welcome, Andy Programmer", driver);
+		login("2", "pw");
+		assertTrue(driver.getTitle().equals("iTrust - Patient Home"));
 		driver.findElement(
-				By.xpath("//div[@id='iTrustMenu']/div/div[8]/div/h2")).click();
+				By.xpath("//div[@id='iTrustMenu']/div/div[7]/div/h2")).click();
 		driver.findElement(By.linkText("Satisfaction Survey Results")).click();
 		driver.findElement(By.name("hcpZip")).clear();
 		driver.findElement(By.name("hcpZip")).sendKeys("27613");
@@ -275,16 +229,9 @@ public class PhysicianSatisfactionUseCaseTest extends iTrustSeleniumTest {
 
 	@Test
 	public void testSurveyResultsZipCodeFormat1() throws Exception {
-		driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
-		driver.findElement(By.id("j_username")).click();
-		driver.findElement(By.id("j_username")).clear();
-		driver.findElement(By.id("j_username")).sendKeys("2");
-		driver.findElement(By.id("j_password")).clear();
-		driver.findElement(By.id("j_password")).sendKeys("pw");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		assertTextPresent("Welcome, Andy Programmer", driver);
-		driver.findElement(
-				By.xpath("//div[@id='iTrustMenu']/div/div[8]/div/h2")).click();
+		login("2", "pw");
+		assertTrue(driver.getTitle().equals("iTrust - Patient Home"));
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[7]/div/h2")).click();
 		driver.findElement(By.linkText("Satisfaction Survey Results")).click();
 		driver.findElement(By.name("hcpZip")).clear();
 		driver.findElement(By.name("hcpZip")).sendKeys("123");
@@ -294,16 +241,9 @@ public class PhysicianSatisfactionUseCaseTest extends iTrustSeleniumTest {
 
 	@Test
 	public void testSurveyResultsZipCodeFormat2() throws Exception {
-		driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
-		driver.findElement(By.id("j_username")).click();
-		driver.findElement(By.id("j_username")).clear();
-		driver.findElement(By.id("j_username")).sendKeys("2");
-		driver.findElement(By.id("j_password")).clear();
-		driver.findElement(By.id("j_password")).sendKeys("pw");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		assertTextPresent("Welcome, Andy Programmer", driver);
-		driver.findElement(
-				By.xpath("//div[@id='iTrustMenu']/div/div[8]/div/h2")).click();
+		login("2", "pw");
+		assertTrue(driver.getTitle().equals("iTrust - Patient Home"));
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[7]/div/h2")).click();
 		driver.findElement(By.linkText("Satisfaction Survey Results")).click();
 		driver.findElement(By.name("hcpZip")).clear();
 		driver.findElement(By.name("hcpZip")).sendKeys("123456");
@@ -313,16 +253,10 @@ public class PhysicianSatisfactionUseCaseTest extends iTrustSeleniumTest {
 
 	@Test
 	public void testSurveyResultsZipCodeFormat3() throws Exception {
-		driver.get(ADDRESS + "/iTrust/auth/forwardUser.jsp");
-		driver.findElement(By.id("j_username")).click();
-		driver.findElement(By.id("j_username")).clear();
-		driver.findElement(By.id("j_username")).sendKeys("2");
-		driver.findElement(By.id("j_password")).clear();
-		driver.findElement(By.id("j_password")).sendKeys("pw");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		assertTextPresent("Welcome, Andy Programmer", driver);
+		login("2", "pw");
+		assertTrue(driver.getTitle().equals("iTrust - Patient Home"));
 		driver.findElement(
-				By.xpath("//div[@id='iTrustMenu']/div/div[8]/div/h2")).click();
+				By.xpath("//div[@id='iTrustMenu']/div/div[7]/div/h2")).click();
 		driver.findElement(By.linkText("Satisfaction Survey Results")).click();
 		driver.findElement(By.name("hcpZip")).clear();
 		driver.findElement(By.name("hcpZip")).sendKeys("abc");
@@ -332,6 +266,7 @@ public class PhysicianSatisfactionUseCaseTest extends iTrustSeleniumTest {
 
 	@After
 	public void tearDown() throws Exception {
+		super.tearDown();
 		driver.quit();
 		String verificationErrorString = verificationErrors.toString();
 		if (!"".equals(verificationErrorString)) {

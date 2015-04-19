@@ -38,8 +38,9 @@ public class SurveyUseCaseTest extends iTrustSeleniumTest {
 		assertEquals("iTrust - Patient Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 2L, 0L, "");
 		
-		driver.findElement(By.xpath("//a[text()='View My Records']")).click();
-		assertTrue(driver.findElement(By.cssSelector("BODY")).getText().contains("Patient Information"));
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
+	    driver.findElement(By.linkText("View My Records")).click();
+	    assertTrue(driver.findElement(By.cssSelector("BODY")).getText().contains("Patient Information"));
 		assertLogged(TransactionType.MEDICAL_RECORD_VIEW, 2L, 2L, "");			
 		
 		driver.findElement(By.xpath("(//a[contains(text(),'Complete Visit Survey')])[1]")).click();	
@@ -81,8 +82,9 @@ public class SurveyUseCaseTest extends iTrustSeleniumTest {
 		assertEquals("iTrust - Patient Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 2L, 0L, "");
 		
-		driver.findElement(By.xpath("//a[text()='View My Records']")).click();
-		assertTrue(driver.findElement(By.cssSelector("BODY")).getText().contains("Patient Information"));
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
+	    driver.findElement(By.linkText("View My Records")).click();
+	    assertTrue(driver.findElement(By.cssSelector("BODY")).getText().contains("Patient Information"));
 		assertLogged(TransactionType.MEDICAL_RECORD_VIEW, 2L, 2L, "");
 		
 		driver.findElement(By.xpath("(//a[contains(text(),'Complete Visit Survey')])[1]")).click();	
@@ -116,7 +118,8 @@ public class SurveyUseCaseTest extends iTrustSeleniumTest {
 		assertEquals("iTrust - Patient Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 2L, 0L, "");
 		
-		driver.findElement(By.xpath("//a[text()='View My Records']")).click();
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
+	    driver.findElement(By.linkText("View My Records")).click();
 		assertTrue(driver.findElement(By.cssSelector("BODY")).getText().contains("Patient Information"));
 		assertLogged(TransactionType.MEDICAL_RECORD_VIEW, 2L, 2L, "");
 		
@@ -126,10 +129,11 @@ public class SurveyUseCaseTest extends iTrustSeleniumTest {
 		driver.findElement(By.name("Satradios")).sendKeys("satRadio3");
 		
 		// patient changes his mind and cancels his input
-		driver.findElement(By.xpath("//a[text()='Home']")).click();
+		driver.get(ADDRESS);
 		assertEquals("iTrust - Patient Home", driver.getTitle());
-		driver.findElement(By.xpath("//a[text()='View My Records']")).click();
-		assertTrue(driver.findElement(By.cssSelector("BODY")).getText().contains("Patient Information"));
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
+	    driver.findElement(By.linkText("View My Records")).click();
+	    assertTrue(driver.findElement(By.cssSelector("BODY")).getText().contains("Patient Information"));
 		assertLogged(TransactionType.MEDICAL_RECORD_VIEW, 2L, 2L, "");
 		
 		// make sure survey CAN still be taken.  This will throw an exception if the survey is not available
