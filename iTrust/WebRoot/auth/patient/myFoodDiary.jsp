@@ -310,7 +310,7 @@
 							
 						
 		%>
-		<tr class="diaryLabelRow <%= label %>" data-diarydate="<%= (oldBean != null ? diaryDateFormat.format(oldBean.getDate()) : "") %>">
+		<tr style="background-color:#E7E7E7;" class="diaryLabelRow <%= label %>" data-diarydate="<%= (oldBean != null ? diaryDateFormat.format(oldBean.getDate()) : "") %>">
 			<td>
 			<b><%=StringEscapeUtils.escapeHtml("Daily Summary")%></b>
 			<br/>
@@ -358,7 +358,7 @@
 				<button style="margin-top: 5px" class="button" id="viewMacroNutrientGraph" onclick="switchHiddenForm('hiddenDailyGraph','showCompareGraph');setActualVal(<%=totalBeanTmp.getGramsOfProtein()%>,<%=totalBeanTmp.getGramsOfFat()%>,<%=totalBeanTmp.getGramsOfCarbs() %>,<%=totalBeanTmp.totalCalories()%>);toggleGraph('Pie');">View Graph</button> 
 			</td>
 		</tr>
-		<tr class="suggestionRow" id="suggestion<%=index%>" style="display: none"> 
+		<tr class="suggestionRow" id="suggestion<%=index%>" style="background-color:#E7E7E7;display: none;"> 
 				<td>Suggestions:</td>
 			<%
 				String suggestionList = "";
@@ -600,8 +600,8 @@
 			<tr>
 				<td colspan="3" align="center">
 				<span class="colorpicker">
-				   	<span class="bgbox"></span>
-				   	<span class="hexbox"></span>
+				   	<span class="bgbox" style="display:none;"></span>
+				   	<span class="hexbox" style="display:none;"></span>
 				  	<span class="clear"></span>
 				   	<span class="colorbox">
 				       <b class="selected" style="background:#99CC00" title="Green"></b>
@@ -612,7 +612,10 @@
 				       <b style="background:#CE93D8" title="Purple"></b>
 				       <b style="background:#BDBDBD" title="Gray"></b>
 				       <b style="background:#FFFFFF" title="White"></b>
-				       <b style="background:#BCAAA4" title="Brown"></b>    
+				       <b style="background:#BCAAA4" title="Brown"></b>  
+				       <b style="background:#4DB6AC" title="Teal"></b>    
+				       <b style="background:#F48FB1" title="Pink"></b>    
+				         
 					 </span>    
 				</span>
 				<script type="text/javascript">
@@ -626,7 +629,9 @@
 	        						  'Purple':'#CE93D8',
 	        						  'Gray':'#BDBDBD',
 	        						  'White':'#FFFFFF',
-	        						  'Brown':'#BCAAA4'
+	        						  'Brown':'#BCAAA4',
+	        						  'Teal':'#4DB6AC',
+	        						  'Pink':'#F48FB1'
 	        						};
 	        			var color = document.getElementById("labelcolorToSave");
 	        			color.value = colors[selectedColorTitle];

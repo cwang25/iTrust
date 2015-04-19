@@ -348,9 +348,6 @@ background: #F44330
 span.colorpicker
 {
     display:none;
-    padding: 12px;
-    background-color: #EEE;
-    border: 1px solid #BBB;
     color:Black;
     text-decoration:none;
     -moz-border-radius: 5px; 
@@ -385,20 +382,20 @@ span.colorbox b
     border:0;
     display:block;
     float:left;
-    width:16px;
-    height:16px;
+    width:25px;
+    height:25px;
     margin:4px;
     overflow:hidden;/*for IE6*/
     border: 1px solid transparent;
 }
 span.colorbox b.selected
 {
-    border: 2px solid #0288D1;
+    border: 3px solid #0097A7;
 }
-
+/*0288D1*/
 span.colorpicker span.hexbox, .colorpicker span.bgbox
-{
-    font: normal 10px verdana;
+{	
+    font: normal 15px verdana;
     height: 16px;
     margin-bottom: 4px;
 }
