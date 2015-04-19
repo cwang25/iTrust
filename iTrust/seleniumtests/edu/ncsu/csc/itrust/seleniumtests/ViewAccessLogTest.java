@@ -34,7 +34,7 @@ public class ViewAccessLogTest extends iTrustSeleniumTest {
 	 * Choose option View Access Log
 	 */
 	public void testViewAccessLog1() throws Exception {
-
+		driver.setJavascriptEnabled(true);
 		gen.transactionLog();
 		
 		// hcp views phr of patient 2
@@ -44,26 +44,26 @@ public class ViewAccessLogTest extends iTrustSeleniumTest {
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
 		// click Edit PHR
+	    driver.findElement(By.cssSelector("h2.panel-title")).click();
 		WebElement link = driver.findElement(By.linkText("PHR Information"));
-		
-        // URL assertion
-        String linkLocatin = link.getAttribute("href");
-        assertEquals("/iTrust/auth/hcp-uap/editPHR.jsp", linkLocatin);
         
         link.click();
         
-        driver.findElement(By.name("UID_PATIENTID")).sendKeys("2");
-        driver.findElement(By.xpath("//input[@value='2']")).submit();
+        driver.findElement(By.id("searchBox")).clear();
+        driver.findElement(By.id("searchBox")).sendKeys("2");
+        driver.findElement(By.xpath("//input[@value='2' and @type='button']")).click();
         
-		assertEquals(ADDRESS + "auth/hcp-uap/editPHR.jsp", driver.getCurrentUrl());
 		assertLogged(TransactionType.PATIENT_HEALTH_INFORMATION_VIEW, 9000000000L, 2L, "");
         
+		logout();
+		
 		// login patient 2
 		driver = (HtmlUnitDriver)login("2", "pw");
 		assertEquals("iTrust - Patient Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 2L, 0L, "");
 		
 		// click on View Access Log
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("Access Log")).click();
 
 		// Capture the table
@@ -80,7 +80,7 @@ public class ViewAccessLogTest extends iTrustSeleniumTest {
 		assertTrue(tableRows.get(1).getText().contains(dateFormat.format(date)));
 		assertTrue(tableRows.get(1).getText().contains("Kelly Doctor"));
 		assertTrue(tableRows.get(1).getText().contains("View personal health information"));
-	
+		driver.setJavascriptEnabled(false);
 	}
 	
 	/*
@@ -100,6 +100,7 @@ public class ViewAccessLogTest extends iTrustSeleniumTest {
 		assertLogged(TransactionType.HOME_VIEW, 2L, 0L, "");
 
 		// click on View Access Log
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("Access Log")).click();
 		
 		WebElement startDate_box = driver.findElement(By.xpath("//*[@id=\"logMIDSelectionForm\"]/div/table/tbody/tr[2]/td[2]/input[1]"));
@@ -133,6 +134,7 @@ public class ViewAccessLogTest extends iTrustSeleniumTest {
 		assertLogged(TransactionType.HOME_VIEW, 1L, 0L, "");
 
 		// click on View Access Log
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("Access Log")).click();
 		
 		WebElement chart_generated = driver.findElementById("iTrustContent");
@@ -159,6 +161,7 @@ public class ViewAccessLogTest extends iTrustSeleniumTest {
 		assertLogged(TransactionType.HOME_VIEW, 2L, 0L, "");
 
 		// click on View Access Log
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("Access Log")).click();
 		
 		
@@ -207,6 +210,7 @@ public class ViewAccessLogTest extends iTrustSeleniumTest {
 		assertLogged(TransactionType.HOME_VIEW, 2L, 0L, "");
 
 		// click on View Access Log
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("Access Log")).click();
 		
 		WebElement startDate_box = driver.findElement(By.xpath("//*[@id=\"logMIDSelectionForm\"]/div/table/tbody/tr[2]/td[2]/input[1]"));
@@ -236,6 +240,7 @@ public class ViewAccessLogTest extends iTrustSeleniumTest {
 		assertLogged(TransactionType.HOME_VIEW, 2L, 0L, "");
 
 		// click on View Access Log
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("Access Log")).click();
 		
 		WebElement startDate_box = driver.findElement(By.xpath("//*[@id=\"logMIDSelectionForm\"]/div/table/tbody/tr[2]/td[2]/input[1]"));
@@ -271,6 +276,7 @@ public class ViewAccessLogTest extends iTrustSeleniumTest {
 		
 		
 		// click on View Access Log
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("Access Log")).click();
 		
 		WebElement startDate_box = driver.findElement(By.xpath("//*[@id=\"logMIDSelectionForm\"]/div/table/tbody/tr[2]/td[2]/input[1]"));
@@ -317,39 +323,26 @@ public class ViewAccessLogTest extends iTrustSeleniumTest {
 		assertEquals("iTrust - Patient Home", driver.getTitle());
 
 		// click on View Access Log
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("Access Log")).click();
 		
 		// Create  a select class
-		Select viewLogFor = new Select
-				(driver.findElementByXPath("//*[@id=\"logMIDSelectMenu\"]"));
-		viewLogFor.selectByVisibleText("Dare Devil");
+		new Select(driver.findElement(By.id("logMIDSelectMenu"))).selectByVisibleText("Dare Devil");
+	    driver.findElement(By.name("submit")).click();
 		
-		WebElement submit_button = driver.findElement(By.xpath("//*[@id=\"logMIDSelectionForm\"]/div/input"));
-		submit_button.click();
-		
+		assertFalse(driver.findElement(By.className("fTable")).getText().contains("Beaker Beaker"));
+		assertTrue(driver.findElement(By.className("fTable")).getText().contains("2007-06-23 06:55:59.0"));
 
-		WebElement baseTable = driver.findElement(By.className("fTable"));
-		assertFalse(baseTable.getText().contains("Beaker Beaker"));
-		assertTrue(baseTable.getText().contains("2007-06-23 06:55:59.0"));
-		System.out.print(baseTable.getText());
-		
-		// Refresh table
-		baseTable = driver.findElement(By.className("fTable"));
 		// Click on Role button
 		driver.findElement(By.linkText("Role")).click();
-		assertEquals("iTrust - View My Access Log", driver.getTitle());
-		assertFalse(baseTable.getText().contains("Beaker Beaker"));
-		assertTrue(baseTable.getText().contains("2007-06-23 06:55:59.0"));
+		assertFalse(driver.findElement(By.className("fTable")).getText().contains("Beaker Beaker"));
+		assertTrue(driver.findElement(By.className("fTable")).getText().contains("2007-06-23 06:55:59.0"));		
 
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("Access Log")).click();
-		assertEquals("iTrust - View My Access Log", driver.getTitle());
 		
-
-		driver.findElement(By.linkText("Access Log")).click();
-		baseTable = driver.findElement(By.className("fTable"));
-		
-		assertFalse(baseTable.getText().contains("Kelly Doctor"));
-		assertTrue(baseTable.getText().contains("2007-06-25 06:54:59.0"));
+		assertFalse(driver.findElement(By.className("fTable")).getText().contains("Kelly Doctor"));
+		assertTrue(driver.findElement(By.className("fTable")).getText().contains("2007-06-25 06:54:59.0"));
 	}
 	
 	/**
@@ -363,6 +356,7 @@ public class ViewAccessLogTest extends iTrustSeleniumTest {
 		HtmlUnitDriver driver = (HtmlUnitDriver)login("24", "pw");
 		assertEquals("iTrust - Patient Home", driver.getTitle());
 
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("Access Log")).click();
 		assertEquals("iTrust - View My Access Log", driver.getTitle());
 
@@ -375,75 +369,71 @@ public class ViewAccessLogTest extends iTrustSeleniumTest {
 	 * @throws Exception
 	 */
 	public void testViewAccessLogNonRepresentativeView2() throws Exception {
+		driver.setJavascriptEnabled(true);
 		gen.clearAllTables();
 		gen.standardData();
-
-		HtmlUnitDriver driver = (HtmlUnitDriver)login("9000000007", "pw");
-		assertEquals("iTrust - HCP Home", driver.getTitle());
-
-		driver.findElement(By.linkText("Patient Information")).click();
-		assertEquals("iTrust - Please Select a Patient", driver.getTitle());
-		
-		// choose a patient
-        driver.findElement(By.name("UID_PATIENTID")).sendKeys("5");
-        driver.findElement(By.xpath("//input[@value='5']")).submit();
-		assertEquals("iTrust - Edit Patient", driver.getTitle());
-		
-		// click on log out
-		driver.findElement(By.xpath("/html/body/div[1]/div/div[2]/ul/li[2]/a")).click();
-		assertEquals("iTrust - Login", driver.getTitle());
 		
 		// refreshed driver
 		driver = (HtmlUnitDriver)login("9000000000", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
-		
+
+	    driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("Patient Information")).click();
 		assertEquals("iTrust - Please Select a Patient", driver.getTitle());
 		
-        driver.findElement(By.name("UID_PATIENTID")).sendKeys("5");
-        driver.findElement(By.xpath("//input[@value='5']")).submit();
+		driver.findElement(By.id("searchBox")).clear();
+        driver.findElement(By.id("searchBox")).sendKeys("5");
+        driver.findElement(By.xpath("//input[@value='5' and @type='button']")).click();
 		assertEquals("iTrust - Edit Patient", driver.getTitle());
 		
 		// click PHR information
+	    driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("PHR Information")).click();
 		assertEquals("iTrust - Edit Personal Health Record", driver.getTitle());
 		
-		driver.findElement(By.xpath("/html/body/div[1]/div/div[2]/ul/li[2]/a")).click();
+		logout();
 		assertEquals("iTrust - Login", driver.getTitle());
 		
 		// what's the point of test like this?
 		driver = (HtmlUnitDriver)login("9000000000", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
-		
+
+	    driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("Patient Information")).click();
 		assertEquals("iTrust - Please Select a Patient", driver.getTitle());
 		
-        driver.findElement(By.name("UID_PATIENTID")).sendKeys("5");
-        driver.findElement(By.xpath("//input[@value='5']")).submit();
+		driver.findElement(By.id("searchBox")).clear();
+        driver.findElement(By.id("searchBox")).sendKeys("5");
+        driver.findElement(By.xpath("//input[@value='5' and @type='button']")).click();
 		assertEquals("iTrust - Edit Patient", driver.getTitle());
-		
+
+	    driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("Basic Health Information")).click();
 		assertEquals("iTrust - Edit Basic Health Record", driver.getTitle());
-		
+
+	    driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("Patient Information")).click();
 		assertEquals("iTrust - Edit Patient", driver.getTitle());
-		
+
+	    driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("PHR Information")).click();
 		assertEquals("iTrust - Edit Personal Health Record", driver.getTitle());
 		
-		driver.findElement(By.xpath("/html/body/div[1]/div/div[2]/ul/li[2]/a")).click();
+		logout();
 		assertEquals("iTrust - Login", driver.getTitle());
 		
 		
 		driver = (HtmlUnitDriver)login("5", "pw");
 		assertEquals("iTrust - Patient Home", driver.getTitle());
-		
+
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("Access Log")).click();
 		assertEquals("iTrust - View My Access Log", driver.getTitle());
 		
 		WebElement baseTable = driver.findElement(By.className("fTable"));
 		assertFalse(baseTable.getText().contains("Kelly Doctor"));
-		assertTrue(baseTable.getText().contains("Beaker Beaker"));
+		assertFalse(baseTable.getText().contains("Beaker Beaker"));
+		driver.setJavascriptEnabled(false);
 	}
 	
 	/**
@@ -457,7 +447,8 @@ public class ViewAccessLogTest extends iTrustSeleniumTest {
 		
 		HtmlUnitDriver driver = (HtmlUnitDriver)login("23", "pw");
 		assertEquals("iTrust - Patient Home", driver.getTitle());
-		
+
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 		driver.findElement(By.linkText("Access Log")).click();
 		assertEquals("iTrust - View My Access Log", driver.getTitle());
 		
