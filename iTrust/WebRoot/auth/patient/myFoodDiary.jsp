@@ -22,7 +22,7 @@
 <%@page import="edu.ncsu.csc.itrust.action.RemoveFoodDiaryLabelAction"%>
 <%@page import="edu.ncsu.csc.itrust.action.RemoveFoodDiaryLabelBucketAction"%>
 <%@page import="edu.ncsu.csc.itrust.action.SuggestionAction"%>
-
+<script src="/iTrust/js/customColorPicker.js"></script>
 <%@page import="java.util.Calendar"%>
 <%@include file="/global.jsp"%>
 
@@ -183,7 +183,8 @@
 					<p align="center"style="font-size: 16pt; font-weight: bold; color:red;" >Label cannot be blank.</p>
 					<%
 				}else{
-					FoodDiaryLabelBean b = new FoodDiaryLabelBean(loggedInMID, newLabelName);
+					String colorCodeToSave = request.getParameter("labelcolorToSave")!=null?request.getParameter("labelcolorToSave"):"#99CC00";
+					FoodDiaryLabelBean b = new FoodDiaryLabelBean(loggedInMID, newLabelName, colorCodeToSave);
 					labelAddAction.addFoodDiaryLabel(b);
 					%>
 					<p align="center"style="font-size: 16pt; font-weight: bold;" >Label has been added.</p>
@@ -301,8 +302,13 @@
 						dailySummaryIndex++;
 						FoodDiaryLabelSetBean labelBean = labelGetAction.getSetFoodDiaryLabel(oldBean.getOwnerID(), new java.sql.Date(oldBean.getDate().getTime()));
 						String label = "";
-						if(labelBean != null)
+						String colorCode="#99CC00";
+						if(labelBean != null){
+							colorCode = labelGetAction.getFoodDiaryLabelByRowID(labelBean.getLabelReferenceRowID()).getColorCode();
 							label = labelBean.getLabel();
+						}
+							
+						
 		%>
 		<tr class="diaryLabelRow <%= label %>" data-diarydate="<%= (oldBean != null ? diaryDateFormat.format(oldBean.getDate()) : "") %>">
 			<td>
@@ -335,7 +341,8 @@
 			<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getGramsOfProtein())%></td>
 			<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.totalCalories())%></td>
 			<td>
-				<span style="<%= label.length() > 0 ? "border-radius:35px; padding:5px 10px 5px 10px; color:black; background-color:#99CC00; font-weight: bold;" : "" %>"><%=StringEscapeUtils.escapeHtml(label)%></span>
+				<!-- COLOR LABEL -->
+				<span style="<%= label.length() > 0 ? "border-radius:35px; padding:5px 10px 5px 10px; color:black; background-color:"+colorCode+"; font-weight: bold;" : "" %>"><%=StringEscapeUtils.escapeHtml(label)%></span>
 				<%= label.length() > 0 ? "<br/><br/>" : "" %>
 				<select value="<%=label %>">
 					<option value="none">none</option>
@@ -351,7 +358,7 @@
 				<button style="margin-top: 5px" class="button" id="viewMacroNutrientGraph" onclick="switchHiddenForm('hiddenDailyGraph','showCompareGraph');setActualVal(<%=totalBeanTmp.getGramsOfProtein()%>,<%=totalBeanTmp.getGramsOfFat()%>,<%=totalBeanTmp.getGramsOfCarbs() %>,<%=totalBeanTmp.totalCalories()%>);toggleGraph('Pie');">View Graph</button> 
 			</td>
 		</tr>
-		<tr id="suggestion<%=index%>" style="display: none"> 
+		<tr class="suggestionRow" id="suggestion<%=index%>" style="display: none"> 
 				<td>Suggestions:</td>
 			<%
 				String suggestionList = "";
@@ -570,7 +577,7 @@
 
 <div id="newLabelForm" name="newLabelForm" style="display: <%=!dataAllCorrect&&addLabel? "block" : "none"%>">
 	<form action="myFoodDiary.jsp" method="post" id="newLabel" align="center">
-		<table class="fTable" align="center" width="400px">
+		<table class="foodDiaryTable" align="center" width="400px">
 			<tr>
 				<th colspan="2">New Label</th>
 				<th><input type="button" style="color: black;font-size: 16pt; font-weight: bold; float: right;" value="Cancel" onclick="$('#newLabelForm').hide();"></th>
@@ -581,6 +588,7 @@
 				<td>
 				<input type="submit" id="saveNewLabelBtn" name="action"	style="display:none;font-size: 8pt; font-weight: bold; float: right;margin: 10px;" value="Save">
 				<input type="button" id="mockSaveNewLabelBtn" onclick="saveLabelBtnFunc();" value="Save">
+				<input id="labelcolorToSave" name="labelcolorToSave" style="display: none;" value="#99CC00">
 				<script>
 				function saveLabelBtnFunc(){
 					document.getElementById("operationMode").value = "addLabel";
@@ -589,7 +597,43 @@
 				</script>
 				</td>
 			</tr>
-			
+			<tr>
+				<td colspan="3" align="center">
+				<span class="colorpicker">
+				   	<span class="bgbox"></span>
+				   	<span class="hexbox"></span>
+				  	<span class="clear"></span>
+				   	<span class="colorbox">
+				       <b class="selected" style="background:#99CC00" title="Green"></b>
+				       <b style="background:#FFEB3B" title="Yellow"></b>
+				       <b style="background:#FF9800" title="Orange"></b>
+				       <b style="background:#E57373" title="Red"></b>
+				       <b style="background:#00B8D4" title="Blue"></b>  
+				       <b style="background:#CE93D8" title="Purple"></b>
+				       <b style="background:#BDBDBD" title="Gray"></b>
+				       <b style="background:#FFFFFF" title="White"></b>
+				       <b style="background:#BCAAA4" title="Brown"></b>    
+					 </span>    
+				</span>
+				<script type="text/javascript">
+	    			function OnCustomColorChanged(selectedColor, selectedColorTitle, colorPickerIndex) {
+	        			//here we use only one of the passed in parameters: selectedColorTitle
+	        			var colors = {'Green': '#99CC00',
+	        						  'Yellow': '#FFEB3B',
+	        						  'Orange': '#FF9800',
+	        						  'Red': '#E57373',
+	        						  'Blue':'#00B8D4',
+	        						  'Purple':'#CE93D8',
+	        						  'Gray':'#BDBDBD',
+	        						  'White':'#FFFFFF',
+	        						  'Brown':'#BCAAA4'
+	        						};
+	        			var color = document.getElementById("labelcolorToSave");
+	        			color.value = colors[selectedColorTitle];
+	    			};
+				</script>
+				</td>
+			</tr>
 		</table>
 		<br/>
 		<input name="operationMode" value="addLabel" type="hidden">
@@ -602,7 +646,7 @@
 			<tr>
 			<td class="subHeaderVertical">Label:</td>
 			<td>
-			<select id="labelListToRemove" class="fixedwidthlist" value="any" >
+			<select id="labelListToRemove" class="fixedwidthlist" >
 			<%
 				List<FoodDiaryLabelBean> labelsList = labelGetAction.getAllFoodDiaryLabels(loggedInMID);
 				for(FoodDiaryLabelBean lb : labelsList) {
@@ -735,6 +779,7 @@
 		if(label == "any") {
 			$('.diaryLabelRow').show();
 		} else {
+			$('.suggestionRow').hide();
 			$('.diaryLabelRow').hide();
 			var selector = '.'+label;
 			$(selector).show();
@@ -783,6 +828,8 @@
 			
 			//show/hide each applicable element
 			$('[data-diarydate]').each(function() {
+				$('.suggestionRow').hide();
+
 				var thisdate = (new Date($(this).attr('data-diarydate'))).getTime();
 				//single date, must be equal
 				if(!dateRange) {

@@ -40,8 +40,10 @@ public class FoodDiaryLabelDAOTest extends TestCase {
 	
 	@Test
 	public void testInsertFoodDiaryLabel() throws DBException {
-		FoodDiaryLabelBean bean = new FoodDiaryLabelBean(730, "test");
+		FoodDiaryLabelBean bean = new FoodDiaryLabelBean(730, "test", "#FFFFFF");
 		long result = foodDAO.insertFoodDiaryLabel(bean);
+		FoodDiaryLabelBean b2 = foodDAO.getFoodDiaryLabelByRowID(result);
+		assertEquals("#FFFFFF",b2.getColorCode() );
 		assertTrue(result>0);
 	}
 	

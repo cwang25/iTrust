@@ -140,8 +140,11 @@
 				SimpleDateFormat sdf2 = new SimpleDateFormat("MM/dd/yyyy");
 				FoodDiaryLabelSetBean labelBean = labelAction.getSetFoodDiaryLabel(oldBean.getOwnerID(), new Date(oldBean.getDate().getTime()));
 				String label = "";
-				if(labelBean != null)
+				String colorCode="#99CC00";
+				if(labelBean != null){
+					colorCode = labelAction.getFoodDiaryLabelByRowID(labelBean.getLabelReferenceRowID()).getColorCode();
 					label = labelBean.getLabel();
+				}
 			%>
 			<tr class="diaryLabelRow <%= label %>" data-diarydate="<%= oldBean != null ? diaryDateFormat.format(oldBean.getDate()) : "" %>">
 				<td>
@@ -168,7 +171,7 @@
 				<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.getGramsOfProtein())%></td>
 				<td><%=StringEscapeUtils.escapeHtml("" + totalBeanTmp.totalCalories())%></td>
 				<td>
-				<span style="<%= label.length() > 0 ? "border-radius:35px; padding:5px 10px 5px 10px; color:black; background-color:#99CC00;font-weight: bold;" : "" %>"><%=StringEscapeUtils.escapeHtml(label)%></span>
+				<span style="<%= label.length() > 0 ? "border-radius:35px; padding:5px 10px 5px 10px; color:black; background-color:"+colorCode+";font-weight: bold;" : "" %>"><%=StringEscapeUtils.escapeHtml(label)%></span>
 				<%= label.length() > 0 ? "<br/><br/>" : "" %>
 				<button style="margin-top: 5px" class="button" id="viewMacroNutrientGraph" onclick="switchHiddenForm('hiddenDailyGraph','showCompareGraph');setActualVal(<%=totalBeanTmp.getGramsOfProtein()%>,<%=totalBeanTmp.getGramsOfFat()%>,<%=totalBeanTmp.getGramsOfCarbs() %>,<%=totalBeanTmp.totalCalories()%>);toggleGraph('Pie');">View Graph</button> 
 				</td>
@@ -416,6 +419,7 @@
 		if(label == "any") {
 			$('.diaryLabelRow').show();
 		} else {
+			$('.suggestionRow').hide();
 			$('.diaryLabelRow').hide();
 			var selector = '.'+label;
 			$(selector).show();
@@ -464,6 +468,7 @@
 			
 			//show/hide each applicable element
 			$('[data-diarydate]').each(function() {
+				$('.suggestionRow').hide();
 				var thisdate = (new Date($(this).attr('data-diarydate'))).getTime();
 				//single date, must be equal
 				if(!dateRange) {

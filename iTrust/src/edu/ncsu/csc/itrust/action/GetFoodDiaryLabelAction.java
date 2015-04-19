@@ -52,7 +52,12 @@ public class GetFoodDiaryLabelAction {
 		loggingAction.logEvent(TransactionType.PATIENT_GET_ALL_LABELS, mid, mid, "");
 		return list;
 	}
-	
+	/**
+	 * Get food diary label (not set.)  by rowid.
+	 * @param rowID
+	 * @return
+	 * @throws DBException
+	 */
 	public FoodDiaryLabelBean getFoodDiaryLabelByRowID(long rowID) throws DBException{
 		return foodDAO.getFoodDiaryLabelByRowID(rowID);
 	}

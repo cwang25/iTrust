@@ -42,9 +42,8 @@ public class FoodDiaryLabelDAO {
 		long lastInsertID = -1;
 		try {
 			conn = factory.getConnection();
-			ps = conn.prepareStatement("INSERT INTO fooddiarylabels (mid, label) VALUES (?,?)");
-			ps.setLong(1, label.getMid());
-			ps.setString(2, label.getLabel());
+			ps = conn.prepareStatement("INSERT INTO fooddiarylabels (mid, label, colorcode) VALUES (?,?,?)");
+			labelLoader.loadParameters(ps, label);
 			ps.executeUpdate();
 			lastInsertID = DBUtil.getLastInsert(conn);
 		} catch (SQLException e) {

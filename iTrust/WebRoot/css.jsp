@@ -343,3 +343,74 @@ background: #F44330
 	width: 28px;
 	z-index: 1;
 }
+/*! Menucool Color Picker v2012.8.30. http://www.menucool.com/color-picker */
+
+span.colorpicker
+{
+    display:none;
+    padding: 12px;
+    background-color: #EEE;
+    border: 1px solid #BBB;
+    color:Black;
+    text-decoration:none;
+    -moz-border-radius: 5px; 
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+span.colorpicker span
+{
+    float: left;
+    display:block;
+}
+
+span.colorpicker span.clear
+{
+    float: none;
+    clear: both;
+    border: 0;
+    overflow:hidden;
+    height:0;
+    font-size:0;
+}
+        
+span.colorpicker span.colorbox
+{
+    float: left;
+    border:0;
+    cursor: pointer;
+}
+span.colorbox b
+{
+	border-radius:35px;
+    border:0;
+    display:block;
+    float:left;
+    width:16px;
+    height:16px;
+    margin:4px;
+    overflow:hidden;/*for IE6*/
+    border: 1px solid transparent;
+}
+span.colorbox b.selected
+{
+    border: 2px solid #0288D1;
+}
+
+span.colorpicker span.hexbox, .colorpicker span.bgbox
+{
+    font: normal 10px verdana;
+    height: 16px;
+    margin-bottom: 4px;
+}
+span.colorpicker span.hexbox
+{
+    margin-left: 12px;
+    color: Black;
+    line-height: 16px;
+}
+span.colorpicker span.bgbox
+{
+	border-radius:50px;
+    width: 20px;
+    height: 20px;
+}
