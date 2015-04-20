@@ -64,6 +64,7 @@ public class MonitorAdverseEventSeleniumTest extends iTrustSeleniumTest {
 		assertTrue(driver.getPageSource().contains("Stomach cramps and migraine headaches after taking this drug"));
 		driver.findElement(By.name("moreInfo")).click();
 		assertTrue(driver.getPageSource().contains("Request sent"));
+		waitFor(1);
 		assertLogged(TransactionType.ADVERSE_EVENT_REQUEST_MORE, 7000000001L, 0L, "Requested more info");
 	}
 	

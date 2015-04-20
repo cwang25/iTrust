@@ -36,13 +36,7 @@ public class SecureMIDNFRTest extends iTrustSeleniumTest{
 	    driver.findElement(By.linkText("Edit Patient")).click();
 	    driver.findElement(By.id("searchBox")).sendKeys("2");
 
-	    for (int second = 0;; second++) {
-	    	if (second >= 60) fail("timeout");
-	    	try { if ("".equals(driver.findElement(By.xpath("//input[@value='2']")).getText())) break; } catch (Exception e) {}
-	    	Thread.sleep(1000);
-	    }
-	    JavascriptExecutor js =(JavascriptExecutor) driver; 
-	    js.executeScript("parent.location.href='getPatientID.jsp?UID_PATIENTID=2&forward=hcp-uap/editPatient.jsp';");
+	    clickOnJavascriptElement(By.xpath("//input[@value='2' and @type='button']"));
 	    assertEquals("iTrust - Edit Patient", driver.getTitle());
 	    assertLogged(TransactionType.DEMOGRAPHICS_VIEW, 8000000009L, 2L, "");
 	  }
@@ -60,13 +54,16 @@ public class SecureMIDNFRTest extends iTrustSeleniumTest{
 	    driver.findElement(By.cssSelector("h2.panel-title")).click();
 	    driver.findElement(By.linkText("Patient Information")).click();
 	    driver.findElement(By.id("searchBox")).sendKeys("2");
-	    for (int second = 0;; second++) {
-	    	if (second >= 60) fail("timeout");
-	    	try { if ("".equals(driver.findElement(By.xpath("//input[@value='2']")).getText())) break; } catch (Exception e) {}
-	    	Thread.sleep(1000);
-	    }
-	    JavascriptExecutor js =(JavascriptExecutor) driver; 
-	    js.executeScript("parent.location.href='getPatientID.jsp?UID_PATIENTID=2&forward=hcp-uap/editPatient.jsp';");
+//	    for (int second = 0;; second++) {
+//	    	if (second >= 60) fail("timeout");
+//	    	try { if ("".equals(driver.findElement(By.xpath("//input[@value='2']")).getText())) break; } catch (Exception e) {}
+//	    	Thread.sleep(1000);
+//	    }
+//	    JavascriptExecutor js =(JavascriptExecutor) driver; 
+//	    js.executeScript("parent.location.href='getPatientID.jsp?UID_PATIENTID=2&forward=hcp-uap/editPatient.jsp';");
+//	    driver.findElement(By.id("searchBox")).sendKeys("2");
+
+	    clickOnJavascriptElement(By.xpath("//input[@value='2' and @type='button']"));
 	    assertEquals("iTrust - Edit Patient", driver.getTitle());
 	    assertLogged(TransactionType.DEMOGRAPHICS_VIEW, 9000000000L, 2L, "");
 	  }
@@ -84,19 +81,21 @@ public class SecureMIDNFRTest extends iTrustSeleniumTest{
 	    driver.findElement(By.linkText("PHR Information")).click();
 	    assertEquals("iTrust - Please Select a Patient", driver.getTitle());
 	    driver.findElement(By.id("searchBox")).sendKeys("2");
-	    for (int second = 0;; second++) {
-	    	if (second >= 60) fail("timeout");
-	    	try { if ("".equals(driver.findElement(By.xpath("//input[@value='2']")).getText())) break; } catch (Exception e) {}
-	    	Thread.sleep(1000);
-	    }
-	    JavascriptExecutor js =(JavascriptExecutor) driver; 
-	    js.executeScript("parent.location.href='getPatientID.jsp?UID_PATIENTID=2&forward=hcp-uap/editPHR.jsp';");
-	    for (int second = 0;; second++) {
-	    	if (second >= 60) fail("timeout");
-	    	try { if ("Baby Programmer".equals(driver.findElement(By.partialLinkText("Baby Programmer")).getText())) break; } catch (Exception e) {}
-	    	Thread.sleep(1000);
-	    }
-	    driver.findElement(By.partialLinkText("Programmer")).click();
+//	    for (int second = 0;; second++) {
+//	    	if (second >= 60) fail("timeout");
+//	    	try { if ("".equals(driver.findElement(By.xpath("//input[@value='2']")).getText())) break; } catch (Exception e) {}
+//	    	Thread.sleep(1000);
+//	    }
+//	    JavascriptExecutor js =(JavascriptExecutor) driver; 
+//	    js.executeScript("parent.location.href='getPatientID.jsp?UID_PATIENTID=2&forward=hcp-uap/editPHR.jsp';");
+	    clickOnJavascriptElement(By.xpath("//input[@value='2' and @type='button']"));
+//	    for (int second = 0;; second++) {
+//	    	if (second >= 60) fail("timeout");
+//	    	try { if ("Baby Programmer".equals(driver.findElement(By.partialLinkText("Baby Programmer")).getText())) break; } catch (Exception e) {}
+//	    	Thread.sleep(1000);
+//	    }
+//	    driver.findElement(By.partialLinkText("Programmer")).click();
+	    clickOnJavascriptElement(By.linkText("Baby Programmer"));
 	    assertEquals("iTrust - Edit Personal Health Record", driver.getTitle());
 	    assertEquals("Baby Programmer", driver.findElement(By.xpath("//div[@id='iTrustContent']/div/div/table/tbody/tr[2]/td[2]")).getText());
 	    assertLogged(TransactionType.PATIENT_HEALTH_INFORMATION_VIEW, 9000000000L, 2L, "");

@@ -42,10 +42,10 @@ public class SecurePasswordTest extends iTrustSeleniumTest{
 	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 	    assertEquals("iTrust - HCP Home", driver.getTitle());
 	    assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
-	    driver.findElement(By.linkText("Display Database")).click();
-		WebElement baseTable = driver.findElement(By.id("users"));
-		List<WebElement> tableRows = baseTable.findElements(By.tagName("tr"));
-		tableRows.get(1).getText();
+//	    driver.findElement(By.linkText("Display Database")).click();
+//		WebElement baseTable = driver.findElement(By.id("users"));
+//		List<WebElement> tableRows = baseTable.findElements(By.tagName("tr"));
+//		tableRows.get(1).getText();
 	  }
 	  
 	  @Test
@@ -64,13 +64,13 @@ public class SecurePasswordTest extends iTrustSeleniumTest{
 	    driver.findElement(By.cssSelector("td > input[type=\"submit\"]")).click();
 	    assertLogged(TransactionType.PASSWORD_RESET, 1L, 1L, "");
 	    assertEquals("Password changed", driver.findElement(By.cssSelector("form > table > tbody > tr > td")).getText());
-	    driver.findElement(By.linkText("Display Database")).click();
-	    TableElement te = new TableElement(driver.findElement(By.id("users")));
-	    
-	    String value = te.getCellAsText(9, 1);
-	    assertNotSame("21fc0414317f574419f5429d70173355c823970a3a918fdaa199ccbae7ad91e3", value);
-		
-		assertNotSame("newPw12345", value);
+//	    driver.findElement(By.linkText("Display Database")).click();
+//	    TableElement te = new TableElement(driver.findElement(By.id("users")));
+//	    
+//	    String value = te.getCellAsText(9, 1);
+//	    assertNotSame("21fc0414317f574419f5429d70173355c823970a3a918fdaa199ccbae7ad91e3", value);
+//		
+//		assertNotSame("newPw12345", value);
 	  }
 	  
 }

@@ -76,6 +76,7 @@ public class PatientHTTPTest extends iTrustSeleniumTest {
 		assertEquals("iTrust - Get My Prescription Report", driver.getTitle());
 		driver.findElement(By.xpath("//*[@id='iTrustContent']/div/form/table/tbody/tr[1]/td[2]/input")).click();
 		assertTrue(driver.getPageSource().contains("No prescriptions found"));
+		waitFor(1);
 		assertLogged(TransactionType.PRESCRIPTION_REPORT_VIEW, 1L, 1L, "");
 	}
 	
