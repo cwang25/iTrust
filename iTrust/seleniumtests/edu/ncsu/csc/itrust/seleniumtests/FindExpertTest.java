@@ -1,8 +1,5 @@
 package edu.ncsu.csc.itrust.seleniumtests;
 
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
@@ -13,18 +10,11 @@ import edu.ncsu.csc.itrust.enums.TransactionType;
 //import com.sun.org.apache.bcel.internal.generic.Select;
 
 public class FindExpertTest extends iTrustSeleniumTest {
-	private String baseUrl;
-	private boolean acceptNextAlert = true;
-	private StringBuffer verificationErrors = new StringBuffer();
-	
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 		gen.clearAllTables();
 		gen.standardData();
-		//WebDriver driver = new HtmlUnitDriver();
-		//baseUrl = "http://localhost:8080/";
-		//driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
 	
 	@Test

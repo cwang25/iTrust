@@ -34,36 +34,16 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 	  }
 	  
 	  public void testInvalidPatientDates() throws Exception {
-		  driver.get(ADDRESS);
-		    try {
-		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
-		      } catch (Error e) {
-		        verificationErrors.append(e.toString());
-		      }
-		    driver.findElement(By.id("j_username")).clear();
-		    driver.findElement(By.id("j_username")).sendKeys("9000000000");
-		    try {
-		        assertEquals("", driver.findElement(By.id("j_password")).getAttribute("value"));
-		      } catch (Error e) {
-		        verificationErrors.append(e.toString());
-		      }
-		    driver.findElement(By.id("j_password")).clear();
-		    driver.findElement(By.id("j_password")).sendKeys("pw");
-		    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		    
-		    driver.findElement(By.cssSelector("h2.panel-title")).click();
-		    driver.findElement(By.linkText("Patient Information")).click();
-		    driver.findElement(By.id("searchBox")).clear();
-		    driver.findElement(By.id("searchBox")).sendKeys("2");
-		    driver.findElement(By.xpath("//input[@value='2']")).click();
-		    driver.findElement(By.name("dateOfDeathStr")).clear();
-		    driver.findElement(By.name("dateOfDeathStr")).sendKeys("01/03/2050");
-		    driver.findElement(By.name("action")).click();
-		    try {
-		      assertEquals("This form has not been validated correctly. The following field are not properly filled in: [Death date cannot be in the future!]", driver.findElement(By.cssSelector("span.iTrustError")).getText());
-		    } catch (Error e) {
-		      verificationErrors.append(e.toString());
-		    }
+			login("9000000000", "pw");
+			driver.findElement(By.cssSelector("div.panel-heading")).click();
+			driver.findElement(By.linkText("Patient Information")).click();
+			driver.findElement(By.id("searchBox")).clear();
+			driver.findElement(By.id("searchBox")).sendKeys("2");
+			clickOnJavascriptElement(By.xpath("//input[@value='2' and @type='button']"));
+			driver.findElement(By.name("dateOfDeathStr")).clear();
+			driver.findElement(By.name("dateOfDeathStr")).sendKeys("01/03/2050");
+			driver.findElement(By.name("action")).click();
+			assertTrue(pageContains("This form has not been validated correctly. The following field are not properly filled in: [Death date cannot be in the future!]"));
 	  }
 	  
 	  public void testInvalidPatientBirthDates() throws Exception {
@@ -88,7 +68,7 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 		    driver.findElement(By.linkText("Patient Information")).click();
 		    driver.findElement(By.id("searchBox")).clear();
 		    driver.findElement(By.id("searchBox")).sendKeys("2");
-		    driver.findElement(By.xpath("//input[@value='2']")).click();
+		    clickOnJavascriptElement(By.xpath("//input[@value='2' and @type='button']"));
 		    
 		    driver.findElement(By.name("dateOfBirthStr")).clear();
 		    driver.findElement(By.name("dateOfBirthStr")).sendKeys("");
@@ -103,28 +83,13 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 	  }
 	  
 	  public void testRepresent() throws Exception {
-		  driver.get(ADDRESS);
-		    try {
-		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
-		      } catch (Error e) {
-		        verificationErrors.append(e.toString());
-		      }
-		    driver.findElement(By.id("j_username")).clear();
-		    driver.findElement(By.id("j_username")).sendKeys("9000000000");
-		    try {
-		        assertEquals("", driver.findElement(By.id("j_password")).getAttribute("value"));
-		      } catch (Error e) {
-		        verificationErrors.append(e.toString());
-		      }
-		    driver.findElement(By.id("j_password")).clear();
-		    driver.findElement(By.id("j_password")).sendKeys("pw");
-		    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		  login("9000000000", "pw");
 		    
 		    driver.findElement(By.cssSelector("h2.panel-title")).click();
-		    driver.findElement(By.linkText("Patient Information")).click();
+		    driver.findElement(By.linkText("PHR Information")).click();
 		    driver.findElement(By.id("searchBox")).clear();
 		    driver.findElement(By.id("searchBox")).sendKeys("2");
-		    driver.findElement(By.xpath("//input[@value='2']")).click();
+		    clickOnJavascriptElement(By.xpath("//input[@value='2' and @type='button']"));
 		  
 		  driver.findElement(By.linkText("Baby Programmer")).click();
 		    try {
@@ -172,7 +137,7 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 		    driver.findElement(By.linkText("PHR Information")).click();
 		    driver.findElement(By.id("searchBox")).clear();
 		    driver.findElement(By.id("searchBox")).sendKeys("2");
-		    driver.findElement(By.xpath("//input[@value='2']")).click();
+		    clickOnJavascriptElement(By.xpath("//input[@value='2' and @type='button']"));
 		    
 		    JavascriptExecutor js = (JavascriptExecutor)driver;
 		    js.executeScript("var descField = document.getElementById('description'); document.getElementById('addAllergyForm').appendChild(descField);");
@@ -214,7 +179,7 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 		    driver.findElement(By.linkText("PHR Information")).click();
 		    driver.findElement(By.id("searchBox")).clear();
 		    driver.findElement(By.id("searchBox")).sendKeys("2");
-		    driver.findElement(By.xpath("//input[@value='2' and @type='button']")).click();
+		    clickOnJavascriptElement(By.xpath("//input[@value='2' and @type='button']"));
 		    
 		    JavascriptExecutor js = (JavascriptExecutor)driver;
 		    js.executeScript("var descField = document.getElementById('description'); document.getElementById('addAllergyForm').appendChild(descField);");
@@ -223,7 +188,6 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 		    driver.findElement(By.id("description")).sendKeys("Penicillin");
 		    js.executeScript("document.getElementById('addA').click()");
 		    //driver.findElement(By.name("addA")).click();
-		    System.out.println(driver.getPageSource());
 		  //assertEquals("Allergy 664662530 - Penicillin has already been added for Andy Programmer.", driver.findElement(By.cssSelector("span.iTrustError")).getText());
 	    	assertTrue(pageContains("Allergy 664662530 - Penicillin has already been added for Andy Programmer."));
 	  }
@@ -250,7 +214,7 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 		    driver.findElement(By.linkText("Document Office Visit")).click();
 		    driver.findElement(By.id("searchBox")).clear();
 		    driver.findElement(By.id("searchBox")).sendKeys("2");
-		    driver.findElement(By.xpath("//input[@value='2']")).click();
+		    clickOnJavascriptElement(By.xpath("//input[@value='2' and @type='button']"));
 		    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		    driver.findElement(By.id("update")).click();
 		    try {
@@ -313,7 +277,7 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 		    driver.findElement(By.linkText("Patient Information")).click();
 		    driver.findElement(By.id("searchBox")).clear();
 		    driver.findElement(By.id("searchBox")).sendKeys("2");
-		    driver.findElement(By.xpath("//input[@value='2']")).click();
+		    clickOnJavascriptElement(By.xpath("//input[@value='2' and @type='button']"));
 		    
 		    driver.findElement(By.name("religion")).clear();
 		    driver.findElement(By.name("religion")).sendKeys("Jedi");
@@ -354,8 +318,7 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 		    driver.findElement(By.linkText("Patient Information")).click();
 		    driver.findElement(By.id("searchBox")).clear();
 		    driver.findElement(By.id("searchBox")).sendKeys("2");
-		    driver.findElement(By.xpath("//input[@value='2']")).click();
-		    
+		    clickOnJavascriptElement(By.xpath("//input[@value='2' and @type='button']"));		    
 		    driver.findElement(By.name("spiritualPractices")).clear();
 		    driver.findElement(By.name("spiritualPractices")).sendKeys("Sleeps in class");
 		    driver.findElement(By.name("action")).click();
@@ -395,7 +358,7 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 		    driver.findElement(By.linkText("Patient Information")).click();
 		    driver.findElement(By.id("searchBox")).clear();
 		    driver.findElement(By.id("searchBox")).sendKeys("2");
-		    driver.findElement(By.xpath("//input[@value='2']")).click();
+		    clickOnJavascriptElement(By.xpath("//input[@value='2' and @type='button']"));
 		    
 		    driver.findElement(By.name("alternateName")).clear();
 		    driver.findElement(By.name("alternateName")).sendKeys("Randy");
@@ -436,18 +399,31 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 		    driver.findElement(By.linkText("PHR Information")).click();
 		    driver.findElement(By.id("searchBox")).clear();
 		    driver.findElement(By.id("searchBox")).sendKeys("25");
-		    driver.findElement(By.xpath("//input[@value='25']")).click();
+		    clickOnJavascriptElement(By.xpath("//input[@value='25' and @type='button']"));
+		    
+		    JavascriptExecutor js = (JavascriptExecutor)driver;
+		    js.executeScript("var descField = document.getElementById('description'); document.getElementById('addAllergyForm').appendChild(descField);");
+		    js.executeScript("var btn = document.getElementById('addA'); document.getElementById('addAllergyForm').appendChild(btn);");
 		    driver.findElement(By.id("description")).clear();
 		    driver.findElement(By.id("description")).sendKeys("Penicillin");
-		    driver.findElement(By.name("addA")).click();
+		    js.executeScript("document.getElementById('addA').click()");
+		    
+//		    driver.findElement(By.id("description")).clear();
+//		    driver.findElement(By.id("description")).sendKeys("Penicillin");
+//		    driver.findElement(By.name("addA")).click();
 		    try {
 		      assertEquals("Allergy Added", driver.findElement(By.cssSelector("span.iTrustError")).getText());
 		    } catch (Error e) {
 		      verificationErrors.append(e.toString());
 		    }
+		    js.executeScript("var descField = document.getElementById('description'); document.getElementById('addAllergyForm').appendChild(descField);");
+		    js.executeScript("var btn = document.getElementById('addA'); document.getElementById('addAllergyForm').appendChild(btn);");
 		    driver.findElement(By.id("description")).clear();
 		    driver.findElement(By.id("description")).sendKeys("Penicillin");
-		    driver.findElement(By.name("addA")).click();
+		    js.executeScript("document.getElementById('addA').click()");
+//		    driver.findElement(By.id("description")).clear();
+//		    driver.findElement(By.id("description")).sendKeys("Penicillin");
+//		    driver.findElement(By.name("addA")).click();
 		    try {
 		      assertEquals("Allergy 664662530 - Penicillin has already been added for Trend Setter.", driver.findElement(By.cssSelector("span.iTrustError")).getText());
 		    } catch (Error e) {
@@ -477,7 +453,7 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 		    driver.findElement(By.linkText("Document Office Visit")).click();
 		    driver.findElement(By.id("searchBox")).clear();
 		    driver.findElement(By.id("searchBox")).sendKeys("25");
-		    driver.findElement(By.xpath("//input[@value='25']")).click();
+		    clickOnJavascriptElement(By.xpath("//input[@value='25' and @type='button']"));
 		    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		    driver.findElement(By.name("visitDate")).clear();
 		    driver.findElement(By.name("visitDate")).sendKeys("01/01/2012");
@@ -516,9 +492,17 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 		    }
 		    driver.findElement(By.cssSelector("h2.panel-title")).click();
 		    driver.findElement(By.linkText("PHR Information")).click();
+		    
+		    JavascriptExecutor js = (JavascriptExecutor)driver;
+		    js.executeScript("var descField = document.getElementById('description'); document.getElementById('addAllergyForm').appendChild(descField);");
+		    js.executeScript("var btn = document.getElementById('addA'); document.getElementById('addAllergyForm').appendChild(btn);");
 		    driver.findElement(By.id("description")).clear();
 		    driver.findElement(By.id("description")).sendKeys("Penicillin");
-		    driver.findElement(By.name("addA")).click();
+		    js.executeScript("document.getElementById('addA').click()");
+		    
+//		    driver.findElement(By.id("description")).clear();
+//		    driver.findElement(By.id("description")).sendKeys("Penicillin");
+//		    driver.findElement(By.name("addA")).click();
 		    try {
 		      assertEquals("Allergy Added", driver.findElement(By.cssSelector("span.iTrustError")).getText());
 		    } catch (Error e) {
@@ -527,29 +511,22 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 	  }
 	  
 	  public void testAddAllergyFutRX() throws Exception {
-		  driver.get(ADDRESS);
-		    try {
-		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
-		      } catch (Error e) {
-		        verificationErrors.append(e.toString());
-		      }
-		    driver.findElement(By.id("j_username")).clear();
-		    driver.findElement(By.id("j_username")).sendKeys("9000000000");
-		    try {
-		        assertEquals("", driver.findElement(By.id("j_password")).getAttribute("value"));
-		      } catch (Error e) {
-		        verificationErrors.append(e.toString());
-		      }
-		    driver.findElement(By.id("j_password")).clear();
-		    driver.findElement(By.id("j_password")).sendKeys("pw");
-		    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		 login("9000000000", "pw");
 		    
 		    driver.findElement(By.cssSelector("h2.panel-title")).click();
 		    driver.findElement(By.linkText("All Patients")).click();
 		    driver.findElement(By.linkText("Anakin Skywalker")).click();
+		    
+		    JavascriptExecutor js = (JavascriptExecutor)driver;
+		    js.executeScript("var descField = document.getElementById('description'); document.getElementById('addAllergyForm').appendChild(descField);");
+		    js.executeScript("var btn = document.getElementById('addA'); document.getElementById('addAllergyForm').appendChild(btn);");
 		    driver.findElement(By.id("description")).clear();
 		    driver.findElement(By.id("description")).sendKeys("Midichlominene");
-		    driver.findElement(By.name("addA")).click();
+		    js.executeScript("document.getElementById('addA').click()");
+		    
+//		    driver.findElement(By.id("description")).clear();
+//		    driver.findElement(By.id("description")).sendKeys("Midichlominene");
+//		    driver.findElement(By.name("addA")).click();
 		    try {
 		      assertEquals("Medication 483012382 - Midichlominene is currently prescribed to Anakin Skywalker.", driver.findElement(By.cssSelector("span.iTrustError")).getText());
 		    } catch (Error e) {
@@ -579,7 +556,7 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 		    driver.findElement(By.linkText("Document Office Visit")).click();
 		    driver.findElement(By.id("searchBox")).clear();
 		    driver.findElement(By.id("searchBox")).sendKeys("25");
-		    driver.findElement(By.xpath("//input[@value='25']")).click();
+		    clickOnJavascriptElement(By.xpath("//input[@value='25' and @type='button']"));
 		    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		    driver.findElement(By.name("visitDate")).clear();
 		    driver.findElement(By.name("visitDate")).sendKeys("02/21/2012");
@@ -613,9 +590,17 @@ public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 		    }
 		    driver.findElement(By.cssSelector("h2.panel-title")).click();
 		    driver.findElement(By.linkText("PHR Information")).click();
+		    
+		    JavascriptExecutor js = (JavascriptExecutor)driver;
+		    js.executeScript("var descField = document.getElementById('description'); document.getElementById('addAllergyForm').appendChild(descField);");
+		    js.executeScript("var btn = document.getElementById('addA'); document.getElementById('addAllergyForm').appendChild(btn);");
 		    driver.findElement(By.id("description")).clear();
 		    driver.findElement(By.id("description")).sendKeys("Lantus");
-		    driver.findElement(By.name("addA")).click();
+		    js.executeScript("document.getElementById('addA').click()");
+		    
+//		    driver.findElement(By.id("description")).clear();
+//		    driver.findElement(By.id("description")).sendKeys("Lantus");
+//		    driver.findElement(By.name("addA")).click();
 		    try {
 		      assertEquals("Medication 00882219 - Lantus is currently prescribed to Trend Setter.", driver.findElement(By.cssSelector("span.iTrustError")).getText());
 		    } catch (Error e) {
