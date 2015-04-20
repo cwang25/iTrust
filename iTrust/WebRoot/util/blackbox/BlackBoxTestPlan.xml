@@ -17526,6 +17526,80 @@
 	</expectedResults>
 </test>
 
+<test id="testCreateNewLabelForFoodDiary">
+	<role>Patient</role>
+	<usecase>73</usecase>
+	<dateAdded>04/20/2015</dateAdded>
+	<description>
+		<precondition>UC73 data is loaded.</precondition>
+		<precondition>TED is a registered user of iTrust system in UC73.</precondition>
+		<step>Log in as TED.</step>
+		<step>Click on My Food Diary.</step>
+		<step>Click on Manage Label.</step>
+		<step>Add new label "newlabel" with green color selected.</step>
+		<step>Click on Save.</step>
+		<step>Select food diary with date of 04/20/2015</step>
+		<step>Select "newlabel" on the right drop down menu, and click Change Label.</step>
+	</description>
+	<expectedResults>
+		<eResult>The food diary of date 04/20/2015 has been attached the green label of "newlabel". </eResult>
+	</expectedResults>
+</test>
+
+<test id="testRemoveExistingFoodDiaryLabel">
+	<role>Patient</role>
+	<usecase>73</usecase>
+	<dateAdded>04/20/2015</dateAdded>
+	<description>
+		<precondition>UC73 data is loaded.</precondition>
+		<precondition>TED is a registered user of iTrust system in UC73.</precondition>
+		<precondition>TED has one existing label "oldlabel".</precondition>
+		<step>Log in as TED.</step>
+		<step>Click on My Food Diary.</step>
+		<step>Click on Manage Label.</step>
+		<step>Select "oldlabel" in the dropdown menu of Remove section.</step>
+		<step>Click on Remove.</step>
+	</description>
+	<expectedResults>
+		<eResult>The "oldlabel" will be removed, and all food diary records that associate with that label will no longer have "oldlabel".</eResult>
+	</expectedResults>
+</test>
+
+<test id="testChangeFoodDiaryLabel">
+	<role>Patient</role>
+	<usecase>73</usecase>
+	<dateAdded>04/20/2015</dateAdded>
+	<description>
+		<precondition>UC73 data is loaded.</precondition>
+		<precondition>TED is a registered user of iTrust system. in UC73.</precondition>
+		<precondition>TED has two existing label "oldlabel", "editlabel".</precondition>
+		<step>Log in as TED.</step>
+		<step>Click on My Food Diary.</step>
+		<step>Click on Food Diary on 04/15/2015 with "oldlabel".</step>
+		<step>Select "editlabel" and click on Change Label.</step>	
+	</description>
+	<expectResults>
+		<eResult>The label of that food dairy daily summary will have "editlabel"</eResult>
+	</expectResults>
+</test>
+
+<test id="testLabelFilter">
+	<role>Patient</role>
+	<usecase>73</usecase>
+	<dateAdded>04/20/2015</dateAdded>
+	<description>
+		<precondition>UC73 data is loaded</precondition>
+		<precondition>TED is a registered user of iTrust system in UC73.</precondition>
+		<step>Log in as TED.</step>
+		<step>Click on My Food Diary.</step>
+		<step>Select "oldlabel" in the dropdown menu in Filter entries by label</step>
+		
+	</description>
+	<expectResults>
+		<eResult>The food diary tabel shall now only show the food diaries with "oldlabel" label.</eResult>
+	</expectResults>
+</test>
+
 <test id="testAddValidWeightLogEntry">
     <role>Patient</role>
     <usecase>76</usecase>
@@ -17580,5 +17654,6 @@
         <eResult>Aaron Hotchner's weight log entrie are displayed.</eResult>
     </expectedResults>
 </test>
+
 
 </BlackBoxTestPlan>
