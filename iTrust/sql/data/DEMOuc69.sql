@@ -398,16 +398,16 @@ INSERT INTO macronutrientprofile(rowID, gender, age, weight, height, goals, acti
 VALUES(NULL, 'male', 20, 55, 168, 'maintain_weight', 'moderately_active', 1);
 
 /*Insert food diary labels.*/
-INSERT INTO fooddiarylabels (rowid, mid, label) 
+INSERT INTO fooddiarylabels (rowid, mid, label, colorcode) 
 VALUES 
-(1,500, 'Diet'),
-(2,500, 'FastFood'),
-(NULL, 500, 'OldDiaries'),
-(NULL, 500, 'BeforeDiet');
+(1,500, 'Diet','#4DB6AC'),
+(2,500, 'FastFood','#FF9800'),
+(3, 500, 'OldDiaries','#BDBDBD'),
+(4, 500, 'BeforeDiet','#F48FB1');
 
 INSERT INTO fooddiarysetlabels (mid, diarydate, label, labelrowID)
 VALUES
-(500, '2014-04-11', 'Diet',1),
+(500, '2014-04-11', 'BeforeDiet',4),
 (500, '2014-04-12', 'Diet',1),
 (500, '2014-04-10', 'FastFood',2)
 ;

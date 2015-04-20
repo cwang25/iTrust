@@ -43,6 +43,7 @@ public class PatientHTTPTest extends iTrustSeleniumTest {
 		driver.findElement(By.xpath("//*[@id='iTrustContent']/form/table/tbody/tr[5]/td/input")).submit();
 
 		assertTrue(driver.getPageSource().contains("Password changed"));
+		waitFor(1);
 		assertLogged(TransactionType.PASSWORD_RESET, 2L, 2L, "");
 		
 		driver.get(ADDRESS + "/auth/forwardUser.jsp");

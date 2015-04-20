@@ -75,6 +75,7 @@ public class EditLOINCDataTest extends iTrustSeleniumTest {
 		
 		new Select(driver.findElement(By.name("ignoreDupData"))).selectByVisibleText("Replace Duplicates");
 		driver.findElement(By.id("sendFile")).click();
+		waitFor(1);
 		assertLogged(TransactionType.LOINC_CODE_FILE_ADD, 9000000001L, 0L, "");
 		driver.findElement(By.linkText("Return to LOINC Codes List")).click();
 		try {
@@ -245,6 +246,7 @@ public class EditLOINCDataTest extends iTrustSeleniumTest {
 		}
 		
 		driver.findElement(By.id("sendFile")).click();
+		waitFor(1);
 		assertLogged(TransactionType.LOINC_CODE_FILE_ADD, 9000000001L, 0L, "");
 		try {
 			assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*ERROR, LINE 2: \"10054-5\" \"I skip rest of fields\" This form has not been validated correctly\\. The following field are not properly filled in: \\[You must have a Lab Procedure Code, Component and Kind Of Property\\][\\s\\S]*$"));
