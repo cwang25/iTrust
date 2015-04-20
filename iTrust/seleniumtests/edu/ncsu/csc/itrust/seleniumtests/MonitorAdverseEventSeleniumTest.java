@@ -35,12 +35,7 @@ public class MonitorAdverseEventSeleniumTest extends iTrustSeleniumTest {
 	    java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(java.util.logging.Level.OFF);
 	    java.util.logging.Logger.getLogger("org.apache.http").setLevel(java.util.logging.Level.OFF);
 	}
-	
-	@Override
-	protected void tearDown() throws Exception {
-		gen.clearAllTables();
-	}
-	
+
 	public void testViewDrugAdverseEvents () throws Exception {
 		gen.adverseEvent1();
 		driver.get(ADDRESS);

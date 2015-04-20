@@ -31,7 +31,7 @@ public class DesignatedNutritionistTest extends iTrustSeleniumTest {
 		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("Patient Food Diary")).click();
 		driver.findElement(By.id("searchBox")).sendKeys("100");
-		driver.findElement(By.xpath("//input[@value='100' and @type='button']")).click();
+		this.clickOnJavascriptElement(By.xpath("//input[@value='100' and @type='button']"));
 		assertTrue((driver.getPageSource()).contains("2. Patient has to set you as his/her Designated Nutritionist in order to view it."));
 		driver.setJavascriptEnabled(false);
 		driver.findElement(By.id("logoutBtn")).click();
@@ -50,7 +50,7 @@ public class DesignatedNutritionistTest extends iTrustSeleniumTest {
 		driver.findElement(By.linkText("Patient Food Diary")).click();
 		driver.findElement(By.id("searchBox")).sendKeys("500");
 		//waitFor(2);
-		driver.findElement(By.xpath("//input[@value='500' and @type='button']")).click();
+		this.clickOnJavascriptElement(By.xpath("//input[@value='500' and @type='button']"));
 		assertTrue((driver.getPageSource()).contains("Oreos"));
 		assertTrue((driver.getPageSource()).contains("Cheese and Bean Dip"));
 
@@ -58,7 +58,7 @@ public class DesignatedNutritionistTest extends iTrustSeleniumTest {
 		driver.findElement(By.linkText("Switch Patient")).click();
 		driver.findElement(By.id("searchBox")).sendKeys("500");
 		//waitFor(2);
-		driver.findElement(By.xpath("//input[@value='500' and @type='button']")).click();
+		this.clickOnJavascriptElement(By.xpath("//input[@value='500' and @type='button']"));
 		driver.findElement(By.linkText("Food Diary")).click();
 		assertTrue((driver.getPageSource()).contains("Oreos"));
 		assertTrue((driver.getPageSource()).contains("Cheese and Bean Dip"));
@@ -111,7 +111,6 @@ public class DesignatedNutritionistTest extends iTrustSeleniumTest {
 		
 		clickOnJavascriptElement(By.xpath("//input[@value='100' and @type='button']"));
 		
-		System.out.println(driver.getPageSource());
 		assertTrue((driver.getPageSource()).contains("The patient has no Food diary"));
 	}
 

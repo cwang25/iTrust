@@ -118,7 +118,8 @@ public class DependentsSTest extends iTrustSeleniumTest{
 		driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("581");
 	    //waitFor(1);
-	    driver.findElement(By.xpath("//input[@value='581' and @type='button']")).click();
+	    clickOnJavascriptElement(By.xpath("//input[@value='581' and @type='button']"));
+	    
 		assertTrue(driver.getTitle().equals("iTrust - Manage Representatives"));
 
 
@@ -275,7 +276,7 @@ public class DependentsSTest extends iTrustSeleniumTest{
 		driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("750");
 	    //waitFor(1);
-	    driver.findElement(By.xpath("//input[@value='750' and @type='button']")).click();
+	    this.clickOnJavascriptElement(By.xpath("//input[@value='750' and @type='button']"));
 		assertTrue(driver.getTitle().equals("iTrust - Manage Representatives"));
 		
 		

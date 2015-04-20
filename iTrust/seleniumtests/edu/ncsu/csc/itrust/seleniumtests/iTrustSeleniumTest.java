@@ -250,7 +250,12 @@ abstract public class iTrustSeleniumTest extends TestCase{
 
 		//Thread.sleep(500);
 	}
-	//Method to return the element instead of clicking it. Exactly like clickOnJavascriptElement(By by)
+	/**
+	 * Method to return the element instead of clicking it. Exactly like clickOnJavascriptElement(By by)
+	 * @param by
+	 * @return
+	 * @throws InterruptedException
+	 */
 	public WebElement getJavascriptElement(By by) throws InterruptedException{
 		boolean result = false;
 		int attempt = 0;

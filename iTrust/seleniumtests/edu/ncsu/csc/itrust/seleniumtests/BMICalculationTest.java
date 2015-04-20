@@ -33,7 +33,7 @@ public class BMICalculationTest extends iTrustSeleniumTest{
 		driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("106");
 	    //waitFor(1);
-	    driver.findElement(By.xpath("//input[@value='106' and @type='button']")).click();
+	    this.clickOnJavascriptElement(By.xpath("//input[@value='106' and @type='button']"));
 		
 		//Verify Basic Health Information page
 		assertEquals(ADDRESS + "auth/hcp-uap/viewBasicHealth.jsp", driver.getCurrentUrl());
@@ -94,7 +94,9 @@ public class BMICalculationTest extends iTrustSeleniumTest{
 		driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("107");
 	    //waitFor(1);
-	    driver.findElement(By.xpath("//input[@value='107' and @type='button']")).click();
+	    
+	    this.clickOnJavascriptElement(By.xpath("//input[@value='107' and @type='button']"));
+	    
 		//Verify Basic Health Information page
 		assertEquals(ADDRESS + "auth/hcp-uap/viewBasicHealth.jsp", driver.getCurrentUrl());
 		
@@ -155,7 +157,8 @@ public class BMICalculationTest extends iTrustSeleniumTest{
 		driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("108");
 	    //waitFor(1);
-	    driver.findElement(By.xpath("//input[@value='108' and @type='button']")).click();
+	    this.clickOnJavascriptElement(By.xpath("//input[@value='108' and @type='button']"));
+	    
 		//Verify Basic Health Information page
 		assertEquals(ADDRESS + "auth/hcp-uap/viewBasicHealth.jsp", driver.getCurrentUrl());
 		

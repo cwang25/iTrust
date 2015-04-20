@@ -57,7 +57,7 @@ public class FoodDiaryDateFilterTest extends iTrustSeleniumTest {
 	    driver.findElement(By.linkText("Patient Food Diary")).click();
 	    driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("500");
-	    driver.findElement(By.xpath("//input[@value='500' and @type='button']")).click();
+	    this.clickOnJavascriptElement(By.xpath("//input[@value='500' and @type='button']"));
 	    driver.findElement(By.id("dateRangeFrom")).clear();
 	    driver.findElement(By.id("dateRangeFrom")).sendKeys("04/13/2014");
 	    driver.findElement(By.id("dateFilterSubmit")).click();
@@ -73,7 +73,7 @@ public class FoodDiaryDateFilterTest extends iTrustSeleniumTest {
 	    driver.findElement(By.linkText("Patient Food Diary")).click();
 	    driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("500");
-	    driver.findElement(By.xpath("//input[@value='500' and @type='button']")).click();
+	    this.clickOnJavascriptElement(By.xpath("//input[@value='500' and @type='button']"));
 	    driver.findElement(By.id("dateRangeCheckbox")).click();
 	    driver.findElement(By.id("dateRangeFrom")).clear();
 	    driver.findElement(By.id("dateRangeFrom")).sendKeys("04/13/2014");
