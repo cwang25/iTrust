@@ -119,6 +119,7 @@ public class HealthDataChartTest extends iTrustSeleniumTest {
 		
 		driver.findElement(By.id("viewHeightChart")).click();
 		assertEquals("iTrust - Height Chart", driver.getTitle());
+		waitFor(1);
 		assertLogged(TransactionType.BASIC_HEALTH_CHARTS_VIEW, 9000000000L, 2L, "Height");	
 	}
 

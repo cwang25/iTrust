@@ -11,6 +11,8 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 
+import edu.ncsu.csc.itrust.dao.DAOFactory;
+import edu.ncsu.csc.itrust.dao.mysql.AuthDAO;
 import edu.ncsu.csc.itrust.enums.TransactionType;
 
 public class SecurePasswordTest extends iTrustSeleniumTest{
@@ -63,6 +65,12 @@ public class SecurePasswordTest extends iTrustSeleniumTest{
 	    assertLogged(TransactionType.PASSWORD_RESET, 1L, 1L, "");
 	    assertEquals("Password changed", driver.findElement(By.cssSelector("form > table > tbody > tr > td")).getText());
 	    driver.findElement(By.linkText("Display Database")).click();
+	    TableElement te = new TableElement(driver.findElement(By.id("users")));
+	    
+	    String value = te.getCellAsText(9, 1);
+	    assertNotSame("21fc0414317f574419f5429d70173355c823970a3a918fdaa199ccbae7ad91e3", value);
+		
+		assertNotSame("newPw12345", value);
 	  }
 	  
 }
