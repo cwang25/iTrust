@@ -250,6 +250,28 @@ abstract public class iTrustSeleniumTest extends TestCase{
 
 		//Thread.sleep(500);
 	}
+	//Method to return the element instead of clicking it. Exactly like clickOnJavascriptElement(By by)
+	public WebElement getJavascriptElement(By by) throws InterruptedException{
+		boolean result = false;
+		int attempt = 0;
+		WebElement theElement = null;
+		String text = "";
+		while(attempt < 4){
+			try{
+				text = driver.findElement(by).getText();
+				theElement = driver.findElement(by);
+				result = true;
+				break;
+			}catch(StaleElementReferenceException e){
+				
+			}
+			attempt++;
+		}
+		return theElement;
+
+		//Thread.sleep(500);
+	}
+	
 	/**
 	 * This is helepr for some elements that having trouble to be clicked when javascript is enable.
 	 * For my experience, iTrst Logout buttons has this problem that if javascript is always on, then the logout buttons is not clickable.

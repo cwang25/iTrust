@@ -12,8 +12,7 @@ import edu.ncsu.csc.itrust.enums.TransactionType;
 public class PersonnelTest extends iTrustSeleniumTest {
 	
 	protected void setUp() throws Exception {
-		//super.setUp();
-		gen.clearAllTables();
+		super.setUp();
 		gen.standardData();
 	}
 	
@@ -77,11 +76,6 @@ public class PersonnelTest extends iTrustSeleniumTest {
         assertEquals("Prioglitazone", driver.findElement(By.xpath("//div[@id='iTrustContent']/div/table/tbody/tr[4]/td[2]")).getText());
         assertEquals("10/10/2006 to 10/11/2020", driver.findElement(By.xpath("//div[@id='iTrustContent']/div/table/tbody/tr[4]/td[3]")).getText());
         assertEquals("Kelly Doctor", driver.findElement(By.xpath("//div[@id='iTrustContent']/div/table/tbody/tr[4]/td[4]")).getText());
-
-
-        //Close the driver
-        driver.quit();
-		
 		
       }
 }

@@ -3,11 +3,13 @@ package edu.ncsu.csc.itrust.seleniumtests;
 //import java.awt.Robot;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 /*import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;*/
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+
 
 /*import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -1045,79 +1047,82 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 	
 	public void testAddAllergy() throws Exception {
 		// login HCP Kathryn Evans
-		driver = new HtmlUnitDriver();
-		driver.get(ADDRESS);
-		driver.findElement(By.id("j_username")).clear();
-	    driver.findElement(By.id("j_username")).sendKeys("9000000012");
-	    driver.findElement(By.id("j_password")).clear();
-	    driver.findElement(By.id("j_password")).sendKeys("pw");
-	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		login("9000000012", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000012L, 0L, "");
 		
 		// click on PHR Info
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("PHR Information")).click();
 		// select specified patient
-		driver.getCurrentUrl();
-		WebElement element = driver.findElement(By.name("UID_PATIENTID"));
-		element.sendKeys("401");
+		driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("401");
+	    clickOnJavascriptElement(By.xpath("//input[@value='401' and @type='button']"));
 		// button click should trigger page redirect
-		element.submit();
-		driver.getCurrentUrl();
 		assertEquals("iTrust - Edit Personal Health Record", driver.getTitle());
 		
+		driver.setJavascriptEnabled(true);
 		
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+	    js.executeScript("var descField = document.getElementById('description'); document.getElementById('addAllergyForm').appendChild(descField);");
+	    js.executeScript("var btn = document.getElementById('addA'); document.getElementById('addAllergyForm').appendChild(btn);");
+	    driver.findElement(By.id("description")).clear();
+	    driver.findElement(By.id("description")).sendKeys("Penicillin");
+	    js.executeScript("document.getElementById('addA').click()");
 		// fill in the office visit part of the form
-		driver.findElement(By.name("description")).sendKeys("Penicillin");
-		//submit the page
-		driver.findElement(By.name("addA")).click();
+//		driver.findElement(By.name("description")).sendKeys("Penicillin");
+//		//submit the page
+//		driver.findElement(By.name("addA")).click();
 		
 		//validate current page updated
 		assertTrue(driver.getPageSource().contains("Penicillin"));
 				
 		//go to the obstetrics homepage
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[8]/div/h2")).click();
 		driver.findElement(By.linkText("View Obstetrics Records")).click();
 		assertEquals("iTrust - Obstetrics", driver.getTitle());
 		
 		//validate obstetrics page updated
 		assertTrue(driver.getPageSource().contains("Penicillin"));
+		logout();
 	}
 	
 	public void testAddSecondAllergy() throws Exception {
 		testAddAllergy();
 		
 		// login HCP Kathryn Evans
-		driver = new HtmlUnitDriver();
-		driver.get(ADDRESS);
-		driver.findElement(By.id("j_username")).clear();
-	    driver.findElement(By.id("j_username")).sendKeys("9000000012");
-	    driver.findElement(By.id("j_password")).clear();
-	    driver.findElement(By.id("j_password")).sendKeys("pw");
-	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		login("9000000012", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000012L, 0L, "");
 		
 		// click on PHR Info
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("PHR Information")).click();
 		// select specified patient
-		driver.getCurrentUrl();
-		WebElement element = driver.findElement(By.name("UID_PATIENTID"));
-		element.sendKeys("401");
+		driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("401");
+	    clickOnJavascriptElement(By.xpath("//input[@value='401' and @type='button']"));
 		// button click should trigger page redirect
-		element.submit();
-		driver.getCurrentUrl();
 		assertEquals("iTrust - Edit Personal Health Record", driver.getTitle());
 		
+		driver.setJavascriptEnabled(true);
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+	    js.executeScript("var descField = document.getElementById('description'); document.getElementById('addAllergyForm').appendChild(descField);");
+	    js.executeScript("var btn = document.getElementById('addA'); document.getElementById('addAllergyForm').appendChild(btn);");
+	    driver.findElement(By.id("description")).clear();
+	    driver.findElement(By.id("description")).sendKeys("Humans");
+	    js.executeScript("document.getElementById('addA').click()");
 		// fill in the office visit part of the form
-		driver.findElement(By.name("description")).sendKeys("Humans");
-		//submit the page
-		driver.findElement(By.name("addA")).click();
+//		driver.findElement(By.name("description")).sendKeys("Humans");
+//		//submit the page
+//		driver.findElement(By.name("addA")).click();
 		
 		//validate current page updated
 		assertTrue(driver.getPageSource().contains("Penicillin"));
 		assertTrue(driver.getPageSource().contains("Humans"));
 		
 		//go to the obstetrics homepage
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[8]/div/h2")).click();
 		driver.findElement(By.linkText("View Obstetrics Records")).click();
 		assertEquals("iTrust - Obstetrics", driver.getTitle());
 		
@@ -1128,38 +1133,44 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 	
 	public void testAddInvalidAllergy() throws Exception {
 		// login HCP Kathryn Evans
-		driver = new HtmlUnitDriver();
-		driver.get(ADDRESS);
-		driver.findElement(By.id("j_username")).clear();
-	    driver.findElement(By.id("j_username")).sendKeys("9000000012");
-	    driver.findElement(By.id("j_password")).clear();
-	    driver.findElement(By.id("j_password")).sendKeys("pw");
-	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		login("9000000012", "pw");
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000012L, 0L, "");
 		
 		// click on PHR Info
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("PHR Information")).click();
 		// select specified patient
-		driver.getCurrentUrl();
-		WebElement element = driver.findElement(By.name("UID_PATIENTID"));
-		element.sendKeys("401");
+		driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("401");
+	    clickOnJavascriptElement(By.xpath("//input[@value='401' and @type='button']"));
 		// button click should trigger page redirect
-		element.submit();
-		driver.getCurrentUrl();
 		assertEquals("iTrust - Edit Personal Health Record", driver.getTitle());
 		
+		driver.setJavascriptEnabled(true);
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+	    js.executeScript("var descField = document.getElementById('description'); document.getElementById('addAllergyForm').appendChild(descField);");
+	    js.executeScript("var btn = document.getElementById('addA'); document.getElementById('addAllergyForm').appendChild(btn);");
+	    driver.findElement(By.id("description")).clear();
+	    driver.findElement(By.id("description")).sendKeys("!@#$");
+	    js.executeScript("document.getElementById('addA').click()");
 		// fill in the office visit part of the form
-		driver.findElement(By.name("description")).sendKeys("!@#$");
+//		driver.findElement(By.id("description")).clear();
+//	    driver.findElement(By.id("description")).sendKeys("!@#$");
+	    //clickOnJavascriptElement(By.id("addA"));
 		//submit the page
-		driver.findElement(By.name("addA")).click();
-		System.out.println(driver.getPageSource());
+	    //driver.setJavascriptEnabled(true);
+		
+		//driver.findElement(By.name("addA")).click();
+		//System.out.println(driver.getPageSource());
 		//validate current page updated
-		assertTrue(!driver.getPageSource().contains("!@#$"));
+		
+		assertTrue(!pageContains("!@#$"));
 		assertTrue(driver.getPageSource().contains("This form has not been validated correctly. The following field are not properly filled in: [Allergy Description: Up to 30 characters, letters, numbers, and a space]"));
 		
 		//go to the obstetrics homepage
-		driver.findElement(By.linkText("View Obstetrics Records")).click();
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[8]/div/h2")).click();
+	    driver.findElement(By.linkText("View Obstetrics Records")).click();
 		assertEquals("iTrust - Obstetrics", driver.getTitle());
 		
 		//validate obstetrics home updated
@@ -1227,39 +1238,32 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 	
 	public void testLaborDeliveryReportFlags() throws Exception {
 		// login HCP Kathryn Evans
-		driver = new HtmlUnitDriver();
-		driver.get(ADDRESS);
-		driver.findElement(By.id("j_username")).clear();
-	    driver.findElement(By.id("j_username")).sendKeys("9000000012");
-	    driver.findElement(By.id("j_password")).clear();
-	    driver.findElement(By.id("j_password")).sendKeys("pw");
-	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		assertEquals("iTrust - HCP Home", driver.getTitle());
+		login("9000000012", "pw");
 		assertLogged(TransactionType.HOME_VIEW, 9000000012L, 0L, "");
 		
 		// click on Obstetrics Home
-		driver.findElement(By.linkText("Obstetrics Home")).click();	
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[8]/div")).click();
+	    driver.findElement(By.linkText("Obstetrics Home")).click();
 		// select specified patient
-		driver.getCurrentUrl();
-		WebElement element = driver.findElement(By.name("UID_PATIENTID"));
-		element.sendKeys("21");
+	    driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("21");
+	    clickOnJavascriptElement(By.xpath("//input[@value='21' and @type='button']"));
 		// button click should trigger page redirect
-		element.submit();
 		driver.getCurrentUrl();
 		assertEquals("iTrust - Obstetrics", driver.getTitle());
 		
 		// click Add Obstetrics Record
-		driver.findElement(By.id("addInitialButtonForm")).submit();
+		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		driver.getCurrentUrl();
 		assertEquals("iTrust - Initialize Obstetrics Record", driver.getTitle());
 	
 		
 		// fill out the form and submit
-		driver.findElement(By.name("lmp")).sendKeys("10/05/2014");
-		driver.findElement(By.name("date")).sendKeys("10/29/2014");
-		driver.findElement(By.name("edd")).sendKeys("7/12/2015");
-		driver.findElement(By.name("weeksPregnant")).sendKeys("3-3");
-		driver.findElement(By.id("submit")).submit();
+		driver.findElement(By.id("lmp")).clear();
+	    driver.findElement(By.id("lmp")).sendKeys("10/05/2014");
+	    driver.findElement(By.id("date")).clear();
+	    driver.findElement(By.id("date")).sendKeys("10/29/2014");
+	    driver.findElement(By.id("submit")).click();
 
 		// submit button click should trigger page redirect
 		driver.getCurrentUrl();
@@ -1268,34 +1272,46 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 		assertTrue(driver.getPageSource().contains("Obstetrics Record successfully added"));
 		
 		// click on PHR Info
+		driver.findElement(By.cssSelector("h2.panel-title")).click();
 		driver.findElement(By.linkText("PHR Information")).click();
 		assertEquals("iTrust - Edit Personal Health Record", driver.getTitle());
 		
-		
-		// fill in the office visit part of the form
-		driver.findElement(By.name("description")).sendKeys("Penicillin");
-		//submit the page
-		driver.findElement(By.name("addA")).click();
+		driver.setJavascriptEnabled(true);
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+	    js.executeScript("var descField = document.getElementById('description'); document.getElementById('addAllergyForm').appendChild(descField);");
+	    js.executeScript("var btn = document.getElementById('addA'); document.getElementById('addAllergyForm').appendChild(btn);");
+	    driver.findElement(By.id("description")).clear();
+	    driver.findElement(By.id("description")).sendKeys("Penicillin");
+	    js.executeScript("document.getElementById('addA').click()");
+//		// fill in the office visit part of the form
+//		driver.findElement(By.name("description")).sendKeys("Penicillin");
+//		//submit the page
+//		driver.findElement(By.name("addA")).click();
 		
 		//validate current page updated
 		assertTrue(driver.getPageSource().contains("Penicillin"));
 			
 		// goto add page
-		driver.findElement(By.partialLinkText("Add Obstetrics Office Visit")).click();
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[8]/div")).click();
+		driver.findElement(By.linkText("Add Obstetrics Office Visit")).click();
 		driver.getCurrentUrl();
 		assertEquals("iTrust - Add Obstetrics Office Visit", driver.getTitle());
 		
 		// fill out the form and submit
-		driver.findElement(By.name("date")).sendKeys("11/05/2014");
-		driver.findElement(By.name("weeksPregnant")).sendKeys("3-1");	
-		driver.findElement(By.name("weight")).sendKeys("140");
-		driver.findElement(By.name("bloodPressureS")).sendKeys("190");		
-		driver.findElement(By.name("bloodPressureD")).sendKeys("80");	
-		driver.findElement(By.name("fhr")).sendKeys("200");		
-		driver.findElement(By.name("fhu")).sendKeys("14");
-		driver.findElement(By.name("twins")).click();
-		driver.findElement(By.id("submit")).submit();
-		
+		driver.findElement(By.id("date")).clear();
+	    driver.findElement(By.id("date")).sendKeys("11/05/2014");
+	    driver.findElement(By.id("weight")).clear();
+	    driver.findElement(By.id("weight")).sendKeys("140");
+	    driver.findElement(By.id("bloodPressureS")).clear();
+	    driver.findElement(By.id("bloodPressureS")).sendKeys("190");
+	    driver.findElement(By.id("bloodPressureD")).clear();
+	    driver.findElement(By.id("bloodPressureD")).sendKeys("80");
+	    driver.findElement(By.id("fhr")).clear();
+	    driver.findElement(By.id("fhr")).sendKeys("200");
+	    driver.findElement(By.id("fhu")).clear();
+	    driver.findElement(By.id("fhu")).sendKeys("14");
+	    driver.findElement(By.id("twins")).click();
+	    driver.findElement(By.id("submit")).click();
 		// should redirect to the obstetrics homepage
 		assertEquals("iTrust - Obstetrics", driver.getTitle());
 		assertTrue(driver.getPageSource().contains("Obstetrics Office Visit successfully added"));
@@ -1306,18 +1322,21 @@ public class ObstetricsTest extends iTrustSeleniumTest {
 		assertTrue(driver.getPageSource().contains(FlagValue.HighBloodPressure.toString()));
 
 		// add a pre-existing condition
-		driver.findElement(By.partialLinkText("Patient Pre-existing Conditions")).click();
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[8]/div/h2")).click();
+	    driver.findElement(By.linkText("Patient Pre-existing Conditions")).click();
 		assertEquals("iTrust - Obstetrics Record Pre-Existing Conditions", driver.getTitle());
 		
-		driver.findElement(By.name("condition")).sendKeys("Diabetes");
-		driver.findElement(By.id("submit")).submit();
+		driver.findElement(By.id("condition")).clear();
+	    driver.findElement(By.id("condition")).sendKeys("Diabetes");
+	    driver.findElement(By.id("submit")).click();
 		
 		// validate that it was added successfully
 		assertEquals("iTrust - Obstetrics Record Pre-Existing Conditions", driver.getTitle());
 		assertTrue(driver.getPageSource().contains("Diabetes"));
 	
 		// click Labor and Delivery Report
-		driver.findElement(By.partialLinkText("Labor and Delivery Report")).click();
+		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[8]/div/h2")).click();
+	    driver.findElement(By.linkText("Labor and Delivery Report")).click();
 		assertEquals("iTrust - Labor and Delivery Report", driver.getTitle());
 		
 		// check pregnancy data: flags, pre-existing conditions, allergies, etc.

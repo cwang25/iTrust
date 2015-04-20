@@ -36,7 +36,7 @@ public class ReportAdversePrescriptionTest extends iTrustSeleniumTest {
 		driver.findElement(By.id("j_username")).sendKeys("2");
 	    driver.findElement(By.id("j_password")).sendKeys("pw");
 	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[4]/div/h2")).click();
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 	    driver.findElement(By.linkText("Prescription Records")).click();
 	    
 	    driver.findElement(By.name("mine")).click();
@@ -53,11 +53,12 @@ public class ReportAdversePrescriptionTest extends iTrustSeleniumTest {
 	
 	@Test
 	public void testReportAdverseEventsButton() throws Exception {
-		driver.get("http://localhost:8080/iTrust/");
-		driver.findElement(By.id("j_username")).sendKeys("2");
-	    driver.findElement(By.id("j_password")).sendKeys("pw");
-	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[4]/div/h2")).click();
+//		driver.get("http://localhost:8080/iTrust/");
+//		driver.findElement(By.id("j_username")).sendKeys("2");
+//	    driver.findElement(By.id("j_password")).sendKeys("pw");
+//	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		login("2", "pw");
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 	    driver.findElement(By.linkText("Prescription Records")).click();
 	    
 	    driver.findElement(By.name("mine")).click();

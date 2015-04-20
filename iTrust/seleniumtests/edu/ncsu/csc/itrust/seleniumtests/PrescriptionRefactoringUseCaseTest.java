@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
@@ -34,9 +35,10 @@ public class PrescriptionRefactoringUseCaseTest extends iTrustSeleniumTest {
 	private DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 	
 	private long getVisitID(WebDriver dr) throws Exception {
-		WebElement e = dr.findElement(By.name("ovID"));
-		String ovIDStr = e.getText();
-		return Long.parseLong(ovIDStr);
+		((HtmlUnitDriver) dr).setJavascriptEnabled(true);
+		JavascriptExecutor js = (JavascriptExecutor)dr;
+		String val = (String) js.executeScript(" return document.getElementsByName('ovID')[0].value;");
+		return Long.parseLong(val);
 	}
 	
 	private String todayOffsetStr(int offset) {
@@ -240,7 +242,11 @@ public class PrescriptionRefactoringUseCaseTest extends iTrustSeleniumTest {
 	    
 		// Check that the page contains the existing office visit
 		assertEquals("iTrust - Document Office Visit", driver.getTitle());
-		assertEquals(dateString, driver.findElement(By.name("visitDate")).getText());
+		((HtmlUnitDriver) driver).setJavascriptEnabled(true);
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		String visitdateval = (String) js.executeScript(" return document.getElementsByName('visitDate')[0].value;");
+		((HtmlUnitDriver) driver).setJavascriptEnabled(false);
+		assertEquals(dateString, visitdateval);
 		assertEquals("Hates getting shots", driver.findElement(By.name("notes")).getText());
 
 		// Check for existing lab procedure
@@ -306,7 +312,11 @@ public class PrescriptionRefactoringUseCaseTest extends iTrustSeleniumTest {
 		// Check that the page contains the existing office visit
 		assertEquals("iTrust - Document Office Visit", driver.getTitle());
 		assertEquals(390, getVisitID(driver));
-		assertEquals("02/02/2011", driver.findElement(By.name("visitDate")).getText());
+		((HtmlUnitDriver) driver).setJavascriptEnabled(true);
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		String visitdateval = (String) js.executeScript(" return document.getElementsByName('visitDate')[0].value;");
+		((HtmlUnitDriver) driver).setJavascriptEnabled(false);
+		assertEquals("02/02/2011", visitdateval);
 		assertEquals("Second medical visit in two days", driver.findElement(By.name("notes")).getText()); //get value or get text?
 		
 		// Check for existing prescription

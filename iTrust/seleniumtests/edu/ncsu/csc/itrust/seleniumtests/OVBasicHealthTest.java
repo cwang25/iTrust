@@ -1,7 +1,9 @@
 package edu.ncsu.csc.itrust.seleniumtests;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.ui.Select;
 
 import edu.ncsu.csc.itrust.enums.TransactionType;
@@ -30,7 +32,14 @@ public class OVBasicHealthTest extends iTrustSeleniumTest {
 	 */
 	public void testOfficeVisit5MonthOldHealthMetrics() throws Exception{
 		//Login as HCP Shelly Vang
-		WebDriver driver = login("8000000011", "pw");	
+		//WebDriver driver = login("8000000011", "pw");	
+		HtmlUnitDriver driver = new HtmlUnitDriver();
+		driver.get(ADDRESS + "/auth/forwardUser.jsp");
+	    driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("8000000011");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertLogged(TransactionType.HOME_VIEW, 8000000011L, 0L, "");
 		
 		//Click Document Office Visit Link
@@ -76,7 +85,7 @@ public class OVBasicHealthTest extends iTrustSeleniumTest {
 		smoking.selectByVisibleText("1 - non-smoking household");
 		//Click the Add Record button
 		driver.findElement(By.xpath("//input[@value='Add Record']")).click();
-		driver.findElement(By.xpath("//input[@value='Add Record']")).submit();
+		//driver.findElement(By.xpath("//input[@value='Add Record']")).submit();
 				
 		//Verify "Health information successfully updated." message
 		assertTrue(driver.getPageSource().contains("Health information successfully updated."));
@@ -91,7 +100,14 @@ public class OVBasicHealthTest extends iTrustSeleniumTest {
 	 */
 	public void testOfficeVisit2YrOldHealthMetrics() throws Exception{
 		//Login as HCP Shelly Vang
-		WebDriver driver = login("8000000011", "pw");
+		//WebDriver driver = login("8000000011", "pw");
+		HtmlUnitDriver driver = new HtmlUnitDriver();
+		driver.get(ADDRESS + "/auth/forwardUser.jsp");
+	    driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("8000000011");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertLogged(TransactionType.HOME_VIEW, 8000000011L, 0L, "");
 		
 		//Click Document Office Visit Link
@@ -137,7 +153,7 @@ public class OVBasicHealthTest extends iTrustSeleniumTest {
 		smoking.selectByVisibleText("3 - indoor smokers");
 		//Click the Add Record button
 		driver.findElement(By.xpath("//input[@value='Add Record']")).click();
-		driver.findElement(By.xpath("//input[@value='Add Record']")).submit();	
+		//driver.findElement(By.xpath("//input[@value='Add Record']")).submit();	
 		
 		//Verify "Health information successfully updated." message
 		assertTrue(driver.getPageSource().contains("Health information successfully updated."));
@@ -160,7 +176,7 @@ public class OVBasicHealthTest extends iTrustSeleniumTest {
 		driver.findElement(By.name("instructions")).sendKeys("Take three times a day");
 		//Click the Add Prescription button
 		driver.findElement(By.xpath("//input[@value='Add Prescription']")).click();
-		driver.findElement(By.xpath("//input[@value='Add Prescription']")).submit();
+		//driver.findElement(By.xpath("//input[@value='Add Prescription']")).submit();
 		
 		//Verify "Prescription information successfully updated." message
 		assertTrue(driver.getPageSource().contains("Prescription information successfully updated."));
@@ -171,7 +187,7 @@ public class OVBasicHealthTest extends iTrustSeleniumTest {
 		diag.selectByVisibleText("34.00 - Streptococcal sore throat");
 		//Click the Add Diagnosis button
 		driver.findElement(By.xpath("//input[@value='Add Diagnosis']")).click();
-		driver.findElement(By.xpath("//input[@value='Add Diagnosis']")).submit();
+		//driver.findElement(By.xpath("//input[@value='Add Diagnosis']")).submit();
 		
 		//Verify "Diagnosis information successfully updated" message
 		assertTrue(driver.getPageSource().contains("Diagnosis information successfully updated"));
@@ -185,7 +201,13 @@ public class OVBasicHealthTest extends iTrustSeleniumTest {
 	 */
 	public void testOfficeVisit5YrOldHealthMetrics() throws Exception{
 		//Login as HCP Shelly Vang
-		WebDriver driver = login("8000000011", "pw");
+		HtmlUnitDriver driver = new HtmlUnitDriver();
+		driver.get(ADDRESS + "/auth/forwardUser.jsp");
+	    driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("8000000011");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertLogged(TransactionType.HOME_VIEW, 8000000011L, 0L, "");
 		
 		//Click Document Office Visit Link
@@ -244,7 +266,14 @@ public class OVBasicHealthTest extends iTrustSeleniumTest {
 	 */
 	public void testOfficeVisit20YrOldHealthMetrics() throws Exception{
 		//Login as HCP Shelly Vang
-		WebDriver driver = login("8000000011", "pw");
+		//WebDriver driver = login("8000000011", "pw");
+		HtmlUnitDriver driver = new HtmlUnitDriver();
+		driver.get(ADDRESS + "/auth/forwardUser.jsp");
+	    driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("8000000011");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertLogged(TransactionType.HOME_VIEW, 8000000011L, 0L, "");
 		
 		//Click Document Office Visit Link
@@ -302,7 +331,7 @@ public class OVBasicHealthTest extends iTrustSeleniumTest {
 		driver.findElement(By.name("cholesterolTri")).sendKeys("147");
 		//Click the Add Record button
 		driver.findElement(By.xpath("//input[@value='Add Record']")).click();
-		driver.findElement(By.xpath("//input[@value='Add Record']")).submit();
+		//driver.findElement(By.xpath("//input[@value='Add Record']")).submit();
 		
 		//Verify "Health information successfully updated." message
 		assertTrue(driver.getPageSource().contains("Health information successfully updated."));
@@ -316,7 +345,14 @@ public class OVBasicHealthTest extends iTrustSeleniumTest {
 	 */
 	public void testOfficeVisit24YrOldHealthMetrics() throws Exception{
 		//Login as HCP Shelly Vang
-		WebDriver driver = login("8000000011", "pw");
+		//WebDriver driver = login("8000000011", "pw");
+		HtmlUnitDriver driver = new HtmlUnitDriver();
+		driver.get(ADDRESS + "/auth/forwardUser.jsp");
+	    driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("8000000011");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertLogged(TransactionType.HOME_VIEW, 8000000011L, 0L, "");
 		
 		//Click Document Office Visit Link
@@ -374,7 +410,7 @@ public class OVBasicHealthTest extends iTrustSeleniumTest {
 		driver.findElement(By.name("cholesterolTri")).sendKeys("162");
 		//Click the Add Record button
 		driver.findElement(By.xpath("//input[@value='Add Record']")).click();
-		driver.findElement(By.xpath("//input[@value='Add Record']")).submit();
+		//driver.findElement(By.xpath("//input[@value='Add Record']")).submit();
 		
 		//Verify "Health information successfully updated." message
 		assertTrue(driver.getPageSource().contains("Health information successfully updated."));
@@ -390,7 +426,14 @@ public class OVBasicHealthTest extends iTrustSeleniumTest {
 	 */
 	public void testNoPatientSmokingStatusSpecified() throws Exception{
 		//Login as HCP Kelly Doctor
-		WebDriver driver = login("9000000000", "pw");
+		//WebDriver driver = login("9000000000", "pw");
+		HtmlUnitDriver driver = new HtmlUnitDriver();
+		driver.get(ADDRESS + "/auth/forwardUser.jsp");
+	    driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
 		//Click Document Office Visit Link
@@ -461,7 +504,14 @@ public class OVBasicHealthTest extends iTrustSeleniumTest {
 	 */
 	public void testNoHighBloodPressure() throws Exception{
 		//Login as HCP Kelly Doctor
-		WebDriver driver = login("9000000000", "pw");
+		//WebDriver driver = login("9000000000", "pw");
+		HtmlUnitDriver driver = new HtmlUnitDriver();
+		driver.get(ADDRESS + "/auth/forwardUser.jsp");
+	    driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
 		//Click Document Office Visit Link
@@ -519,7 +569,7 @@ public class OVBasicHealthTest extends iTrustSeleniumTest {
 		driver.findElement(By.name("cholesterolTri")).sendKeys("345");
 		//Click the Add Record button
 		driver.findElement(By.xpath("//input[@value='Add Record']")).click();
-		driver.findElement(By.xpath("//input[@value='Add Record']")).submit();
+		//driver.findElement(By.xpath("//input[@value='Add Record']")).submit();
 		
 		//Verify "Information not valid" message
 		//Verify "Systolic blood pressure must be an integer in [0,999]" message
@@ -536,7 +586,14 @@ public class OVBasicHealthTest extends iTrustSeleniumTest {
 	 */
 	public void testInvalidCharactersForHDL() throws Exception{
 		//Login as HCP Kelly Doctor
-		WebDriver driver = login("9000000000", "pw");
+		//WebDriver driver = login("9000000000", "pw");
+		HtmlUnitDriver driver = new HtmlUnitDriver();
+		driver.get(ADDRESS + "/auth/forwardUser.jsp");
+	    driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
 		//Click Document Office Visit Link
@@ -594,7 +651,7 @@ public class OVBasicHealthTest extends iTrustSeleniumTest {
 		driver.findElement(By.name("cholesterolTri")).sendKeys("222");
 		//Click the Add Record button
 		driver.findElement(By.xpath("//input[@value='Add Record']")).click();
-		driver.findElement(By.xpath("//input[@value='Add Record']")).submit();
+		//driver.findElement(By.xpath("//input[@value='Add Record']")).submit();
 		
 		//Verify "Information not valid" message
 		//Verify "Cholesterol HDL must be an integer in [0,89]" message
@@ -612,7 +669,14 @@ public class OVBasicHealthTest extends iTrustSeleniumTest {
 	 */
 	public void testLeapDay2014() throws Exception{
 		//Login as HCP Kelly Doctor
-		WebDriver driver = login("9000000000", "pw");
+		//WebDriver driver = login("9000000000", "pw");
+		HtmlUnitDriver driver = new HtmlUnitDriver();
+		driver.get(ADDRESS + "/auth/forwardUser.jsp");
+	    driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
 		//Click Document Office Visit Link
@@ -644,7 +708,10 @@ public class OVBasicHealthTest extends iTrustSeleniumTest {
 		assertTrue(driver.getPageSource().contains("Information Successfully Updated"));
 		
 		//Verify that date changed for to March 1st, 2014.
-		assertEquals(driver.findElement(By.name("visitDate")).getText(), "03/01/2014");
+		//assertEquals("03/01/2014", driver.findElement(By.name("visitDate")).getText());
+		driver.setJavascriptEnabled(true);
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		assertEquals("03/01/2014", (String)js.executeScript("return document.getElementsByName('visitDate')[0].value;"));
 	}
 	
 	/**
@@ -655,7 +722,14 @@ public class OVBasicHealthTest extends iTrustSeleniumTest {
 	 */
 	public void testZeroHeadCircumferenceForUnderThreeYearOld() throws Exception{
 		//Login as HCP Kelly Doctor
-		WebDriver driver = login("9000000000", "pw");
+		//WebDriver driver = login("9000000000", "pw");
+		HtmlUnitDriver driver = new HtmlUnitDriver();
+		driver.get(ADDRESS + "/auth/forwardUser.jsp");
+	    driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
 		//Click Document Office Visit Link

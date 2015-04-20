@@ -28,12 +28,12 @@ public class SearchUserTest extends iTrustSeleniumTest{
 	    driver.findElement(By.id("searchBox")).sendKeys("Random Person");
 
 	    try {
-	      assertEquals("Random", driver.findElement(By.xpath("//div[@id='searchTarget']/table/tbody/tr[2]/td[2]")).getText());
+	      assertEquals("Random", getJavascriptElement(By.xpath("//div[@id='searchTarget']/table/tbody/tr[2]/td[2]")).getText());
 	    } catch (Error e) {
 	      verificationErrors.append(e.toString());
 	    }
 	    try {
-	      assertEquals("Person", driver.findElement(By.xpath("//div[@id='searchTarget']/table/tbody/tr[2]/td[3]")).getText());
+	      assertEquals("Person", getJavascriptElement(By.xpath("//div[@id='searchTarget']/table/tbody/tr[2]/td[3]")).getText());
 	    } catch (Error e) {
 	      verificationErrors.append(e.toString());
 	    }
@@ -53,12 +53,12 @@ public class SearchUserTest extends iTrustSeleniumTest{
 	    driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("Andy");
 	    try {
-	      assertEquals("Andy", driver.findElement(By.xpath("//div[@id='searchTarget']/table/tbody/tr[2]/td[2]")).getText());
+	      assertEquals("Andy", getJavascriptElement(By.xpath("//div[@id='searchTarget']/table/tbody/tr[2]/td[2]")).getText());
 	    } catch (Error e) {
 	      verificationErrors.append(e.toString());
 	    }
 	    try {
-	      assertEquals("Programmer", driver.findElement(By.xpath("//div[@id='searchTarget']/table/tbody/tr[2]/td[3]")).getText());
+	      assertEquals("Programmer", getJavascriptElement(By.xpath("//div[@id='searchTarget']/table/tbody/tr[2]/td[3]")).getText());
 	    } catch (Error e) {
 	      verificationErrors.append(e.toString());
 	    }

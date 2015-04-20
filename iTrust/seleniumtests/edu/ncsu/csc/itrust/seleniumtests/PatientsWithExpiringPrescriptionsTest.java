@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.junit.Test;
 
 import edu.ncsu.csc.itrust.enums.TransactionType;
@@ -30,8 +31,13 @@ public class PatientsWithExpiringPrescriptionsTest extends iTrustSeleniumTest {
 	
 	@Test
 	public void testPatient9() throws Exception {
-		
-		login("9900000000", "pw");
+		HtmlUnitDriver driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9900000000");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals(driver.getTitle(), "iTrust - HCP Home");
 		//assertLogged(TransactionType.HOME_VIEW, 9900000000L, 0L, "");
 		
@@ -53,7 +59,14 @@ public class PatientsWithExpiringPrescriptionsTest extends iTrustSeleniumTest {
 	@Test
 	public void testPatientTen() throws Exception {
 
-		login("9900000000", "pw");
+		//login("9900000000", "pw");
+		HtmlUnitDriver driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9900000000");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9900000000L, 0L, "");
 		
@@ -71,7 +84,14 @@ public class PatientsWithExpiringPrescriptionsTest extends iTrustSeleniumTest {
 	@Test
 	public void testPatientEleven() throws Exception {
 
-		login("9900000000", "pw");
+		//login("9900000000", "pw");
+		HtmlUnitDriver driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9900000000");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9900000000L, 0L, "");
 		
@@ -91,7 +111,14 @@ public class PatientsWithExpiringPrescriptionsTest extends iTrustSeleniumTest {
 	@Test
 	public void testPatientTwelve() throws Exception {
 
-		login("9900000000", "pw");
+		//login("9900000000", "pw");
+		HtmlUnitDriver driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9900000000");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9900000000L, 0L, "");
 		
@@ -110,7 +137,14 @@ public class PatientsWithExpiringPrescriptionsTest extends iTrustSeleniumTest {
 	@Test
 	public void testPatientThirteen() throws Exception {
 
-		login("9900000000", "pw");
+		//login("9900000000", "pw");
+		HtmlUnitDriver driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9900000000");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9900000000L, 0L, "");
 		
@@ -130,7 +164,14 @@ public class PatientsWithExpiringPrescriptionsTest extends iTrustSeleniumTest {
 	@Test
 	public void testPatientFourteen() throws Exception {
 
-		login("9900000000", "pw");
+		//login("9900000000", "pw");
+		HtmlUnitDriver driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9900000000");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9900000000L, 0L, "");
 		
@@ -151,7 +192,14 @@ public class PatientsWithExpiringPrescriptionsTest extends iTrustSeleniumTest {
 	@Test
 	public void testPatientFifteen() throws Exception {
 
-		login("9900000000", "pw");
+		//login("9900000000", "pw");
+		HtmlUnitDriver driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9900000000");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9900000000L, 0L, "");
 		
@@ -170,7 +218,14 @@ public class PatientsWithExpiringPrescriptionsTest extends iTrustSeleniumTest {
 	@Test
 	public void testPatientOrdering() throws Exception {
 
-		login("9900000000", "pw");
+		//login("9900000000", "pw");
+		HtmlUnitDriver driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9900000000");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9900000000L, 0L, "");
 		
@@ -203,7 +258,14 @@ public class PatientsWithExpiringPrescriptionsTest extends iTrustSeleniumTest {
 	public void testAcceptance() throws Exception {
 		gen.UC32Acceptance();
 
-		login("9000000003", "pw");
+		//login("9000000003", "pw");
+		HtmlUnitDriver driver = new HtmlUnitDriver();
+		driver.get(ADDRESS);
+		driver.findElement(By.id("j_username")).clear();
+	    driver.findElement(By.id("j_username")).sendKeys("9000000003");
+	    driver.findElement(By.id("j_password")).clear();
+	    driver.findElement(By.id("j_password")).sendKeys("pw");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 		assertEquals("iTrust - HCP Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000003L, 0L, "");
 		

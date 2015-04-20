@@ -122,9 +122,11 @@ public class AppointmentTest extends iTrustSeleniumTest{
 		element = driver.findElement(By.name("schedDate"));
 		element.clear();
 		element.sendKeys(format2.format(c.getTime()));
-
-		driver.findElement(By.id("changeButton")).click();
-		assertNotLogged(TransactionType.APPOINTMENT_EDIT, 9000000000L, 1L, "");
+		driver.setJavascriptEnabled(true);
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		js.executeScript("document.getElementById('changeButton').click();");
+		//driver.findElement(By.id("changeButton")).click();
+		assertNotLogged(TransactionType.APPOINTMENT_ADD, 9000000000L, 1L, "");
 		
 		//edit second entry, making it conflict
 		driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div")).click();
@@ -139,9 +141,9 @@ public class AppointmentTest extends iTrustSeleniumTest{
 		select = new Select (driver.findElement(By.name("apptType")));
 		select.selectByIndex(0);
 		select = new Select (driver.findElement(By.name("time1")));
-		select.selectByIndex(0);
+		select.selectByIndex(1);
 		select = new Select (driver.findElement(By.name("time2")));
-		select.selectByIndex(9);
+		select.selectByIndex(0);
 		select = new Select (driver.findElement(By.name("time3")));
 		select.selectByIndex(1);
 		element = driver.findElement(By.name("schedDate"));
@@ -153,7 +155,7 @@ public class AppointmentTest extends iTrustSeleniumTest{
 		//confirm warning displayed and appointment not edited
 		element = driver.findElement(By.xpath("//*[@id='conflictTable']/span"));
 		assertTrue(element.getText().contains("Warning"));
-		assertLogged(TransactionType.APPOINTMENT_EDIT, 9000000000L, 2L, "");
+		assertLogged(TransactionType.APPOINTMENT_EDIT, 9000000000L, 1L, "");
 		
 		
 	}

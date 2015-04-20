@@ -1,634 +1,625 @@
 package edu.ncsu.csc.itrust.seleniumtests;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
-
-import org.junit.After;
-import org.junit.Before;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.Select;
 
-import com.gargoylesoftware.htmlunit.BrowserVersion;
+public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest{
 
-import edu.ncsu.csc.itrust.enums.TransactionType;
-
-/**
- * Use Case 10
- */
-public class PersonalHealthRecordsUseCaseTest extends iTrustSeleniumTest {
-	private WebDriver driver;
-	private String baseUrl;
-	private StringBuffer verificationErrors = new StringBuffer();
-
-	@Before
-	public void setUp() throws Exception {
+	@Override
+	protected void setUp() throws Exception {
 		super.setUp();
 		gen.clearAllTables();
 		gen.standardData();
-		driver = new HtmlUnitDriver();
-		baseUrl = "http://localhost:8080";
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
-
-	/**
-	 * testEditPatient
-	 * 
-	 * @throws Exception
-	 */
-	public void testEditPatient() throws Exception {
-		driver.get(baseUrl + "/iTrust/auth/forwardUser.jsp");
-		driver.findElement(By.id("j_username")).clear();
-		driver.findElement(By.id("j_username")).sendKeys("9000000000");
-		driver.findElement(By.id("j_password")).clear();
-		driver.findElement(By.id("j_password")).sendKeys("pw");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		assertTextPresent("Welcome, Kelly Doctor", driver);
-		driver.findElement(By.linkText("PHR Information")).click();
-		assertEquals("iTrust - Please Select a Patient", driver.getTitle());
-		driver.findElement(By.name("UID_PATIENTID")).sendKeys("2");
-		driver.findElement(By.xpath("//input[@value='2']")).submit();
-		assertTextPresent("Andy Programmer", driver);
-		assertLogged(TransactionType.PATIENT_HEALTH_INFORMATION_VIEW,
-				9000000000L, 2L, "");
-	}
-
-	private void assertTextPresent(String str, WebDriver driver2) {
-		// TODO Auto-generated method stub
-		assertTrue(driver2.getPageSource().contains(str));
-	}
-
-	/**
-	 * testInvalidPatientDates
-	 * 
-	 * @throws Exception
-	 */
-	public void testInvalidPatientDates() throws Exception {
-		driver.get(baseUrl + "/iTrust/auth/forwardUser.jsp");
-		driver.findElement(By.id("j_username")).clear();
-		driver.findElement(By.id("j_username")).sendKeys("9000000000");
-		driver.findElement(By.id("j_password")).clear();
-		driver.findElement(By.id("j_password")).sendKeys("pw");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		assertTextPresent("Welcome, Kelly Doctor", driver);
-		driver.findElement(By.linkText("Patient Information")).click();
-		assertEquals("iTrust - Please Select a Patient", driver.getTitle());
-		driver.findElement(By.name("UID_PATIENTID")).sendKeys("2");
-		driver.findElement(By.xpath("//input[@value='2']")).submit();
-		assertTextPresent("Patient Information", driver);
-		assertLogged(TransactionType.DEMOGRAPHICS_VIEW, 9000000000L, 2L, "");
-
-		driver.findElement(By.name("dateOfDeathStr")).sendKeys("01/03/2050");
-		driver.findElement(By.name("action")).click();
-		assertTextPresent("future", driver);
-		assertNotLogged(TransactionType.DEMOGRAPHICS_EDIT, 9000000000L, 2L, "");
-	}
-
-	/**
-	 * testInvalidPatientBirthDates
-	 * 
-	 * @throws Exception
-	 */
-	public void testInvalidPatientBirthDates() throws Exception {
-		driver.get(baseUrl + "/iTrust/auth/forwardUser.jsp");
-		driver.findElement(By.id("j_username")).clear();
-		driver.findElement(By.id("j_username")).sendKeys("9000000000");
-		driver.findElement(By.id("j_password")).clear();
-		driver.findElement(By.id("j_password")).sendKeys("pw");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		assertTextPresent("Welcome, Kelly Doctor", driver);
-		driver.findElement(By.linkText("Patient Information")).click();
-		assertEquals("iTrust - Please Select a Patient", driver.getTitle());
-		driver.findElement(By.name("UID_PATIENTID")).sendKeys("2");
-		driver.findElement(By.xpath("//input[@value='2']")).submit();
-		assertTextPresent("Patient Information", driver);
-		assertLogged(TransactionType.DEMOGRAPHICS_VIEW, 9000000000L, 2L, "");
-
-		driver.findElement(By.name("dateOfDeathStr")).sendKeys("");
-		driver.findElement(By.name("dateOfBirthStr")).sendKeys("01/03/2050");
-		driver.findElement(By.name("action")).click();
-		assertTextPresent("future", driver);
-		assertNotLogged(TransactionType.DEMOGRAPHICS_EDIT, 9000000000L, 2L, "");
-	}
-
-	/**
-	 * testRepresent
-	 * 
-	 * @throws Exception
-	 */
-	public void testRepresent() throws Exception {
-		driver.get(baseUrl + "/iTrust/auth/forwardUser.jsp");
-		driver.findElement(By.id("j_username")).clear();
-		driver.findElement(By.id("j_username")).sendKeys("9000000000");
-		driver.findElement(By.id("j_password")).clear();
-		driver.findElement(By.id("j_password")).sendKeys("pw");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		assertTextPresent("Welcome, Kelly Doctor", driver);
-		driver.findElement(By.linkText("PHR Information")).click();
-		assertEquals("iTrust - Please Select a Patient", driver.getTitle());
-		driver.findElement(By.name("UID_PATIENTID")).sendKeys("2");
-		driver.findElement(By.xpath("//input[@value='2']")).submit();
-		assertLogged(TransactionType.PATIENT_HEALTH_INFORMATION_VIEW,
-				9000000000L, 2L, "");
-
-		driver.findElement(By.linkText("Baby Programmer")).click();
-
-		// Clicking on a representee's name takes you to their records
-		assertTextPresent("Andy Programmer", driver);
-		assertTextPresent("Diabetes with ketoacidosis", driver);
-		assertTextPresent("Grandparent", driver);
-		assertLogged(TransactionType.PATIENT_HEALTH_INFORMATION_VIEW,
-				9000000000L, 5L, "");
-		driver.findElement(By.linkText("Random Person")).click();
-		assertTextPresent("nobody@gmail.com", driver);
-		assertLogged(TransactionType.PATIENT_HEALTH_INFORMATION_VIEW,
-				9000000000L, 1L, "");
-	}
-
-	/**
-	 * testAllergy
-	 * 
-	 * @throws Exception
-	 */
-	public void testAllergy() throws Exception {
-		driver.get(baseUrl + "/iTrust/auth/forwardUser.jsp");
-		driver.findElement(By.id("j_username")).clear();
-		driver.findElement(By.id("j_username")).sendKeys("9000000000");
-		driver.findElement(By.id("j_password")).clear();
-		driver.findElement(By.id("j_password")).sendKeys("pw");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		assertTextPresent("Welcome, Kelly Doctor", driver);
-		driver.findElement(By.linkText("PHR Information")).click();
-		assertEquals("iTrust - Please Select a Patient", driver.getTitle());
-		driver.findElement(By.name("UID_PATIENTID")).sendKeys("2");
-		driver.findElement(By.xpath("//input[@value='2']")).submit();
-		assertLogged(TransactionType.PATIENT_HEALTH_INFORMATION_VIEW,
-				9000000000L, 2L, "");
-
-		// Add allergy
-		driver.findElement(By.name("description")).sendKeys("081096");
-		driver.findElement(By.name("addA")).click();
-		assertLogged(TransactionType.PATIENT_HEALTH_INFORMATION_EDIT,
-				9000000000L, 2L, "");
-		assertTextPresent("Allergy Added", driver);
-	}
-
-	/**
-	 * testAllergy2
-	 * 
-	 * @throws Exception
-	 */
-	public void testAllergy2() throws Exception {
-		HtmlUnitDriver driver = new HtmlUnitDriver(BrowserVersion.FIREFOX_24);
-		driver.setJavascriptEnabled(true);
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-		driver.get(baseUrl + "/iTrust/");
-		driver.findElement(By.id("j_username")).clear();
-		driver.findElement(By.id("j_username")).sendKeys("9000000000");
-		driver.findElement(By.id("j_password")).clear();
-		driver.findElement(By.id("j_password")).sendKeys("pw");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-	    driver.findElement(By.cssSelector("div.panel-heading")).click();
-	    driver.findElement(By.linkText("PHR Information")).click();
-	    driver.findElement(By.id("searchBox")).clear();
-	    driver.findElement(By.id("searchBox")).sendKeys("2");
-	    driver.findElement(By.xpath("//input[@value='2' and @type='button']")).click();
-	    driver.findElement(By.id("description")).clear();
-	    driver.findElement(By.id("description")).sendKeys("Penicillin");
-	    driver.findElement(By.id("addA")).click();
-	    System.out.println(driver.getPageSource());
-		assertTextPresent("664662530 - Penicilli", driver);
-	}
-
-	/**
-	 * testEditSmokingStatus
-	 * 
-	 * @throws Exception
-	 */
-	public void testEditSmokingStatus() throws Exception {
-		// Login
-		driver.get(baseUrl + "/iTrust/auth/forwardUser.jsp");
-		driver.findElement(By.id("j_username")).clear();
-		driver.findElement(By.id("j_username")).sendKeys("9000000000");
-		driver.findElement(By.id("j_password")).clear();
-		driver.findElement(By.id("j_password")).sendKeys("pw");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		assertTextPresent("Welcome, Kelly Doctor", driver);
-
-		// Click Document Office Visit
-		driver.findElement(By.linkText("Document Office Visit")).click();
-		assertEquals(
-				ADDRESS
-						+ "auth/getPatientID.jsp?forward=/iTrust/auth/hcp-uap/documentOfficeVisit.jsp",
-				driver.getCurrentUrl());
-
-		// Choose patient 2
-		driver.findElement(By.name("UID_PATIENTID")).sendKeys("2");
-		driver.findElement(By.xpath("//input[@value='2']")).submit();
-		assertEquals(ADDRESS + "auth/hcp-uap/documentOfficeVisit.jsp",
-				driver.getCurrentUrl());
-
-		// Click Yes, Document Office Visit
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		// Verify Edit Office Visit page
-		assertEquals("iTrust - Document Office Visit", driver.getTitle());
-
-		// Click the create button
-		driver.findElement(By.id("update")).click();
-
-		// Verify "Information Successfully Updated" message
-		assertTextPresent("Information Successfully Updated", driver);
-		assertLogged(TransactionType.OFFICE_VISIT_CREATE, 9000000000L, 2L, "");
-
-		// Create Health Metrics Record
-		driver.findElement(By.name("height")).clear();
-		driver.findElement(By.name("height")).sendKeys("56");
-		driver.findElement(By.name("weight")).clear();
-		driver.findElement(By.name("weight")).sendKeys("111");
-		new Select(driver.findElement(By.id("isSmoker")))
-				.selectByVisibleText("2 - Current some day smoker");
-		new Select(driver.findElement(By.id("householdSmokingStatus")))
-				.selectByVisibleText("1 - non-smoking household");
-		driver.findElement(By.name("bloodPressureN")).clear();
-		driver.findElement(By.name("bloodPressureN")).sendKeys("999");
-		driver.findElement(By.name("bloodPressureD")).clear();
-		driver.findElement(By.name("bloodPressureD")).sendKeys("000");
-		driver.findElement(By.name("cholesterolHDL")).clear();
-		driver.findElement(By.name("cholesterolHDL")).sendKeys("50");
-		driver.findElement(By.name("cholesterolLDL")).clear();
-		driver.findElement(By.name("cholesterolLDL")).sendKeys("200");
-		driver.findElement(By.name("cholesterolTri")).clear();
-		driver.findElement(By.name("cholesterolTri")).sendKeys("200");
-		driver.findElement(By.name("cholesterolTri")).submit();
-		driver.findElement(By.cssSelector("input#addHR")).click();
-
-		// Verify "Health information successfully updated." message
-		assertTextPresent("Health information successfully updated.", driver);
-		assertLogged(TransactionType.CREATE_BASIC_HEALTH_METRICS, 9000000000L,
-				2L, "");
-		// Verify create health metrics log
-
-		// Change the smoking status
-		new Select(driver.findElement(By.id("isSmoker")))
-				.selectByVisibleText("1 - Current every day smoker");
-		new Select(driver.findElement(By.id("householdSmokingStatus")))
-				.selectByVisibleText("1 - non-smoking household");
-		driver.findElement(By.id("addHR")).click();
-
-		// Verify "Health information successfully updated." message
-		assertTextPresent("Health information successfully updated.", driver);
-		// Verify edit health metrics log
-		assertLogged(TransactionType.EDIT_BASIC_HEALTH_METRICS, 9000000000L,
-				2L, "");
-	}
-
-	/**
-	 * testAddAdditionalDemographics1
-	 * 
-	 * @throws Exception
-	 */
-	public void testAddAdditionalDemographics1() throws Exception {
-		driver.get(baseUrl + "/iTrust/auth/forwardUser.jsp");
-		driver.findElement(By.id("j_username")).clear();
-		driver.findElement(By.id("j_username")).sendKeys("9000000000");
-		driver.findElement(By.id("j_password")).clear();
-		driver.findElement(By.id("j_password")).sendKeys("pw");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		assertTextPresent("Welcome, Kelly Doctor", driver);
-		driver.findElement(By.linkText("Patient Information")).click();
-		assertEquals("iTrust - Please Select a Patient", driver.getTitle());
-		driver.findElement(By.name("UID_PATIENTID")).sendKeys("2");
-		driver.findElement(By.xpath("//input[@value='2']")).submit();
-		assertTextPresent("Patient Information", driver);
-		assertLogged(TransactionType.DEMOGRAPHICS_VIEW, 9000000000L, 2L, "");
-
-		driver.findElement(By.name("religion")).sendKeys("Jedi");
-		driver.findElement(By.name("action")).click();
-		assertLogged(TransactionType.DEMOGRAPHICS_EDIT, 9000000000L, 2L, "");
-
-		driver.findElement(By.linkText("PHR Information")).click();
-		assertEquals("iTrust - Edit Personal Health Record", driver.getTitle());
-		assertEquals(
-				"Religion:",
-				driver.findElement(
-						By.xpath("//div[@id='iTrustContent']/div/div/table/tbody/tr[7]/td"))
-						.getText());
-		assertEquals(
-				"Jedi",
-				driver.findElement(
-						By.xpath("//div[@id='iTrustContent']/div/div/table/tbody/tr[7]/td[2]"))
-						.getText());
-		assertLogged(TransactionType.PATIENT_HEALTH_INFORMATION_VIEW,
-				9000000000L, 2L, "");
-	}
-
-	/**
-	 * testAddAdditionDemographicss2
-	 * 
-	 * @throws Exception
-	 */
-	public void testAddAdditionalDemographics2() throws Exception {
-		driver.get(baseUrl + "/iTrust/auth/forwardUser.jsp");
-		driver.findElement(By.id("j_username")).clear();
-		driver.findElement(By.id("j_username")).sendKeys("9000000000");
-		driver.findElement(By.id("j_password")).clear();
-		driver.findElement(By.id("j_password")).sendKeys("pw");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		assertTextPresent("Welcome, Kelly Doctor", driver);
-		driver.findElement(By.linkText("Patient Information")).click();
-		assertEquals("iTrust - Please Select a Patient", driver.getTitle());
-		driver.findElement(By.name("UID_PATIENTID")).sendKeys("2");
-		driver.findElement(By.xpath("//input[@value='2']")).submit();
-		assertTextPresent("Patient Information", driver);
-		assertLogged(TransactionType.DEMOGRAPHICS_VIEW, 9000000000L, 2L, "");
-
-		driver.findElement(By.name("spiritualPractices")).sendKeys(
-				"Sleeps in class");
-		driver.findElement(By.name("action")).click();
-		assertLogged(TransactionType.DEMOGRAPHICS_EDIT, 9000000000L, 2L, "");
-
-		driver.findElement(By.linkText("PHR Information")).click();
-		assertEquals("iTrust - Edit Personal Health Record", driver.getTitle());
-		assertEquals(
-				"Spiritual Practices:",
-				driver.findElement(
-						By.xpath("//div[@id='iTrustContent']/div/div/table/tbody/tr[9]/td"))
-						.getText());
-		assertEquals(
-				"Sleeps in class",
-				driver.findElement(
-						By.xpath("//div[@id='iTrustContent']/div/div/table/tbody/tr[9]/td[2]"))
-						.getText());
-		assertLogged(TransactionType.PATIENT_HEALTH_INFORMATION_VIEW,
-				9000000000L, 2L, "");
-	}
-
-	/**
-	 * testAddAdditionDemographicss3
-	 * 
-	 * @throws Exception
-	 */
-	public void testAddAdditionalDemographics3() throws Exception {
-		driver.get(baseUrl + "/iTrust/auth/forwardUser.jsp");
-		driver.findElement(By.id("j_username")).clear();
-		driver.findElement(By.id("j_username")).sendKeys("9000000000");
-		driver.findElement(By.id("j_password")).clear();
-		driver.findElement(By.id("j_password")).sendKeys("pw");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		assertTextPresent("Welcome, Kelly Doctor", driver);
-		driver.findElement(By.linkText("Patient Information")).click();
-		assertEquals("iTrust - Please Select a Patient", driver.getTitle());
-		driver.findElement(By.name("UID_PATIENTID")).sendKeys("2");
-		driver.findElement(By.xpath("//input[@value='2']")).submit();
-		assertTextPresent("Patient Information", driver);
-		assertLogged(TransactionType.DEMOGRAPHICS_VIEW, 9000000000L, 2L, "");
-
-		driver.findElement(By.name("alternateName")).sendKeys("Randy");
-		driver.findElement(By.name("action")).click();
-		assertLogged(TransactionType.DEMOGRAPHICS_EDIT, 9000000000L, 2L, "");
-
-		driver.findElement(By.linkText("PHR Information")).click();
-		assertEquals("iTrust - Edit Personal Health Record", driver.getTitle());
-		assertEquals(
-				"Alternate Name:",
-				driver.findElement(
-						By.xpath("//div[@id='iTrustContent']/div/div/table/tbody/tr[10]/td"))
-						.getText());
-		assertEquals(
-				"Randy",
-				driver.findElement(
-						By.xpath("//div[@id='iTrustContent']/div/div/table/tbody/tr[10]/td[2]"))
-						.getText());
-		assertLogged(TransactionType.PATIENT_HEALTH_INFORMATION_VIEW,
-				9000000000L, 2L, "");
-	}
-
-	/**
-	 * testAddDupAllergy
-	 * 
-	 * @throws Exception
-	 */
-	public void testAddDupAllergy() throws Exception {
-		driver.get(baseUrl + "/iTrust/auth/forwardUser.jsp");
-		driver.findElement(By.id("j_username")).clear();
-		driver.findElement(By.id("j_username")).sendKeys("9000000000");
-		driver.findElement(By.id("j_password")).clear();
-		driver.findElement(By.id("j_password")).sendKeys("pw");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		assertTextPresent("Welcome, Kelly Doctor", driver);
-		driver.findElement(By.linkText("PHR Information")).click();
-		assertEquals("iTrust - Please Select a Patient", driver.getTitle());
-		driver.findElement(By.name("UID_PATIENTID")).sendKeys("25");
-		driver.findElement(By.xpath("//input[@value='25']")).submit();
-		assertLogged(TransactionType.PATIENT_HEALTH_INFORMATION_VIEW,
-				9000000000L, 25L, "");
-
-		// Selects Patient Trend Setter
-		assertEquals(ADDRESS + "auth/hcp-uap/editPHR.jsp",
-				driver.getCurrentUrl());
-
-		driver.findElement(By.name("description")).sendKeys("Penicillin");
-		driver.findElement(By.name("addA")).click();
-		assertLogged(TransactionType.PATIENT_HEALTH_INFORMATION_EDIT,
-				9000000000L, 25L, "");
-		assertTextPresent("Allergy Added", driver);
-
-		driver.findElement(By.name("description")).sendKeys("Penicillin");
-		driver.findElement(By.name("addA")).click();
-		// Add Penicillin Allergy again
-		assertTextPresent(
-				"Allergy 664662530 - Penicillin has already been added for Trend Setter.",
-				driver);
-		// This is the error that should appear when this allergy is added a
-		// second time.
-		assertLogged(TransactionType.PATIENT_HEALTH_INFORMATION_EDIT,
-				9000000000L, 25L, "");
-	}
-
-	/**
-	 * testAddAllergyPrevRX
-	 * 
-	 * @throws Exception
-	 */
-	public void testAddAllergyPrevRX() throws Exception {
-		driver.get(baseUrl + "/iTrust/auth/forwardUser.jsp");
-		driver.findElement(By.id("j_username")).clear();
-		driver.findElement(By.id("j_username")).sendKeys("9000000000");
-		driver.findElement(By.id("j_password")).clear();
-		driver.findElement(By.id("j_password")).sendKeys("pw");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		assertTextPresent("Welcome, Kelly Doctor", driver);
-		driver.findElement(By.linkText("Document Office Visit")).click();
-		assertEquals("iTrust - Please Select a Patient", driver.getTitle());
-		driver.findElement(By.name("UID_PATIENTID")).sendKeys("25");
-		driver.findElement(By.xpath("//input[@value='25']")).submit();
-		// Selects Patient Trend Setter
-		assertEquals(ADDRESS + "auth/hcp-uap/documentOfficeVisit.jsp",
-				driver.getCurrentUrl());
-
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		// Verify Edit Office Visit page
-		assertEquals("iTrust - Document Office Visit", driver.getTitle());
-
-		driver.findElement(By.name("visitDate")).clear();
-		driver.findElement(By.name("visitDate")).sendKeys("01/01/2012");
-		driver.findElement(By.name("notes")).sendKeys("just some more notes");
-		driver.findElement(By.cssSelector("input#update")).click();
-		// Create new OV on date 01/01/2012
-
-		assertTextPresent("Information Successfully Updated", driver);
-		assertLogged(TransactionType.OFFICE_VISIT_CREATE, 9000000000L, 25L,
-				"Office visit");
-
-		new Select(driver.findElement(By.id("medID")))
-				.selectByVisibleText("664662530 - Penicillin");
-		driver.findElement(By.name("dosage")).sendKeys("60");
-		driver.findElement(By.name("startDate")).clear();
-		driver.findElement(By.name("startDate")).sendKeys("01/01/2012");
-		driver.findElement(By.name("endDate")).clear();
-		driver.findElement(By.name("endDate")).sendKeys("01/31/2012");
-		driver.findElement(By.name("instructions")).clear();
-		driver.findElement(By.name("instructions")).sendKeys(
-				"Take three times daily with food.");
-		driver.findElement(By.name("instructions")).submit();
-		driver.findElement(By.id("addprescription")).click();
-		// Add Penicillin RX, 60mg, 01/01/2012 - 01/31/2012, thrice daily w/
-		// food
-		assertTextPresent("Prescription information successfully updated.",
-				driver);
-		assertLogged(TransactionType.OFFICE_VISIT_EDIT, 9000000000L, 25L, "");
-
-		driver.findElement(By.linkText("PHR Information")).click(); // Clicks
-																	// PHR Info
-		assertEquals("iTrust - Edit Personal Health Record", driver.getTitle());
-
-		driver.findElement(By.name("description")).sendKeys("Penicillin");
-		driver.findElement(By.name("addA")).click();
-		// Add Penicillin Allergy (will be firstFound on today's date)
-		assertTextPresent("Allergy Added", driver);
-		// No error should appear when this allergy is added.
-		assertLogged(TransactionType.PATIENT_HEALTH_INFORMATION_EDIT,
-				9000000000L, 25L, "");
-	}
-
-	/**
-	 * testAddAllergyFutRX
-	 * 
-	 * @throws Exception
-	 */
-	public void testAddAllergyFutRX() throws Exception {
-		driver.get(baseUrl + "/iTrust/auth/forwardUser.jsp");
-		driver.findElement(By.id("j_username")).clear();
-		driver.findElement(By.id("j_username")).sendKeys("9000000000");
-		driver.findElement(By.id("j_password")).clear();
-		driver.findElement(By.id("j_password")).sendKeys("pw");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		assertTextPresent("Welcome, Kelly Doctor", driver);
-		driver.findElement(By.linkText("All Patients")).click();
-		assertEquals("iTrust - View All Patients", driver.getTitle());
-		assertLogged(TransactionType.PATIENT_LIST_VIEW, 9000000000L, 0L, "");
-
-		driver.findElement(By.linkText("Anakin Skywalker")).click();
-		// Select Anakin Skywalker, this seemed to be easier than what the
-		// acceptance tests did.
-		assertEquals("iTrust - Edit Personal Health Record", driver.getTitle());
-		assertLogged(TransactionType.PATIENT_HEALTH_INFORMATION_VIEW,
-				9000000000L, 100L, "");
-
-		/*
-		 * Since we don't worry about preconditions and it takes us straight to
-		 * the correct page anyway, we can skip a lot of stuff here.
-		 */
-		driver.findElement(By.name("description")).sendKeys("Midichlominene");
-		driver.findElement(By.name("addA")).click();
-		// Add M-minene Allergy (will be firstFound on today's date)
-		assertTextPresent(
-				"Medication 483012382 - Midichlominene is currently prescribed to Anakin Skywalker.",
-				driver);
-		// This is the error that should appear when this allergy is added.
-		assertLogged(TransactionType.PATIENT_HEALTH_INFORMATION_EDIT,
-				9000000000L, 100L, "");
-	}
-
-	/**
-	 * testAddAllergyExistRX
-	 * 
-	 * @throws Exception
-	 */
-	public void testAddAllergyExistRX() throws Exception {
-		driver.get(baseUrl + "/iTrust/auth/forwardUser.jsp");
-		driver.findElement(By.id("j_username")).clear();
-		driver.findElement(By.id("j_username")).sendKeys("9000000000");
-		driver.findElement(By.id("j_password")).clear();
-		driver.findElement(By.id("j_password")).sendKeys("pw");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		assertTextPresent("Welcome, Kelly Doctor", driver);
-		driver.findElement(By.linkText("Document Office Visit")).click();
-		assertEquals("iTrust - Please Select a Patient", driver.getTitle());
-		driver.findElement(By.name("UID_PATIENTID")).sendKeys("25");
-		driver.findElement(By.xpath("//input[@value='25']")).submit();
-		// Selects Patient Trend Setter
-		assertEquals(ADDRESS + "auth/hcp-uap/documentOfficeVisit.jsp",
-				driver.getCurrentUrl());
-
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-		// Verify Edit Office Visit page
-		assertEquals("iTrust - Document Office Visit", driver.getTitle());
-
-		driver.findElement(By.name("visitDate")).clear();
-		driver.findElement(By.name("visitDate")).sendKeys("02/01/2012");
-		driver.findElement(By.name("notes")).sendKeys("just some more notes");
-		driver.findElement(By.id("update")).click();
-		// Create new OV on date 02/01/2012
-		assertTextPresent("Information Successfully Updated", driver);
-		assertLogged(TransactionType.OFFICE_VISIT_CREATE, 9000000000L, 25L,
-				"Office visit");
-
-		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-		cal.add(Calendar.DAY_OF_YEAR, 7);
-
-		new Select(driver.findElement(By.id("medID")))
-				.selectByVisibleText("00882219 - Lantus");
-		driver.findElement(By.name("dosage")).sendKeys("100");
-		driver.findElement(By.name("startDate")).clear();
-		driver.findElement(By.name("startDate")).sendKeys("02/01/2012");
-		driver.findElement(By.name("endDate")).clear();
-		driver.findElement(By.name("endDate")).sendKeys(
-				format.format(cal.getTime()));
-		driver.findElement(By.name("instructions")).clear();
-		driver.findElement(By.name("instructions")).sendKeys("Take once daily");
-		driver.findElement(By.name("instructions")).submit();
-		driver.findElement(By.id("addprescription")).click();
-		// Add Lantus RX, 100mg, 02/01/2012 - 08/01/2012, once daily
-		assertTextPresent("Prescription information successfully updated.",
-				driver);
-		assertLogged(TransactionType.OFFICE_VISIT_EDIT, 9000000000L, 25L, "");
-
-		driver.findElement(By.linkText("PHR Information")).click(); // Clicks
-																	// PHR Info
-		assertEquals("iTrust - Edit Personal Health Record", driver.getTitle());
-
-		driver.findElement(By.name("description")).sendKeys("Lantus");
-		driver.findElement(By.name("addA")).click();
-		// Add Lantus Allergy (will be firstFound on today's date)
-		assertTextPresent(
-				"Medication 00882219 - Lantus is currently prescribed to Trend Setter.",
-				driver);
-		// This is the error that should appear when this allergy is added.
-		assertLogged(TransactionType.PATIENT_HEALTH_INFORMATION_EDIT,
-				9000000000L, 25L, "");
-
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		driver.quit();
-		String verificationErrorString = verificationErrors.toString();
-		if (!"".equals(verificationErrorString)) {
-			fail(verificationErrorString);
-		}
-	}
+	
+	  public void testEditPatient() throws Exception {
+		    driver.get(ADDRESS);
+		    driver.findElement(By.id("j_username")).clear();
+		    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+		    driver.findElement(By.id("j_password")).clear();
+		    driver.findElement(By.id("j_password")).sendKeys("pw");
+		    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		    
+		    driver.findElement(By.cssSelector("div.panel-heading")).click();
+		    driver.findElement(By.linkText("PHR Information")).click();
+		    
+		    driver.findElement(By.id("searchBox")).clear();
+		    driver.findElement(By.id("searchBox")).sendKeys("2");
+		    try {
+		      assertEquals("Andy", driver.findElement(By.xpath("//div[@id='searchTarget']/table/tbody/tr[2]/td[2]")).getText());
+		    } catch (Error e) {
+		      verificationErrors.append(e.toString());
+		    }
+	  }
+	  
+	  public void testInvalidPatientDates() throws Exception {
+		  driver.get(ADDRESS);
+		    try {
+		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
+		      } catch (Error e) {
+		        verificationErrors.append(e.toString());
+		      }
+		    driver.findElement(By.id("j_username")).clear();
+		    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+		    try {
+		        assertEquals("", driver.findElement(By.id("j_password")).getAttribute("value"));
+		      } catch (Error e) {
+		        verificationErrors.append(e.toString());
+		      }
+		    driver.findElement(By.id("j_password")).clear();
+		    driver.findElement(By.id("j_password")).sendKeys("pw");
+		    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		    
+		    driver.findElement(By.cssSelector("h2.panel-title")).click();
+		    driver.findElement(By.linkText("Patient Information")).click();
+		    driver.findElement(By.id("searchBox")).clear();
+		    driver.findElement(By.id("searchBox")).sendKeys("2");
+		    driver.findElement(By.xpath("//input[@value='2']")).click();
+		    driver.findElement(By.name("dateOfDeathStr")).clear();
+		    driver.findElement(By.name("dateOfDeathStr")).sendKeys("01/03/2050");
+		    driver.findElement(By.name("action")).click();
+		    try {
+		      assertEquals("This form has not been validated correctly. The following field are not properly filled in: [Death date cannot be in the future!]", driver.findElement(By.cssSelector("span.iTrustError")).getText());
+		    } catch (Error e) {
+		      verificationErrors.append(e.toString());
+		    }
+	  }
+	  
+	  public void testInvalidPatientBirthDates() throws Exception {
+		  driver.get(ADDRESS);
+		    try {
+		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
+		      } catch (Error e) {
+		        verificationErrors.append(e.toString());
+		      }
+		    driver.findElement(By.id("j_username")).clear();
+		    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+		    try {
+		        assertEquals("", driver.findElement(By.id("j_password")).getAttribute("value"));
+		      } catch (Error e) {
+		        verificationErrors.append(e.toString());
+		      }
+		    driver.findElement(By.id("j_password")).clear();
+		    driver.findElement(By.id("j_password")).sendKeys("pw");
+		    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		    
+		    driver.findElement(By.cssSelector("h2.panel-title")).click();
+		    driver.findElement(By.linkText("Patient Information")).click();
+		    driver.findElement(By.id("searchBox")).clear();
+		    driver.findElement(By.id("searchBox")).sendKeys("2");
+		    driver.findElement(By.xpath("//input[@value='2']")).click();
+		    
+		    driver.findElement(By.name("dateOfBirthStr")).clear();
+		    driver.findElement(By.name("dateOfBirthStr")).sendKeys("");
+		    driver.findElement(By.name("dateOfBirthStr")).clear();
+		    driver.findElement(By.name("dateOfBirthStr")).sendKeys("01/03/2050");
+		    driver.findElement(By.name("action")).click();
+		    try {
+		      assertEquals("This form has not been validated correctly. The following field are not properly filled in: [Death date cannot be before birth date!, Birth date cannot be in the future!]", driver.findElement(By.cssSelector("span.iTrustError")).getText());
+		    } catch (Error e) {
+		      verificationErrors.append(e.toString());
+		    }
+	  }
+	  
+	  public void testRepresent() throws Exception {
+		  driver.get(ADDRESS);
+		    try {
+		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
+		      } catch (Error e) {
+		        verificationErrors.append(e.toString());
+		      }
+		    driver.findElement(By.id("j_username")).clear();
+		    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+		    try {
+		        assertEquals("", driver.findElement(By.id("j_password")).getAttribute("value"));
+		      } catch (Error e) {
+		        verificationErrors.append(e.toString());
+		      }
+		    driver.findElement(By.id("j_password")).clear();
+		    driver.findElement(By.id("j_password")).sendKeys("pw");
+		    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		    
+		    driver.findElement(By.cssSelector("h2.panel-title")).click();
+		    driver.findElement(By.linkText("Patient Information")).click();
+		    driver.findElement(By.id("searchBox")).clear();
+		    driver.findElement(By.id("searchBox")).sendKeys("2");
+		    driver.findElement(By.xpath("//input[@value='2']")).click();
+		  
+		  driver.findElement(By.linkText("Baby Programmer")).click();
+		    try {
+		      assertEquals("Andy Programmer", driver.findElement(By.linkText("Andy Programmer")).getText());
+		    } catch (Error e) {
+		      verificationErrors.append(e.toString());
+		    }
+		    try {
+		      assertEquals("Diabetes with ketoacidosis", driver.findElement(By.xpath("//div[@id='iTrustContent']/table/tbody/tr[3]/td[9]")).getText());
+		    } catch (Error e) {
+		      verificationErrors.append(e.toString());
+		    }
+		    try {
+		      assertEquals("Grandparent", driver.findElement(By.xpath("//div[@id='iTrustContent']/table/tbody/tr[7]/td[2]")).getText());
+		    } catch (Error e) {
+		      verificationErrors.append(e.toString());
+		    }
+		    driver.findElement(By.linkText("Random Person")).click();
+		    try {
+		      assertEquals("nobody@gmail.com", driver.findElement(By.xpath("//div[@id='iTrustContent']/div/div/table/tbody/tr[5]/td[2]")).getText());
+		    } catch (Error e) {
+		      verificationErrors.append(e.toString());
+		    }
+	  }
+	  
+	  public void testAllergy() throws Exception {
+		  driver.get(ADDRESS);
+		    try {
+		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
+		      } catch (Error e) {
+		        verificationErrors.append(e.toString());
+		      }
+		    driver.findElement(By.id("j_username")).clear();
+		    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+		    try {
+		        assertEquals("", driver.findElement(By.id("j_password")).getAttribute("value"));
+		      } catch (Error e) {
+		        verificationErrors.append(e.toString());
+		      }
+		    driver.findElement(By.id("j_password")).clear();
+		    driver.findElement(By.id("j_password")).sendKeys("pw");
+		    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		    
+		    driver.findElement(By.cssSelector("h2.panel-title")).click();
+		    driver.findElement(By.linkText("PHR Information")).click();
+		    driver.findElement(By.id("searchBox")).clear();
+		    driver.findElement(By.id("searchBox")).sendKeys("2");
+		    driver.findElement(By.xpath("//input[@value='2']")).click();
+		    
+		    JavascriptExecutor js = (JavascriptExecutor)driver;
+		    js.executeScript("var descField = document.getElementById('description'); document.getElementById('addAllergyForm').appendChild(descField);");
+		    js.executeScript("var btn = document.getElementById('addA'); document.getElementById('addAllergyForm').appendChild(btn);");
+		    driver.findElement(By.id("description")).clear();
+		    driver.findElement(By.id("description")).sendKeys("081096");
+		    js.executeScript("document.getElementById('addA').click()");
+		    
+//		    driver.findElement(By.id("description")).clear();
+//		    driver.findElement(By.id("description")).sendKeys("081096");
+//		    driver.findElement(By.name("addA")).click();
+//		    try {
+//		      assertEquals("Allergy Added", driver.findElement(By.cssSelector("span.iTrustError")).getText());
+//		    } catch (Error e) {
+//		      verificationErrors.append(e.toString());
+//		    }
+		    assertTrue(pageContains("Allergy Added"));
+	  }
+	  
+	  public void testAllergy2() throws Exception {
+		  driver.get(ADDRESS);
+		    try {
+		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
+		      } catch (Error e) {
+		        verificationErrors.append(e.toString());
+		      }
+		    driver.findElement(By.id("j_username")).clear();
+		    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+		    try {
+		        assertEquals("", driver.findElement(By.id("j_password")).getAttribute("value"));
+		      } catch (Error e) {
+		        verificationErrors.append(e.toString());
+		      }
+		    driver.findElement(By.id("j_password")).clear();
+		    driver.findElement(By.id("j_password")).sendKeys("pw");
+		    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		    
+		    driver.findElement(By.cssSelector("h2.panel-title")).click();
+		    driver.findElement(By.linkText("PHR Information")).click();
+		    driver.findElement(By.id("searchBox")).clear();
+		    driver.findElement(By.id("searchBox")).sendKeys("2");
+		    driver.findElement(By.xpath("//input[@value='2' and @type='button']")).click();
+		    
+		    JavascriptExecutor js = (JavascriptExecutor)driver;
+		    js.executeScript("var descField = document.getElementById('description'); document.getElementById('addAllergyForm').appendChild(descField);");
+		    js.executeScript("var btn = document.getElementById('addA'); document.getElementById('addAllergyForm').appendChild(btn);");
+		    driver.findElement(By.id("description")).clear();
+		    driver.findElement(By.id("description")).sendKeys("Penicillin");
+		    js.executeScript("document.getElementById('addA').click()");
+		    //driver.findElement(By.name("addA")).click();
+		    System.out.println(driver.getPageSource());
+		  //assertEquals("Allergy 664662530 - Penicillin has already been added for Andy Programmer.", driver.findElement(By.cssSelector("span.iTrustError")).getText());
+	    	assertTrue(pageContains("Allergy 664662530 - Penicillin has already been added for Andy Programmer."));
+	  }
+	  
+	  public void testEditSmokingStatus() throws Exception {
+		  driver.get(ADDRESS);
+		    try {
+		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
+		      } catch (Error e) {
+		        verificationErrors.append(e.toString());
+		      }
+		    driver.findElement(By.id("j_username")).clear();
+		    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+		    try {
+		        assertEquals("", driver.findElement(By.id("j_password")).getAttribute("value"));
+		      } catch (Error e) {
+		        verificationErrors.append(e.toString());
+		      }
+		    driver.findElement(By.id("j_password")).clear();
+		    driver.findElement(By.id("j_password")).sendKeys("pw");
+		    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		    
+		    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
+		    driver.findElement(By.linkText("Document Office Visit")).click();
+		    driver.findElement(By.id("searchBox")).clear();
+		    driver.findElement(By.id("searchBox")).sendKeys("2");
+		    driver.findElement(By.xpath("//input[@value='2']")).click();
+		    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		    driver.findElement(By.id("update")).click();
+		    try {
+		      assertEquals("Information Successfully Updated", driver.findElement(By.cssSelector("span.iTrustMessage")).getText());
+		    } catch (Error e) {
+		      verificationErrors.append(e.toString());
+		    }
+		    driver.findElement(By.name("height")).clear();
+		    driver.findElement(By.name("height")).sendKeys("56.0");
+		    driver.findElement(By.name("weight")).clear();
+		    driver.findElement(By.name("weight")).sendKeys("111.0");
+		    new Select(driver.findElement(By.id("isSmoker"))).selectByVisibleText("2 - Current some day smoker");
+		    new Select(driver.findElement(By.id("householdSmokingStatus"))).selectByVisibleText("1 - non-smoking household");
+		    driver.findElement(By.name("bloodPressureN")).clear();
+		    driver.findElement(By.name("bloodPressureN")).sendKeys("999");
+		    driver.findElement(By.name("bloodPressureD")).clear();
+		    driver.findElement(By.name("bloodPressureD")).sendKeys("000");
+		    driver.findElement(By.name("cholesterolHDL")).clear();
+		    driver.findElement(By.name("cholesterolHDL")).sendKeys("50");
+		    driver.findElement(By.name("cholesterolLDL")).clear();
+		    driver.findElement(By.name("cholesterolLDL")).sendKeys("200");
+		    driver.findElement(By.name("cholesterolTri")).clear();
+		    driver.findElement(By.name("cholesterolTri")).sendKeys("200");
+		    driver.findElement(By.id("addHR")).click();
+		    try {
+		      assertEquals("Health information successfully updated.", driver.findElement(By.cssSelector("span.iTrustMessage")).getText());
+		    } catch (Error e) {
+		      verificationErrors.append(e.toString());
+		    }
+		    new Select(driver.findElement(By.id("isSmoker"))).selectByVisibleText("1 - Current every day smoker");
+		    new Select(driver.findElement(By.id("householdSmokingStatus"))).selectByVisibleText("1 - non-smoking household");
+		    driver.findElement(By.id("addHR")).click();
+		    try {
+		      assertEquals("Health information successfully updated.", driver.findElement(By.cssSelector("span.iTrustMessage")).getText());
+		    } catch (Error e) {
+		      verificationErrors.append(e.toString());
+		    }
+		    
+	  }
+	  
+	  public void testAddAdditionalDemographics1() throws Exception {
+		  driver.get(ADDRESS);
+		    try {
+		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
+		      } catch (Error e) {
+		        verificationErrors.append(e.toString());
+		      }
+		    driver.findElement(By.id("j_username")).clear();
+		    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+		    try {
+		        assertEquals("", driver.findElement(By.id("j_password")).getAttribute("value"));
+		      } catch (Error e) {
+		        verificationErrors.append(e.toString());
+		      }
+		    driver.findElement(By.id("j_password")).clear();
+		    driver.findElement(By.id("j_password")).sendKeys("pw");
+		    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		  
+		  driver.findElement(By.cssSelector("div.panel-heading")).click();
+		    driver.findElement(By.linkText("Patient Information")).click();
+		    driver.findElement(By.id("searchBox")).clear();
+		    driver.findElement(By.id("searchBox")).sendKeys("2");
+		    driver.findElement(By.xpath("//input[@value='2']")).click();
+		    
+		    driver.findElement(By.name("religion")).clear();
+		    driver.findElement(By.name("religion")).sendKeys("Jedi");
+		    driver.findElement(By.name("action")).click();
+		    try {
+		      assertEquals("Information Successfully Updated", driver.findElement(By.cssSelector("span.iTrustMessage")).getText());
+		    } catch (Error e) {
+		      verificationErrors.append(e.toString());
+		    }
+		    driver.findElement(By.cssSelector("h2.panel-title")).click();
+		    driver.findElement(By.linkText("PHR Information")).click();
+		    try {
+		      assertEquals("Jedi", driver.findElement(By.xpath("//div[@id='iTrustContent']/div/div/table/tbody/tr[7]/td[2]")).getText());
+		    } catch (Error e) {
+		      verificationErrors.append(e.toString());
+		    }
+	  }
+	  
+	  public void testAddAdditionalDemographics2() throws Exception {
+		  driver.get(ADDRESS);
+		    try {
+		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
+		      } catch (Error e) {
+		        verificationErrors.append(e.toString());
+		      }
+		    driver.findElement(By.id("j_username")).clear();
+		    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+		    try {
+		        assertEquals("", driver.findElement(By.id("j_password")).getAttribute("value"));
+		      } catch (Error e) {
+		        verificationErrors.append(e.toString());
+		      }
+		    driver.findElement(By.id("j_password")).clear();
+		    driver.findElement(By.id("j_password")).sendKeys("pw");
+		    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		  
+		  driver.findElement(By.cssSelector("div.panel-heading")).click();
+		    driver.findElement(By.linkText("Patient Information")).click();
+		    driver.findElement(By.id("searchBox")).clear();
+		    driver.findElement(By.id("searchBox")).sendKeys("2");
+		    driver.findElement(By.xpath("//input[@value='2']")).click();
+		    
+		    driver.findElement(By.name("spiritualPractices")).clear();
+		    driver.findElement(By.name("spiritualPractices")).sendKeys("Sleeps in class");
+		    driver.findElement(By.name("action")).click();
+		    try {
+		      assertEquals("Information Successfully Updated", driver.findElement(By.cssSelector("span.iTrustMessage")).getText());
+		    } catch (Error e) {
+		      verificationErrors.append(e.toString());
+		    }
+		    driver.findElement(By.cssSelector("h2.panel-title")).click();
+		    driver.findElement(By.linkText("PHR Information")).click();
+		    try {
+		      assertEquals("Sleeps in class", driver.findElement(By.xpath("//div[@id='iTrustContent']/div/div/table/tbody/tr[9]/td[2]")).getText());
+		    } catch (Error e) {
+		      verificationErrors.append(e.toString());
+		    }
+	  }
+	  
+	  public void testAddAdditionalDemographics3() throws Exception {
+		  driver.get(ADDRESS);
+		    try {
+		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
+		      } catch (Error e) {
+		        verificationErrors.append(e.toString());
+		      }
+		    driver.findElement(By.id("j_username")).clear();
+		    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+		    try {
+		        assertEquals("", driver.findElement(By.id("j_password")).getAttribute("value"));
+		      } catch (Error e) {
+		        verificationErrors.append(e.toString());
+		      }
+		    driver.findElement(By.id("j_password")).clear();
+		    driver.findElement(By.id("j_password")).sendKeys("pw");
+		    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		  
+		  driver.findElement(By.cssSelector("div.panel-heading")).click();
+		    driver.findElement(By.linkText("Patient Information")).click();
+		    driver.findElement(By.id("searchBox")).clear();
+		    driver.findElement(By.id("searchBox")).sendKeys("2");
+		    driver.findElement(By.xpath("//input[@value='2']")).click();
+		    
+		    driver.findElement(By.name("alternateName")).clear();
+		    driver.findElement(By.name("alternateName")).sendKeys("Randy");
+		    driver.findElement(By.name("action")).click();
+		    try {
+		      assertEquals("Information Successfully Updated", driver.findElement(By.cssSelector("span.iTrustMessage")).getText());
+		    } catch (Error e) {
+		      verificationErrors.append(e.toString());
+		    }
+		    driver.findElement(By.cssSelector("div.panel-heading")).click();
+		    driver.findElement(By.linkText("PHR Information")).click();
+		    try {
+		      assertEquals("Randy", driver.findElement(By.xpath("//div[@id='iTrustContent']/div/div/table/tbody/tr[10]/td[2]")).getText());
+		    } catch (Error e) {
+		      verificationErrors.append(e.toString());
+		    }
+	  }
+	  
+	  public void testAddDupAllergy() throws Exception {
+		  driver.get(ADDRESS);
+		    try {
+		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
+		      } catch (Error e) {
+		        verificationErrors.append(e.toString());
+		      }
+		    driver.findElement(By.id("j_username")).clear();
+		    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+		    try {
+		        assertEquals("", driver.findElement(By.id("j_password")).getAttribute("value"));
+		      } catch (Error e) {
+		        verificationErrors.append(e.toString());
+		      }
+		    driver.findElement(By.id("j_password")).clear();
+		    driver.findElement(By.id("j_password")).sendKeys("pw");
+		    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		  
+		  driver.findElement(By.cssSelector("div.panel-heading")).click();
+		    driver.findElement(By.linkText("PHR Information")).click();
+		    driver.findElement(By.id("searchBox")).clear();
+		    driver.findElement(By.id("searchBox")).sendKeys("25");
+		    driver.findElement(By.xpath("//input[@value='25']")).click();
+		    driver.findElement(By.id("description")).clear();
+		    driver.findElement(By.id("description")).sendKeys("Penicillin");
+		    driver.findElement(By.name("addA")).click();
+		    try {
+		      assertEquals("Allergy Added", driver.findElement(By.cssSelector("span.iTrustError")).getText());
+		    } catch (Error e) {
+		      verificationErrors.append(e.toString());
+		    }
+		    driver.findElement(By.id("description")).clear();
+		    driver.findElement(By.id("description")).sendKeys("Penicillin");
+		    driver.findElement(By.name("addA")).click();
+		    try {
+		      assertEquals("Allergy 664662530 - Penicillin has already been added for Trend Setter.", driver.findElement(By.cssSelector("span.iTrustError")).getText());
+		    } catch (Error e) {
+		      verificationErrors.append(e.toString());
+		    }
+	  }
+	  
+	  public void testAddAllergyPrevRX() throws Exception {
+		  driver.get(ADDRESS);
+		    try {
+		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
+		      } catch (Error e) {
+		        verificationErrors.append(e.toString());
+		      }
+		    driver.findElement(By.id("j_username")).clear();
+		    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+		    try {
+		        assertEquals("", driver.findElement(By.id("j_password")).getAttribute("value"));
+		      } catch (Error e) {
+		        verificationErrors.append(e.toString());
+		      }
+		    driver.findElement(By.id("j_password")).clear();
+		    driver.findElement(By.id("j_password")).sendKeys("pw");
+		    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		    
+		    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
+		    driver.findElement(By.linkText("Document Office Visit")).click();
+		    driver.findElement(By.id("searchBox")).clear();
+		    driver.findElement(By.id("searchBox")).sendKeys("25");
+		    driver.findElement(By.xpath("//input[@value='25']")).click();
+		    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		    driver.findElement(By.name("visitDate")).clear();
+		    driver.findElement(By.name("visitDate")).sendKeys("01/01/2012");
+		    driver.findElement(By.name("notes")).clear();
+		    driver.findElement(By.name("notes")).sendKeys("just some more notes");
+		    driver.findElement(By.id("update")).click();
+		    try {
+		      assertEquals("Information Successfully Updated", driver.findElement(By.cssSelector("span.iTrustMessage")).getText());
+		    } catch (Error e) {
+		      verificationErrors.append(e.toString());
+		    }
+		    new Select(driver.findElement(By.id("medID"))).selectByVisibleText("664662530 - Penicillin");
+		    driver.findElement(By.id("dosage")).clear();
+		    driver.findElement(By.id("dosage")).sendKeys("60");
+		    driver.findElement(By.id("startDate")).click();
+		    driver.findElement(By.id("startDate")).click();
+		    driver.findElement(By.id("startDate")).click();
+		    driver.findElement(By.id("startDate")).clear();
+		    driver.findElement(By.id("startDate")).sendKeys("01/01/2012");
+		    driver.findElement(By.xpath("//button[@onclick='updateDateField(\"startDate\");']")).click();
+		    driver.findElement(By.id("endDate")).click();
+		    driver.findElement(By.id("endDate")).click();
+		    driver.findElement(By.id("endDate")).click();
+		    driver.findElement(By.id("endDate")).click();
+		    driver.findElement(By.id("endDate")).clear();
+		    driver.findElement(By.id("endDate")).sendKeys("01/31/2012");
+		    driver.findElement(By.id("instructions")).clear();
+		    driver.findElement(By.id("instructions")).sendKeys("");
+		    driver.findElement(By.id("instructions")).clear();
+		    driver.findElement(By.id("instructions")).sendKeys("Take three times daily with food.");
+		    driver.findElement(By.id("addprescription")).click();
+		    try {
+		      assertEquals("Prescription information successfully updated.", driver.findElement(By.cssSelector("span.iTrustMessage")).getText());
+		    } catch (Error e) {
+		      verificationErrors.append(e.toString());
+		    }
+		    driver.findElement(By.cssSelector("h2.panel-title")).click();
+		    driver.findElement(By.linkText("PHR Information")).click();
+		    driver.findElement(By.id("description")).clear();
+		    driver.findElement(By.id("description")).sendKeys("Penicillin");
+		    driver.findElement(By.name("addA")).click();
+		    try {
+		      assertEquals("Allergy Added", driver.findElement(By.cssSelector("span.iTrustError")).getText());
+		    } catch (Error e) {
+		      verificationErrors.append(e.toString());
+		    }
+	  }
+	  
+	  public void testAddAllergyFutRX() throws Exception {
+		  driver.get(ADDRESS);
+		    try {
+		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
+		      } catch (Error e) {
+		        verificationErrors.append(e.toString());
+		      }
+		    driver.findElement(By.id("j_username")).clear();
+		    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+		    try {
+		        assertEquals("", driver.findElement(By.id("j_password")).getAttribute("value"));
+		      } catch (Error e) {
+		        verificationErrors.append(e.toString());
+		      }
+		    driver.findElement(By.id("j_password")).clear();
+		    driver.findElement(By.id("j_password")).sendKeys("pw");
+		    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		    
+		    driver.findElement(By.cssSelector("h2.panel-title")).click();
+		    driver.findElement(By.linkText("All Patients")).click();
+		    driver.findElement(By.linkText("Anakin Skywalker")).click();
+		    driver.findElement(By.id("description")).clear();
+		    driver.findElement(By.id("description")).sendKeys("Midichlominene");
+		    driver.findElement(By.name("addA")).click();
+		    try {
+		      assertEquals("Medication 483012382 - Midichlominene is currently prescribed to Anakin Skywalker.", driver.findElement(By.cssSelector("span.iTrustError")).getText());
+		    } catch (Error e) {
+		      verificationErrors.append(e.toString());
+		    }
+	  }
+	  
+	  public void testAddAllergyExistRX() throws Exception {
+		  driver.get(ADDRESS);
+		    try {
+		        assertEquals("", driver.findElement(By.id("j_username")).getAttribute("value"));
+		      } catch (Error e) {
+		        verificationErrors.append(e.toString());
+		      }
+		    driver.findElement(By.id("j_username")).clear();
+		    driver.findElement(By.id("j_username")).sendKeys("9000000000");
+		    try {
+		        assertEquals("", driver.findElement(By.id("j_password")).getAttribute("value"));
+		      } catch (Error e) {
+		        verificationErrors.append(e.toString());
+		      }
+		    driver.findElement(By.id("j_password")).clear();
+		    driver.findElement(By.id("j_password")).sendKeys("pw");
+		    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		    
+		    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
+		    driver.findElement(By.linkText("Document Office Visit")).click();
+		    driver.findElement(By.id("searchBox")).clear();
+		    driver.findElement(By.id("searchBox")).sendKeys("25");
+		    driver.findElement(By.xpath("//input[@value='25']")).click();
+		    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		    driver.findElement(By.name("visitDate")).clear();
+		    driver.findElement(By.name("visitDate")).sendKeys("02/21/2012");
+		    driver.findElement(By.name("visitDate")).clear();
+		    driver.findElement(By.name("visitDate")).sendKeys("02/01/2012");
+		    driver.findElement(By.name("notes")).clear();
+		    driver.findElement(By.name("notes")).sendKeys("just some notes");
+		    driver.findElement(By.id("update")).click();
+		    try {
+		      assertEquals("Information Successfully Updated", driver.findElement(By.cssSelector("span.iTrustMessage")).getText());
+		    } catch (Error e) {
+		      verificationErrors.append(e.toString());
+		    }
+		    new Select(driver.findElement(By.id("medID"))).selectByVisibleText("00882219 - Lantus");
+		    driver.findElement(By.id("dosage")).clear();
+		    driver.findElement(By.id("dosage")).sendKeys("100");
+		    driver.findElement(By.id("startDate")).click();
+		    driver.findElement(By.id("startDate")).click();
+		    driver.findElement(By.id("startDate")).clear();
+		    driver.findElement(By.id("startDate")).sendKeys("02/01/2012");
+		    driver.findElement(By.id("endDate")).click();
+		    driver.findElement(By.id("endDate")).clear();
+		    driver.findElement(By.id("endDate")).sendKeys("04/01/2020");
+		    driver.findElement(By.id("instructions")).clear();
+		    driver.findElement(By.id("instructions")).sendKeys("Take once daily");
+		    driver.findElement(By.id("addprescription")).click();
+		    try {
+		      assertEquals("Prescription information successfully updated.", driver.findElement(By.cssSelector("span.iTrustMessage")).getText());
+		    } catch (Error e) {
+		      verificationErrors.append(e.toString());
+		    }
+		    driver.findElement(By.cssSelector("h2.panel-title")).click();
+		    driver.findElement(By.linkText("PHR Information")).click();
+		    driver.findElement(By.id("description")).clear();
+		    driver.findElement(By.id("description")).sendKeys("Lantus");
+		    driver.findElement(By.name("addA")).click();
+		    try {
+		      assertEquals("Medication 00882219 - Lantus is currently prescribed to Trend Setter.", driver.findElement(By.cssSelector("span.iTrustError")).getText());
+		    } catch (Error e) {
+		      verificationErrors.append(e.toString());
+		    }
+	  }
 }
