@@ -41,8 +41,8 @@ public class FindExpertTest extends iTrustSeleniumTest {
 		driver.findElement(By.name("LAST_NAME")).clear();
 		driver.findElement(By.name("LAST_NAME")).sendKeys("Doctor");
 		driver.findElement(By.xpath("//input[@value='User Search']")).click();
-		driver.findElement(By.xpath("(//input[@value='9000000000' and @type='submit'])")).click();
-		
+		//driver.findElement(By.xpath("(//input[@value='9000000000' and @type='submit'])")).click();
+		clickOn9000000000(driver);
 		assertEquals("iTrust - Edit Personnel", driver.getTitle());
 		driver.findElement(By.name("phone")).clear();
 		driver.findElement(By.name("phone")).sendKeys("919-100-1000");
@@ -64,6 +64,9 @@ public class FindExpertTest extends iTrustSeleniumTest {
 		driver.setJavascriptEnabled(false);
 	}
 
-	 
-
+	private void clickOn9000000000(WebDriver dr){
+		((HtmlUnitDriver)dr).setJavascriptEnabled(true);
+		JavascriptExecutor js = (JavascriptExecutor)dr;
+		js.executeScript("document.getElementsByTagName('form')[2].submit();");
+	}
 }
