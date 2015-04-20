@@ -3,16 +3,21 @@
  */
 package edu.ncsu.csc.itrust.seleniumtests;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.ui.Select;
+
+import com.gargoylesoftware.htmlunit.BrowserVersion;
 
 /**
  * @author Hussein Koprly
@@ -40,6 +45,12 @@ public class ReferralsTest extends iTrustSeleniumTest {
 	 */
 	@Test
 	public void testCreateNewReferral() throws Exception {
+		//The team taht create the driver is not compatible to this test cases so it keeps failing.
+		//I created a new one with Javascript enable.
+		HtmlUnitDriver driver = new HtmlUnitDriver(BrowserVersion.FIREFOX_24);
+		driver.setJavascriptEnabled(true);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+
 		driver.get("http://localhost:8080/iTrust/");
 		driver.findElement(By.id("j_username")).sendKeys("9000000000");
 	    driver.findElement(By.id("j_password")).clear();
@@ -47,11 +58,20 @@ public class ReferralsTest extends iTrustSeleniumTest {
 	    driver.findElement(By.id("j_password")).clear();
 	    driver.findElement(By.id("j_password")).sendKeys("pw");
 	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[4]/div")).click();
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 	    driver.findElement(By.linkText("Document Office Visit")).click();
 	    driver.findElement(By.id("searchBox")).clear();
-	    driver.findElement(By.name("UID_PATIENTID")).sendKeys("301");
-	    driver.findElement(By.xpath("//input[@value='301']")).submit();
+	    driver.findElement(By.id("searchBox")).sendKeys("301");
+	    int attempt = 0;
+		while(attempt < 4){
+			try{
+				driver.findElement(By.xpath("//input[@value='301' and @type='button']")).click();
+				break;
+			}catch(StaleElementReferenceException e){
+				
+			}
+			attempt++;
+		}
 	    driver.findElement(By.linkText("01/05/2013")).click();
 	    driver.findElement(By.id("add_referral")).click();
 	    driver.findElement(By.name("FIRST_NAME")).clear();
@@ -60,9 +80,11 @@ public class ReferralsTest extends iTrustSeleniumTest {
 	    driver.findElement(By.name("LAST_NAME")).sendKeys("Stormcrow");
 	    driver.findElement(By.xpath("//input[@value='User Search']")).click();
 	    driver.findElement(By.xpath("(//input[@value='9000000003'])[2]")).click();
-	    System.out.println(driver.findElement(By.xpath("(//input[@value='9000000003'])[2]")));
-
-	    //System.out.println(driver.getPageSource());
+	    //The Selenium framework has problems about submitting the form in getPersonnelID.jsp for redirection.
+	    //So, I used javascript to force the page to submit the form, then it will be able to redirect to next page.
+	    JavascriptExecutor js = (JavascriptExecutor)driver;
+	    js.executeScript("document.searchResultForm.submit();");
+	    
 	    driver.findElement(By.name("referralDetails")).clear();
 	    driver.findElement(By.name("referralDetails")).sendKeys("See Gandalf. He will translate the engravings on that ring for you");
 	    new Select(driver.findElement(By.name("priority"))).selectByVisibleText("1");

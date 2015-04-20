@@ -76,11 +76,10 @@ public class SearchUserTest extends iTrustSeleniumTest{
 	    driver.findElement(By.linkText("Basic Health Information")).click();
 	    driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("Kelly Doctor");
-	    try {
-	      assertEquals("Found 0 Records", driver.findElement(By.cssSelector("span.searchResults")).getText());
-	    } catch (Error e) {
-	      verificationErrors.append(e.toString());
-	    }
+	    //Need to wait for letting javascript update the view, otherwise the result is 7 instead of 0.
+	    // 7 is the result when you search by 'K'
+	    waitFor(1);
+	    assertEquals("Found 0 Records", driver.findElement(By.cssSelector("span.searchResults")).getText());
 	}
 
 }

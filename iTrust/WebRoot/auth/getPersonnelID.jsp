@@ -75,7 +75,7 @@ if(lastName == null)
 		out.println("<table border='1px'><tr><td width='175px'>MID</td><td width='250px'>First Name</td><td width='250px'>Last Name</td></tr>");
 		for(PersonnelBean p : personnel){
 %>
-<form action="getPersonnelID.jsp?forward=<%= StringEscapeUtils.escapeHtml("" + ( request.getParameter("forward") )) %>" method="post">
+<form id="searchResultForm" name="searchResultForm" action="getPersonnelID.jsp?forward=<%= StringEscapeUtils.escapeHtml("" + ( request.getParameter("forward") )) %>" method="post">
 <input type="hidden" name="UID_PERSONNELID" value="<%= StringEscapeUtils.escapeHtml("" + ( p.getMID() )) %>" />
 
 

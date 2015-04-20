@@ -22,7 +22,7 @@ public class FoodDiaryLabelTest extends iTrustSeleniumTest {
 	    driver.findElement(By.xpath("(//button[@type='button'])[9]")).click();
 	    driver.findElement(By.id("newLabelName")).clear();
 	    driver.findElement(By.id("newLabelName")).sendKeys("testlabel");
-	    driver.findElement(By.id("saveNewLabelBtn")).click();
+	    driver.findElement(By.id("mockSaveNewLabelBtn")).click();
 	    assertTrue(pageContains("Label has been added."));
 	}
 	
@@ -34,7 +34,7 @@ public class FoodDiaryLabelTest extends iTrustSeleniumTest {
 	    driver.findElement(By.xpath("(//button[@type='button'])[9]")).click();
 	    driver.findElement(By.id("newLabelName")).clear();
 	    driver.findElement(By.id("newLabelName")).sendKeys("test");
-	    driver.findElement(By.id("saveNewLabelBtn")).click();
+	    driver.findElement(By.id("mockSaveNewLabelBtn")).click();
 	    assertTrue(pageContains("Label has been added."));
 	    new Select(driver.findElement(By.xpath("(//select[@value=''])[2]"))).selectByVisibleText("test");
 	    driver.findElement(By.xpath("//table[@id='foodDiaryTable']/tbody/tr[7]/td[13]/button")).click();
@@ -49,7 +49,7 @@ public class FoodDiaryLabelTest extends iTrustSeleniumTest {
 	    driver.findElement(By.xpath("(//button[@type='button'])[9]")).click();
 	    driver.findElement(By.id("newLabelName")).clear();
 	    driver.findElement(By.id("newLabelName")).sendKeys("test");
-	    driver.findElement(By.id("saveNewLabelBtn")).click();
+	    driver.findElement(By.id("mockSaveNewLabelBtn")).click();
 	    assertTrue(pageContains("Label has been added."));
 	    new Select(driver.findElement(By.xpath("//select[@value='']"))).selectByVisibleText("test");
 	    driver.findElement(By.cssSelector("button.changeLabelBtn")).click();
@@ -67,7 +67,7 @@ public class FoodDiaryLabelTest extends iTrustSeleniumTest {
 	    driver.findElement(By.xpath("(//button[@type='button'])[9]")).click();
 	    driver.findElement(By.id("newLabelName")).clear();
 	    driver.findElement(By.id("newLabelName")).sendKeys("test");
-	    driver.findElement(By.id("saveNewLabelBtn")).click();
+	    driver.findElement(By.id("mockSaveNewLabelBtn")).click();
 	    assertTrue(pageContains("Label has been added."));
 	    new Select(driver.findElement(By.xpath("//select[@value='']"))).selectByVisibleText("test");
 	    driver.findElement(By.cssSelector("button.changeLabelBtn")).click();
