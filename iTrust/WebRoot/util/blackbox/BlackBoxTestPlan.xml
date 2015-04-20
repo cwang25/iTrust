@@ -17532,7 +17532,7 @@
 	<dateAdded>04/20/2015</dateAdded>
 	<description>
 		<precondition>UC73 data is loaded.</precondition>
-		<precondition>TED is a registered user of iTrust system in UC73.</precondition>
+		<precondition>TED(mid:731) is a registered user of iTrust system in UC73.</precondition>
 		<step>Log in as TED.</step>
 		<step>Click on My Food Diary.</step>
 		<step>Click on Manage Label.</step>
@@ -17552,7 +17552,7 @@
 	<dateAdded>04/20/2015</dateAdded>
 	<description>
 		<precondition>UC73 data is loaded.</precondition>
-		<precondition>TED is a registered user of iTrust system in UC73.</precondition>
+		<precondition>TED(mid:731) is a registered user of iTrust system in UC73.</precondition>
 		<precondition>TED has one existing label "oldlabel".</precondition>
 		<step>Log in as TED.</step>
 		<step>Click on My Food Diary.</step>
@@ -17571,7 +17571,7 @@
 	<dateAdded>04/20/2015</dateAdded>
 	<description>
 		<precondition>UC73 data is loaded.</precondition>
-		<precondition>TED is a registered user of iTrust system. in UC73.</precondition>
+		<precondition>TED(mid:731) is a registered user of iTrust system. in UC73.</precondition>
 		<precondition>TED has two existing label "oldlabel", "editlabel".</precondition>
 		<step>Log in as TED.</step>
 		<step>Click on My Food Diary.</step>
@@ -17589,11 +17589,13 @@
 	<dateAdded>04/20/2015</dateAdded>
 	<description>
 		<precondition>UC73 data is loaded</precondition>
-		<precondition>TED is a registered user of iTrust system in UC73.</precondition>
-		<step>Log in as TED.</step>
+		<precondition>Stadnard data is loaded.</precondition>
+		<precondition>Aaron Hotcher(mid:500) is a registered user of iTrust system in UC73.</precondition>
+		<step>Log in as Aaron Hotcher.</step>
 		<step>Click on My Food Diary.</step>
-		<step>Select "oldlabel" in the dropdown menu in Filter entries by label</step>
-		
+		<step>Add new label as "test'</step>
+		<step>Set one food diary as "test" label.</step>
+		<step>Select "test" in the dropdown menu in Filter entries by label</step>
 	</description>
 	<expectResults>
 		<eResult>The food diary tabel shall now only show the food diaries with "oldlabel" label.</eResult>

@@ -54,11 +54,39 @@ VALUES
 'B+',
 'Asian American',
 'Male',
+''),
+(731,
+'TED', 
+'TED', 
+'ted@ncsu.edu', 
+'1247 Raynor Dr', 
+'Suite 888', 
+'Raleigh', 
+'NC', 
+'27606-1234', 
+'919-971-0000', 
+'Mommy Person', 
+'704-538-2117', 
+'Aetna', 
+'1234 Raynor Blvd', 
+'Suite 602', 
+'Charlotte',
+'NC', 
+'28215', 
+'704-555-1234', 
+'ChetumNHowe', 
+'1950-05-10',
+0,
+0,
+'B+',
+'Asian American',
+'Male',
 '')
  ON DUPLICATE KEY UPDATE MID = MID;
 
 INSERT INTO users(MID, password, role, sQuestion, sAnswer) 
-VALUES (730, '30c952fab122c3f9759f02a6d95c3758b246b4fee239957b2d4fee46e26170c4', 'patient', 'what is your uc case?', 'uc73')
+VALUES (730, '30c952fab122c3f9759f02a6d95c3758b246b4fee239957b2d4fee46e26170c4', 'patient', 'what is your uc case?', 'uc73'),
+(731, '30c952fab122c3f9759f02a6d95c3758b246b4fee239957b2d4fee46e26170c4', 'patient', 'what is your uc case?', 'uc73')
 ON DUPLICATE KEY UPDATE MID = MID;
 /*password: pw*/
 /*End of patient insertion.*/
@@ -137,10 +165,10 @@ NULL,
 5
 ),(
 NULL,
-730,
-'2012-09-30',
+731,
+'2015-04-15',
 'Lunch',
-'Mango Passionfriut Juice',
+'Sushi',
 1.2,
 130,
 0,
@@ -149,7 +177,23 @@ NULL,
 29,
 0,
 1
-);
+),
+(
+NULL,
+731,
+'2015-04-20',
+'Lunch',
+'Ramen',
+1.2,
+130,
+0,
+25,
+32,
+29,
+0,
+1
+)
+;
 /*End of insert food diary.*/
 
 /*Insert food diary labels.*/
@@ -157,10 +201,13 @@ INSERT INTO fooddiarylabels (rowid, mid, label)
 VALUES 
 (2,730, 'Southbeach'),
 (3, 730, 'Atkins'),
-(NULL, 730, 'Jenny Craig'),
-(NULL, 730, 'Low carb');
+(4, 730, 'Jenny Craig'),
+(5, 730, 'Low carb'),
+(6, 731, 'oldlabel'),
+(7, 731, 'editlabel');
 
 INSERT INTO fooddiarysetlabels (mid, diarydate, label, labelrowID)
 VALUES
-(730, '2012-09-30', 'Southbeach',2);
+(730, '2012-09-30', 'Southbeach',2),
+(731, '2015-04-15', 'oldlabel',6);
 /*End of insert food diary labels.*/
