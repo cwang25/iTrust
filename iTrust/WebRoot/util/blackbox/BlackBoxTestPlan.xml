@@ -17532,17 +17532,15 @@
 	<dateAdded>04/20/2015</dateAdded>
 	<description>
 		<precondition>UC73 data is loaded.</precondition>
-		<precondition>TED(mid:731) is a registered user of iTrust system in UC73.</precondition>
-		<step>Log in as TED.</step>
+		<precondition>Standard data is loaded.</precondition>
+		<step>Log in as aaron hotcher(mid:500).</step>
 		<step>Click on My Food Diary.</step>
 		<step>Click on Manage Label.</step>
 		<step>Add new label "newlabel" with green color selected.</step>
 		<step>Click on Save.</step>
-		<step>Select food diary with date of 04/20/2015</step>
-		<step>Select "newlabel" on the right drop down menu, and click Change Label.</step>
 	</description>
 	<expectedResults>
-		<eResult>The food diary of date 04/20/2015 has been attached the green label of "newlabel". </eResult>
+		<eResult>The successful added message is shown. </eResult>
 	</expectedResults>
 </test>
 

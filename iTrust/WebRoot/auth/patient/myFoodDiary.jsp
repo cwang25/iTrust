@@ -462,8 +462,8 @@
 	<div>
 		</br>
 		<button type='button' id="macroBtn" onclick="switchHiddenForm('hiddenMacro','showGraph'); preGraph();">Macro Calculator</button>
-		<button type='button' onclick="switchHiddenForm('HiddenForm', 'new')">Add new food diary</button>
-		<button type='button' onclick="switchHiddenForm('newLabelForm', 'addLabel')">Manage label</button>
+		<button type='button' id="addnewFoodDiaryBtn" onclick="switchHiddenForm('HiddenForm', 'new')">Add new food diary</button>
+		<button type='button' id="manageLabelBtn"onclick="switchHiddenForm('newLabelForm', 'addLabel')">Manage label</button>
 	</div>	
 	<br />
 	<div id="HiddenForm" name="Hiddenform"
@@ -650,7 +650,7 @@
 		<br/>
 		<input name="operationMode" value="addLabel" type="hidden">
 	</form>
-	<form action="myFoodDiary.jsp" method="post" id="removeLabel" align="center">
+	<form action="myFoodDiary.jsp" method="post" name="removeLabel" id="removeLabel" align="center">
 		<table class="fTable" align="center" width="400px">
 			<tr>
 				<th colspan="3">Remove Label</th>
