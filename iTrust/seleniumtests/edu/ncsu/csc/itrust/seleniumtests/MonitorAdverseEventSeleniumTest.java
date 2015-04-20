@@ -95,6 +95,7 @@ public class MonitorAdverseEventSeleniumTest extends iTrustSeleniumTest {
 		assertTrue(driver.getPageSource().contains("A rash began spreading outward from the injection spot"));
 		driver.findElement(By.name("remove")).click();
 		assertTrue(driver.getPageSource().contains("Report successfully removed"));
+		waitFor(1);
 		assertLogged(TransactionType.ADVERSE_EVENT_REMOVE, 7000000001L, 0L, "");
 	}
 	
@@ -119,6 +120,7 @@ public class MonitorAdverseEventSeleniumTest extends iTrustSeleniumTest {
 		driver.findElement(By.name("immunizations")).click();
 		
 		driver.findElement(By.linkText("View Chart")).click();
+		waitFor(1);
 		assertLogged(TransactionType.ADVERSE_EVENT_CHART_VIEW, 7000000001L, 0L, "");
 	}
 
