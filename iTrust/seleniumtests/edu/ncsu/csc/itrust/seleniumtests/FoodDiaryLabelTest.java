@@ -42,7 +42,7 @@ public class FoodDiaryLabelTest extends iTrustSeleniumTest {
 	}
 	
 	@Test
-	public void testRemoveLabel() throws Exception {
+	public void testRemoveAttachedLabel() throws Exception {
 		login("500", "pw");
 	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
 	    driver.findElement(By.linkText("My Food Diary")).click();
@@ -74,5 +74,23 @@ public class FoodDiaryLabelTest extends iTrustSeleniumTest {
 	    assertTrue(pageContains("Label has been set."));
 	    new Select(driver.findElement(By.id("labelFilter"))).selectByVisibleText("test");
 	    assertFalse(driver.findElementsByXPath("//*[contains(text(), '5/21/2013')]").get(0).isDisplayed());
+	}
+	
+	@Test
+	public void testRemoveExistingFoodDiaryLabel() throws Exception {
+		login("500", "pw");
+	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
+	    driver.findElement(By.linkText("My Food Diary")).click();
+	    driver.findElement(By.xpath("(//button[@type='button'])[9]")).click();
+	    driver.findElement(By.id("newLabelName")).clear();
+	    driver.findElement(By.id("newLabelName")).sendKeys("test");
+	    driver.findElement(By.id("mockSaveNewLabelBtn")).click();
+	    assertTrue(pageContains("Label has been added."));
+	    new Select(driver.findElement(By.xpath("//select[@value='']"))).selectByVisibleText("test");
+	    driver.findElement(By.cssSelector("button.changeLabelBtn")).click();
+	    assertTrue(pageContains("Label has been set."));
+	    new Select(driver.findElement(By.xpath("//select[@value='']"))).selectByVisibleText("none");
+	    driver.findElement(By.cssSelector("button.changeLabelBtn")).click();
+	    assertTrue(pageContains("Label has been set."));
 	}
 }
