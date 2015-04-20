@@ -30,7 +30,7 @@ public class FoodDiaryLabelSetBean {
 	public FoodDiaryLabelSetBean(long rowid, long mid, Date date, String label, long referenceRowID) {
 		this.rowid = rowid;
 		this.mid = mid;
-		this.date = date;
+		this.date = (Date)date.clone();
 		this.label = label;
 		this.labelReferenceRowID = referenceRowID;
 	}
@@ -63,13 +63,14 @@ public class FoodDiaryLabelSetBean {
 	 * @return the date
 	 */
 	public Date getDate() {
-		return date;
+		return (Date)date.clone();
 	}
 	/**
 	 * @param date the date to set
 	 */
 	public void setDate(Date date) {
-		this.date = date;
+		Date tmp = (Date) date.clone();
+		this.date = tmp;
 	}
 	/**
 	 * @return the label

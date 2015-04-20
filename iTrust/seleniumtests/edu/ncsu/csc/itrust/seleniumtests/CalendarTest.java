@@ -28,6 +28,7 @@ public class CalendarTest extends iTrustSeleniumTest {
 
 	@Override
 	protected void tearDown() throws Exception {
+		super.tearDown();
 		gen.clearAllTables();
 		//gen.standardData();
 	}

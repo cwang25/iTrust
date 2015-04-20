@@ -190,6 +190,7 @@ public class GetVisitRemindersTest extends iTrustSeleniumTest {
 	
 	@After
 	public void tearDown() throws Exception {
+		super.tearDown();
 		driver.quit();
 	}
 
