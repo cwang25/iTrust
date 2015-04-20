@@ -137,23 +137,24 @@ public class EditLOINCDataTest extends iTrustSeleniumTest {
 
 	@Test
 	public void testAddLOINCFile() throws Exception {
-		WebDriver driver = new HtmlUnitDriver();
+//		WebDriver driver = new HtmlUnitDriver();
 		baseUrl = "http://localhost:8080/iTrust/";
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-
-		driver.get(baseUrl + "auth/forwardUser.jsp");
-		try {
-			assertEquals("iTrust - Login", driver.getTitle());
-		} catch (Error e) {
-			verificationErrors.append(e.toString());
-			fail();
-		}
-		//log in processes
-		driver.findElement(By.id("j_username")).clear();
-		driver.findElement(By.id("j_username")).sendKeys("9000000001");
-		driver.findElement(By.id("j_password")).clear();
-		driver.findElement(By.id("j_password")).sendKeys("pw");
-		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+//		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+//
+//		driver.get(baseUrl + "auth/forwardUser.jsp");
+//		try {
+//			assertEquals("iTrust - Login", driver.getTitle());
+//		} catch (Error e) {
+//			verificationErrors.append(e.toString());
+//			fail();
+//		}
+//		//log in processes
+//		driver.findElement(By.id("j_username")).clear();
+//		driver.findElement(By.id("j_username")).sendKeys("9000000001");
+//		driver.findElement(By.id("j_password")).clear();
+//		driver.findElement(By.id("j_password")).sendKeys("pw");
+//		driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+		login("9000000001", "pw");
 		//check that log in correctly
 		assertEquals("iTrust - Admin Home", driver.getTitle());
 		assertLogged(TransactionType.HOME_VIEW, 9000000001L, 0L, "");
