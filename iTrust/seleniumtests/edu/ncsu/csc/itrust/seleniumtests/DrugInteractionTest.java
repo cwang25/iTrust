@@ -154,6 +154,7 @@ public class DrugInteractionTest extends iTrustSeleniumTest{
 
   @After
   public void tearDown() throws Exception {
+	super.tearDown();
     driver.quit();
     String verificationErrorString = verificationErrors.toString();
     if (!"".equals(verificationErrorString)) {

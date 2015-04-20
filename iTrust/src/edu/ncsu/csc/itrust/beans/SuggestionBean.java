@@ -65,14 +65,14 @@ public class SuggestionBean {
 	 * @return the date
 	 */
 	public Date getDate() {
-		return date;
+		return (Date)date.clone();
 	}
 
 	/**
 	 * @param date the date to set
 	 */
 	public void setDate(Date date) {
-		this.date = date;
+		this.date = (Date)date.clone();
 	}
 
 	/**
