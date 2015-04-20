@@ -14,13 +14,15 @@ import com.gargoylesoftware.htmlunit.BrowserVersion;
 import edu.ncsu.csc.itrust.dao.DAOFactory;
 import edu.ncsu.csc.itrust.dao.mysql.AuthDAO;
 import edu.ncsu.csc.itrust.enums.TransactionType;
+import edu.ncsu.csc.itrust.testutils.TestDAOFactory;
 
 public class SecurePasswordTest extends iTrustSeleniumTest{
 
 	
 	private HtmlUnitDriver driver;
 	private String baseUrl;
-
+	private DAOFactory factory = TestDAOFactory.getTestInstance();
+	private AuthDAO authDAO = factory.getAuthDAO();
 	@Before
 	public void setUp() throws Exception {
 	  super.setUp();
@@ -29,6 +31,7 @@ public class SecurePasswordTest extends iTrustSeleniumTest{
 	  driver = new HtmlUnitDriver(BrowserVersion.FIREFOX_24);
 	  baseUrl = "http://localhost:8080/iTrust/";
 	  driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+	  
 	}
 	
 	
@@ -42,6 +45,7 @@ public class SecurePasswordTest extends iTrustSeleniumTest{
 	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
 	    assertEquals("iTrust - HCP Home", driver.getTitle());
 	    assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
+	    assertTrue(authDAO.authenticatePassword(9000000000L, "pw"));
 //	    driver.findElement(By.linkText("Display Database")).click();
 //		WebElement baseTable = driver.findElement(By.id("users"));
 //		List<WebElement> tableRows = baseTable.findElements(By.tagName("tr"));
@@ -64,6 +68,7 @@ public class SecurePasswordTest extends iTrustSeleniumTest{
 	    driver.findElement(By.cssSelector("td > input[type=\"submit\"]")).click();
 	    assertLogged(TransactionType.PASSWORD_RESET, 1L, 1L, "");
 	    assertEquals("Password changed", driver.findElement(By.cssSelector("form > table > tbody > tr > td")).getText());
+	    assertTrue(authDAO.authenticatePassword(1L, "newPw12345"));
 //	    driver.findElement(By.linkText("Display Database")).click();
 //	    TableElement te = new TableElement(driver.findElement(By.id("users")));
 //	    
