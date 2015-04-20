@@ -44,7 +44,7 @@ public class ViewHealthRecordsHistoryTest extends iTrustSeleniumTest {
 	    driver.findElement(By.id("searchBox")).sendKeys("101");
 	    //waitFor(1);
 	    //Click on first MID button
-	    driver.findElement(By.xpath("//input[@value='101' and @type='button']")).click();
+	    clickOnJavascriptElement(By.xpath("//input[@value='101' and @type='button']"));
 	    //Verify Document Office Visit page
 	    assertEquals(ADDRESS + "auth/hcp-uap/documentOfficeVisit.jsp", driver.getCurrentUrl());
 	    //Click Yes, Document Office Visit
@@ -184,7 +184,7 @@ public class ViewHealthRecordsHistoryTest extends iTrustSeleniumTest {
 	    driver.findElement(By.id("searchBox")).sendKeys("104");
 	    //waitFor(1);
 	    //Click on first MID button
-	    driver.findElement(By.xpath("//input[@value='104' and @type='button']")).click();
+	    clickOnJavascriptElement(By.xpath("//input[@value='104' and @type='button']"));
 		
 		//Verify Basic Health Information page
 		assertEquals(ADDRESS + "auth/hcp-uap/viewBasicHealth.jsp", driver.getCurrentUrl());
@@ -414,7 +414,7 @@ public class ViewHealthRecordsHistoryTest extends iTrustSeleniumTest {
 	    driver.findElement(By.id("searchBox")).sendKeys("101");
 	    //waitFor(1);
 	    //Click on first MID button
-	    driver.findElement(By.xpath("//input[@value='101' and @type='button']")).click();
+	    clickOnJavascriptElement(By.xpath("//input[@value='101' and @type='button']"));
 		//Verify Document Office Visit page
 		assertEquals(ADDRESS + "auth/hcp-uap/documentOfficeVisit.jsp", driver.getCurrentUrl());
 		//Click Yes, Document Office Visit
@@ -542,7 +542,7 @@ public class ViewHealthRecordsHistoryTest extends iTrustSeleniumTest {
 	    driver.findElement(By.id("searchBox")).sendKeys("102");
 	    //waitFor(1);
 		//Click on first MID button
-	    driver.findElement(By.xpath("//input[@value='102' and @type='button']")).click();
+	    clickOnJavascriptElement(By.xpath("//input[@value='102' and @type='button']"));
 		//Verify Basic Health Information page
 		assertEquals(ADDRESS + "auth/hcp-uap/viewBasicHealth.jsp", driver.getCurrentUrl());
 

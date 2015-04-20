@@ -365,7 +365,11 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 		driver.findElement(By.partialLinkText("Document Office Visit")).click();
 		
 		// select the patient
-		selectPatientFromSearch("2");
+		driver.findElement(By.id("searchBox")).clear();
+	    driver.findElement(By.id("searchBox")).sendKeys("2");
+	    //waitFor(1);
+	    //Click on first MID button
+	    clickOnJavascriptElement(By.xpath("//input[@value='2' and @type='button']"));
 		assertEquals(ADDRESS + "auth/hcp-uap/documentOfficeVisit.jsp", driver.getCurrentUrl());
 		
 		// click Yes, Document Office Visit

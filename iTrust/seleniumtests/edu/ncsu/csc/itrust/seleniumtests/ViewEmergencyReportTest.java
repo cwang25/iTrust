@@ -35,7 +35,7 @@ public class ViewEmergencyReportTest extends iTrustSeleniumTest {
         driver.findElement(By.linkText("Emergency Patient Report")).click();
         driver.findElement(By.id("searchBox")).clear();
         driver.findElement(By.id("searchBox")).sendKeys("99");
-        driver.findElement(By.xpath("//input[@value='99' and @type='button']")).click();
+        clickOnJavascriptElement(By.xpath("//input[@value='99' and @type='button']"));
         assertTrue(pageContains("Darryl Thompson"));
         logout();
         assertTrue(pageContains("patient-centered"));
