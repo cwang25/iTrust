@@ -294,7 +294,7 @@ public class ViewHealthRecordsHistoryTest extends iTrustSeleniumTest {
 	    driver.findElement(By.id("searchBox")).sendKeys("1");
 	    //waitFor(1);
 	    //Click on first MID button
-	    driver.findElement(By.xpath("//input[@value='1' and @type='button']")).click();
+	    this.clickOnJavascriptElement(By.xpath("//input[@value='1' and @type='button']"));
 		//Verify Document Office Visit page
 		assertEquals(ADDRESS + "auth/hcp-uap/documentOfficeVisit.jsp", driver.getCurrentUrl());
 		//Click Yes, Document Office Visit

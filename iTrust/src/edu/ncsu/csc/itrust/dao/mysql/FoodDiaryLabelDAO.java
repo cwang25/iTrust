@@ -199,6 +199,7 @@ public class FoodDiaryLabelDAO {
 			if(rs.next()){
 				bean = labelLoader.loadSingle(rs);
 			}
+			rs.close();
 		} catch(SQLException e) {
 			e.printStackTrace();
 			throw new DBException(e);

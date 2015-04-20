@@ -30,7 +30,7 @@ public class FoodDiaryLabelSetBean {
 	public FoodDiaryLabelSetBean(long rowid, long mid, Date date, String label, long referenceRowID) {
 		this.rowid = rowid;
 		this.mid = mid;
-		this.date = (Date)date.clone();
+		this.date = date != null ? (Date)date.clone() : null;
 		this.label = label;
 		this.labelReferenceRowID = referenceRowID;
 	}
