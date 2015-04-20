@@ -60,7 +60,7 @@ public class FoodDiaryLabelDAOTest extends TestCase {
 	public void testSetFoodDiaryLabel() throws DBException {
 		FoodDiaryLabelSetBean bean = new FoodDiaryLabelSetBean(730, Date.valueOf("2012-09-30"), "Atkins", 3L);
 		long result = foodDAO.setFoodDiaryLabel(bean);
-		assertEquals(2, result);
+		assertEquals(3, result);
 	}
 	
 	@Test

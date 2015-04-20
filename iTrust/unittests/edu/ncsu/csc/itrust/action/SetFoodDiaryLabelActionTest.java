@@ -39,6 +39,6 @@ public class SetFoodDiaryLabelActionTest extends TestCase {
 		long referenceRowID = labelAct.addFoodDiaryLabel(new FoodDiaryLabelBean(730, "Test"));
 		FoodDiaryLabelSetBean b = new FoodDiaryLabelSetBean(730, Date.valueOf("2012-09-02"), "Test", referenceRowID);
 		long ret = action.setFoodDiaryLabel(b);
-		assertEquals(2, ret);
+		assertEquals(3, ret);
 	}
 }
