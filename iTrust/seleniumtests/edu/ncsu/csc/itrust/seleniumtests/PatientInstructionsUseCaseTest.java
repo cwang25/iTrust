@@ -35,7 +35,10 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 		gen.hcp4();
 		login("9000000004", "pw");
 		driver.get(ADDRESS + "auth/getPatientID.jsp");
-		selectPatientFromSearch("1");
+		driver.findElement(By.id("searchBox")).clear();
+		driver.findElement(By.id("searchBox")).sendKeys("1");
+		//waitFor(1);
+		clickOnJavascriptElement(By.xpath("//input[@value='1' and @type='button']"));
 	}
 	
 	/**
@@ -108,7 +111,10 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 		driver.findElement(By.linkText("Document Office Visit")).click();
 		
 		// select the patient
-		selectPatientFromSearch("1");
+		driver.findElement(By.id("searchBox")).clear();
+		driver.findElement(By.id("searchBox")).sendKeys("1");
+		//waitFor(1);
+		clickOnJavascriptElement(By.xpath("//input[@value='1' and @type='button']"));
 		assertEquals(ADDRESS + "auth/hcp-uap/documentOfficeVisit.jsp", driver.getCurrentUrl());
 		// Select the office visit from yesterday
 		driver.findElement(By.partialLinkText("1/28/2011")).click();
@@ -152,7 +158,10 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 		driver.findElement(By.linkText("Document Office Visit")).click();
 		
 		// select the patient
-		selectPatientFromSearch("5");
+		driver.findElement(By.id("searchBox")).clear();
+		driver.findElement(By.id("searchBox")).sendKeys("5");
+		//waitFor(1);
+		clickOnJavascriptElement(By.xpath("//input[@value='5' and @type='button']"));
 		assertEquals(ADDRESS + "auth/hcp-uap/documentOfficeVisit.jsp", driver.getCurrentUrl());
 		// Select the office visit from yesterday
 		driver.findElement(By.partialLinkText("1/28/2011")).click();
@@ -190,7 +199,10 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 		driver.findElement(By.linkText("Document Office Visit")).click();
 		
 		// select the patient
-		selectPatientFromSearch("2");
+		driver.findElement(By.id("searchBox")).clear();
+		driver.findElement(By.id("searchBox")).sendKeys("2");
+		//waitFor(1);
+		clickOnJavascriptElement(By.xpath("//input[@value='2' and @type='button']"));
 		assertEquals(ADDRESS + "auth/hcp-uap/documentOfficeVisit.jsp", driver.getCurrentUrl());
 		
 		// click Yes, Document Office Visit
@@ -320,7 +332,10 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 		driver.findElement(By.partialLinkText("Document Office Visit")).click();
 		
 		// select the patient
-		selectPatientFromSearch("2");
+		driver.findElement(By.id("searchBox")).clear();
+		driver.findElement(By.id("searchBox")).sendKeys("2");
+		//waitFor(1);
+		clickOnJavascriptElement(By.xpath("//input[@value='2' and @type='button']"));
 		assertEquals(ADDRESS + "auth/hcp-uap/documentOfficeVisit.jsp", driver.getCurrentUrl());
 		
 		// click Yes, Document Office Visit
@@ -423,7 +438,10 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 		driver.findElement(By.partialLinkText("Document Office Visit")).click();
 		
 		// select the patient
-		selectPatientFromSearch("1");
+		driver.findElement(By.id("searchBox")).clear();
+		driver.findElement(By.id("searchBox")).sendKeys("1");
+		//waitFor(1);
+		clickOnJavascriptElement(By.xpath("//input[@value='1' and @type='button']"));
 		assertEquals(ADDRESS + "auth/hcp-uap/documentOfficeVisit.jsp", driver.getCurrentUrl());
 		// Select the office visit from yesterday
 		driver.findElement(By.partialLinkText("1/28/2011")).click();
@@ -480,7 +498,10 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 		driver.findElement(By.partialLinkText("Document Office Visit")).click();
 		
 		// select the patient
-		selectPatientFromSearch("1");
+		driver.findElement(By.id("searchBox")).clear();
+		driver.findElement(By.id("searchBox")).sendKeys("1");
+		//waitFor(1);
+		clickOnJavascriptElement(By.xpath("//input[@value='1' and @type='button']"));
 		assertEquals(ADDRESS + "auth/hcp-uap/documentOfficeVisit.jsp", driver.getCurrentUrl());
 		// Select the office visit from yesterday
 		driver.findElement(By.partialLinkText("1/28/2011")).click();
