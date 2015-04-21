@@ -14,8 +14,6 @@ import org.openqa.selenium.WebElement;
  */
 public class TableElement {
 	WebElement tableElement;
-	List<List<WebElement>> table;
-	
 	/**
 	 * Constructor.
 	 * This object will help user to get data from each cell of the table.
@@ -24,12 +22,7 @@ public class TableElement {
 	public TableElement(WebElement tableElement) {
 		// TODO Auto-generated constructor stub
 		this.tableElement = tableElement;
-		table = new ArrayList<List<WebElement>>();
-		List<WebElement> trCollection = tableElement.findElements(By.xpath("tbody/tr"));
-		for(WebElement trElement : trCollection){
-			List<WebElement> tdCollection = trElement.findElements(By.xpath("td"));
-			table.add(tdCollection);
-		}
+		
 		
 	}
 	/**
@@ -39,7 +32,8 @@ public class TableElement {
 	 * @return The WebElement in that given cell.
 	 */
 	public WebElement getTableCell(int row, int column){
-		return table.get(row).get(column);
+		WebElement cell = tableElement.findElements(By.xpath("tbody/tr")).get(row).findElements(By.xpath("td")).get(column);
+		return cell;
 	}
 	
 	/**
@@ -49,7 +43,8 @@ public class TableElement {
 	 * @return The WebElement in that given cell.
 	 */
 	public String getCellAsText(int row, int column){
-		return table.get(row).get(column).getText();
+		WebElement cell = tableElement.findElements(By.xpath("tbody/tr")).get(row).findElements(By.xpath("td")).get(column);
+		return cell.getText();
 	}
 	
 	public int getRowSize(){
