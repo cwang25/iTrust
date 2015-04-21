@@ -17169,27 +17169,6 @@
 		</eResult>
     </expectedResults>
 </test>
-<test id="UndoDeleteFoodDiaryEntry">
-    <role>Patient</role>
-    <usecase>70</usecase>
-    <dateAdded>03/04/2015</dateAdded>
-    <description>
-    	<precondition>Standard data is loaded.</precondition>
-    	<precondition>UC70 data is loaded.</precondition>
-		<precondition>Patient Jennifer Jareau (MID: 703) authenticates into iTrust.</precondition>
-		<precondition>Jennifer Jareau has two previous food diary entries on 09/30/2012.</precondition>
-		<step>Jennifer Jareau logs into iTrust.</step>
-		<step>Patient Jennifer Jareau clicks on My Food Diary under View.</step>
-		<step>Patient Jennifer Jareau  clicks on delete button for his Breakfast entry from 09/30/2012.</step>
-		<step>Patient Jennifer Jareau clicks confirm button.</step>
-		<step>On reading deletion successful message and updated table, Jennifer Jareau clicks on “Undo” button to undo her deletion.</step>
-	</description>
-    <expectedResults>
-        <eResult>
-		The deleted entry will then be restored to the table.  Jennifer remains on the page to view her food diary, and the totals of that day remain the same.
-		</eResult>
-    </expectedResults>
-</test>
 <test id="NotDesignatedNutritionistViewPatientFoodDiary">
     <role>HCP</role>
     <usecase>74</usecase>
@@ -17860,6 +17839,67 @@
         <eResult>Aaron Hotchner's weight log entrie are displayed.</eResult>
     </expectedResults>
 </test>
-<test id=''>
-
+<test id="UndoDeleteFoodDiaryEntry">
+    <role>Patient</role>
+    <usecase>78</usecase>
+    <dateAdded>04/20/2015</dateAdded>
+    <description>
+    	<precondition>Standard data is loaded.</precondition>
+    	<precondition>UC70 data is loaded.</precondition>
+		<precondition>Patient Jennifer Jareau (MID: 703) authenticates into iTrust.</precondition>
+		<precondition>Jennifer Jareau has two previous food diary entries on 09/30/2012.</precondition>
+		<step>Jennifer Jareau logs into iTrust.</step>
+		<step>Patient Jennifer Jareau clicks on My Food Diary under View.</step>
+		<step>Patient Jennifer Jareau  clicks on delete button for his Breakfast entry from 09/30/2012.</step>
+		<step>Patient Jennifer Jareau clicks confirm button.</step>
+		<step>On reading deletion successful message and updated table, Jennifer Jareau clicks on “Undo” button to undo her deletion.</step>
+	</description>
+    <expectedResults>
+        <eResult>
+		The deleted entry will then be restored to the table.  Jennifer remains on the page to view her food diary, and the totals of that day remain the same.
+		</eResult>
+    </expectedResults>
+</test>
+<test id="UndoDeleteFoodDiaryEntryAfterLeavingMyFoodDiary">
+    <role>Patient</role>
+    <usecase>78</usecase>
+    <dateAdded>04/20/2015</dateAdded>
+    <description>
+    	<precondition>Standard data is loaded.</precondition>
+    	<precondition>UC69 data is loaded.</precondition>
+		<precondition>Patient Jennifer Jareau (MID: 703) authenticates into iTrust.</precondition>
+		<precondition>Jennifer Jareau has two previous food diary entries on 09/30/2012.</precondition>
+		<step>Jennifer Jareau logs into iTrust.</step>
+		<step>Patient Jennifer Jareau clicks on My Food Diary under View.</step>
+		<step>Patient Jennifer Jareau  clicks on delete button for his Breakfast entry from 04/13/2014.</step>
+		<step>Patient Jennifer Jareau clicks confirm button.</step>
+		<step>On reading deletion successful message and updated table, click on Undo button</step>
+	</description>
+    <expectedResults>
+        <eResult>
+		The undo button will be gone, and the deletion will be done.
+		</eResult>
+    </expectedResults>
+</test>
+<test id="UndoDeleteFoodDiaryEntryWithSuggestions">
+    <role>Patient</role>
+    <usecase>70</usecase>
+    <dateAdded>04/20/2015</dateAdded>
+    <description>
+    	<precondition>Standard data is loaded.</precondition>
+    	<precondition>UC69 data is loaded.</precondition>
+		<precondition>Aaron Hotcher (MID: 500) authenticates into iTrust.</precondition>
+		<precondition>Aaron Hotcher has two previous food diary entries on 09/30/2012.</precondition>
+		<step>Aaron Hotcher logs into iTrust.</step>
+		<step>Patient Aaron Hotcher clicks on My Food Diary under View.</step>
+		<step>Patient Aaron Hotcher  clicks on delete button for his Breakfast entry from 04/12/2012.</step>
+		<step>Patient Aaron Hotcher clicks confirm button.</step>
+		<step>On reading deletion successful message and updated table, Jennifer Jareau clicks on “Undo” button to undo her deletion.</step>
+	</description>
+    <expectedResults>
+        <eResult>
+		The deleted entry will then be restored to the table including its suggestions..  Jennifer remains on the page to view her food diary, and the totals of that day remain the same.
+		</eResult>
+    </expectedResults>
+</test>
 </BlackBoxTestPlan>

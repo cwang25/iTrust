@@ -25,6 +25,7 @@ public class EditFoodDiaryEntryTest extends iTrustSeleniumTest {
 	protected void setUp() throws Exception {
 		super.setUp();
 		gen.clearAllTables();
+		gen.standardData();
 		gen.uc70();
 	}
 
@@ -165,7 +166,7 @@ public class EditFoodDiaryEntryTest extends iTrustSeleniumTest {
 	}
 
 	/**
-	 * Test ID: UndoDeleteFoodDiaryEntry UC: UC70
+	 * Test ID: UndoDeleteFoodDiaryEntry UC: UC78
 	 */
 	public void testUndoDeleteFoodDiaryEntry() throws Exception {
 		// login
@@ -197,5 +198,73 @@ public class EditFoodDiaryEntryTest extends iTrustSeleniumTest {
 		// make sure if the Breakfast record is restored back.
 
 		assertTrue(restoredRowNum == tableRowNum);
+	}
+	
+	/**
+	 * Test ID: UndoDeleteFoodDiaryEntryAfterLeavingMyFoodDiary UC: UC78
+	 */
+	public void testUndoDeleteFoodDiaryEntryAfterLeavingMyFoodDiary() throws Exception {
+		// login
+		gen.transactionLog();
+		login("703", "pw");// log in as Jeannifer Jareau.
+		driver.findElement(
+				By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
+		driver.findElement(By.linkText("My Food Diary")).click();
+		// According to
+		// http://stackoverflow.com/questions/8837754/webdriver-and-popups-in-htmlunitdriver
+		// Selenium HtmlUnitDriver is lack of supporting alert dialog.
+		// this is a walk around to test the website.
+		driver.executeScript("function runDeleteRecord(index){document.getElementById('operationMode').value = 'delete';document.getElementById('selectedIndex').value = ''+index;document.getElementById('saveBtn').click();}");
+		driver.findElement(By.name("deleteBtn")).click();
+		assertTrue(driver.getPageSource().contains(
+				"Your Food Diary has been deleted"));
+		assertTrue(driver.getPageSource().contains("Vi"
+				+ "ew My Food Diary"));
+		//make sure undo button shows
+		assertTrue(pageContains("Undo"));
+		driver.findElement(
+				By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
+		driver.findElement(By.linkText("My Food Diary")).click();
+		//Undo buttons will now be gone after leaving the page.
+		assertFalse(pageContains("Undo"));
+
+	}
+	
+	/**
+	 * Test ID: UndoDeleteFoodDiaryEntryWithSuggestions UC: UC78
+	 */
+	public void testUndoDeleteFoodDiaryEntryWithSuggestions() throws Exception {
+		// login
+		gen.transactionLog();
+		login("500", "pw");// log in as Jeannifer Jareau.
+		driver.findElement(
+				By.xpath("//div[@id='iTrustMenu']/div/div[2]/div/h2")).click();
+		driver.findElement(By.linkText("My Food Diary")).click();
+		TableElement table1 = new TableElement(driver.findElement(By.id("foodDiaryTable")));
+		int tableRowNum = table1.getRowSize();
+		// According to
+		// http://stackoverflow.com/questions/8837754/webdriver-and-popups-in-htmlunitdriver
+		// Selenium HtmlUnitDriver is lack of supporting alert dialog.
+		// this is a walk around to test the website.
+		driver.executeScript("function runDeleteRecord(index){document.getElementById('operationMode').value = 'delete';document.getElementById('selectedIndex').value = ''+index;document.getElementById('saveBtn').click();}");
+		//delete the first food diary which will have First test suggestion suggestions.
+		driver.findElement(By.name("deleteBtn")).click();
+		assertTrue(driver.getPageSource().contains(
+				"Your Food Diary has been deleted"));
+		assertTrue(driver.getPageSource().contains("Vi"
+				+ "ew My Food Diary"));
+		TableElement table2 = new TableElement(driver.findElement(By.id("foodDiaryTable")));
+		int deletedRowsNum = table2.getRowSize();
+		assertTrue(tableRowNum > deletedRowsNum);
+		assertFalse(pageContains("First test suggestion"));
+		driver.findElement(By.name("undoBtn")).click();
+		TableElement table3 = new TableElement (driver.findElement(By.id("foodDiaryTable")));
+		int restoredRowNum = table3.getRowSize();
+		// make sure if the Breakfast record is restored back.
+		assertTrue(restoredRowNum == tableRowNum);
+		//The suggestions should also be restored back to the table
+		assertTrue(pageContains("First test suggestion"));
+
+		
 	}
 }
