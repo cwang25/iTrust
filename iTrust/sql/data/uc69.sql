@@ -178,11 +178,11 @@ NULL,
 /*End of insert food diary.*/
 
 /*Add suggestions for testing*/
-INSERT INTO suggestions (suggDate, patientID, hcpID, sugg, isNew)
-VALUES('2014-04-13', 500, 9900000012, 'First test suggestion','true'),
-('2014-04-13', 500, 9900000012, 'Second test suggestion','true'),
-('2013-05-21', 500, 9900000012, 'Third test suggestion','true'),
-('2013-05-21', 500, 9900000012, 'Fourth test suggestion','true');
+INSERT INTO suggestions (rowID, suggDate, patientID, hcpID, sugg, isNew)
+VALUES(1, '2014-04-13', 500, 9900000012, 'First test suggestion','true'),
+(NULL, '2014-04-13', 500, 9900000012, 'Second test suggestion','true'),
+(NULL,'2013-05-21', 500, 9900000012, 'Third test suggestion','true'),
+(NULL,'2013-05-21', 500, 9900000012, 'Fourth test suggestion','true');
 /*End of add suggestions*/
 
 /*Insert declared HCP, only designaed Nutritionist can view the patient's food diary.*/
