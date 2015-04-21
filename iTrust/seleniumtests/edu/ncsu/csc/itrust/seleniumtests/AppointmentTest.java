@@ -155,7 +155,7 @@ public class AppointmentTest extends iTrustSeleniumTest{
 		//confirm warning displayed and appointment not edited
 		element = driver.findElement(By.xpath("//*[@id='conflictTable']/span"));
 		assertTrue(element.getText().contains("Warning"));
-		assertLogged(TransactionType.APPOINTMENT_EDIT, 9000000000L, 1L, "");
+		assertLogged(TransactionType.APPOINTMENT_EDIT, 9000000000L, 2L, "");
 		
 		
 	}

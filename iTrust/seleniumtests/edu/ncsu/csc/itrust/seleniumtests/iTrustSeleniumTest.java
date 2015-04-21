@@ -16,7 +16,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
+
 import com.gargoylesoftware.htmlunit.BrowserVersion;
+
 import edu.ncsu.csc.itrust.beans.TransactionBean;
 import edu.ncsu.csc.itrust.datagenerators.TestDataGenerator;
 import edu.ncsu.csc.itrust.enums.TransactionType;
@@ -41,6 +43,13 @@ abstract public class iTrustSeleniumTest extends TestCase{
 	private boolean acceptNextAlert = true;
 	protected StringBuffer verificationErrors = new StringBuffer();
 	
+	/**
+	 * This is the value that is used for failure times tolerance for
+	 * Javascript elements, assertLogged...etc for those functions that
+	 * Selenium test framework will occur some delay and result it false failures at the begining.
+	 * So use this tolerance to give it a couple trials before report it as failed.
+	 */
+	static int failureTolerance = 5;
 	/**
 	 * Generic setUp
 	 * This will setup the driver for the browser version and the wait time.
@@ -106,31 +115,37 @@ abstract public class iTrustSeleniumTest extends TestCase{
 	}
 	/**
 	 * assertLogged
+	 * Selenium might occurs some delay issues so we use while loop to give the database have some chances to get it right.
+	 * AssertLogged will re-check a couple times if it fails, and will ultimately fail if the result fails a specific times in a row.
 	 * @param code code
 	 * @param loggedInMID loggedInMID
 	 * @param secondaryMID secondaryMID
 	 * @param addedInfo addedInfo
 	 * @throws DBException
+	 * @throws InterruptedException 
 	 */
 	protected static void assertLogged(TransactionType code, long loggedInMID,
-			long secondaryMID, String addedInfo)
-			throws DBException {
-		List<TransactionBean> transList = TestDAOFactory.getTestInstance().getTransactionDAO().getAllTransactions();
-		for (TransactionBean t : transList)
-		{	
-			if( (t.getTransactionType() == code) &&
-				(t.getLoggedInMID() == loggedInMID) &&
-				(t.getSecondaryMID() == secondaryMID))
-				{
+			long secondaryMID, String addedInfo) throws DBException, InterruptedException {
+		int attempt = 0;
+		while (attempt < failureTolerance) {
+			List<TransactionBean> transList = TestDAOFactory.getTestInstance()
+					.getTransactionDAO().getAllTransactions();
+			for (TransactionBean t : transList) {
+				if ((t.getTransactionType() == code)
+						&& (t.getLoggedInMID() == loggedInMID)
+						&& (t.getSecondaryMID() == secondaryMID)) {
 					assertTrue(t.getTransactionType() == code);
-					if(!t.getAddedInfo().trim().contains(addedInfo.trim()))
-					{
+					if (!t.getAddedInfo().trim().contains(addedInfo.trim())) {
 						fail("Additional Information is not logged correctly.");
 					}
 					return;
 				}
+			}
+			attempt++;
+			Thread.sleep(1000);
 		}
 		fail("Event not logged as specified.");
+
 	}
 
 	/**
@@ -226,9 +241,10 @@ abstract public class iTrustSeleniumTest extends TestCase{
 	
 	/**
 	 * Method to click on element that associate with javascript.
-	 * This helepr will help you delay the process a little bit to allow javascript to finish up loading before further instrcutions come.
+	 * This helepr will help you delay the process a little bit to allow javascript to finish up loading before further instructions come.
 	 * If there is no delay, then the upcoming new elements or new interface will not be showed when the further process comes.
 	 * No delay may result in exception, or element not visible errors.
+	 * Also this method will give a couple trials to attempt to click on the javascript element before reporting an error.
 	 * @param w WebElement to be clicked
 	 * @return True success, False Fail
 	 * @throws InterruptedException
@@ -236,7 +252,7 @@ abstract public class iTrustSeleniumTest extends TestCase{
 	public boolean clickOnJavascriptElement(By by) throws InterruptedException{
 		boolean result = false;
 		int attempt = 0;
-		while(attempt < 4){
+		while(attempt < failureTolerance){
 			try{
 				driver.findElement(by).click();
 				result = true;
@@ -261,7 +277,7 @@ abstract public class iTrustSeleniumTest extends TestCase{
 		int attempt = 0;
 		WebElement theElement = null;
 		String text = "";
-		while(attempt < 4){
+		while(attempt < failureTolerance){
 			try{
 				text = driver.findElement(by).getText();
 				theElement = driver.findElement(by);
