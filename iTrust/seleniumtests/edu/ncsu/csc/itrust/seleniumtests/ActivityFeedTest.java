@@ -157,10 +157,8 @@ public class ActivityFeedTest extends iTrustSeleniumTest {
 		assertTrue(pageContains("Information Successfully Updated"));
 
 		logout();
-		assertEquals("iTrust - Login", driver.getTitle());
 		
 		login("21", "pw");
-		assertEquals("iTrust - Patient Home", driver.getTitle());
 
 		assertTrue(pageContains("Kelly Doctor"));
 		assertTrue(pageContains("created an office visit"));
