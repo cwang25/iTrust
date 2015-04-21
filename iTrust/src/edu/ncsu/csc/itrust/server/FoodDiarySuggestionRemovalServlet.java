@@ -15,10 +15,18 @@ import edu.ncsu.csc.itrust.action.SuggestionAction;
 import edu.ncsu.csc.itrust.beans.SuggestionBean;
 import edu.ncsu.csc.itrust.dao.DAOFactory;
 import edu.ncsu.csc.itrust.exception.ITrustException;
+import edu.ncsu.csc.itrust.testutils.TestDAOFactory;
 
 public class FoodDiarySuggestionRemovalServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	boolean isTesting = false;
+	public FoodDiarySuggestionRemovalServlet(){
+		isTesting = false;
+	}
+	
+	protected FoodDiarySuggestionRemovalServlet(boolean isTesting){
+		this.isTesting = isTesting;
+	}
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -35,7 +43,7 @@ public class FoodDiarySuggestionRemovalServlet extends HttpServlet {
 		String suggestionRowID = req.getParameter("suggestionRowID");
 		try {
 			SuggestionAction a = new SuggestionAction(
-					DAOFactory.getProductionInstance(),
+					isTesting?TestDAOFactory.getTestInstance():DAOFactory.getProductionInstance(),
 					Long.parseLong(loggedInMid));
 			SuggestionBean b = a.getSuggetionByRowID(Long.parseLong(suggestionRowID));
 			a.removeSuggestion(b);

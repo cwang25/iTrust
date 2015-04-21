@@ -2,23 +2,29 @@ package edu.ncsu.csc.itrust.server;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.ncsu.csc.itrust.action.SearchUsersAction;
 import edu.ncsu.csc.itrust.action.SuggestionAction;
 import edu.ncsu.csc.itrust.beans.SuggestionBean;
 import edu.ncsu.csc.itrust.dao.DAOFactory;
 import edu.ncsu.csc.itrust.exception.ITrustException;
+import edu.ncsu.csc.itrust.testutils.TestDAOFactory;
 
 public class FoodDiarySuggestionUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	boolean isTesting = false;
+	
+	public FoodDiarySuggestionUpdateServlet (){
+		this.isTesting = false;
+	}
+	
+	protected FoodDiarySuggestionUpdateServlet(boolean isTesting){
+		this.isTesting = isTesting;
+	}
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -36,7 +42,7 @@ public class FoodDiarySuggestionUpdateServlet extends HttpServlet {
 		String suggestionNewText = req.getParameter("newText");
 		try {
 			SuggestionAction a = new SuggestionAction(
-					DAOFactory.getProductionInstance(),
+					isTesting?TestDAOFactory.getTestInstance():DAOFactory.getProductionInstance(),
 					Long.parseLong(loggedInMid));
 			SuggestionBean b = a.getSuggetionByRowID(Long.parseLong(suggestionRowID));
 			b.setSuggestion(suggestionNewText);
