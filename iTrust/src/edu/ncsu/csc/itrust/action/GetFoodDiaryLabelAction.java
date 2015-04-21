@@ -61,4 +61,8 @@ public class GetFoodDiaryLabelAction {
 	public FoodDiaryLabelBean getFoodDiaryLabelByRowID(long rowID) throws DBException{
 		return foodDAO.getFoodDiaryLabelByRowID(rowID);
 	}
+	
+	public long getloggedInMID(){
+		return mid;
+	}
 }

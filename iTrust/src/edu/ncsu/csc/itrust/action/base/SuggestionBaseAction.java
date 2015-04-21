@@ -7,13 +7,13 @@ import edu.ncsu.csc.itrust.exception.ITrustException;
 
 public class SuggestionBaseAction {
 
-	private DAOFactory factory;
+//	private DAOFactory factory;
 	protected SuggestionDAO suggestionDAO;
 	protected EventLoggingAction loggingAction;
 	protected long loggedInMID;
 	
 	public SuggestionBaseAction(DAOFactory factory, long mid) throws ITrustException {
-		this.factory = factory;
+//		this.factory = factory;
 		suggestionDAO = factory.getSuggestionDAO();
 		loggingAction = new EventLoggingAction(factory);
 		this.loggedInMID = mid;

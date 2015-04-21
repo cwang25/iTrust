@@ -37,7 +37,8 @@ public class WeightLogBean {
 	 */
 	public WeightLogBean(long mid, Date date, double weight, double chest, double waist, double upperarm, double forearm, double thigh, double calves, double neck) {
 		this.mid = mid;
-		this.date = date;
+		if(date != null)
+			this.date = (Date)date.clone();
 		this.weight = weight;
 		this.chest = chest;
 		this.waist = waist;

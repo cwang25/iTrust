@@ -27,20 +27,20 @@ public class AddMacroNutrientProfileAction extends MacroNutrientProfileBaseActio
 	 * @return The long id of the new inserted record.
 	 * @throws DBException
 	 */
-	public long addMacroNutrientProfile(MacroNutrientProfileBean b)throws DBException{
-		b.setRowID( -1);
-		long newid= -1;
-		//No need to check if nutitionist is designated hcp, since the ownerID is not in this record plus
-		//It requires to know the macronutrientplan first in order to isnert new record to profile, which plan has already checked it..
-		if(this.isNutritionist){
-			newid = macroDAO.insertMacroNutrientProfile(b);
-			//Didn't plan to add loggingevent since it will get duplicated by the Macronutrientplan related operations.
-			//loggingAction.logEvent(TransactionType.HCP_ADD_MACRONUTRIENTPLAN, mid, b.getOwnerID(), "Nutritionist created patient's macronutrient plan.");
-		}else{
-			newid = macroDAO.insertMacroNutrientProfile(b);
-			//loggingAction.logEvent(TransactionType.PATIENT_ADD_MACRONUTRIENTPLAN, mid, mid, "Patient created macronutrient plan.");
-
-		}
+	public long addMacroNutrientProfile(MacroNutrientProfileBean b)
+			throws DBException {
+		b.setRowID(-1);
+		long newid = -1;
+		// No need to check if nutitionist is designated hcp, since the ownerID
+		// is not in this record plus
+		// It requires to know the macronutrientplan first in order to isnert
+		// new record to profile, which plan has already checked it..
+		newid = macroDAO.insertMacroNutrientProfile(b);
+		// Didn't plan to add loggingevent since it will get duplicated by the
+		// Macronutrientplan related operations.
+		// loggingAction.logEvent(TransactionType.HCP_ADD_MACRONUTRIENTPLAN,
+		// mid, b.getOwnerID(),
+		// "Nutritionist created patient's macronutrient plan.");
 		return newid;
 	}
 	

@@ -13,7 +13,6 @@ public class MacroNutrientProfileBaseAction {
 	 */
 	private DAOFactory factory;
 	protected MacroNutrientProfileDAO macroDAO;
-	protected EventLoggingAction loggingAction;
 	/**
 	 * Flag to show if the user is Nutritionist.
 	 */
@@ -34,7 +33,6 @@ public class MacroNutrientProfileBaseAction {
 		this.factory = factory;
 		this.mid = checkOwnerID(midString);
 		macroDAO = factory.getMacroNutrientProfileDAO();
-		loggingAction = new EventLoggingAction(factory);
 		isNutritionist = checkIfNutritionist(midString);
 
 	}

@@ -20,23 +20,25 @@ public class EditMacroNutrientProfileAction extends
 	
 	/**
 	 * Edit macronutrientprofile in database.
-	 * @param b MacroNutrientPlanBean to isnert.
+	 * 
+	 * @param b
+	 *            MacroNutrientPlanBean to isnert.
 	 * @return The long id of the new inserted record.
 	 * @throws DBException
 	 */
-	public int editMacroNutrientProfile(MacroNutrientProfileBean b)throws DBException{
-		int rowUpdate= 0;
-		//No need to check if nutitionist is designated hcp, since the ownerID is not in this record plus
-		//It requires to know the macronutrientplan first in order to isnert new record to profile, which plan has already checked it..
-		if(this.isNutritionist){
-			rowUpdate = macroDAO.updateMacroNutrientProfile(b);
-			//Didn't plan to add loggingevent since it will get duplicated by the Macronutrientplan related operations.
-			//loggingAction.logEvent(TransactionType.HCP_ADD_MACRONUTRIENTPLAN, mid, b.getOwnerID(), "Nutritionist created patient's macronutrient plan.");
-		}else{
-			rowUpdate = macroDAO.updateMacroNutrientProfile(b);
-			//loggingAction.logEvent(TransactionType.PATIENT_ADD_MACRONUTRIENTPLAN, mid, mid, "Patient created macronutrient plan.");
-
-		}
+	public int editMacroNutrientProfile(MacroNutrientProfileBean b)
+			throws DBException {
+		int rowUpdate = 0;
+		// No need to check if nutitionist is designated hcp, since the ownerID
+		// is not in this record plus
+		// It requires to know the macronutrientplan first in order to isnert
+		// new record to profile, which plan has already checked it..
+		rowUpdate = macroDAO.updateMacroNutrientProfile(b);
+		// Didn't plan to add loggingevent since it will get duplicated by the
+		// Macronutrientplan related operations.
+		// loggingAction.logEvent(TransactionType.HCP_ADD_MACRONUTRIENTPLAN,
+		// mid, b.getOwnerID(),
+		// "Nutritionist created patient's macronutrient plan.");
 		return rowUpdate;
 	}
 	
