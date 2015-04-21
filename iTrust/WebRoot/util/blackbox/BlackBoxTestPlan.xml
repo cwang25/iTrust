@@ -17883,7 +17883,7 @@
 </test>
 <test id="UndoDeleteFoodDiaryEntryWithSuggestions">
     <role>Patient</role>
-    <usecase>70</usecase>
+    <usecase>78</usecase>
     <dateAdded>04/20/2015</dateAdded>
     <description>
     	<precondition>Standard data is loaded.</precondition>
