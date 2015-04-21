@@ -17367,6 +17367,70 @@
 	</expectedResults>
 </test>
 
+<test id="testEditSuggestion">
+	<role>HCP</role>
+	<role>Patient</role>
+	<usecase>75</usecase>
+	<dateAdded>03/25/2015</dateAdded>
+	<description>
+		<precondition>Standard Data is loaded</precondition>
+		<precondition>UC 69 data to be loaded</precondition>
+		<precondition>HCP Spencer Reid(MID: 9900000012) is a registered Nutritionist for Aaron Hotchner(mid:500)</precondition>
+		<precondition>Aaron Hotchner is a registered user of the iTrust system</precondition>
+		<step>Log in as Spencer Reid</step>
+		<step>Click on 'Patient Info' -> Patient Food Diary</step>
+		<step>Enter 500 in the search box</step>
+		<step>Click on Patient 500 - Aaron Hotchner</step>
+		<step>Click on '+' icon below 'Daily Summary' for 04/13/2014</step>
+		<step>Add a suggestion: "This is a test suggestion that I will edit."</step>
+		<step>Click 'Submit Suggestion'</step>
+		<step>Click on '+' icon below 'Daily Summary' for 04/13/2013</step>
+		<step>Select 'This is a test suggestion that I will edit' from the dropdown</step>
+		<step>Edit it and append 'I edited it.'</step>
+		<step>Click 'Update' and confirm the alert box</step>
+		<step> Log Out</step>
+	</description>
+	<expectedResults>
+		<eResult>Search box appears to select patient</eResult>
+		<eResult>Aaron Hotchner's food diary is displayed</eResult>
+		<eResult>A text area pops up for entering suggestion</eResult>
+		<eResult>"Your Suggestion has been added to the patient's Food Diary" appears on the screen</eResult>
+		<eResult>"Suggestion has been updated"" appears on the screen.</eResult>
+	</expectedResults>
+</test>
+
+<test id="testDeleteSuggestion">
+	<role>HCP</role>
+	<role>Patient</role>
+	<usecase>75</usecase>
+	<dateAdded>03/25/2015</dateAdded>
+	<description>
+		<precondition>Standard Data is loaded</precondition>
+		<precondition>UC 69 data to be loaded</precondition>
+		<precondition>HCP Spencer Reid(MID: 9900000012) is a registered Nutritionist for Aaron Hotchner(mid:500)</precondition>
+		<precondition>Aaron Hotchner is a registered user of the iTrust system</precondition>
+		<step>Log in as Spencer Reid</step>
+		<step>Click on 'Patient Info' -> Patient Food Diary</step>
+		<step>Enter 500 in the search box</step>
+		<step>Click on Patient 500 - Aaron Hotchner</step>
+		<step>Click on '+' icon below 'Daily Summary' for 04/13/2014</step>
+		<step>Add a suggestion: "Add suggestion for deleting."</step>
+		<step>Click 'Submit Suggestion'</step>
+		<step>Click on '+' icon below 'Daily Summary' for 04/13/2013</step>
+		<step>Select 'Add suggestion for deleting' from the dropdown</step>
+		<step>Click 'Delete' and confirm the alert box</step>
+		<step> Log Out</step>
+	</description>
+	<expectedResults>
+		<eResult>Search box appears to select patient</eResult>
+		<eResult>Aaron Hotchner's food diary is displayed</eResult>
+		<eResult>A text area pops up for entering suggestion</eResult>
+		<eResult>"Your Suggestion has been added to the patient's Food Diary" appears on the screen</eResult>
+		<eResult>"Suggestion has been deleted" appears on the screen.</eResult>
+		<eResult>Suggestion does not exist in the dropdown</eResult>
+	</expectedResults>
+</test>
+
 <test id="TestAddFoodDiarylabel">
 	<role>Patient</role>
 	<usecase>73</usecase>
@@ -17526,6 +17590,148 @@
 	</expectedResults>
 </test>
 
+<test id="testAddValidEntry">
+	<role>Patient</role>
+	<usecase>72</usecase>
+	<dateAdded>05/20/2015</dateAdded>
+	<description>
+		<precondition>Standard data is loaded</precondition>
+		<precondition>Aaron Hotchner is a registered user of the iTrust system</precondition>
+		<step>Login as Aaron Hotchner (mid:500)</step>
+		<step>Click on View->My Food Diary</step>
+		<step>Click on Macro Calculator</step>
+		<step>Add these values for fields on the form:
+				Gender: male
+				Age: 30
+				Weight: 60
+				Height 170
+				Goal: Maintain weight
+				Activity Level: Lightly active
+		</step>
+		<step>Click Preview</step>
+		<step>Click Save</step>
+	</description>
+	<expectedResults>
+		<eResult>Patient logs in</eResult>
+		<eResult>Food Diary is shown</eResult>
+		<eResult>Macro Nutrient Calculator form is displayed</eResult>
+		<eResult>Chart is displayed</eResult>
+		<eResult>Information is successfully saved</eResult>
+	</expectedResults>
+</test>
+
+<test id="testAddInvalidWeight1">
+	<role>Patient</role>
+	<usecase>72</usecase>
+	<dateAdded>05/20/2015</dateAdded>
+	<description>
+		<precondition>Standard data is loaded</precondition>
+		<precondition>Aaron Hotchner is a registered user of the iTrust system</precondition>
+		<step>Login as Aaron Hotchner (mid:500)</step>
+		<step>Click on View->My Food Diary</step>
+		<step>Click on Macro Calculator</step>
+		<step>Add these values for fields on the form:
+				Gender: male
+				Age: 30
+				Weight: seventy
+				Height 170
+				Goal: Maintain weight
+				Activity Level: Sedentary
+		</step>
+		<step>Click Preview</step>
+	</description>
+	<expectedResults>
+		<eResult>Patient logs in</eResult>
+		<eResult>Food Diary is shown</eResult>
+		<eResult>Macro Nutrient Calculator form is displayed</eResult>
+		<eResult>Error message shown under weight: "Enter value in range 1-790"</eResult>
+	</expectedResults>
+</test>
+
+<test id="testAddInvalidWeight2">
+	<role>Patient</role>
+	<usecase>72</usecase>
+	<dateAdded>05/20/2015</dateAdded>
+	<description>
+		<precondition>Standard data is loaded</precondition>
+		<precondition>Aaron Hotchner is a registered user of the iTrust system</precondition>
+		<step>Login as Aaron Hotchner (mid:500)</step>
+		<step>Click on View->My Food Diary</step>
+		<step>Click on Macro Calculator</step>
+		<step>Add these values for fields on the form:
+				Gender: male
+				Age: 30
+				Weight: 900
+				Height 170
+				Goal: Maintain weight
+				Activity Level: Sedentary
+		</step>
+		<step>Click Preview</step>
+	</description>
+	<expectedResults>
+		<eResult>Patient logs in</eResult>
+		<eResult>Food Diary is shown</eResult>
+		<eResult>Macro Nutrient Calculator form is displayed</eResult>
+		<eResult>Error message shown under weight: "Enter value in range 1-790"</eResult>
+	</expectedResults>
+</test>
+
+<test id="testAddInvalidHeight1">
+	<role>Patient</role>
+	<usecase>72</usecase>
+	<dateAdded>05/20/2015</dateAdded>
+	<description>
+		<precondition>Standard data is loaded</precondition>
+		<precondition>Aaron Hotchner is a registered user of the iTrust system</precondition>
+		<step>Login as Aaron Hotchner (mid:500)</step>
+		<step>Click on View->My Food Diary</step>
+		<step>Click on Macro Calculator</step>
+		<step>Add these values for fields on the form:
+				Gender: male
+				Age: 30
+				Weight: 70
+				Height 274
+				Goal: Maintain weight
+				Activity Level: Sedentary
+		</step>
+		<step>Click Preview</step>
+	</description>
+	<expectedResults>
+		<eResult>Patient logs in</eResult>
+		<eResult>Food Diary is shown</eResult>
+		<eResult>Macro Nutrient Calculator form is displayed</eResult>
+		<eResult>Error message shown under height: "Enter value in range 1-273"</eResult>
+	</expectedResults>
+</test>
+
+<test id="testAddInvalidHeight2">
+	<role>Patient</role>
+	<usecase>72</usecase>
+	<dateAdded>05/20/2015</dateAdded>
+	<description>
+		<precondition>Standard data is loaded</precondition>
+		<precondition>Aaron Hotchner is a registered user of the iTrust system</precondition>
+		<step>Login as Aaron Hotchner (mid:500)</step>
+		<step>Click on View->My Food Diary</step>
+		<step>Click on Macro Calculator</step>
+		<step>Add these values for fields on the form:
+				Gender: male
+				Age: 30
+				Weight: 70
+				Height tall
+				Goal: Maintain weight
+				Activity Level: Sedentary
+		</step>
+		<step>Click Preview</step>
+	</description>
+	<expectedResults>
+		<eResult>Patient logs in</eResult>
+		<eResult>Food Diary is shown</eResult>
+		<eResult>Macro Nutrient Calculator form is displayed</eResult>
+		<eResult>Error message shown under height: "Enter value in range 1-273"</eResult>
+	</expectedResults>
+</test>
+
 <test id="testCreateNewLabelForFoodDiary">
 	<role>Patient</role>
 	<usecase>73</usecase>
@@ -17654,6 +17860,6 @@
         <eResult>Aaron Hotchner's weight log entrie are displayed.</eResult>
     </expectedResults>
 </test>
-
+<test id=''>
 
 </BlackBoxTestPlan>

@@ -52,7 +52,10 @@ public class PatientInstructionsUseCaseTest extends iTrustSeleniumTest {
 		driver.setJavascriptEnabled(true);
 	    driver.findElement(By.xpath("//div[@id='iTrustMenu']/div/div[3]/div/h2")).click();
 		driver.findElement(By.linkText("Document Office Visit")).click();		
-		selectPatientFromSearch("1");
+		driver.findElement(By.id("searchBox")).clear();
+		driver.findElement(By.id("searchBox")).sendKeys("1");
+		//waitFor(1);
+		clickOnJavascriptElement(By.xpath("//input[@value='1' and @type='button']"));
 		driver.setJavascriptEnabled(false);
 		
 		// click Yes, Document Office Visit

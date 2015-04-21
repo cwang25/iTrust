@@ -15,7 +15,7 @@ import edu.ncsu.csc.itrust.dao.mysql.FoodDiaryLabelDAO;
 import edu.ncsu.csc.itrust.testutils.TestDAOFactory;
 
 /**
- * @author nishant
+ * Class that tests Food Diary Suggestion functionality
  *
  */
 public class FoodDiarySuggestionsTest extends iTrustSeleniumTest {
@@ -84,7 +84,7 @@ public class FoodDiarySuggestionsTest extends iTrustSeleniumTest {
 		driver.findElement(By.id("searchBox")).clear();
 		driver.findElement(By.id("searchBox")).sendKeys("500");
 		//waitFor(1);
-		driver.findElement(By.xpath("//input[@value='500' and @type='button']")).click();
+		clickOnJavascriptElement(By.xpath("//input[@value='500' and @type='button']"));
 		driver.findElement(By.id("toggle1")).click();
 		driver.findElement(By.id("suggestionText1")).clear();
 		driver.findElement(By.id("suggestionText1")).sendKeys("TestSuggestion1");
@@ -121,7 +121,7 @@ public class FoodDiarySuggestionsTest extends iTrustSeleniumTest {
 		driver.findElement(By.id("searchBox")).clear();
 		driver.findElement(By.id("searchBox")).sendKeys("500");
 		//waitFor(1);
-		driver.findElement(By.xpath("//input[@value='500' and @type='button']")).click();
+		clickOnJavascriptElement(By.xpath("//input[@value='500' and @type='button']"));
 		driver.findElement(By.id("toggle1")).click();
 		driver.findElement(By.id("suggestionText1")).clear();
 		driver.findElement(By.id("suggestionText1")).sendKeys("AprilSuggestion");
@@ -183,16 +183,21 @@ public class FoodDiarySuggestionsTest extends iTrustSeleniumTest {
 	
 	@Test
 	public void testDeleteSuggestion() throws Exception{
+		//Log in as Spencer Reif
 		login("9900000012", "pw");
+		//Select 'View'
 		driver.findElement(By.cssSelector("h2.panel-title")).click();
 	    driver.findElement(By.linkText("Patient Food Diary")).click();
+	    //Search for patient 500
 	    driver.findElement(By.id("searchBox")).clear();
 	    driver.findElement(By.id("searchBox")).sendKeys("500");
 	    clickOnJavascriptElement(By.xpath("//input[@value='500' and @type='button']"));
+	    //Click on + button for adding suggestion and add suggestion
 	    driver.findElement(By.id("toggle1")).click();
 	    driver.findElement(By.id("suggestionText1")).clear();
 	    driver.findElement(By.id("suggestionText1")).sendKeys("Add suggestion for deleting");
 	    driver.findElement(By.id("addNewSuggestion1")).click();
+	    //Select suggestion and delete it
 	    driver.findElement(By.id("toggle1")).click();
 	    new Select(driver.findElement(By.id("savedSuggestionList1"))).selectByVisibleText("Add suggestion for deleti");
 	    driver.findElement(By.id("removeSuggestion1")).click();
